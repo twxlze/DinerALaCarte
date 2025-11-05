@@ -6,7 +6,7 @@ namespace API_Footies.Data.DAO
     /// <summary>
     /// Récupère l'identifiant unique d'un type en fonction de son nom.
     /// </summary>
-    public class TypeDAO : ITypeDAO
+    public class PersonneDAO : IPersonneDAO
     {
         public long GetIdTypeByNom(string nom)
         {

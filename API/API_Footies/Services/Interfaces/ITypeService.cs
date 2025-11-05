@@ -1,9 +1,9 @@
-﻿namespace API_Footies.Data.Interfaces
+﻿namespace API_Footies.Services.Interfaces
 {
     /// <summary>
-    /// Définit les méthodes pour accéder et récupérer des informations dans une base de données
+    /// Interface pour le service de gestion des types permettant de renvoyer différentes informations sur les types.
     /// </summary>
-    public interface ITypeDAO
+    public interface ITypeService
     {
         /// <summary>
         /// Renvoie la liste de tous les invités
