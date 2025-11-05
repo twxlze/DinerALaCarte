@@ -15,12 +15,12 @@ namespace API_Footies.Data.DAO
             {
                 var parameters = new Dictionary<string, object>()
                 {
-                    {"@nom",nom }
+                    {"@Nom",nom }
                 };
-                var data = connection.ExecuteQuery("SELECT * FROM Invite WHERE nom=@nom", parameters);
+                var data = connection.ExecuteQuery("SELECT * FROM Invite WHERE Nom=@Nom", parameters);
                 if (data.Rows.Count > 0)
                 {
-                    id = data.Rows[0].Field<Int64>("idInvite");
+                    id = data.Rows[0].Field<Int64>("IDInvite");
                 }
 
             }

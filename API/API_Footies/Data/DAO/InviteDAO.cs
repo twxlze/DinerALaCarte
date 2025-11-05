@@ -24,15 +24,13 @@ namespace API_Footies.Data.DAO
                 {
                     var parameters = new Dictionary<string, object>()
                     {
-
-                    {"@Id", typeDAO.GetIdTypeByNom(invite.Nom) },
                     {"@Nom",invite.Nom },
                     {"@Prenom",invite.Prenom },
                     {"@Telephone",invite.Telephone },
                     {"@Email",invite.Email }
 
                     };
-                    invite.Id = connection.ExecuteInsert("INSERT INTO Invite (idInvite,nom,prenom,telephone,email) VALUES (@Id,@Nom,@Prenom,@Telephone, @Email)", parameters);
+                    invite.Id = connection.ExecuteInsert("INSERT INTO Invite (Nom,Prenom,NumTel,Mail) VALUES (@Nom,@Prenom,@Telephone, @Email)", parameters);
                     ajoute = true;
                 }
 

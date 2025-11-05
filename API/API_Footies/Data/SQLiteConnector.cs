@@ -16,7 +16,7 @@ namespace API_Footies.Data
         /// </summary>
         public SQLiteConnector()
         {
-            this.connection = new SqliteConnection("Data Source=database.db");
+            this.connection = new SqliteConnection("Data Source=DataBase.db");
         }
 
         /// <summary>
@@ -44,14 +44,6 @@ namespace API_Footies.Data
                 using (SqliteDataReader reader = command.ExecuteReader())
                 {
                     dataTable.Load(reader);
-                }
-            }
-
-            using (FileStream stream = File.Create("C:\\Users\\hugol\\Desktop\\Cours_iut\\Github\\Diner_a_la_carte\\API\\API_Diner_Carte\\volume\\ecriture.txt"))
-            {
-                using (StreamWriter writer = new StreamWriter(stream))
-                {
-                    writer.WriteLine(query);
                 }
             }
 
