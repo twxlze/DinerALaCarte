@@ -12,7 +12,6 @@ namespace API_Footies.Data.DAO
 
         public bool AjouterInvite(Invite invite)
         {
-            PersonneDAO typeDAO = new PersonneDAO();
             bool ajoute = false;
             using (SQLiteConnector connection = new SQLiteConnector())
             {

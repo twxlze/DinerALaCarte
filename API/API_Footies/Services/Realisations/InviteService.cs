@@ -13,8 +13,6 @@ namespace API_Footies.Services.Realisations
 
         private IInviteDAO dao;
 
-        private ITypeService typeService;
-
         #endregion
 
         /// <summary>
@@ -22,10 +20,9 @@ namespace API_Footies.Services.Realisations
         /// </summary>
         /// <param name="dao">Injection de dépendance</param>
         /// <param name="typeService">Service utilisé pour gérer les opérations liées aux types associées aux invitations.</param>
-        public InviteService(IInviteDAO dao, ITypeService typeService)
+        public InviteService(IInviteDAO dao)
         {
             this.dao = dao;
-            this.typeService = typeService;
         }
 
         #region methods
