@@ -10,5 +10,11 @@ namespace API_Footies.Services.Interfaces
         /// <param name="invite"> Invite à ajouter </param>
         /// <returns> Invité ajouter </returns>
         void AjouterInvite(Invite invite);
+        /// <summary>
+        /// Modifier un invité
+        /// </summary>
+        /// <param name="invite">invite à modifier</param>
+        void ModifierInvite(Invite invite);
+
     }
 }

@@ -12,7 +12,6 @@ namespace API_Footies.Data.DAO
 
         public bool AjouterInvite(Invite invite)
         {
-            PersonneDAO typeDAO = new PersonneDAO();
             bool ajoute = false;
             using (SQLiteConnector connection = new SQLiteConnector())
             {
@@ -36,6 +35,33 @@ namespace API_Footies.Data.DAO
 
             }
             return ajoute;
+        }
+
+        public bool ModifierInvite(Invite invite)
+        {
+            bool modifie = false;
+            using (SQLiteConnector connection = new SQLiteConnector())
+            {
+                if (connection == null)
+                {
+                    throw new Exception("Erreur de connexion à la base de données");
+                }
+                else
+                {
+                    var parameters = new Dictionary<string, object>()
+                    {
+                        {"@Id", invite.Id },
+                        {"@Nom", invite.Nom },
+                        {"@Prenom", invite.Prenom },
+                        {"@Telephone", invite.Telephone },
+                        {"@Email", invite.Email }
+                    };
+
+                    connection.ExecuteQuery("UPDATE Invite SET Nom = @Nom, Prenom = @Prenom, NumTel = @Telephone, Mail = @Email WHERE IDInvite = @Id", parameters);
+                    modifie = true;
+                }
+            }
+            return modifie;
         }
     }
 }

@@ -17,9 +17,7 @@ builder.Services.AddScoped<IInviteDAO, InviteDAO>();
 builder.Services.AddScoped<IInviteService, InviteService>();
 
 
-builder.Services.AddScoped<IPersonneDAO, PersonneDAO>();
 builder.Services.AddScoped<IInviteDAO, InviteDAO>();
-builder.Services.AddScoped<ITypeService, TypeService>();
 
 SQLitePCL.Batteries.Init();
 
