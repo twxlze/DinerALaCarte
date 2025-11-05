@@ -1,4 +1,5 @@
-﻿using API_Footies.Data.Interfaces;
+﻿using System.Data;
+using API_Footies.Data.Interfaces;
 
 namespace API_Footies.Data.DAO
 {
