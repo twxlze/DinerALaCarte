@@ -33,7 +33,7 @@ namespace METIER_Footies.Data
         {
             List<Invite> listeDesInvites = new List<Invite>();
 
-            HttpResponseMessage reponseHttp = await this.GetAsync("Invites");
+            HttpResponseMessage reponseHttp = await this.GetAsync("Invites/ListeInvite");
 
             if (reponseHttp.IsSuccessStatusCode)
             {
