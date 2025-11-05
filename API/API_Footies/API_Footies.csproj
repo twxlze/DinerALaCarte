@@ -13,4 +13,11 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Data\Interfaces\" />
+    <Folder Include="Data\DAO\" />
+    <Folder Include="Services\Interfaces\" />
+    <Folder Include="Services\Realisations\" />
+  </ItemGroup>
+
 </Project>
