@@ -6,7 +6,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace METIER_Footies
+namespace METIER_Footies.Data
 {
     /// <summary>
     // Classe abstraite d'accès aux données pour la base de données
@@ -57,7 +57,7 @@ namespace METIER_Footies
         /// <param name="demande">adresse de la demande</param>
         /// <param name="objet">objet à envoyer dans le body</param>
         /// <returns>Réponse http de l'API</returns>
-        public async Task<HttpResponseMessage> PostAsync(string demande, Object objet)
+        public async Task<HttpResponseMessage> PostAsync(string demande, object objet)
         {
             string adresseEnvoi = adressAPI + demande;
             return await httpClient.PostAsJsonAsync(adresseEnvoi, objet);

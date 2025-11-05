@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace METIER_Footies
+namespace METIER_Footies.Metier
 {
     /// <summary>
     /// Représentation d'un invité avec son identité et coordonées
