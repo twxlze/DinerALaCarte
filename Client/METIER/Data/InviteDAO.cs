@@ -24,5 +24,23 @@ namespace METIER_Footies.Data
             HttpResponseMessage reponseHttp = await PostAsync("Invites/AjoutInvite", invite); 
             return reponseHttp;
         }
+
+        /// <summary>
+        /// Obtient tous les invités
+        /// </summary>
+        /// <returns> Liste de tous les invités </returns>
+        public async Task<List<Invite>> ObtenirTout()
+        {
+            List<Invite> listeDesInvites = new List<Invite>();
+
+            HttpResponseMessage reponseHttp = await this.GetAsync("Invites");
+
+            if (reponseHttp.IsSuccessStatusCode)
+            {
+                string reponse = await reponseHttp.Content.ReadAsStringAsync();
+                listeDesInvites = JsonSerializer.Deserialize<List<Invite>>(reponse, options);
+            }
+            return listeDesInvites;
+        }
     }
 }
