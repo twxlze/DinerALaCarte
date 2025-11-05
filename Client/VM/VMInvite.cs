@@ -29,8 +29,8 @@ namespace VM_Footies
         #region Propriétés
         /// <summary>
         // Nom de famille de l'invité
-        /// Le set notifie le changement de la propriété
         /// </summary>
+        /// <remarks> Le set notifie le changement de la propriété </remarks>
         public string Nom
         {
             get => this.invite.Nom;
@@ -43,8 +43,8 @@ namespace VM_Footies
 
         /// <summary>
         /// Prénom de l'invité
-        /// Le set notifie le changement de la propriété
         /// </summary>
+        /// <remarks> Le set notifie le changement de la propriété </remarks>
         public string Prenom
         {
             get => this.invite.Prenom;
@@ -57,8 +57,8 @@ namespace VM_Footies
 
         /// <summary>
         /// Téléphone de l'invité
-        /// Le set notifie le changement de la propriété
         /// </summary>
+        /// <remarks> Le set notifie le changement de la propriété </remarks>
         public string Telephone
         {
             get => this.invite.Telephone;
@@ -71,8 +71,8 @@ namespace VM_Footies
 
         /// <summary>
         /// Email de l'invité
-        /// Le set notifie le changement de la propriété
         /// </summary>
+        /// <remarks> Le set notifie le changement de la propriété </remarks>
         public string Email
         {
             get => this.invite.Email;
