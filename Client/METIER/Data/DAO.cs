@@ -5,6 +5,8 @@ using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Configuration.Json;
 
 namespace METIER_Footies.Data
 {
@@ -15,7 +17,7 @@ namespace METIER_Footies.Data
     {
         #region Attributs
         private HttpClient httpClient;
-        private string adressAPI = "https://localhost:7230/";
+        private string adressAPI;
         #endregion
 
         #region Constructeurs
@@ -24,6 +26,7 @@ namespace METIER_Footies.Data
         /// </summary>
         public DAO()
         {
+            GetUrlApi();
             httpClient = new HttpClient();
         }
         #endregion
@@ -61,6 +64,24 @@ namespace METIER_Footies.Data
         {
             string adresseEnvoi = adressAPI + demande;
             return await httpClient.PostAsJsonAsync(adresseEnvoi, objet);
+        }
+        #endregion
+
+        #region Méthodes privées
+
+        /// <summary>
+        /// Configure l'URL de l'API à partir du fichier appsettings.json
+        /// </summary>
+        /// <remarks> Si le fichier n'existe pas ou que l'URL ne marche pas, renvoie une exception</remarks>
+        private void GetUrlApi()
+        {
+            // Configuration pour lire le fichier appsettings.json
+
+            var config = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true).Build();
+
+            //Récupère l'URL de l'API dans la section JSON qui correspond 
+            this.adressAPI = Convert.ToString(config.GetSection("API:url")) ?? throw new NullReferenceException();
         }
         #endregion
     }
