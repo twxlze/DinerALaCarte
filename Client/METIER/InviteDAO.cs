@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace METIER_Footies
 {
-    internal class InviteDAO
+    public class InviteDAO
     {
     }
 }

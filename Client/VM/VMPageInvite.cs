@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace VM_Footies
 {
-    internal class VMPageInvite
+    public class VMPageInvite
     {
     }
 }
