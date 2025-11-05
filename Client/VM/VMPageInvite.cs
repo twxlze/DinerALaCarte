@@ -13,12 +13,12 @@ namespace VM_Footies
     public class VMPageInvite : INotifyPropertyChanged
     {
         #region Attributs
-        private List<VMInvite> listeInvites;
+        private List<VMInvite> listeVMInvite;
         private InviteDAO inviteDAO;
         #endregion
 
         public event PropertyChangedEventHandler? PropertyChanged;
-        public List<VMInvite> VMInvites => listeInvites;
+        public List<VMInvite> VMInvites => listeVMInvite;
 
         #region Constructeurs
         /*
@@ -33,8 +33,20 @@ namespace VM_Footies
             }
         }
         */
+        #endregion
 
+        #region Méthodes
+        public void AjouterInvite(VMInvite invite)
+        {
+            this.inviteDAO.AjouterInvite(invite.Invite);
+            this.listeVMInvite.Add(invite);
+            this.Notify("VMInvites");
+        }
 
+        private void Notify(string message)
+        {
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(message));
+        }
         #endregion
     }
 }
