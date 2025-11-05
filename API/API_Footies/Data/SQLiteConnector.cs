@@ -1,4 +1,7 @@
-﻿namespace API_Footies.Data
+﻿using System.Data;
+using Microsoft.Data.Sqlite;
+
+namespace API_Footies.Data
 {
     /// <summary>
     /// Connecteur à la bdd
