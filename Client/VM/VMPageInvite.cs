@@ -18,24 +18,33 @@ namespace VM_Footies
         #endregion
 
         public event PropertyChangedEventHandler? PropertyChanged;
+
+        /// <summary>
+        // Liste des VMInvite 
+        /// </summary>
         public List<VMInvite> VMInvites => listeVMInvite;
 
         #region Constructeurs
-        /*
+        /// <summary>
+        // Constructeur par défaut d'une page d'invité
+        /// </summary>
         public VMPageInvite()
         {
             this.inviteDAO = new InviteDAO();
-            this.listeInvites = new List<VMInvite>();
+            this.listeVMInvite = new List<VMInvite>();
 
-            foreach (Invite invite in inviteDAO.ObtenirTout()) // coder la méthode ObtenirTout dans InviteDAO
+            foreach (Invite invite in inviteDAO.ObtenirTout().Result)
             {
-                this.listeInvites.Add(new VMInvite(invite));
+                this.listeVMInvite.Add(new VMInvite(invite));
             }
         }
-        */
         #endregion
 
         #region Méthodes
+        /// <summary>
+        /// Ajoute un invité à la liste des invités
+        /// </summary>
+        /// <param name="invite"> L'invité à ajouter </param>
         public void AjouterInvite(VMInvite invite)
         {
             this.inviteDAO.AjouterInvite(invite.Invite);
