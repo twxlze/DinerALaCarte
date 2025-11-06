@@ -20,24 +20,34 @@ namespace IHM_Footies
     /// </summary>
     public partial class VueInvites : Window
     {
-        public VueInvites(MainWindow mainWindows)
+        public VueInvites()
         {
             InitializeComponent();
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
         }
 
-        private async void BoutonAccueil_Click(object sender, RoutedEventArgs e)
+        private void BoutonVueAccueil(object sender, RoutedEventArgs e)
         {
-            MainWindow mainWindow = new MainWindow();
-            mainWindow.Show();
-            await Task.Delay(500);
-            this.Close();
+            Navigation.AllerAccueil(this);
         }
 
         private void BoutonInvite_Click(object sender, RoutedEventArgs e)
         {
-            // Cette page est déjà la page des invités, donc pas besoin de faire quoi que ce soit
-            // Ou vous pouvez rafraîchir la page si nécessaire
+            Navigation.AllerInvites(this);
+        }
+
+        private void BoutonAccueil_Click(object sender, RoutedEventArgs e)
+        {
+            Navigation.AllerAccueil(this);
+        }
+
+        private void BoutonAjouterInvite_Click(object sender, RoutedEventArgs e)
+        {
+            Navigation.AllerFormulaireInvite(this);
+        }
+        private void ButonFermerFenetre_Click(object sender, RoutedEventArgs e)
+        {
+            Navigation.FermerFenetre(this);
         }
     }
 }

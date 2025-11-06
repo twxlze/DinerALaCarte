@@ -85,6 +85,21 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
+        <!-- Bouton fermer -->
+        <Button x:Name="CloseButton"
+        Content="✖"
+        FontSize="16"
+        FontWeight="Bold"
+        Foreground="#B44B3E"
+        Background="Transparent"
+        BorderThickness="0"
+        Cursor="Hand"
+        HorizontalAlignment="Right"
+        VerticalAlignment="Top"
+        Margin="0,5,8,0"
+        Click="ButonFermerFenetre_Click"
+        Grid.Column="1000"/>
+
         <!-- Menu à gauche -->
         <Border BorderBrush="#8C2F26"  BorderThickness="0,0,2,0" Grid.Column="0" Grid.RowSpan="9">
             <Grid>
@@ -127,7 +142,7 @@
         </Border>
         
         <!-- Boutons -->
-        <Button Grid.RowSpan="2" Grid.Column="1" Content="Ajouter un invité" HorizontalAlignment="Left" Margin="40,0,0,30" Grid.Row="6" VerticalAlignment="Bottom" Height="40" Width="240" Style="{StaticResource StyleBoutonInvite}"/>
+        <Button Grid.RowSpan="2" Grid.Column="1" Content="Ajouter un invité" HorizontalAlignment="Left" Margin="40,0,0,30" Grid.Row="6" VerticalAlignment="Bottom" Height="40" Width="240" Style="{StaticResource StyleBoutonInvite}" Click="BoutonAjouterInvite_Click" />
         <Button Grid.Column="1" Content="Modifier un invité" HorizontalAlignment="Right" Margin="0,0,40,30" Grid.Row="7" VerticalAlignment="Bottom" Height="40" Width="240" Style="{StaticResource StyleBoutonInvite}" Cursor="Hand"/>
         <Button Grid.Column="1" Content="Supprimer un invité" HorizontalAlignment="Center" Grid.Row="7" VerticalAlignment="Top" Height="40" Width="240" Style="{StaticResource StyleBoutonInvite}" Margin="0,64,0,15" Grid.RowSpan="2"/>
         <TextBlock Grid.Column="1" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Gestion des invités" VerticalAlignment="Top" FontWeight="Bold" FontSize="20" Foreground="#B44B3E" Margin="0,20,0,0"/>

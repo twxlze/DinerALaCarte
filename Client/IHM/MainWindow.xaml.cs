@@ -23,11 +23,13 @@ public partial class MainWindow : Window
         WindowStartupLocation = WindowStartupLocation.CenterScreen;
     }
 
-    private async void ClickBoutonAjouterInvite(object sender, RoutedEventArgs e)
+    private void ClickBoutonAjouterInvite(object sender, RoutedEventArgs e)
     {
-        VueInvites vueInvites = new VueInvites(this);
-        vueInvites.Show();
-        await Task.Delay(500);
-        this.Close();
+        Navigation.AllerInvites(this);
+    }
+
+    private void ButonFermerFenetre_Click(object sender, RoutedEventArgs e)
+    {
+        Navigation.FermerFenetre(this);
     }
 }

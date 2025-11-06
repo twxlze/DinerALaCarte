@@ -18,11 +18,22 @@ namespace IHM_Footies
     /// <summary>
     /// Logique d'interaction pour VueFormulaireInvite.xaml
     /// </summary>
-    public partial class VueFormulaireInvite : Page
+    public partial class VueFormulaireInvite : Window
     {
         public VueFormulaireInvite()
         {
             InitializeComponent();
+            WindowStartupLocation = WindowStartupLocation.CenterScreen;
+        }
+
+        private void BoutonAccueil_Click(object sender, RoutedEventArgs e)
+        {
+            Navigation.AllerAccueil(this);
+        }
+        
+        private void ButonFermerFenetre_Click(object sender, RoutedEventArgs e)
+        {
+            Navigation.FermerFenetre(this);
         }
     }
 }
