@@ -42,5 +42,14 @@ namespace METIER_Footies.Data
             }
             return listeDesInvites;
         }
+
+        /// <summary>
+        /// Supprime un invité
+        /// </summary>
+        public async Task<HttpResponseMessage> SupprimerInvite(int idInvite)
+        {
+            HttpResponseMessage reponseHttp = await PostAsync("Invites/SupprimerInvite", idInvite);
+            return reponseHttp;
+        }
     }
 }
