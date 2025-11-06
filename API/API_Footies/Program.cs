@@ -2,6 +2,7 @@ using API_Footies.Data.DAO;
 using API_Footies.Data.Interfaces;
 using API_Footies.Services.Interfaces;
 using API_Footies.Services.Realisations;
+using SQLitePCL;
 
 public class Program
 {
@@ -16,11 +17,16 @@ public class Program
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
 
-        /// ---- Injections des d�pendances ----
+        /// ---- Injections des dépendances Pour Invite ----
         builder.Services.AddScoped<IInviteDAO, InviteDAO>();
         builder.Services.AddScoped<IInviteService, InviteService>();
+      
+      
+        /// ---- Injections de dépendances pour les groupes d'invités ------
+        builder.Services.AddScoped<IGroupeInviteDAO, GroupeInviteDAO>();
+        builder.Services.AddScoped<IGroupeInvitesService, GroupeInvitesService>();
 
-        SQLitePCL.Batteries.Init();
+        Batteries_V2.Init(); 
 
         var app = builder.Build();
 
