@@ -41,11 +41,13 @@ namespace IHM_Footies
         public void Deselectionner()
         {
             this.Background = new SolidColorBrush(Colors.Transparent);
+            this.Foreground = new SolidColorBrush(Colors.Black);
         }
 
         public void Selectionner()
         {
-            this.Background = new SolidColorBrush(Colors.Red);
+            this.Background = new SolidColorBrush(Colors.Maroon);
+            this.Foreground = new SolidColorBrush(Colors.White);
         }
         #endregion
     }

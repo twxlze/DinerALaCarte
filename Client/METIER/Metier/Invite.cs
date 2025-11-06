@@ -83,8 +83,7 @@ namespace METIER_Footies.Metier
                     
                     if (!long.TryParse(value, out _)) // out _ = on jette la valeur convertie // on veut juste le true/false
                     {
-                        if (string.IsNullOrWhiteSpace(value))
-                        { }
+                        if (string.IsNullOrWhiteSpace(value)){ } // désolée :(
                         else
                         {
                             throw new ArgumentException("Le numéro de téléphone doit contenir uniquement des chiffres");
