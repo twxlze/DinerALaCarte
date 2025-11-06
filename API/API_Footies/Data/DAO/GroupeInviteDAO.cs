@@ -167,5 +167,21 @@ namespace API_Footies.Data.DAO
             return groupeInvite;
         }
 
+        public GroupeInvites SupprimerGroupeInvite(long idGroupeInvite)
+        {
+            GroupeInvites groupeSupprime = RecupereGroupeViaId(idGroupeInvite);
+            using (SQLiteConnector connection = new SQLiteConnector())
+            {
+                var parameters = new Dictionary<string, object>()
+                {
+                    {"@IdGroupeInvites", idGroupeInvite }
+                };
+                // Supprimer les associations dans la table de liaison
+                connection.ExecuteQuery("DELETE FROM Invite_Groupe WHERE IDGroupeInvite = @IdGroupeInvites", parameters);
+                // Supprimer le groupe lui-même
+                connection.ExecuteQuery("DELETE FROM GroupeInvite WHERE IDGroupeInvite = @IdGroupeInvites", parameters);
+            }
+            return groupeSupprime;
+        }
     }
 }

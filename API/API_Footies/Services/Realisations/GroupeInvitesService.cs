@@ -43,5 +43,10 @@ namespace API_Footies.Services.Realisations
         {
             return _groupeInviteDAO.RecupererTousGroupesInvites();
         }
+
+        public GroupeInvites SupprimerGroupe(long idGroupeInvite)
+        {
+            return _groupeInviteDAO.SupprimerGroupeInvite(idGroupeInvite);
+        }
     }
 }
