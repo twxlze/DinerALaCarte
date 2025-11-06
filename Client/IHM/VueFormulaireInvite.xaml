@@ -111,5 +111,43 @@
                 <Button x:Name="BoutonReglage" Content="⚙️" Grid.Row="8" Style="{StaticResource BoutonMenu}" HorizontalContentAlignment="Center" Margin="100,0,0,0" FontSize="25"/>
             </Grid>
         </Border>
+
+        <!-- Partie droite  -->
+
+        <!-- Titre -->
+        <TextBlock Grid.Column="1" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Gestion des invités" VerticalAlignment="Top" FontWeight="Bold" FontSize="20" Foreground="#B44B3E" Margin="0,20,0,0"/>
+
+        <!-- Container formulaire -->
+        <Border BorderBrush="#8C2F26" 
+                    Grid.Column="1" Grid.RowSpan="8" 
+                    Margin="10,61,10,41"
+                    BorderThickness="3"
+                    CornerRadius="10"
+                    Padding="5">
+            <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="2">
+                <StackPanel>
+
+                </StackPanel>
+            </ScrollViewer>
+        </Border>
+
+        <!-- Sous-titre -->
+        <TextBlock Grid.Column="1" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Informations" VerticalAlignment="Top" FontWeight="SemiBold" FontSize="16" Foreground="#B44B3E" Margin="0,65,0,0" Grid.RowSpan="2"/>
+
+        <!-- Input -->
+        <Label Grid.Column="1" Margin="92,6,300,6" Grid.Row="1"  FontSize="16" Foreground="#B44B3E">Nom*</Label>
+        <TextBox Grid.Column="1" Margin="177,8,35,3" Grid.Row="1" Height="25"/>
+
+        <Label Grid.Column="1" Margin="92,0,300,6" Grid.Row="2"  FontSize="16" Foreground="#B44B3E">Prénom*</Label>
+        <TextBox Grid.Column="1" Margin="177,1,35,10" Grid.Row="2" Height="25"/>
+
+        <Label Grid.Column="1" Margin="92,36,308,6" Grid.Row="2"  FontSize="16" Foreground="#B44B3E" Grid.RowSpan="2">Téléphone</Label>
+        <TextBox Grid.Column="1" Margin="177,39,35,10" Grid.Row="2" Height="25" Grid.RowSpan="2"/>
+
+        <Label Grid.Column="1" Margin="92,28,308,23" Grid.Row="3"  FontSize="16" Foreground="#B44B3E" Grid.RowSpan="2">Email</Label>
+        <TextBox Grid.Column="1" Margin="177,31,35,23" Grid.Row="3" Height="25" Grid.RowSpan="2"/>
+
+
     </Grid>
+
 </Window>
