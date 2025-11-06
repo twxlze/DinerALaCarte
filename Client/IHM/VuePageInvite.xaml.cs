@@ -89,6 +89,7 @@ namespace IHM_Footies
             if (result == true)
             {
                 this.vmPageInvite.AjouterInvite(fenetre.Invite);
+                this.RafraichirListe();
             }
         }
 

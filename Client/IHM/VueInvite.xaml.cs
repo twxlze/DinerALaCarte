@@ -31,7 +31,7 @@ namespace IHM_Footies
         {
             this.invite = invite;
             this.DataContext = this.invite;
-            this.Height = 100; /// Juste pour tester
+            this.Height = 20; /// Juste pour tester
             this.Background = Brushes.AliceBlue; /// Juste pour tester
             InitializeComponent();
         }
@@ -40,7 +40,7 @@ namespace IHM_Footies
         #region Méthodes
         public void Deselectionner()
         {
-            this.Background = new SolidColorBrush(Colors.Aqua);
+            this.Background = new SolidColorBrush(Colors.Transparent);
         }
 
         public void Selectionner()

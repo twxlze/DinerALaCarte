@@ -80,13 +80,15 @@ namespace METIER_Footies.Metier
             {
                 if (value != null)
                 {
-                    if (value.Length != 10)
-                    {
-                        throw new ArgumentException("Le numéro de téléphone doit avoir 10 chiffres");
-                    }
+                    
                     if (!long.TryParse(value, out _)) // out _ = on jette la valeur convertie // on veut juste le true/false
                     {
-                        throw new ArgumentException("Le numéro de téléphone doit contenir uniquement des chiffres");
+                        if (string.IsNullOrWhiteSpace(value))
+                        { }
+                        else
+                        {
+                            throw new ArgumentException("Le numéro de téléphone doit contenir uniquement des chiffres");
+                        }
                     }
                 }
                 telephone = value;

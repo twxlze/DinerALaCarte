@@ -44,12 +44,14 @@ namespace VM_Footies
         {
             this.inviteDAO = new InviteDAO();
             this.listeVMInvite = new List<VMInvite>();
+            
             /*
-            foreach (Invite invite in inviteDAO.ObtenirTout().Result)
+            foreach ( Invite invite in inviteDAO.ObtenirTout().Result)
             {
                 this.listeVMInvite.Add(new VMInvite(invite));
             }
             */
+            
         }
         #endregion
 
