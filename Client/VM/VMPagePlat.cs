@@ -4,32 +4,33 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using METIER_Footies;
 using METIER_Footies.Data;
 using METIER_Footies.Metier;
 
 namespace VM_Footies
 {
-    internal class VmPagePlat : INotifyPropertyChanged
+    public class VMPagePlat : INotifyPropertyChanged
     {
         #region Attributs
         private List<VMPlat> listeVMPlat;
-        private PlatDAO platDAO;
+        private PlatDAO PlatDAO;
         #endregion
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
         /// <summary>
-        // Liste des VMInvite 
+        // Liste des VMPlats 
         /// </summary>
         public List<VMPlat> VMPlat => listeVMPlat;
 
         #region Constructeurs
         /// <summary>
-        // Constructeur par défaut d'une page d'invité
+        // Constructeur par défaut d'une page d'un plat
         /// </summary>
         public VMPagePlat()
         {
-            this.inviteDAO = new InviteDAO();
+            this.PlatDAO = new PlatDAO();
             this.listeVMPlat = new List<VMPlat>();
 
             foreach (Plat plat in PlatDAO.ObtenirTout().Result)
@@ -41,14 +42,14 @@ namespace VM_Footies
 
         #region Méthodes
         /// <summary>
-        /// Ajoute un invité à la liste des invités
+        /// Ajoute un invité à la liste des plat
         /// </summary>
-        /// <param name="invite"> L'invité à ajouter </param>
-        public void AjouterInvite(VMInvite invite)
+        /// <param name="vmplat"> Le plat à ajouter </param>
+        public void AjouterPlat(VMPlat vmplat)
         {
-            this.inviteDAO.AjouterInvite(invite.Invite);
-            this.listeVMInvite.Add(invite);
-            this.Notify("VMInvites");
+            this.PlatDAO.AjouterPlat(vmplat.Plat);
+            this.listeVMPlat.Add(vmplat);
+            this.Notify("VMplat");
         }
 
         private void Notify(string message)

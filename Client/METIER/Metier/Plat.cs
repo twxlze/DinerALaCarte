@@ -44,9 +44,9 @@ namespace METIER_Footies.Metier
         {
             get { return nom; }
             set {
-                if (string.IsNullOrWhiteSpace(value))
+                if (string.IsNullOrWhiteSpace(value) && HasSpecialChars(value))
                 {
-                    throw new ArgumentException("Le nom ne peut pas être vide");
+                    throw new ArgumentException("Le nom est invalide");
                 }
                 nom = value;
             }
@@ -59,9 +59,9 @@ namespace METIER_Footies.Metier
         {
             get { return description; }
             set {
-                if (string.IsNullOrWhiteSpace(value))
+                if (HasSpecialChars(value))
                 {
-                    throw new ArgumentException("La description ne peut pas être vide");
+                    throw new ArgumentException("La description ne peut pas contenir de caractère spécial");
                 }
                 description = value;
             }
@@ -92,5 +92,10 @@ namespace METIER_Footies.Metier
             this.categorie = categorie;
         }
 
+
+        private bool HasSpecialChars(string yourString)
+        {
+            return yourString.Any(ch => !char.IsLetterOrDigit(ch));
+        }
     }
 }
