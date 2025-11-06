@@ -14,9 +14,9 @@ namespace METIER_Footies.Data
     public class PlatDAO : DAO
     {
         /// <summary>
-        /// Ajoute un invité
+        /// Ajouter un plat 
         /// </summary>
-        /// <param name="invite"> l'invité à ajouter </param>
+        /// <param name="invite"> le plat à ajouter </param>
         /// <returns> Réponse http de l'API </returns>
         public async Task<HttpResponseMessage> AjouterPlat(Plat plat)
         {
@@ -25,9 +25,9 @@ namespace METIER_Footies.Data
         }
 
         /// <summary>
-        /// Obtient tous les invités
+        /// Obtient tous les plats
         /// </summary>
-        /// <returns> Liste de tous les invités </returns>
+        /// <returns> Liste de tous les plats </returns>
         public async Task<List<Plat>> ObtenirTout()
         {
             List<Plat> listeDesPlats = new List<Plat>();

@@ -10,7 +10,7 @@ using static METIER_Footies.Metier.Plat;
 namespace VM_Footies
 {
     /// <summary>
-    /// Classe ViewModel pour un invité
+    /// Classe ViewModel pour un plat
     /// </summary>
     public class VMPlat : INotifyPropertyChanged
     {
@@ -22,14 +22,14 @@ namespace VM_Footies
         public event PropertyChangedEventHandler? PropertyChanged;
 
         /// <summary>
-        /// Invite associée au VMInvite
+        /// Invite associée au VMPlat
         /// </summary>
         public Plat Plat => this.plat;
 
 
         #region Propriétés
         /// <summary>
-        // Nom de famille de l'invité
+        // Nom du plat
         /// </summary>
         /// <remarks> Le set notifie le changement de la propriété </remarks>
         public string Nom
@@ -43,7 +43,7 @@ namespace VM_Footies
         }
 
         /// <summary>
-        /// Prénom de l'invité
+        /// Description du plat
         /// </summary>
         /// <remarks> Le set notifie le changement de la propriété </remarks>
         public string Description
@@ -57,7 +57,7 @@ namespace VM_Footies
         }
 
         /// <summary>
-        /// Téléphone de l'invité
+        /// Catégorie du plat
         /// </summary>
         /// <remarks> Le set notifie le changement de la propriété </remarks>
         public CategoriePlat Categorie

@@ -42,7 +42,7 @@ namespace VM_Footies
 
         #region Méthodes
         /// <summary>
-        /// Ajoute un invité à la liste des plat
+        /// Ajoute un plat à la liste des plats
         /// </summary>
         /// <param name="vmplat"> Le plat à ajouter </param>
         public void AjouterPlat(VMPlat vmplat)
