@@ -84,22 +84,28 @@ namespace VM_Footies
             this.Notify("VMInvites");
         }
 
-        /*
+        
         /// <summary>
         /// Supprime un invité de la liste des invités
         /// </summary>
         /// <param name="invite">l'invité à supprimer</param>
-        public void SupprimerInvite()
+        public async void SupprimerInvite()
         {
             if (this.inviteSelectionne != null)
             {
-                this.inviteDAO.SupprimerInvite(this.inviteSelectionne.Invite);
+                int id = this.inviteSelectionne.Invite.Id;
+
+                if (id != 0)
+                    await this.inviteDAO.SupprimerInvite(id);
+
                 this.listeVMInvite.Remove(this.inviteSelectionne);
-                this.Notify("VMPersonnes");
                 this.inviteSelectionne = null;
+
+                this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(VMInvites)));
             }
         }
-        */
+        
+        
 
         private void Notify(string message)
         {

@@ -96,7 +96,8 @@ namespace IHM_Footies
         
         private void BoutonSupprimerInvite_Click(object sender, RoutedEventArgs e)
         {
-            //this.vmPageInvite.SupprimerInvite();
+            this.vmPageInvite.SupprimerInvite();
+            this.RafraichirListe();
         }
         
 
