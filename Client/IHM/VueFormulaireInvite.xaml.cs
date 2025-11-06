@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -45,7 +46,59 @@ namespace IHM_Footies
         #region Boutons d'action
         private void Enregistrer_Click(object sender, RoutedEventArgs e)
         {
-            this.DialogResult = true;
+            try
+            {
+                List<string> erreurs = new List<string>();
+
+                // nom
+                if (string.IsNullOrWhiteSpace(this.invite.Nom))
+                {
+                    erreurs.Add("Entrez le nom de l'invité");
+                }
+
+                // prénom
+                if (string.IsNullOrWhiteSpace(this.invite.Prenom))
+                {
+                    erreurs.Add("Entrez le prénom de l'invité");
+                }
+
+                // téléphone
+                if (!string.IsNullOrWhiteSpace(this.invite.Telephone))
+                {
+                    if (!long.TryParse(this.invite.Telephone, out _))
+                    {
+                        erreurs.Add("Le numéro de téléphone doit contenir uniquement des chiffres");
+                    }
+                    else if (this.invite.Telephone.Length != 10)
+                    {
+                        erreurs.Add("Le numéro de téléphone doit avoir 10 chiffres");
+                    }
+                }
+
+                // email
+                if (!string.IsNullOrWhiteSpace(this.invite.Email))
+                {
+                    if (!Regex.IsMatch(this.invite.Email, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
+                    {
+                        erreurs.Add("L'adresse email n'est pas valide");
+                    }
+                }
+
+                // pleins d'erreurs 
+                if (erreurs.Count > 0)
+                {
+                    string message = string.Join("\n", erreurs);
+                    MessageBox.Show(message, "Erreur de validation", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                else
+                {
+                    this.DialogResult = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erreur lors de l'enregistrement : {ex.Message}", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
         #endregion
 

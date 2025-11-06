@@ -46,11 +46,11 @@ namespace METIER_Footies.Metier
             get => nom; 
             set 
             {
-                if (string.IsNullOrWhiteSpace(value))
+               /* if (string.IsNullOrWhiteSpace(value))
                 {
                     throw new ArgumentException("Le nom ne peut pas être vide");
-                }
-                nom = value;
+                }*/
+                nom = value.ToUpper();
             }
         }
 
@@ -61,11 +61,11 @@ namespace METIER_Footies.Metier
         { 
             get => prenom; 
             set 
-            {
+            {/*
                 if (string.IsNullOrWhiteSpace(value))
                 {
                     throw new ArgumentException("Le prénom ne peut pas être vide");
-                }
+                }*/
                 prenom = value;
             }
         }
@@ -77,19 +77,20 @@ namespace METIER_Footies.Metier
         { 
             get => telephone;
             set
-            {
+            {/*
                 if (value != null)
                 {
                     
                     if (!long.TryParse(value, out _)) // out _ = on jette la valeur convertie // on veut juste le true/false
                     {
-                        if (string.IsNullOrWhiteSpace(value)){ } // désolée :(
+                        if ((string.IsNullOrWhiteSpace(value)) || value == " "     )
+                        { } // désolée :(
                         else
                         {
                             throw new ArgumentException("Le numéro de téléphone doit contenir uniquement des chiffres");
                         }
                     }
-                }
+                }*/
                 telephone = value;
             }
         }
@@ -101,14 +102,14 @@ namespace METIER_Footies.Metier
         {
             get => email; 
             set
-            {
+            {/*
                 if (value != null && !string.IsNullOrWhiteSpace(value))
                 {
                     if (!Regex.IsMatch(value, @"^[^@\s]+@[^@\s]+\.[^@\s]+$")) // Ne cherchez pas à comprendre (vive le Regex ^^)
                     {
                         throw new ArgumentException("L'adresse email n'est pas valide");
                     }
-                }
+                }*/
                 email = value?.Trim();
             }
         }
