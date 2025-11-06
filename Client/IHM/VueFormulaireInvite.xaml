@@ -65,6 +65,36 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
+        <Style x:Key="StyleBoutonEnregistrer" TargetType="Button">
+            <Setter Property="Background" Value="#F9F9F9"/>
+            <Setter Property="Foreground" Value="#8C2F26"/>
+            <Setter Property="BorderBrush" Value="#8C2F26"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="20,0"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="FontFamily" Value="Poppins"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="10"
+                        Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#B44B3E"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
     </Window.Resources>
 
     <Grid>
@@ -146,6 +176,9 @@
 
         <Label Grid.Column="1" Margin="92,28,308,23" Grid.Row="3"  FontSize="16" Foreground="#B44B3E" Grid.RowSpan="2">Email</Label>
         <TextBox Grid.Column="1" Margin="177,31,35,23" Grid.Row="3" Height="25" Grid.RowSpan="2"/>
+
+        <!-- Boutons -->
+        <Button Grid.RowSpan="2" Grid.Column="1" Content="Enregistrer" HorizontalAlignment="Center" Margin="0,58,0,0" Grid.Row="7" VerticalAlignment="Top" Height="40" Width="240" Style="{StaticResource StyleBoutonEnregistrer}"/>
 
 
     </Grid>
