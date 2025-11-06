@@ -17,7 +17,12 @@ public class Program
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
 
-        /// Injections de dÈpendances pour les groupes d'invitÈs
+        /// ---- Injections des d√©pendances Pour Invite ----
+        builder.Services.AddScoped<IInviteDAO, InviteDAO>();
+        builder.Services.AddScoped<IInviteService, InviteService>();
+      
+      
+        /// ---- Injections de d√©pendances pour les groupes d'invit√©s ------
         builder.Services.AddScoped<IGroupeInviteDAO, GroupeInviteDAO>();
         builder.Services.AddScoped<IGroupeInvitesService, GroupeInvitesService>();
 
