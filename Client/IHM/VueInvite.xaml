@@ -7,7 +7,6 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <StackPanel Orientation="Horizontal">
-        <TextBlock Text="{Binding Nom}"/>
-        <TextBlock Text="{Binding Prenom}"/>
+        <TextBlock Text="{Binding Identite}"/>
     </StackPanel>
 </UserControl>

@@ -46,6 +46,7 @@ namespace VM_Footies
             {
                 this.invite.Nom = value;
                 this.Notify("Nom");
+                this.Notify("Identite");
             }
         }
 
@@ -60,6 +61,7 @@ namespace VM_Footies
             {
                 this.invite.Prenom = value;
                 this.Notify("Prenom");
+                this.Notify("Identite");
             }
         }
 
@@ -90,6 +92,11 @@ namespace VM_Footies
                 this.Notify("Email");
             }
         }
+
+        /// <summary>
+        /// Nom complet de l'invité (Prénom + Nom)
+        /// </summary>
+        public string Identite { get => $"{this.Prenom} {this.Nom}"; }
         #endregion
 
         #region Constructeurs

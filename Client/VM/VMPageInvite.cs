@@ -77,7 +77,7 @@ namespace VM_Footies
         /// Ajoute un invité à la liste des invités
         /// </summary>
         /// <param name="invite"> L'invité à ajouter </param>
-        public void AjouterInvite(VMInvite invite)
+        public async void AjouterInvite(VMInvite invite)
         {
             this.inviteDAO.AjouterInvite(invite.Invite);
             this.listeVMInvite.Add(invite);
