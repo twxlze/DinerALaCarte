@@ -12,37 +12,27 @@ namespace API_Footies.Controllers
     public class PlatController : ControllerBase
     {
         //Service en charge des plats
-        private IInviteService service;
+        private IPlatService service;
 
         /// <summary>
         /// Constructeur
         /// </summary>
-        public PlatController(IInviteService service)
+        public PlatController(IPlatService service)
         {
             this.service = service;
         }
 
 
         /// <summary>
-        /// Ajoute un invité
+        /// Ajoute un plat
         /// </summary>
-        /// <param name="invite">invité à ajouter</param>
-        /// <returns>L'invité avec Id modifié</returns>
-        [HttpPost("AjoutInvite")]
-        public Metier.Invite AjouterInvite(Metier.Invite invite)
+        /// <param name="plat">plat à ajouter</param>
+        /// <returns>Le plat avec Id modifié</returns>
+        [HttpPost("AjoutPlat")]
+        public Metier.Plat AjouterPlat(Metier.Plat plat)
         {
-            this.service.AjouterInvite(invite);
-            return invite;
-        }
-
-        /// <summary>
-        /// Modifier un invité
-        /// </summary>
-        /// <param name="invite">l'invité</param>
-        [HttpPut("ModifierInvite")]
-        public void ModifierInvite(Metier.Invite invite)
-        {
-            this.service.ModifierInvite(invite);
+            this.service.AjouterPlat(plat);
+            return plat;
         }
 
     }
