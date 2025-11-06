@@ -1,4 +1,6 @@
-﻿using API_Footies.Services.Interfaces;
+﻿using System.Security.Principal;
+using API_Footies.Metier;
+using API_Footies.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API_Footies.Controllers
@@ -29,10 +31,12 @@ namespace API_Footies.Controllers
         /// <param name="plat">plat à ajouter</param>
         /// <returns>Le plat avec Id modifié</returns>
         [HttpPost("AjoutPlat")]
-        public Metier.Plat AjouterPlat(Metier.Plat plat)
+        [ProducesResponseType(type: typeof(Plat), StatusCodes.Status201Created)]
+        public IActionResult AjouterPlat(Metier.Plat plat)
         {
             this.service.AjouterPlat(plat);
-            return plat;
+            return Created(" ", plat);
+            //return plat;
         }
 
     }

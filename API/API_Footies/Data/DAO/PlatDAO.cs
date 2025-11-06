@@ -25,7 +25,7 @@ namespace API_Footies.Data.DAO
                     var parameters = new Dictionary<string, object>()
                     {
                     {"@Nom",plat.Nom },
-                    {"@Categorie",plat.Categorie },
+                    {"@Categorie",plat.Categorie.ToString() },
                     {"@Description",plat.Description}
                     };
                     plat.Id = connection.ExecuteInsert("INSERT INTO Plat (Nom,Categorie,Description) VALUES (@Nom,@Categorie,@Description)", parameters);
