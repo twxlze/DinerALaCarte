@@ -30,7 +30,7 @@ namespace IHM_Footies
         /// <param name="fenetreActuelle"> La fenêtre actuelle à fermer</param>
         public static void AllerInvites(Window fenetreActuelle)
         {
-            VueInvites vueInvites = new VueInvites();
+            VuePageInvite vueInvites = new VuePageInvite();
             vueInvites.Show();
             fenetreActuelle.Close();
         }

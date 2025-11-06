@@ -12,20 +12,27 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using IHM;
+using VM_Footies;
 
 namespace IHM_Footies
 {
     /// <summary>
-    /// Logique d'interaction pour VueInvites.xaml
+    /// Logique d'interaction pour VuePageInvite.xaml
     /// </summary>
-    public partial class VueInvites : Window
+    public partial class VuePageInvite : Window
     {
-        public VueInvites()
+        #region Attributs
+        private VMPageInvite vmPageInvite;
+
+        #endregion
+
+        public VuePageInvite()
         {
             InitializeComponent();
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
         }
 
+        #region Boutons de navigation
         private void BoutonVueAccueil(object sender, RoutedEventArgs e)
         {
             Navigation.AllerAccueil(this);
@@ -49,5 +56,6 @@ namespace IHM_Footies
         {
             Navigation.FermerFenetre(this);
         }
+        #endregion
     }
 }
