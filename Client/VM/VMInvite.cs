@@ -112,6 +112,18 @@ namespace VM_Footies
         {
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(message));
         }
+
+        /// <summary>
+        /// Modifie les informations de l'invité
+        /// </summary>
+        /// <param name="invite"> L'invité avec les nouvelles informations </param>
+        internal void ModifierInvite(VMInvite invite)
+        {
+            this.Nom = invite.Nom;
+            this.Prenom = invite.Prenom;
+            this.Telephone = invite.Telephone;
+            this.Email = invite.Email;
+        }
         #endregion
     }
 }
