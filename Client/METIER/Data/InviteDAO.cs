@@ -21,8 +21,15 @@ namespace METIER_Footies.Data
         /// <returns> Réponse http de l'API </returns>
         public async Task<HttpResponseMessage> AjouterInvite(Invite invite)
         {
-            HttpResponseMessage reponseHttp = await PostAsync("Invites/AjoutInvite", invite); 
-            return reponseHttp;
+            try
+            {
+                HttpResponseMessage reponseHttp = await PostAsync("Invites/AjoutInvite", invite);
+                return reponseHttp;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erreur lors de l'ajout de l'invité : " + ex.Message);
+            }
         }
 
         /// <summary>
@@ -48,8 +55,15 @@ namespace METIER_Footies.Data
         /// </summary>
         public async Task<HttpResponseMessage> SupprimerInvite(int idInvite)
         {
-            HttpResponseMessage reponseHttp = await PostAsync("Invites/SupprimerInvite", idInvite);
-            return reponseHttp;
+            try
+            {
+                HttpResponseMessage reponseHttp = await PostAsync("Invites/SupprimerInvite", idInvite);
+                return reponseHttp;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erreur lors de la suppression de l'invité : " + ex.Message);
+            }
         }
 
         /// <summary>
@@ -59,8 +73,15 @@ namespace METIER_Footies.Data
         /// <returns> Réponse http de l'API </returns>
         public async Task<HttpResponseMessage> ModifierInvite(Invite invite)
         {
-            HttpResponseMessage reponseHttp = await PostAsync("Invites/ModifierInvite", invite);
-            return reponseHttp;
+            try
+            {
+                HttpResponseMessage reponseHttp = await PostAsync("Invites/ModifierInvite", invite);
+                return reponseHttp;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erreur lors de la modification de l'invité : " + ex.Message);
+            }
         }
 
     }
