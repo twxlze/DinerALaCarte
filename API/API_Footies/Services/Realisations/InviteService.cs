@@ -26,22 +26,23 @@ namespace API_Footies.Services.Realisations
         }
 
         #region methods
-        /// <summary>
-        /// Ajoute un invité
-        /// </summary>
-        /// <param name="invite">l'inviter à ajouté</param>
+
         public void AjouterInvite(Invite invite)
         {
             this.dao.AjouterInvite(invite);
         }
-        /// <summary>
-        /// Modifie un invité
-        /// </summary>
-        /// <param name="invite">l'invité</param>
+
         public void ModifierInvite(Invite invite)
         {
             this.dao.ModifierInvite(invite);
         }
+
+
+        public void SupprimerInvite(long id)
+        {
+            this.dao.SupprimerInvite(id);
+        }
+
         #endregion
 
     }
