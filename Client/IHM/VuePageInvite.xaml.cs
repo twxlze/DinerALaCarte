@@ -23,14 +23,83 @@ namespace IHM_Footies
     {
         #region Attributs
         private VMPageInvite vmPageInvite;
-
+        private List<VueInvite> vueInvite;
         #endregion
 
+        #region Constructeur
         public VuePageInvite()
         {
+            this.vueInvite = new List<VueInvite>();
+            this.vmPageInvite = new VMPageInvite();
+            this.vmPageInvite.PropertyChanged += VMPageInvite_PropertyChanged;
+
             InitializeComponent();
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            this.RafraichirListe();
         }
+        #endregion
+
+        #region Méthodes
+        private void VMPageInvite_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "VMInvite") this.RafraichirListe();
+        }
+
+        private void RafraichirListe()
+        {
+            this.PanelListeInvites.Children.Clear();
+            this.vueInvite.Clear();
+
+            foreach (VMInvite invite in this.vmPageInvite.VMInvites)
+            {
+                VueInvite vue = new VueInvite(invite);
+                vue.MouseDown += (s, e) => this.SelectionnerPersonne(vue);
+                vue.MouseDoubleClick += (s, e) => this.OuvrirModification(vue);
+                this.vueInvite.Add(vue);
+                this.PanelListeInvites.Children.Add(vue);
+            }
+        }
+
+        private void OuvrirModification(VueInvite vue)
+        {
+            VMInvite memoire = new VMInvite(vue.Invite);
+            VueFormulaireInvite fenetre = new VueFormulaireInvite(vue.Invite);
+            bool? result = fenetre.ShowDialog();
+            if (result == false)
+            {
+                vue.Invite.ModifierInvite(memoire);
+            }
+        }
+        private void SelectionnerPersonne(VueInvite vue)
+        {
+            this.vmPageInvite.InviteSelectionne = vue.Invite;
+            foreach (VueInvite vueI in this.vueInvite)
+            {
+                vueI.Deselectionner();
+            }
+            vue.Selectionner();
+        }
+        #endregion
+
+        #region Boutons 
+        private void BoutonAjouterInvite_Click(object sender, RoutedEventArgs e)
+        {
+            VueFormulaireInvite fenetre = new VueFormulaireInvite();
+            bool? result = fenetre.ShowDialog();
+            if (result == true)
+            {
+                this.vmPageInvite.AjouterInvite(fenetre.Invite);
+            }
+        }
+
+        
+        private void BoutonSupprimerInvite_Click(object sender, RoutedEventArgs e)
+        {
+            //this.vmPageInvite.SupprimerInvite();
+        }
+        
+
+        #endregion
 
         #region Boutons de navigation
         private void BoutonVueAccueil(object sender, RoutedEventArgs e)
@@ -48,10 +117,6 @@ namespace IHM_Footies
             Navigation.AllerAccueil(this);
         }
 
-        private void BoutonAjouterInvite_Click(object sender, RoutedEventArgs e)
-        {
-            Navigation.AllerFormulaireInvite(this);
-        }
         private void ButonFermerFenetre_Click(object sender, RoutedEventArgs e)
         {
             Navigation.FermerFenetre(this);

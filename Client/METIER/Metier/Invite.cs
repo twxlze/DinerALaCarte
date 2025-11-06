@@ -129,6 +129,26 @@ namespace METIER_Footies.Metier
             this.telephone = telephone;
             this.email = email;
         }
+
+        /// <summary>
+        /// Constructeur de copie d'un invité
+        /// </summary>
+        /// <param name="invite"> L'invité à copier </param>
+        public Invite(Invite invite)
+        {
+            this.nom = invite.nom;
+            this.prenom = invite.prenom;
+            this.telephone = invite.telephone;
+            this.email = invite.email;
+        }
+
+        public Invite()
+        {
+            this.nom = "";
+            this.prenom = "";
+            this.telephone = null;
+            this.email = null;
+        }
         #endregion
     }
 }

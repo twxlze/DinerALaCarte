@@ -101,6 +101,16 @@ namespace VM_Footies
         {
             this.invite = invite;
         }
+
+        public VMInvite(VMInvite modele)
+        {
+            this.invite = new Invite(modele.invite);
+        }
+
+        public VMInvite()
+        {
+            this.invite = new Invite();
+        }
         #endregion
 
         #region Méthodes
@@ -117,7 +127,7 @@ namespace VM_Footies
         /// Modifie les informations de l'invité
         /// </summary>
         /// <param name="invite"> L'invité avec les nouvelles informations </param>
-        internal void ModifierInvite(VMInvite invite)
+        public void ModifierInvite(VMInvite invite)
         {
             this.Nom = invite.Nom;
             this.Prenom = invite.Prenom;

@@ -23,13 +23,29 @@ namespace IHM_Footies
     {
         #region Attributs
         private VMInvite invite;
-        private VMInvite Invite => this.invite;
+        public VMInvite Invite => this.invite;
         #endregion
 
         #region Constructeur
-        public VueInvite()
+        public VueInvite(VMInvite invite)
         {
+            this.invite = invite;
+            this.DataContext = this.invite;
+            this.Height = 100; /// Juste pour tester
+            this.Background = Brushes.AliceBlue; /// Juste pour tester
             InitializeComponent();
+        }
+        #endregion
+
+        #region Méthodes
+        public void Deselectionner()
+        {
+            this.Background = new SolidColorBrush(Colors.Aqua);
+        }
+
+        public void Selectionner()
+        {
+            this.Background = new SolidColorBrush(Colors.Red);
         }
         #endregion
     }

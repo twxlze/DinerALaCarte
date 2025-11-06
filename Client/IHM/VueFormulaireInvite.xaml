@@ -193,7 +193,7 @@
         <TextBox Grid.Column="1" Margin="177,31,35,23" Grid.Row="3" Height="25" Grid.RowSpan="2"/>
 
         <!-- Boutons -->
-        <Button Grid.RowSpan="2" Grid.Column="1" Content="Enregistrer" HorizontalAlignment="Center" Margin="0,58,0,0" Grid.Row="7" VerticalAlignment="Top" Height="40" Width="240" Style="{StaticResource StyleBoutonEnregistrer}"/>
+        <Button Grid.RowSpan="2" Grid.Column="1" Content="Enregistrer" HorizontalAlignment="Center" Margin="0,58,0,0" Grid.Row="7" VerticalAlignment="Top" Height="40" Width="240" Style="{StaticResource StyleBoutonEnregistrer}" Click="Enregistrer_Click" />
 
 
     </Grid>

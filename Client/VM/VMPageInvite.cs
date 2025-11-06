@@ -14,7 +14,19 @@ namespace VM_Footies
     {
         #region Attributs
         private List<VMInvite> listeVMInvite;
+        private VMInvite inviteSelectionne;
         private InviteDAO inviteDAO;
+        #endregion
+
+        #region Propriétés 
+        /// <summary>
+        /// Invité sélectionné dans la liste
+        /// </summary>
+        public VMInvite InviteSelectionne
+        {
+            get { return inviteSelectionne; }
+            set { this.inviteSelectionne = value; }
+        }
         #endregion
 
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -32,10 +44,17 @@ namespace VM_Footies
         {
             this.inviteDAO = new InviteDAO();
             this.listeVMInvite = new List<VMInvite>();
+            /*
+            foreach (Invite invite in inviteDAO.ObtenirTout().Result)
+            {
+                this.listeVMInvite.Add(new VMInvite(invite));
+            }
+            */
         }
         #endregion
 
         #region Méthodes
+        
         /// <summary>
         // Charge la liste des invités depuis la base de données
         /// </summary>
@@ -50,7 +69,7 @@ namespace VM_Footies
             }
             this.Notify("VMInvites");
         }
-
+        
 
         /// <summary>
         /// Ajoute un invité à la liste des invités
@@ -63,16 +82,22 @@ namespace VM_Footies
             this.Notify("VMInvites");
         }
 
+        /*
         /// <summary>
         /// Supprime un invité de la liste des invités
         /// </summary>
         /// <param name="invite">l'invité à supprimer</param>
-        public void SupprimerInvite(VMInvite invite)
+        public void SupprimerInvite()
         {
-            this.inviteDAO.SupprimerInvite(invite.Id);
-            this.listeVMInvite.Remove(invite);
-            this.Notify("VMInvites");     
+            if (this.inviteSelectionne != null)
+            {
+                this.inviteDAO.SupprimerInvite(this.inviteSelectionne.Invite);
+                this.listeVMInvite.Remove(this.inviteSelectionne);
+                this.Notify("VMPersonnes");
+                this.inviteSelectionne = null;
+            }
         }
+        */
 
         private void Notify(string message)
         {

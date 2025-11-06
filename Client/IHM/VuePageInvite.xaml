@@ -135,7 +135,7 @@
                 CornerRadius="10"
                 Padding="5">
             <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="2">
-                <StackPanel>
+                <StackPanel Orientation="Vertical" x:Name="PanelListeInvites" >
 
                 </StackPanel>
             </ScrollViewer>
@@ -144,7 +144,7 @@
         <!-- Boutons -->
         <Button Grid.RowSpan="2" Grid.Column="1" Content="Ajouter un invité" HorizontalAlignment="Left" Margin="40,0,0,30" Grid.Row="6" VerticalAlignment="Bottom" Height="40" Width="240" Style="{StaticResource StyleBoutonInvite}" Click="BoutonAjouterInvite_Click" />
         <Button Grid.Column="1" Content="Modifier un invité" HorizontalAlignment="Right" Margin="0,0,40,30" Grid.Row="7" VerticalAlignment="Bottom" Height="40" Width="240" Style="{StaticResource StyleBoutonInvite}" Cursor="Hand"/>
-        <Button Grid.Column="1" Content="Supprimer un invité" HorizontalAlignment="Center" Grid.Row="7" VerticalAlignment="Top" Height="40" Width="240" Style="{StaticResource StyleBoutonInvite}" Margin="0,64,0,15" Grid.RowSpan="2"/>
+        <Button Grid.Column="1" Content="Supprimer un invité" HorizontalAlignment="Center" Grid.Row="7" VerticalAlignment="Top" Height="40" Width="240" Style="{StaticResource StyleBoutonInvite}" Margin="0,64,0,15" Grid.RowSpan="2" Click="BoutonSupprimerInvite_Click"/>
         <TextBlock Grid.Column="1" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Gestion des invités" VerticalAlignment="Top" FontWeight="Bold" FontSize="20" Foreground="#B44B3E" Margin="0,20,0,0"/>
 
     </Grid>
