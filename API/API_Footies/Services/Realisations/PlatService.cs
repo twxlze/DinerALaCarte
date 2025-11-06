@@ -30,7 +30,7 @@ namespace API_Footies.Services.Realisations
         /// <summary>
         /// Ajoute un plat
         /// </summary>
-        /// <param name="invite">plat à ajouté</param>
+        /// <param name="plat">plat à ajouté</param>
         public void AjouterPlat(Plat plat)
         {
             this.dao.AjouterPlat(plat);

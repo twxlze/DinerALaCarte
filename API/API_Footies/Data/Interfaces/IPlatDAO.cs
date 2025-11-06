@@ -11,7 +11,7 @@ namespace API_Footies.Data.Interfaces
         /// <summary>
         /// Ajouter un plat
         /// </summary>
-        /// <param name="invite"> Plat à ajouter </param>
+        /// <param name="plat"> Plat à ajouter </param>
         /// <returns> True si ajouté False sinon </returns>
         bool AjouterPlat(Plat plat);
     }

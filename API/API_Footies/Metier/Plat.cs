@@ -5,12 +5,12 @@
         #region --- Attributs ---
         private long id;
         private string nom;
-        private string description;
+        private string? description;
         private CategoriePlat categorie;
         #endregion
 
         #region --- Enumérations ---
-        public enum CategoriePlat { Apéritif, Entrée, PlatPrincipal, Dessert }
+        public enum CategoriePlat {aperitif,entree, plat, dessert }
         #endregion
 
         #region --- Propriétés ---
@@ -37,7 +37,7 @@
         /// <summary>
         /// Retourne ou modifie le prénom du plat
         /// </summary>
-        public string Description
+        public string? Description
         {
             get { return description; }
             set { description = value; }
@@ -60,7 +60,7 @@
         /// <param name="nom">nom du plat</param>
         /// <param name="description">description du plat</param>
         /// <param name="categorie">categorie du plat</param>
-        public Plat(long id, string nom, string description, CategoriePlat categorie)
+        public Plat(long id, string nom, string? description, CategoriePlat categorie)
         {
             this.id = id;
             this.nom = nom;
