@@ -6,7 +6,10 @@
         xmlns:local="clr-namespace:IHM"
         mc:Ignorable="d"
         Title="Hostably" Height="450" Width="800"
-        Background="#F9F9F9">
+        Background="#F9F9F9"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        >
 
     <Window.Resources>
         <Style x:Key="BoutonMenu" TargetType="Button">

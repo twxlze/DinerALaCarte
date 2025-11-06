@@ -26,12 +26,18 @@ namespace IHM_Footies
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
         }
 
-        private async void BoutonVueAccueil(object sender, RoutedEventArgs e)
+        private async void BoutonAccueil_Click(object sender, RoutedEventArgs e)
         {
             MainWindow mainWindow = new MainWindow();
             mainWindow.Show();
             await Task.Delay(500);
             this.Close();
+        }
+
+        private void BoutonInvite_Click(object sender, RoutedEventArgs e)
+        {
+            // Cette page est déjà la page des invités, donc pas besoin de faire quoi que ce soit
+            // Ou vous pouvez rafraîchir la page si nécessaire
         }
     }
 }
