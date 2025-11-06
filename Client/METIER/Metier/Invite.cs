@@ -14,6 +14,7 @@ namespace METIER_Footies.Metier
     public class Invite
     {
         #region Attributs
+        private int id;
         private string nom;
         private string prenom;
         private string? telephone; // string pour simplifier avec l'API
@@ -21,6 +22,22 @@ namespace METIER_Footies.Metier
         #endregion
 
         #region Propriétés
+        /// <summary>
+        /// Id de l'invité
+        /// </summary>
+        public int Id 
+        { 
+            get => id; 
+            set 
+            {
+                if (value <= 0)
+                {
+                    throw new ArgumentException("L'ID doit être un entier positif");
+                }
+                id = value;
+            }
+        }
+
         /// <summary>
         /// Nom de famille de l'invité
         /// </summary>
@@ -104,8 +121,9 @@ namespace METIER_Footies.Metier
         /// <param name="prenom"> Prénom de l'invité </param>
         /// <param name="telephone"> Téléphone de l'invité </param>
         /// <param name="email"> Email de l'invité </param>
-        public Invite(string nom, string prenom, string? telephone, string? email)
+        public Invite(int id, string nom, string prenom, string? telephone, string? email)
         {
+            this.id = id;
             this.nom = nom;
             this.prenom = prenom;
             this.telephone = telephone;

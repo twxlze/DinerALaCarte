@@ -28,6 +28,14 @@ namespace VM_Footies
 
         #region Propriétés
         /// <summary>
+        /// Id de l'invité
+        /// </summary>
+        public int Id
+        {
+            get => this.invite.Id;
+        }
+
+        /// <summary>
         // Nom de famille de l'invité
         /// </summary>
         /// <remarks> Le set notifie le changement de la propriété </remarks>
