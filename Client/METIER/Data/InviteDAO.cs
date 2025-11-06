@@ -51,5 +51,17 @@ namespace METIER_Footies.Data
             HttpResponseMessage reponseHttp = await PostAsync("Invites/SupprimerInvite", idInvite);
             return reponseHttp;
         }
+
+        /// <summary>
+        /// Modifier un invité
+        /// </summary>
+        /// <param name="invite"> L'invité à modifier </param>
+        /// <returns> Réponse http de l'API </returns>
+        public async Task<HttpResponseMessage> ModifierInvite(Invite invite)
+        {
+            HttpResponseMessage reponseHttp = await PostAsync("Invites/ModifierInvite", invite);
+            return reponseHttp;
+        }
+
     }
 }

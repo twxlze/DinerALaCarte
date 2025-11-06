@@ -32,15 +32,26 @@ namespace VM_Footies
         {
             this.inviteDAO = new InviteDAO();
             this.listeVMInvite = new List<VMInvite>();
-
-            foreach (Invite invite in inviteDAO.ObtenirTout().Result)
-            {
-                this.listeVMInvite.Add(new VMInvite(invite));
-            }
         }
         #endregion
 
         #region Méthodes
+        /// <summary>
+        // Charge la liste des invités depuis la base de données
+        /// </summary>
+        public async void ChargerInvites()
+        {
+            this.listeVMInvite.Clear();
+            List<Invite> invites = await this.inviteDAO.ObtenirTout();
+            foreach (Invite invite in invites)
+            {
+                VMInvite vmInvite = new VMInvite(invite);
+                this.listeVMInvite.Add(vmInvite);
+            }
+            this.Notify("VMInvites");
+        }
+
+
         /// <summary>
         /// Ajoute un invité à la liste des invités
         /// </summary>
@@ -67,6 +78,7 @@ namespace VM_Footies
         {
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(message));
         }
+
         #endregion
     }
 }
