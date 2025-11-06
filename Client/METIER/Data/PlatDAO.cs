@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
@@ -10,18 +9,18 @@ using METIER_Footies.Metier;
 namespace METIER_Footies.Data
 {
     /// <summary>
-    // Classe d'accès aux données pour les invités avec la base de données
+    // Classe d'accès aux données pour les plats avec la base de données
     /// </summary>
-    public class InviteDAO : DAO
+    public class PlatDAO : DAO
     {
         /// <summary>
         /// Ajoute un invité
         /// </summary>
         /// <param name="invite"> l'invité à ajouter </param>
         /// <returns> Réponse http de l'API </returns>
-        public async Task<HttpResponseMessage> AjouterInvite(Invite invite)
+        public async Task<HttpResponseMessage> AjouterPlat(Plat plat)
         {
-            HttpResponseMessage reponseHttp = await PostAsync("Invites/AjoutInvite", invite); 
+            HttpResponseMessage reponseHttp = await PostAsync("Plat/AjouterPlat", plat);
             return reponseHttp;
         }
 
@@ -29,18 +28,18 @@ namespace METIER_Footies.Data
         /// Obtient tous les invités
         /// </summary>
         /// <returns> Liste de tous les invités </returns>
-        public async Task<List<Invite>> ObtenirTout()
+        public async Task<List<Plat>> ObtenirTout()
         {
-            List<Invite> listeDesInvites = new List<Invite>();
+            List<Plat> listeDesPlats = new List<Plat>();
 
-            HttpResponseMessage reponseHttp = await this.GetAsync("Invites/ListeInvite");
+            HttpResponseMessage reponseHttp = await this.GetAsync("Plat/ListePlat");
 
             if (reponseHttp.IsSuccessStatusCode)
             {
                 string reponse = await reponseHttp.Content.ReadAsStringAsync();
-                listeDesInvites = JsonSerializer.Deserialize<List<Invite>>(reponse, options);
+                listeDesPlats = JsonSerializer.Deserialize<List<Plat>>(reponse, options);
             }
-            return listeDesInvites;
+            return listeDesPlats;
         }
     }
 }

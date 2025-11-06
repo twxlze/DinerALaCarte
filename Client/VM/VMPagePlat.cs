@@ -4,17 +4,16 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using METIER_Footies;
 using METIER_Footies.Data;
 using METIER_Footies.Metier;
 
 namespace VM_Footies
 {
-    public class VMPageInvite : INotifyPropertyChanged
+    internal class VmPagePlat : INotifyPropertyChanged
     {
         #region Attributs
-        private List<VMInvite> listeVMInvite;
-        private InviteDAO inviteDAO;
+        private List<VMPlat> listeVMPlat;
+        private PlatDAO platDAO;
         #endregion
 
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -22,20 +21,20 @@ namespace VM_Footies
         /// <summary>
         // Liste des VMInvite 
         /// </summary>
-        public List<VMInvite> VMInvites => listeVMInvite;
+        public List<VMPlat> VMPlat => listeVMPlat;
 
         #region Constructeurs
         /// <summary>
         // Constructeur par défaut d'une page d'invité
         /// </summary>
-        public VMPageInvite()
+        public VMPagePlat()
         {
             this.inviteDAO = new InviteDAO();
-            this.listeVMInvite = new List<VMInvite>();
+            this.listeVMPlat = new List<VMPlat>();
 
-            foreach (Invite invite in inviteDAO.ObtenirTout().Result)
+            foreach (Plat plat in PlatDAO.ObtenirTout().Result)
             {
-                this.listeVMInvite.Add(new VMInvite(invite));
+                this.listeVMPlat.Add(new VMPlat(plat));
             }
         }
         #endregion

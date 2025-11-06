@@ -5,25 +5,26 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using METIER_Footies.Metier;
+using static METIER_Footies.Metier.Plat;
 
 namespace VM_Footies
 {
     /// <summary>
     /// Classe ViewModel pour un invité
     /// </summary>
-    public class VMInvite : INotifyPropertyChanged
+    public class VMPlat : INotifyPropertyChanged
     {
         #region Attributs
-        private Invite invite;
+        private Plat plat;
         #endregion
 
-        
+
         public event PropertyChangedEventHandler? PropertyChanged;
 
         /// <summary>
         /// Invite associée au VMInvite
         /// </summary>
-        public Invite Invite => this.invite;
+        public Plat Plat => this.plat;
 
 
         #region Propriétés
@@ -33,10 +34,10 @@ namespace VM_Footies
         /// <remarks> Le set notifie le changement de la propriété </remarks>
         public string Nom
         {
-            get => this.invite.Nom;
+            get => this.plat.Nom;
             set
             {
-                this.invite.Nom = value;
+                this.plat.Nom = value;
                 this.Notify("Nom");
             }
         }
@@ -45,13 +46,13 @@ namespace VM_Footies
         /// Prénom de l'invité
         /// </summary>
         /// <remarks> Le set notifie le changement de la propriété </remarks>
-        public string Prenom
+        public string Description
         {
-            get => this.invite.Prenom;
+            get => this.plat.Description;
             set
             {
-                this.invite.Prenom = value;
-                this.Notify("Prenom");
+                this.plat.Description = value;
+                this.Notify("Description");
             }
         }
 
@@ -59,27 +60,13 @@ namespace VM_Footies
         /// Téléphone de l'invité
         /// </summary>
         /// <remarks> Le set notifie le changement de la propriété </remarks>
-        public string Telephone
+        public CategoriePlat Categorie
         {
-            get => this.invite.Telephone;
+            get => this.plat.Categorie;
             set
             {
-                this.invite.Telephone = value;
-                this.Notify("Telephone");
-            }
-        }
-
-        /// <summary>
-        /// Email de l'invité
-        /// </summary>
-        /// <remarks> Le set notifie le changement de la propriété </remarks>
-        public string Email
-        {
-            get => this.invite.Email;
-            set
-            {
-                this.invite.Email = value;
-                this.Notify("Email");
+                this.plat.Categorie = value;
+                this.Notify("Categorie");
             }
         }
         #endregion
@@ -89,9 +76,9 @@ namespace VM_Footies
         // Constructeur d'un VMInvite à partir d'un Invite
         /// </summary>
         /// <param name="invite"></param>
-        public VMInvite(Invite invite)
+        public VMPlat(Plat plat)
         {
-            this.invite = invite;
+            this.plat = plat;
         }
         #endregion
 
