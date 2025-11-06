@@ -8,6 +8,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using IHM_Footies;
 
 namespace IHM;
 
@@ -19,5 +20,14 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
+        WindowStartupLocation = WindowStartupLocation.CenterScreen;
+    }
+
+    private async void ClickBoutonAjouterInvite(object sender, RoutedEventArgs e)
+    {
+        VueInvites vueInvites = new VueInvites(this);
+        vueInvites.Show();
+        await Task.Delay(500);
+        this.Close();
     }
 }
