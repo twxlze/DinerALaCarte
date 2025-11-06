@@ -4,20 +4,20 @@ using Microsoft.AspNetCore.Mvc;
 namespace API_Footies.Controllers
 {
     /// <summary>
-    /// Controlleur en charge de tout ce qui touche au invités
+    /// Controlleur en charge de tout ce qui touche au plats
     /// </summary>
 
     [ApiController]
-    [Route("Invites")]
-    public class InviteController : ControllerBase
+    [Route("Plats")]
+    public class PlatController : ControllerBase
     {
-        //Service en charge des invités
+        //Service en charge des plats
         private IInviteService service;
 
         /// <summary>
         /// Constructeur
         /// </summary>
-        public InviteController(IInviteService service)
+        public PlatController(IInviteService service)
         {
             this.service = service;
         }
