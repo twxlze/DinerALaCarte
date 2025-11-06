@@ -52,6 +52,17 @@ namespace VM_Footies
             this.Notify("VMInvites");
         }
 
+        /// <summary>
+        /// Supprime un invité de la liste des invités
+        /// </summary>
+        /// <param name="invite">l'invité à supprimer</param>
+        public void SupprimerInvite(VMInvite invite)
+        {
+            this.inviteDAO.SupprimerInvite(invite.Id);
+            this.listeVMInvite.Remove(invite);
+            this.Notify("VMInvites");     
+        }
+
         private void Notify(string message)
         {
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(message));
