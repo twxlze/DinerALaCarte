@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Moq;
+using API_Footies.Data.DAO;
 
 namespace UnitTest_Footies
 {
@@ -36,6 +37,32 @@ namespace UnitTest_Footies
             Assert.Equal(3, groupeInvite.Invites.Count);
             Assert.Contains(groupeInvite.Invites, i => i.Nom == "Invite1");
             Assert.True(groupeInvite.Invites.Any());
+        }
+
+        [Fact]
+        public void TestSuppressionGroupeInvite()
+        {
+            GroupeInvites groupeInvite = new GroupeInvites();
+            groupeInvite.Nom = "GroupeASupprimer";
+            GroupeInviteDAO groupeInviteDAO = new GroupeInviteDAO();
+            GroupeInvitesService groupeInvitesService = new GroupeInvitesService(groupeInviteDAO);
+            GroupeInvites groupeAjoute = groupeInvitesService.AjouterGroupeInvite(groupeInvite);
+            long idGroupeInvite = groupeAjoute.IdGroupeInvites;
+            
+            // Vérifier que le groupe a bien été ajouter
+            GroupeInvites groupeRecupere = groupeInvitesService.RecupereGroupeViaId(idGroupeInvite);
+            Assert.NotNull(groupeRecupere);
+            Assert.Equal(groupeInvite.Nom, groupeRecupere.Nom);
+
+            //Supprimer le groupe et vérifie
+            GroupeInvites groupeSupprime = groupeInvitesService.SupprimerGroupe(idGroupeInvite);
+            Assert.NotNull(groupeSupprime);
+            Assert.Equal(groupeInvite.Nom, groupeSupprime.Nom);
+            Assert.Equal(idGroupeInvite, groupeSupprime.IdGroupeInvites);
+            GroupeInvites groupeApressuppression = groupeInvitesService.RecupereGroupeViaId(idGroupeInvite);
+            Assert.NotNull(groupeApressuppression);
+            Assert.Equal(0, groupeApressuppression.IdGroupeInvites);
+            Assert.Null(groupeApressuppression.Nom); 
         }
     }
 }
