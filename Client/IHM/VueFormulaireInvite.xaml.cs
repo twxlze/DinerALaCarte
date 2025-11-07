@@ -135,7 +135,25 @@ namespace IHM_Footies
             Navigation.FermerFenetre(this);
         }
 
-        
+        /// <summary>
+        /// Bouton pour aller à la vue des invités
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BoutonAllerInvite_Click(object sender, RoutedEventArgs e)
+        {
+            Navigation.AllerInvites(this);
+        }
+
+        /// <summary>
+        /// Bouton pour aller à la vue des plats
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BoutonAllerPlat_Click(object sender, RoutedEventArgs e)
+        {
+            Navigation.AllerPlat(this);
+        }
         #endregion
     }
 }
