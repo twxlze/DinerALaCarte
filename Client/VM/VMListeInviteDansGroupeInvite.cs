@@ -1,4 +1,6 @@
-﻿using System;
+﻿using METIER_Footies.Data;
+using METIER_Footies.Metier;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading.Tasks;
@@ -12,7 +14,11 @@ namespace VM_Footies
     {
         #region Attributs
 
-        private VMGroupeInvite groupeVM;
+        private VMGroupeInvite groupeVM;                    // Le ViewModel du groupe
+        private GroupeInvites groupe;                       // Le modèle du groupe
+        private List<VMInvite> listeVMInviteDuGroupe;       // Liste des invités du groupe
+        private GroupeInviteDAO groupeDAO;                 // DAO pour les opérations sur les groupes
+        private VMInvite inviteSelectionne;              // Invité sélectionné dans l'UI
 
         #endregion
 
@@ -25,32 +31,22 @@ namespace VM_Footies
         {
             get
             {
+                List<VMInvite> invite = new List<VMInvite>();
                 if (groupeVM != null)
                 {
-                    return groupeVM.VMInvites;
+                    invite = groupeVM.ListeVMInviteDuGroupe;
                 }
-                return new List<VMInvite>();
+                return invite ;
             }
         }
 
         /// <summary>
-        /// Groupe sélectionné
+        /// Invité sélectionné dans la liste
         /// </summary>
-        public VMGroupeInvite Groupe
+        public VMInvite InviteSelectionne
         {
-            get
-            {
-                return groupeVM;
-            }
-            set
-            {
-                if (groupeVM != value)
-                {
-                    groupeVM = value;
-                    this.Notifier("VMInvites");
-                    this.Notifier("Groupe");
-                }
-            }
+            get { return inviteSelectionne; }
+            set { this.inviteSelectionne = value; }
         }
 
         #endregion
@@ -81,31 +77,21 @@ namespace VM_Footies
         /// </summary>
         /// <param name="invite">L'invité à ajouter</param>
         /// <returns>true si l'ajout a réussi, false sinon</returns>
-        public async Task<bool> AjouterInvite(VMInvite invite)
+        public async Task<bool> AjouterInvite()
         {
-            if (groupeVM != null)
+            bool resultat = false;
+            if (this.inviteSelectionne != null)
             {
-                bool resultat = await groupeVM.AjouterInvite(invite);
+                resultat = await groupeVM.AjouterInviteAuGroupe(inviteSelectionne);
                 if (resultat)
                 {
                     this.Notifier("VMInvites");
                 }
-                return resultat;
             }
-            return false;
+            return resultat;
         }
 
-        /// <summary>
-        /// Recharge la liste des invités depuis le groupe
-        /// </summary>
-        public void RechargerInvites()
-        {
-            if (groupeVM != null)
-            {
-                groupeVM.ChargerInvites();
-                this.Notifier("VMInvites");
-            }
-        }
+        /*   implementer ici supprimer un invite du groupe  */
 
         #endregion
 

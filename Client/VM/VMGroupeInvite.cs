@@ -15,8 +15,8 @@ namespace VM_Footies
         #region Attributs
 
         private GroupeInvites groupe;               // Le modèle du groupe
-        private List<VMInvite> listeVMInvite;       // Liste des invités du groupe
-        private GroupeInviteDAO groupeDAO;          // DAO pour interagir avec la base
+        private List<VMInvite> listeVMInviteDuGroupe;       // Liste des invités du groupe
+        private GroupeInviteDAO groupeDAO; // DAO pour les opérations sur les groupes
 
         #endregion
 
@@ -44,13 +44,16 @@ namespace VM_Footies
         /// <summary>
         /// Liste des VMInvite pour affichage dans l'UI
         /// </summary>
-        public List<VMInvite> VMInvites
+        public List<VMInvite> ListeVMInviteDuGroupe
         {
             get
             {
-                return this.listeVMInvite;
+                return this.listeVMInviteDuGroupe;
             }
         }
+
+        public GroupeInvites Groupe => this.groupe;
+
 
         #endregion
 
@@ -66,86 +69,49 @@ namespace VM_Footies
         /// Constructeur d'un VMGroupeInvite à partir d'un modèle GroupeInvites
         /// </summary>
         /// <param name="groupe">Le groupe à gérer</param>
-        public VMGroupeInvite(GroupeInvites groupe)
+        public VMGroupeInvite(GroupeInvites groupes)
         {
-            this.groupe = groupe;
+            this.groupe = groupes;
+            this.listeVMInviteDuGroupe = new List<VMInvite>();
             this.groupeDAO = new GroupeInviteDAO();
-            this.listeVMInvite = new List<VMInvite>();
-
-            // Initialiser la liste des VMInvite à partir du modèle
-            foreach (Invite invite in groupe.Invites)
-            {
-                VMInvite vmInvite = new VMInvite(invite);
-                this.listeVMInvite.Add(vmInvite);
-            }
         }
 
         #endregion
 
+
         #region Méthodes publiques
 
         /// <summary>
-        /// Modifie le nom du groupe côté serveur
+        /// Charge les invités du groupe depuis le serveur
         /// </summary>
-        /// <param name="nouveauNom">Le nouveau nom du groupe</param>
-        /// <returns>true si la modification a réussi, false sinon</returns>
-        public async Task<bool> ModifierNomGroupe(string nouveauNom)
+        /// <returns>Une tâche représentant l'opération asynchrone</returns>
+        public async Task ChargerInvitesGroupeAsync(VMGroupeInvite vMGroupe)
         {
-            bool resultat = false;
-            try
+            listeVMInviteDuGroupe.Clear();
+            GroupeInvites? groupes = await groupeDAO.RecupererGroupeParId(vMGroupe.Groupe.IdGroupeInvites);
+            if (groupes != null)
             {
-                this.groupe.Nom = nouveauNom;
-                bool reussi = await this.groupeDAO.ModifierGroupe(this.groupe);
-                if (reussi)
+                foreach (Invite invite in groupes.Invites)
                 {
-                    this.Notifier("Nom");
-                    resultat = true;
+                    listeVMInviteDuGroupe.Add(new VMInvite(invite));
                 }
             }
-            catch (Exception)
-            {
-                resultat = false;
-            }
-            return resultat;
         }
 
         /// <summary>
-        /// Ajoute un invité au groupe et synchronise avec le serveur
+        /// Ajoute un invité au groupe côté serveur et met à jour le ViewModel local si succès
         /// </summary>
-        /// <param name="invite">L'invité à ajouter</param>
-        /// <returns>true si l'ajout a réussi, false sinon</returns>
-        public async Task<bool> AjouterInvite(VMInvite invite)
+        /// <param name="invite"> l'invite (sa vue)</param>
+        /// <returns>succes ou pas</returns>
+        public async Task<bool> AjouterInviteAuGroupe(VMInvite invite)
         {
-            bool resultat = false;
-            try
+            bool succes = await this.groupeDAO.AjouterInviteAuGroupe(this.groupe.IdGroupeInvites, invite.Invite);
+            if (succes)
             {
-                bool ok = await this.groupeDAO.AjouterInviteAuGroupe(this.groupe.IdGroupeInvites, invite.Invite);
-                if (ok)
-                {
-                    this.listeVMInvite.Add(invite);
-                    this.Notifier("VMInvites");
-                    resultat = true;
-                }
+                this.listeVMInviteDuGroupe.Add(invite);
+                this.Notifier("ListeVMInviteDuGroupe");
             }
-            catch (Exception)
-            {
-                resultat = false;
-            }
-            return resultat;
-        }
-
-        /// <summary>
-        /// Récupère la liste des VMInvite pour affichage
-        /// </summary>
-        public void ChargerInvites()
-        {
-            this.listeVMInvite.Clear();
-            foreach (Invite invite in this.groupe.Invites)
-            {
-                VMInvite vmInvite = new VMInvite(invite);
-                this.listeVMInvite.Add(vmInvite);
-            }
-            this.Notifier("ChargerVMInvites");
+            return succes;
         }
 
         #endregion
@@ -160,7 +126,7 @@ namespace VM_Footies
         {
             if (this.PropertyChanged != null)
             {
-                this.PropertyChanged(this, new PropertyChangedEventArgs(propriete));
+                this.PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propriete));
             }
         }
 
