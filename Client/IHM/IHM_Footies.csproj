@@ -9,7 +9,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Ressources\LogoHostably.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\VM\VM_Footies.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Ressources\LogoHostably.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
 </Project>
