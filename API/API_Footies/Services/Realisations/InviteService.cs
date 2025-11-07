@@ -42,6 +42,13 @@ namespace API_Footies.Services.Realisations
         {
             this.dao.ModifierInvite(invite);
         }
+
+
+        public List<Invite> ListInvite()
+        {
+            return this.dao.ListInvite();
+        }
+
         #endregion
 
     }

@@ -16,5 +16,11 @@ namespace API_Footies.Services.Interfaces
         /// <param name="invite">invite à modifier</param>
         void ModifierInvite(Invite invite);
 
+        /// <summary>
+        /// Récupérer la liste des invités
+        /// </summary>
+        /// <returns> liste des invités</returns>
+        public List<Invite> ListInvite();
+
     }
 }
