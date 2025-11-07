@@ -17,17 +17,30 @@ namespace IHM;
 /// </summary>
 public partial class MainWindow : Window
 {
+    /// <summary>
+    /// Constructeur par défaut de la fenêtre principale
+    /// </summary>
     public MainWindow()
     {
         InitializeComponent();
         WindowStartupLocation = WindowStartupLocation.CenterScreen;
     }
 
+    /// <summary>
+    /// Bouton pour aller à la vue des invités
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void ClickBoutonAjouterInvite(object sender, RoutedEventArgs e)
     {
         Navigation.AllerInvites(this);
     }
 
+    /// <summary>
+    /// Bouton pour fermer la fenêtre
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void ButonFermerFenetre_Click(object sender, RoutedEventArgs e)
     {
         Navigation.FermerFenetre(this);

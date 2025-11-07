@@ -148,10 +148,19 @@ namespace IHM_Footies
         /// <param name="e"></param>
         private void BoutonSupprimerInvite_Click(object sender, RoutedEventArgs e)
         {
-            this.vmPageInvite.SupprimerInvite();
-            this.RafraichirListe();
-        }
+            MessageBoxResult resultat = MessageBox.Show(
+            "Êtes-vous sûr de vouloir supprimer cet invité ?",
+            "Confirmation de suppression",
+            MessageBoxButton.YesNo,
+            MessageBoxImage.Question);
 
+            if (resultat == MessageBoxResult.Yes)
+            {
+                this.vmPageInvite.SupprimerInvite();
+                this.RafraichirListe();
+            }
+
+        }
 
         #endregion
 
