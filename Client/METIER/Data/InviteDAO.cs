@@ -91,6 +91,7 @@ namespace METIER_Footies.Data
         /// <returns>True si l'invité fait partie d'au moins un groupe, False sinon</returns>
         public async Task<bool> EstDansUnGroupe(long idInvite)
         {
+            bool resultat = false;
             try
             {
                 HttpResponseMessage reponseHttp = await GetAsync($"Invites/EstDansUnGroupe?id={idInvite}");
@@ -98,14 +99,14 @@ namespace METIER_Footies.Data
                 if (reponseHttp.IsSuccessStatusCode)
                 {
                     string reponse = await reponseHttp.Content.ReadAsStringAsync();
-                    return JsonSerializer.Deserialize<bool>(reponse, options);
+                    resultat = JsonSerializer.Deserialize<bool>(reponse, options);
                 }
-                return false;
             }
             catch (Exception ex)
             {
                 throw new Exception("Erreur lors de la vérification de l'association de l'invité aux groupes : " + ex.Message);
             }
+            return resultat;
         }
 
     }

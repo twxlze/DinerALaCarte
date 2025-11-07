@@ -148,38 +148,39 @@ namespace IHM_Footies
         /// <param name="e"></param>
         private async void BoutonSupprimerInvite_Click(object sender, RoutedEventArgs e)
         {
-            if (this.vmPageInvite.InviteSelectionne == null)
+            if (this.vmPageInvite.InviteSelectionne != null)
+            {
+                MessageBoxResult resultat = MessageBox.Show(
+                    "Êtes-vous sûr de vouloir supprimer cet invité ?",
+                    "Confirmation de suppression",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Question);
+
+                if (resultat == MessageBoxResult.Yes)
+                {
+                    bool suppressionReussie = await this.vmPageInvite.SupprimerInvite();
+
+                    if (!suppressionReussie)
+                    {
+                        MessageBox.Show(
+                            "Suppression impossible, l'invité fait partie d'un ou plusieurs groupes.",
+                            "Suppression impossible",
+                            MessageBoxButton.OK,
+                            MessageBoxImage.Warning);
+                    }
+                    else
+                    {
+                        this.RafraichirListe();
+                    }
+                }
+            }
+            else
             {
                 MessageBox.Show(
                     "Veuillez sélectionner un invité à supprimer.",
                     "Aucun invité sélectionné",
                     MessageBoxButton.OK,
                     MessageBoxImage.Warning);
-                return;
-            }
-
-            MessageBoxResult resultat = MessageBox.Show(
-                "Êtes-vous sûr de vouloir supprimer cet invité ?",
-                "Confirmation de suppression",
-                MessageBoxButton.YesNo,
-                MessageBoxImage.Question);
-
-            if (resultat == MessageBoxResult.Yes)
-            {
-                bool suppressionReussie = await this.vmPageInvite.SupprimerInvite();
-                
-                if (!suppressionReussie)
-                {
-                    MessageBox.Show(
-                        "Suppression impossible, l'invité fait partie d'un ou plusieurs groupes.",
-                        "Suppression impossible",
-                        MessageBoxButton.OK,
-                        MessageBoxImage.Warning);
-                }
-                else
-                {
-                    this.RafraichirListe();
-                }
             }
         }
 

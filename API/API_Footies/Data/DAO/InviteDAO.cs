@@ -113,9 +113,10 @@ namespace API_Footies.Data.DAO
             }
         }
 
-        
+
         public bool EstDansUnGroupe(long idInvite)
         {
+            bool resultat = false;
             using (SQLiteConnector connection = new SQLiteConnector())
             {
                 if (connection == null)
@@ -124,21 +125,21 @@ namespace API_Footies.Data.DAO
                 }
                 else
                 {
-                    var parameters = new Dictionary<string, object>()
+                    Dictionary<string, object> parameters = new Dictionary<string, object>()
             {
                 {"@IdInvite", idInvite }
             };
 
-                    var dataTable = connection.ExecuteQuery("SELECT COUNT(*) as NombreGroupes FROM Invite_Groupe WHERE IdInvite = @IdInvite", parameters);
+                    DataTable dataTable = connection.ExecuteQuery("SELECT COUNT(*) as NombreGroupes FROM Invite_Groupe WHERE IdInvite = @IdInvite", parameters);
 
                     if (dataTable.Rows.Count > 0)
                     {
                         int nombreGroupes = Convert.ToInt32(dataTable.Rows[0]["NombreGroupes"]);
-                        return nombreGroupes > 0;
+                        resultat = nombreGroupes > 0;
                     }
-                    return false;
                 }
             }
+            return resultat;
         }
 
 

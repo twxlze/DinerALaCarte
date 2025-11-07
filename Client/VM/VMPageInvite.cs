@@ -90,13 +90,15 @@ namespace VM_Footies
             this.Notify("VMInvites");
         }
 
-        
+
         /// <summary>
         /// Supprime un invité de la liste des invités
         /// </summary>
         /// <returns>True si la suppression a réussi, False sinon</returns>
         public async Task<bool> SupprimerInvite()
         {
+            bool suppressionReussie = false;
+
             if (this.inviteSelectionne != null)
             {
                 long id = this.inviteSelectionne.Invite.Id;
@@ -104,19 +106,23 @@ namespace VM_Footies
                 if (id != 0)
                 {
                     bool estDansUnGroupe = await this.inviteDAO.EstDansUnGroupe(id);
-                    if (estDansUnGroupe)
+                    if (!estDansUnGroupe)
                     {
-                        return false;
+                        await this.inviteDAO.SupprimerInvite(id);
+                        this.listeVMInvite.Remove(this.inviteSelectionne);
+                        this.inviteSelectionne = null;
+                        suppressionReussie = true;
                     }
-                    
-                    await this.inviteDAO.SupprimerInvite(id);
                 }
-
-                this.listeVMInvite.Remove(this.inviteSelectionne);
-                this.inviteSelectionne = null;
-                return true;
+                else
+                {
+                    this.listeVMInvite.Remove(this.inviteSelectionne);
+                    this.inviteSelectionne = null;
+                    suppressionReussie = true;
+                }
             }
-            return false;
+
+            return suppressionReussie;
         }
 
         /// <summary>
