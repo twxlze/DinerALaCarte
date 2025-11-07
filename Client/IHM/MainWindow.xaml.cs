@@ -32,4 +32,9 @@ public partial class MainWindow : Window
     {
         Navigation.FermerFenetre(this);
     }
+
+    private void BoutonGroupeInvite_Click(object sender, RoutedEventArgs e)
+    {
+        Navigation.AllerGroupesInvites(this);
+    }
 }

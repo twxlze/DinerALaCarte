@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace VM_Footies
 {
-    class VMPageGroupeInvite : INotifyPropertyChanged
+    public class VMPageGroupeInvite : INotifyPropertyChanged
     {
         #region Attributs
         private GroupeInviteDAO groupeDAO; // DAO pour les opérations sur les groupes
@@ -63,7 +63,25 @@ namespace VM_Footies
                 if (succes)
                 {
                     groupe.Groupe.Nom = groupe.Nom;
-                    this.Notifier("ModifierNom");
+                    this.Notifier("Modifie");
+                }
+            }
+        }
+
+        /// <summary>
+        /// Ajoute un nouveau groupe côté serveur et met à jour le ViewModel local si succès
+        /// </summary>
+        /// <param name="groupe"></param>
+        /// <returns></returns>
+        public async Task AjouterNouveauGroupe(VMGroupeInvite groupe)
+        {
+            if (groupe != null)
+            {
+                bool succes = await this.groupeDAO.AjouterGroupeInvite(groupe.Groupe);
+                if (succes)
+                {
+                    this.listeVMGroupeInvite.Add(groupe);
+                    this.Notifier("Modifie");
                 }
             }
         }
@@ -83,7 +101,7 @@ namespace VM_Footies
                 VMGroupeInvite vmGroupe = new VMGroupeInvite(g);
                 this.listeVMGroupeInvite.Add(vmGroupe);
             }
-            this.Notifier("ChargerGpInvites");
+            this.Notifier("Modifie");
         }
         #endregion
 

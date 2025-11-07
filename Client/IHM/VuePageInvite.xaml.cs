@@ -143,9 +143,9 @@ namespace IHM_Footies
         }
         #endregion
 
-        private void BoutonGroupes_Click(object sender, RoutedEventArgs e)
+        private void BoutonGroupeInvite_Click(object sender, RoutedEventArgs e)
         {
-
+            Navigation.AllerGroupesInvites(this);
         }
     }
 }

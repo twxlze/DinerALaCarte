@@ -76,7 +76,7 @@
         <TextBlock Text="HOSTABLY" FontSize="19" FontWeight="Bold" Foreground="#B44B3E" HorizontalAlignment="Right" Height="27" Margin="73,0,23,0" FontFamily="Montserrat"/>
         <Button x:Name="BoutonAccueil"  Content="🏠 Accueil" Grid.Row="1" Grid.Column="0" Style="{StaticResource BoutonMenu}" Background="#BFBFBF" FontWeight="Bold"/>
         <Button x:Name="BoutonInvites" Content="👤 Invités" Grid.Row="2" Grid.Column="0" Style="{StaticResource BoutonMenu}" Click="ClickBoutonAjouterInvite"/>
-        <Button x:Name="BoutonGroupes" Content="👥 Groupes d'invités" Grid.Row="3" Grid.Column="0" Style="{StaticResource BoutonMenu}"/>
+        <Button x:Name="BoutonGroupes" Content="👥 Groupes d'invités" Grid.Row="3" Grid.Column="0" Style="{StaticResource BoutonMenu}" Click="BoutonGroupeInvite_Click"/>
         <Button x:Name="BoutonInvitations" Content="🎟️ Invitations" Grid.Row="4" Grid.Column="0" Style="{StaticResource BoutonMenu}"/>
         <Button x:Name="BoutonMenus" Content="📋 Menus" Grid.Row="5" Grid.Column="0" Style="{StaticResource BoutonMenu}"/>
         <Button x:Name="BoutonPlats" Content="🍽️ Plats" Grid.Row="6" Grid.Column="0" Style="{StaticResource BoutonMenu}"/>
