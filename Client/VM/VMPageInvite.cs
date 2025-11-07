@@ -45,22 +45,21 @@ namespace VM_Footies
             this.inviteDAO = new InviteDAO();
             this.listeVMInvite = new List<VMInvite>();
             
-            /*
-            foreach ( Invite invite in inviteDAO.ObtenirTout().Result)
-            {
-                this.listeVMInvite.Add(new VMInvite(invite));
-            }
-            */
             
-        }
+            //foreach ( Invite invite in inviteDAO.ObtenirTout().Result)
+            //{
+            //    this.listeVMInvite.Add(new VMInvite(invite));
+            //}
+           
+                    }
         #endregion
 
         #region Méthodes
-        
+
         /// <summary>
         // Charge la liste des invités depuis la base de données
         /// </summary>
-        public async void ChargerInvites()
+        public async Task ChargerInvitesAsync()
         {
             this.listeVMInvite.Clear();
             List<Invite> invites = await this.inviteDAO.ObtenirTout();
@@ -71,7 +70,14 @@ namespace VM_Footies
             }
             this.Notify("VMInvites");
         }
-        
+
+        /// <summary>
+        // Charge la liste des invités depuis la base de données (version non-async pour compatibilité)
+        /// </summary>
+        public async void ChargerInvites()
+        {
+            await ChargerInvitesAsync();
+        }
 
         /// <summary>
         /// Ajoute un invité à la liste des invités
@@ -93,15 +99,14 @@ namespace VM_Footies
         {
             if (this.inviteSelectionne != null)
             {
-                int id = this.inviteSelectionne.Invite.Id;
+                long id = this.inviteSelectionne.Invite.Id;
 
                 if (id != 0)
                     await this.inviteDAO.SupprimerInvite(id);
 
                 this.listeVMInvite.Remove(this.inviteSelectionne);
                 this.inviteSelectionne = null;
-
-                this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(VMInvites)));
+                this.Notify("VMInvite");
             }
         }
         

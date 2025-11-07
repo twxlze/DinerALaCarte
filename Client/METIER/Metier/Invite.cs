@@ -14,7 +14,7 @@ namespace METIER_Footies.Metier
     public class Invite
     {
         #region Attributs
-        private int id;
+        private long id;
         private string nom;
         private string prenom;
         private string? telephone; // string pour simplifier avec l'API
@@ -25,7 +25,7 @@ namespace METIER_Footies.Metier
         /// <summary>
         /// Id de l'invité
         /// </summary>
-        public int Id 
+        public long Id 
         { 
             get => id; 
             set 
@@ -75,7 +75,7 @@ namespace METIER_Footies.Metier
         /// </summary>
         public string Telephone 
         { 
-            get => telephone;
+            get => telephone ?? "";
             set
             {/*
                 if (value != null)
@@ -100,7 +100,7 @@ namespace METIER_Footies.Metier
         /// </summary>
         public string Email
         {
-            get => email; 
+            get => email ?? ""; 
             set
             {/*
                 if (value != null && !string.IsNullOrWhiteSpace(value))
@@ -123,7 +123,7 @@ namespace METIER_Footies.Metier
         /// <param name="prenom"> Prénom de l'invité </param>
         /// <param name="telephone"> Téléphone de l'invité </param>
         /// <param name="email"> Email de l'invité </param>
-        public Invite(int id, string nom, string prenom, string? telephone, string? email)
+        public Invite(long id, string nom, string prenom, string? telephone, string? email)
         {
             this.id = id;
             this.nom = nom;

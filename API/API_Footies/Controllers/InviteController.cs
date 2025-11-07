@@ -56,5 +56,15 @@ namespace API_Footies.Controllers
             this.service.SupprimerInvite(id);
         }
 
+
+        /// <summary>
+        /// Récupérer la liste des invités
+        ///</summary>
+        [HttpGet("ListeInvite")]
+       public List<Metier.Invite> ListInvite()
+        {
+           return this.service.ListInvite();
+        }
     }
+
 }

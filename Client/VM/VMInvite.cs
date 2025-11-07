@@ -30,7 +30,7 @@ namespace VM_Footies
         /// <summary>
         /// Id de l'invité
         /// </summary>
-        public int Id
+        public long Id
         {
             get => this.invite.Id;
         }

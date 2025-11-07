@@ -17,7 +17,7 @@ namespace METIER_Footies.Data
     {
         #region Attributs
         private HttpClient httpClient;
-        private string adressAPI;
+        private string adressAPI = "https://localhost:7230/";
         #endregion
 
         #region Constructeurs
@@ -26,7 +26,6 @@ namespace METIER_Footies.Data
         /// </summary>
         public DAO()
         {
-            GetUrlApi();
             httpClient = new HttpClient();
         }
         #endregion
@@ -78,24 +77,17 @@ namespace METIER_Footies.Data
             return await httpClient.PutAsJsonAsync(adresseEnvoi, objet);
         }
 
-        #endregion
-
-        #region Méthodes privées
-
         /// <summary>
-        /// Configure l'URL de l'API à partir du fichier appsettings.json
+        /// Suppression d'une donnée de façon asynchrone à l'API : DELETE pour supprimer des données
         /// </summary>
-        /// <remarks> Si le fichier n'existe pas ou que l'URL ne marche pas, renvoie une exception</remarks>
-        private void GetUrlApi()
+        /// <param name="demande"> adresse de la demande</param>
+        /// <returns></returns>
+        public async Task<HttpResponseMessage> DeleteAsync(string demande)
         {
-            // Configuration pour lire le fichier appsettings.json
-
-            var config = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true).Build();
-
-            //Récupère l'URL de l'API dans la section JSON qui correspond 
-            this.adressAPI = Convert.ToString(config.GetSection("API:url")) ?? throw new NullReferenceException();
+            string adresseEnvoi = adressAPI + demande;
+            return await httpClient.DeleteAsync(adresseEnvoi);
         }
         #endregion
+
     }
 }

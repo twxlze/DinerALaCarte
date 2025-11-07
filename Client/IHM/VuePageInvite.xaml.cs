@@ -36,6 +36,7 @@ namespace IHM_Footies
             InitializeComponent();
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
             this.RafraichirListe();
+            
         }
         #endregion
 
@@ -45,10 +46,12 @@ namespace IHM_Footies
             if (e.PropertyName == "VMInvite") this.RafraichirListe();
         }
 
-        private void RafraichirListe()
+        private async void RafraichirListe()
         {
             this.PanelListeInvites.Children.Clear();
             this.vueInvite.Clear();
+
+            await this.vmPageInvite.ChargerInvitesAsync();
 
             foreach (VMInvite invite in this.vmPageInvite.VMInvites)
             {

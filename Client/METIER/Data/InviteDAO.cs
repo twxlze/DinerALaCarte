@@ -53,11 +53,11 @@ namespace METIER_Footies.Data
         /// <summary>
         /// Supprime un invité
         /// </summary>
-        public async Task<HttpResponseMessage> SupprimerInvite(int idInvite)
+        public async Task<HttpResponseMessage> SupprimerInvite(long idInvite)
         {
             try
             {
-                HttpResponseMessage reponseHttp = await PostAsync("Invites/SupprimerInvite", idInvite);
+                HttpResponseMessage reponseHttp = await DeleteAsync($"Invites/SupprimerInvite?id={idInvite}");
                 return reponseHttp;
             }
             catch (Exception ex)

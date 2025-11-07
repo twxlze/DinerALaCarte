@@ -41,6 +41,8 @@ namespace API_Footies.Services.Realisations
         public List<Invite> ListInvite()
         {
             return this.dao.ListInvite();
+        }
+
         public void SupprimerInvite(long id)
         {
             this.dao.SupprimerInvite(id);
