@@ -8,23 +8,27 @@
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
   </PropertyGroup>
 
+  <!-- Fichiers à exclure -->
+  <ItemGroup>
+    <None Remove="Data\SQLLiteConnector.cs~RFb668d2b.TMP" />
+    <None Remove="DataBase.db" />
+  </ItemGroup>
 
-	<ItemGroup>
-		<None Remove="DataBase.db" />
-	</ItemGroup>
+  <!-- Inclusion de la base de données pour le déploiement -->
+  <ItemGroup>
+    <Content Include="DataBase.db">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
 
-	<ItemGroup>
-		<Content Include="DataBase.db">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</Content>
-	</ItemGroup>
-
-	<ItemGroup>
-		<PackageReference Include="Microsoft.Data.Sqlite.Core" Version="9.0.10" />
-		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.22.1" />
-		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
-		<PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.14" />
-		<PackageReference Include="Microsoft.Data.Sqlite" Version="9.0.10" />
-	</ItemGroup>
+  <!-- Références NuGet fusionnées -->
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Data.Sqlite" Version="9.0.10" />
+    <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="9.0.10" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.22.1" />
+    <PackageReference Include="SQLitePCLRaw.bundle_e_sqlite3" Version="3.0.2" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.14" />
+  </ItemGroup>
 
 </Project>

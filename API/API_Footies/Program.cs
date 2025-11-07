@@ -17,12 +17,16 @@ public class Program
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
 
-        /// ---- Injections des d�pendances Pour Invite ----
+        /// ---- Injections des dÃ©pendances Pour Invite ----
         builder.Services.AddScoped<IInviteDAO, InviteDAO>();
         builder.Services.AddScoped<IInviteService, InviteService>();
+      
+      
+        /// ---- Injections de dÃ©pendances pour les groupes d'invitÃ©s ------
+        builder.Services.AddScoped<IGroupeInviteDAO, GroupeInviteDAO>();
+        builder.Services.AddScoped<IGroupeInvitesService, GroupeInvitesService>();
 
-
-        Batteries_V2.Init();
+        Batteries_V2.Init(); 
 
         var app = builder.Build();
 
