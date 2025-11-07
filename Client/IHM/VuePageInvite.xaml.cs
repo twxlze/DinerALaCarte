@@ -110,13 +110,13 @@ namespace IHM_Footies
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void BoutonAjouterInvite_Click(object sender, RoutedEventArgs e)
+        private async void BoutonAjouterInvite_Click(object sender, RoutedEventArgs e)
         {
             VueFormulaireInvite fenetre = new VueFormulaireInvite();
             bool? result = fenetre.ShowDialog();
             if (result == true)
             {
-                this.vmPageInvite.AjouterInvite(fenetre.Invite);
+                await this.vmPageInvite.AjouterInvite(fenetre.Invite);
                 this.RafraichirListe();
             }
         }
