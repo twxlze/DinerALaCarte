@@ -120,7 +120,7 @@
                 <Button x:Name="BoutonAccueil"  Content="🏠 Accueil" Grid.Row="1" Style="{StaticResource BoutonMenu}" Click="BoutonAccueil_Click" />
                 <Button x:Name="BoutonInvites" Content="👤 Invités" Grid.Row="2" Style="{StaticResource BoutonMenu}" Click="BoutonInvite_Click"/>
                 <Button x:Name="BoutonGroupes" Content="👥 Groupes d'invités" Grid.Row="3" Style="{StaticResource BoutonMenu}"/>
-                <Button x:Name="BoutonInvitations" Content="🎟️ Invitations" Grid.Row="4" Style="{StaticResource BoutonMenu}"/>
+                <Button x:Name="BoutonInvitations" Content="🎟️ Invitations" Grid.Row="4" Style="{StaticResource BoutonMenu}"/>   
                 <Button x:Name="BoutonMenus" Content="📋 Menus" Grid.Row="5" Style="{StaticResource BoutonMenu}"/>
                 <Button x:Name="BoutonPlats" Content="🍽️ Plats" Grid.Row="6" Style="{StaticResource BoutonMenu}"  Background="#BFBFBF" FontWeight="Bold" Click="BoutonPlat_Click" />
                 <Button x:Name="BoutonUtilisateur" Content="👤" Grid.Row="8" Style="{StaticResource BoutonMenu}" Margin="0,0,100,0" HorizontalContentAlignment="Center" FontSize="25"/>

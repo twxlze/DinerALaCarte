@@ -183,6 +183,11 @@ public partial class MainWindow : Window
         Navigation.AllerInvites(this);
     }
 
+    private void BoutonAllerGroupeInvite_Click(object sender, RoutedEventArgs e)
+    {
+        Navigation.AllerGroupesInvites(this);
+    }
+
     #endregion
 
 

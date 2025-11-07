@@ -54,6 +54,11 @@ namespace IHM_Footies
         #endregion
 
         #region Boutons enregistrer modifications 
+        /// <summary>
+        /// Gestion du clic sur le bouton Enregistrer
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
 
         private void Enregistrer_Click(object sender, RoutedEventArgs e)
         {
@@ -78,20 +83,40 @@ namespace IHM_Footies
 
 
         #region Boutons de navigation
+        /// <summary>
+        /// Bouton pour aller à la vue d'accueil
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
 
         private void BoutonAccueil_Click(object sender, RoutedEventArgs e)
         {
             Navigation.AllerAccueil(this);
         }
 
+        /// <summary>
+        /// Bouton pour fermer la fenêtre
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ButonFermerFenetre_Click(object sender, RoutedEventArgs e)
         {
             Navigation.FermerFenetre(this);
         }
 
+        /// <summary>
+        /// Bouton pour aller à la vue des invités
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BoutonInvite_Click(object sender, RoutedEventArgs e)
         {
             Navigation.AllerInvites(this);
+        }
+
+        private void BoutonAllerPlat_Click(object sender, RoutedEventArgs e)
+        {
+            Navigation.AllerPlat(this);
         }
 
         private void BoutonGroupeInvite_Click(object sender, RoutedEventArgs e)
