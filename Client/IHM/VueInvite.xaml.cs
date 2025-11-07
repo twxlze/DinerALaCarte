@@ -27,6 +27,10 @@ namespace IHM_Footies
         #endregion
 
         #region Constructeur
+        /// <summary>
+        /// Constructeur d'une vue d'invité
+        /// </summary>
+        /// <param name="invite"> Le VMInvite à afficher </param>
         public VueInvite(VMInvite invite)
         {
             this.invite = invite;
@@ -46,12 +50,18 @@ namespace IHM_Footies
         #endregion
 
         #region Méthodes
+        /// <summary>
+        /// Désélectionne la vue d'invité (remet les couleurs par défaut)
+        /// </summary>
         public void Deselectionner()
         {
             this.Background = new SolidColorBrush(Colors.Transparent);
             this.Foreground = new SolidColorBrush(Colors.Black);
         }
 
+        /// <summary>
+        /// Sélectionne la vue d'invité (change les couleurs pour indiquer la sélection)
+        /// </summary>
         public void Selectionner()
         {
             this.Background = new SolidColorBrush(Colors.Maroon);

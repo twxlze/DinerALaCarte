@@ -27,6 +27,9 @@ namespace IHM_Footies
         #endregion
 
         #region Constructeur
+        /// <summary>
+        /// Constructeur par défaut d'une page d'invité
+        /// </summary>
         public VuePageInvite()
         {
             this.vueInvite = new List<VueInvite>();
@@ -41,11 +44,19 @@ namespace IHM_Footies
         #endregion
 
         #region Méthodes
+        /// <summary>
+        /// Gestion du changement de propriété dans le VMPageInvite
+        /// </summary>
+        /// <param name="sender"> </param>
+        /// <param name="e"></param>
         private void VMPageInvite_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             if (e.PropertyName == "VMInvite") this.RafraichirListe();
         }
 
+        /// <summary>
+        /// Rafraîchit la liste des invités affichés
+        /// </summary>
         private async void RafraichirListe()
         {
             this.PanelListeInvites.Children.Clear();
@@ -63,6 +74,10 @@ namespace IHM_Footies
             }
         }
 
+        /// <summary>
+        /// Ouvre la fenêtre de modification d'un invité
+        /// </summary>
+        /// <param name="vue"></param>
         private void OuvrirModification(VueInvite vue)
         {
             VMInvite memoire = new VMInvite(vue.Invite);
@@ -73,6 +88,11 @@ namespace IHM_Footies
                 vue.Invite.ModifierInvite(memoire);
             }
         }
+
+        /// <summary>
+        /// Sélectionne une personne dans la liste des invités
+        /// </summary>
+        /// <param name="vue"> VueInvite sélectionnée </param>
         private void SelectionnerPersonne(VueInvite vue)
         {
             this.vmPageInvite.InviteSelectionne = vue.Invite;
@@ -85,6 +105,11 @@ namespace IHM_Footies
         #endregion
 
         #region Boutons 
+        /// <summary>
+        /// Ouvre la fenêtre d'ajout d'un invité
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BoutonAjouterInvite_Click(object sender, RoutedEventArgs e)
         {
             VueFormulaireInvite fenetre = new VueFormulaireInvite();
@@ -96,6 +121,11 @@ namespace IHM_Footies
             }
         }
 
+        /// <summary>
+        /// Ouvre la fenêtre de modification d'un invité sélectionné
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BoutonModifierInvite_Click(object sender, RoutedEventArgs e)
         {
             if (this.vmPageInvite.InviteSelectionne != null)
@@ -111,32 +141,56 @@ namespace IHM_Footies
         }
 
 
-
+        /// <summary>
+        /// Supprime l'invité sélectionné
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BoutonSupprimerInvite_Click(object sender, RoutedEventArgs e)
         {
             this.vmPageInvite.SupprimerInvite();
             this.RafraichirListe();
         }
-        
+
 
         #endregion
 
         #region Boutons de navigation
+        /// <summary>
+        /// Bouton pour aller à la vue d'accueil
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BoutonVueAccueil(object sender, RoutedEventArgs e)
         {
             Navigation.AllerAccueil(this);
         }
 
+        /// <summary>
+        /// Bouton pour aller à la vue des invités
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BoutonInvite_Click(object sender, RoutedEventArgs e)
         {
             Navigation.AllerInvites(this);
         }
 
+        /// <summary>
+        /// Bouton pour aller à la vue du formulaire d'invité
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BoutonAccueil_Click(object sender, RoutedEventArgs e)
         {
             Navigation.AllerAccueil(this);
         }
 
+        /// <summary>
+        /// Bouton pour fermer la fenêtre
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ButonFermerFenetre_Click(object sender, RoutedEventArgs e)
         {
             Navigation.FermerFenetre(this);

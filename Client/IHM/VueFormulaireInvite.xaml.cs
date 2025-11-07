@@ -29,6 +29,10 @@ namespace IHM_Footies
 
 
         #region Constructeurs
+        /// <summary>
+        /// Constructeur d'une vue de formulaire d'invité
+        /// </summary>
+        /// <param name="invite"> Le VMInvite à afficher </param>
         public VueFormulaireInvite(VMInvite invite)
         {
             this.invite = invite;
@@ -38,12 +42,20 @@ namespace IHM_Footies
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
         }
 
+        /// <summary>
+        /// Constructeur par défaut d'une vue de formulaire d'invité
+        /// </summary>
         public VueFormulaireInvite() : this(new VMInvite())
         {
         }
         #endregion
 
         #region Boutons d'action
+        /// <summary>
+        /// Gestion du clic sur le bouton Enregistrer
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Enregistrer_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -103,12 +115,21 @@ namespace IHM_Footies
         #endregion
 
         #region Boutons de navigation
-
+        /// <summary>
+        /// Bouton pour aller à la vue d'accueil
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BoutonAccueil_Click(object sender, RoutedEventArgs e)
         {
             Navigation.AllerAccueil(this);
         }
-        
+
+        /// <summary>
+        /// Bouton pour aller à la vue des invités
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ButonFermerFenetre_Click(object sender, RoutedEventArgs e)
         {
             Navigation.FermerFenetre(this);

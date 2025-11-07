@@ -109,11 +109,18 @@ namespace VM_Footies
             this.invite = invite;
         }
 
+        /// <summary>
+        /// Constructeur d'un VMInvite à partir d'un autre VMInvite
+        /// </summary>
+        /// <param name="modele"> Le VMInvite à copier </param>
         public VMInvite(VMInvite modele)
         {
             this.invite = new Invite(modele.invite);
         }
 
+        /// <summary>
+        /// Constructeur par défaut d'un VMInvite
+        /// </summary>
         public VMInvite()
         {
             this.invite = new Invite();

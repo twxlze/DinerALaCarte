@@ -33,7 +33,7 @@ namespace VM_Footies
 
         /// <summary>
         // Liste des VMInvite 
-        /// </summary>
+        /// </summary>  
         public List<VMInvite> VMInvites => listeVMInvite;
 
         #region Constructeurs
@@ -109,7 +109,11 @@ namespace VM_Footies
                 this.Notify("VMInvite");
             }
         }
-        
+
+        /// <summary>
+        /// Modifie un invité dans la liste des invités
+        /// </summary>
+        /// <param name="invite"></param>
         public async void ModifierInvite(VMInvite invite)
         {
             if (invite != null)
@@ -119,6 +123,10 @@ namespace VM_Footies
             }
         }
 
+        /// <summary>
+        /// Notifie le changement d'une propriété
+        /// </summary>
+        /// <param name="message"> Nom de la propriété changée </param>
         private void Notify(string message)
         {
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(message));
