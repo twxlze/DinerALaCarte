@@ -2,6 +2,7 @@
 using System.Data;
 using API_Footies.Data.Interfaces;
 using API_Footies.Metier;
+using static API_Footies.Metier.Plat;
 
 namespace API_Footies.Data.DAO
 {
@@ -34,6 +35,62 @@ namespace API_Footies.Data.DAO
 
             }
             return ajoute;
+        }
+
+        public bool EstDansUnMenu(long idPlat)
+        {
+            bool resultat = false;
+            using (SQLiteConnector connection = new SQLiteConnector())
+            {
+                if (connection == null)
+                {
+                    throw new Exception("Erreur de connexion à la base de données");
+                }
+                else
+                {
+                    Dictionary<string, object> parameters = new Dictionary<string, object>()
+                 {
+                     {"@IdPlat", idPlat }
+                 };
+
+                    DataTable dataTable = connection.ExecuteQuery("SELECT COUNT(*) as NombrePlats FROM Menu_Plat WHERE IdPlat = @IdPlat", parameters);
+
+                    if (dataTable.Rows.Count > 0)
+                    {
+                        int nombrePlats = Convert.ToInt32(dataTable.Rows[0]["NombrePlats"]);
+                        resultat = nombrePlats > 0;
+                    }
+                }
+            }
+            return resultat;
+        }
+
+        public List<Plat> ListPlat()
+        {
+            List<Plat> listePlat = new List<Plat>();
+            using (SQLiteConnector connection = new SQLiteConnector())
+            {
+                if (connection == null)
+                {
+                    throw new Exception("Erreur de connexion à la base de données");
+                }
+                else
+                {
+                    var dataTable = connection.ExecuteQuery("SELECT * FROM Plat");
+                    foreach (DataRow? row in dataTable.Rows)
+                    {
+                        CategoriePlat categorie;
+                        if (!Enum.TryParse(row["categorie"].ToString(), true, out categorie))
+                        {
+                            categorie = CategoriePlat.plat;
+                        }
+
+                        Plat plat = new Plat((long)row["idPlat"], row["nom"].ToString(),row["description"].ToString(),categorie);
+                        listePlat.Add(plat);
+                    }
+                }
+            }
+            return listePlat;
         }
 
         public bool ModifierPlat(Plat plat)
