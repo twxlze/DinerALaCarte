@@ -65,6 +65,19 @@ namespace METIER_Footies.Data
             string adresseEnvoi = adressAPI + demande;
             return await httpClient.PostAsJsonAsync(adresseEnvoi, objet);
         }
+
+        /// <summary>
+        /// Mise à jour d'une donnée de façon asynchrone à l'API : PUT pour modifier des données
+        /// </summary>
+        /// <param name="demande"> adresse de la demande</param>
+        /// <param name="objet"> objet à envoyer dans le body</param>
+        /// <returns></returns>
+        public async Task<HttpResponseMessage> PutAsync(string demande, object objet)
+        {
+            string adresseEnvoi = adressAPI + demande;
+            return await httpClient.PutAsJsonAsync(adresseEnvoi, objet);
+        }
+
         #endregion
 
         #region Méthodes privées
