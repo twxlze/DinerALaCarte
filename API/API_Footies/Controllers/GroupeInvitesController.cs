@@ -97,7 +97,20 @@ namespace API_Footies.Controllers
             return _groupeInvitesService.RecupereGroupeViaId(idGroupeInvites);
         }
 
-        /* Supprimer un groupe d'invités - non implémenté */
+        /// <summary>
+        /// Supprime un groupe d'invités via son ID
+        /// </summary>
+        [HttpDelete("SupprimerGroupe/{idGroupeInvite}")]
+        public IActionResult SupprimerGroupe(long idGroupeInvite)
+        {
+            GroupeInvites groupeSupprime = _groupeInvitesService.SupprimerGroupe(idGroupeInvite);
+            IActionResult resultat;
+            if (groupeSupprime == null)
+            { resultat = NotFound(); }
+            else
+            { resultat = Ok(groupeSupprime); }
+            return resultat;
+        }
 
     }
 }

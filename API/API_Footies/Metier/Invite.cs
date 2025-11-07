@@ -6,8 +6,8 @@
         private long id;
         private string nom;
         private string prenom;
-        private string telephone;
-        private string email;
+        private string ?telephone;
+        private string ?email;
         #endregion
 
 
@@ -44,7 +44,7 @@
         /// <summary>
         /// Retourne ou modifie le téléphone de l'invité
         /// </summary>
-        public string Telephone
+        public string ?Telephone
         {
             get { return telephone; }
             set { telephone = value; }
@@ -53,7 +53,7 @@
         /// <summary>
         /// Retourne ou modifie l'email de l'invité
         /// </summary>
-        public string Email
+        public string ?Email
         {
             get { return email; }
             set { email = value; }

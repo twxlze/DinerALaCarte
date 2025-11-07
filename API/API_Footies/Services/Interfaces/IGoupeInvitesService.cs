@@ -38,5 +38,10 @@ namespace API_Footies.Services.Interfaces
         /// <param name="groupeInvite">le groupe d'invite</param>
         /// <returns>le groupe d'invite modifier</returns>
         GroupeInvites ModifierGroupe(GroupeInvites groupeInvite);
+
+        /// <summary>
+        ///  Supprime un groupe d'invités via son ID
+        ///</summary>
+        GroupeInvites SupprimerGroupe(long idGroupeInvite);
     }
 }
