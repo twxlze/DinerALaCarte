@@ -12,6 +12,7 @@
         >
 
     <Window.Resources>
+        <BitmapImage x:Key="LogoHostably" UriSource="/Ressources/LogoHostably.png"/>
         <Style x:Key="BoutonMenu" TargetType="Button">
             <Setter Property="Background" Value="#F9F9F9"/>
             <Setter Property="Foreground" Value="#B44B3E"/>
@@ -37,6 +38,14 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
+        <Style x:Key="TitleStyle" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Poppins"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="#B44B3E"/>
+        </Style>
+        
     </Window.Resources>
     <Grid>
 
@@ -56,7 +65,7 @@
             <ColumnDefinition Width="200"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        
+
         <!-- Bouton fermer -->
         <Button x:Name="CloseButton"
         Content="✖"
@@ -73,14 +82,82 @@
         Grid.Column="1000"/>
 
         <!-- Menu à gauche -->
-        <TextBlock Text="HOSTABLY" FontSize="19" FontWeight="Bold" Foreground="#B44B3E" HorizontalAlignment="Right" Height="27" Margin="73,0,23,0" FontFamily="Montserrat"/>
-        <Button x:Name="BoutonAccueil"  Content="🏠 Accueil" Grid.Row="1" Grid.Column="0" Style="{StaticResource BoutonMenu}" Background="#BFBFBF" FontWeight="Bold"/>
-        <Button x:Name="BoutonInvites" Content="👤 Invités" Grid.Row="2" Grid.Column="0" Style="{StaticResource BoutonMenu}" Click="ClickBoutonAjouterInvite"/>
-        <Button x:Name="BoutonGroupes" Content="👥 Groupes d'invités" Grid.Row="3" Grid.Column="0" Style="{StaticResource BoutonMenu}"/>
-        <Button x:Name="BoutonInvitations" Content="🎟️ Invitations" Grid.Row="4" Grid.Column="0" Style="{StaticResource BoutonMenu}"/>
-        <Button x:Name="BoutonMenus" Content="📋 Menus" Grid.Row="5" Grid.Column="0" Style="{StaticResource BoutonMenu}"/>
-        <Button x:Name="BoutonPlats" Content="🍽️ Plats" Grid.Row="6" Grid.Column="0" Style="{StaticResource BoutonMenu}"/>
-        <Button x:Name="BoutonUtilisateur" Content="👤" Grid.Row="8" Grid.Column="0" Style="{StaticResource BoutonMenu}" Margin="0,0,100,0" HorizontalContentAlignment="Center" FontSize="25"/>
-        <Button x:Name="BoutonReglage" Content="⚙️" Grid.Row="8" Grid.Column="0" Style="{StaticResource BoutonMenu}" HorizontalContentAlignment="Center" Margin="100,0,0,0" FontSize="25"/>
+        <Border BorderBrush="#8C2F26"  BorderThickness="0,0,2,0" Grid.Column="0" Grid.RowSpan="9">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Text="HOSTABLY" FontSize="19" FontWeight="Bold" Foreground="#B44B3E" VerticalAlignment="Center" Height="27" Margin="73,0,23,0" FontFamily="Montserrat"/>
+                <Button x:Name="BoutonAccueil"  Content="🏠 Accueil" Grid.Row="1" Grid.Column="0" Style="{StaticResource BoutonMenu}" Background="#BFBFBF" FontWeight="Bold"/>
+                <Button x:Name="BoutonInvites" Content="👤 Invités" Grid.Row="2" Grid.Column="0" Style="{StaticResource BoutonMenu}" Click="ClickBoutonAjouterInvite"/>
+                <Button x:Name="BoutonGroupes" Content="👥 Groupes d'invités" Grid.Row="3" Grid.Column="0" Style="{StaticResource BoutonMenu}"/>
+                <Button x:Name="BoutonInvitations" Content="🎟️ Invitations" Grid.Row="4" Grid.Column="0" Style="{StaticResource BoutonMenu}"/>
+                <Button x:Name="BoutonMenus" Content="📋 Menus" Grid.Row="5" Grid.Column="0" Style="{StaticResource BoutonMenu}"/>
+                <Button x:Name="BoutonPlats" Content="🍽️ Plats" Grid.Row="6" Grid.Column="0" Style="{StaticResource BoutonMenu}"/>
+                <Button x:Name="BoutonUtilisateur" Content="👤" Grid.Row="8" Grid.Column="0" Style="{StaticResource BoutonMenu}" Margin="0,0,100,0" HorizontalContentAlignment="Center" FontSize="25"/>
+                <Button x:Name="BoutonReglage" Content="⚙️" Grid.Row="8" Grid.Column="0" Style="{StaticResource BoutonMenu}" HorizontalContentAlignment="Center" Margin="100,0,0,0" FontSize="25"/>
+            </Grid>
+        </Border>
+
+    <!-- Contenu des invités -->
+        <Border BorderBrush="#8C2F26" 
+        Grid.Column="1" Grid.RowSpan="4" 
+        Margin="36,27,322,24"
+        BorderThickness="2"
+        CornerRadius="10"
+        Padding="5">
+            <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="2" Margin="-7,-7,-8,-7">
+                <StackPanel Orientation="Vertical" x:Name="PanelListeInvitesAccueil" Width="235" Height="141" />
+            </ScrollViewer>
+        </Border>
+
+        <!-- Contenu des groupes d'invités -->
+        <Border BorderBrush="#8C2F26" 
+        Grid.Column="1" Grid.RowSpan="4" 
+        Margin="319,25,40,24"
+        BorderThickness="2"
+        CornerRadius="10"
+        Padding="5">
+            <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="2" Margin="-7,0,-7,0" Height="156" VerticalAlignment="Center">
+                <StackPanel Orientation="Vertical" x:Name="PanelListeGroupesInvitesAccueil" Width="239" Height="152" />
+            </ScrollViewer>
+        </Border>
+
+        <!-- Contenu des menus -->
+        <Border BorderBrush="#8C2F26" 
+        Grid.Column="1" Grid.RowSpan="3" Margin="38,19,38,20"
+        BorderThickness="2"
+        CornerRadius="10"
+        Padding="5" Grid.Row="4">
+            <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="2" Margin="-7,-7,-7,-7">
+                <StackPanel Orientation="Vertical" x:Name="PanelListeMenusAccueil" Width="522" Height="74" />
+            </ScrollViewer>
+        </Border>
+
+        <!-- Contenu des plats -->
+        <Border BorderBrush="#8C2F26" 
+        Grid.Column="1" Margin="38,23,38,19"
+        BorderThickness="2"
+        CornerRadius="10"
+        Padding="5" Grid.Row="7" Grid.RowSpan="2">
+            <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="2" Margin="-7,-7,-7,-7">
+                <StackPanel Orientation="Vertical" x:Name="PanelListePlatsAccueil" Width="524" Height="71" />
+            </ScrollViewer>
+        </Border>
+
+        <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="50,6,0,0" TextWrapping="Wrap" Text="Invités" VerticalAlignment="Top" Style="{StaticResource TitleStyle}"/>
+        <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="335,5,0,0" TextWrapping="Wrap" Text="Groupes d'invités" VerticalAlignment="Top" Style="{StaticResource TitleStyle}"/>
+        <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="48,0,0,24" Grid.Row="4" TextWrapping="Wrap" Text="Menus" VerticalAlignment="Bottom" Style="{StaticResource TitleStyle}"/>
+        <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="48,41,0,0" Grid.Row="6" TextWrapping="Wrap" Text="Plats" VerticalAlignment="Top" Grid.RowSpan="2" Style="{StaticResource TitleStyle}"/>
+        <Image Source="{StaticResource ResourceKey=LogoHostably}" Margin="15,10,121,17" />
     </Grid>
 </Window>
