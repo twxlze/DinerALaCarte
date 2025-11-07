@@ -130,17 +130,17 @@
 
         <Border BorderBrush="#8C2F26" 
                 Grid.Column="1" Grid.RowSpan="6" 
-                Margin="80,61,80,17"
+                Margin="80,20,80,16"
                 BorderThickness="2"
                 CornerRadius="10"
-                Padding="5">
+                Padding="5" Grid.Row="1">
             <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="2">
                 <StackPanel Orientation="Vertical" x:Name="PanelListeInvites" >
 
                 </StackPanel>
             </ScrollViewer>
         </Border>
-        
+
         <!-- Boutons -->
         <Button Grid.RowSpan="2" Grid.Column="1" Content="Ajouter un invité" HorizontalAlignment="Left" Margin="40,0,0,30" Grid.Row="6" VerticalAlignment="Bottom" Height="40" Width="240" Style="{StaticResource StyleBoutonInvite}" Click="BoutonAjouterInvite_Click" />
         <Button Grid.Column="1" Content="Modifier un invité" HorizontalAlignment="Right" Margin="0,0,40,30" Grid.Row="7" VerticalAlignment="Bottom" Height="40" Width="240" Style="{StaticResource StyleBoutonInvite}" Cursor="Hand"/>
