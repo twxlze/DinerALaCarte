@@ -61,21 +61,5 @@
 
         #endregion
 
-        /// <summary>
-        /// Constructeur d'un invité
-        /// </summary>
-        /// <param name="nom">nom de l'invité</param>
-        /// <param name="prenom">prénom de l'invité</param>
-        /// <param name="telephone">numéro de téléphone de l'invité</param>
-        /// <param name="email">email de l'invité</param>
-        public Invite(long id, string nom, string prenom, string telephone, string email)
-        {
-            this.id = id;
-            this.nom = nom;
-            this.prenom = prenom;
-            this.telephone = telephone;
-            this.email = email;
-        }
-
     }
 }
