@@ -126,7 +126,7 @@ namespace IHM_Footies
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void BoutonModifierInvite_Click(object sender, RoutedEventArgs e)
+        private async void BoutonModifierInvite_Click(object sender, RoutedEventArgs e)
         {
             if (this.vmPageInvite.InviteSelectionne != null)
             {
@@ -134,7 +134,7 @@ namespace IHM_Footies
                 bool? result = fenetre.ShowDialog();
                 if (result == true)
                 {
-                    this.vmPageInvite.ModifierInvite(fenetre.Invite);
+                    await this.vmPageInvite.ModifierInvite(fenetre.Invite);
                     this.RafraichirListe();
                 }
             }

@@ -61,14 +61,15 @@ namespace VM_Footies
         /// </summary>
         public async Task ChargerInvitesAsync()
         {
-            this.Notify("VMInvites");
             this.listeVMInvite.Clear();
+
             List<Invite> invites = await this.inviteDAO.ObtenirTout();
             foreach (Invite invite in invites)
             {
                 VMInvite vmInvite = new VMInvite(invite);
                 this.listeVMInvite.Add(vmInvite);
             }
+            this.Notify("VMInvites");
         }
 
         /// <summary>
@@ -85,9 +86,9 @@ namespace VM_Footies
         /// <param name="invite"> L'invité à ajouter </param>
         public async Task AjouterInvite(VMInvite invite)
         {
-            this.Notify("VMInvites");
             await this.inviteDAO.AjouterInvite(invite.Invite);
             this.listeVMInvite.Add(invite);
+            this.Notify("VMInvites");
         }
 
 
@@ -129,12 +130,12 @@ namespace VM_Footies
         /// Modifie un invité dans la liste des invités
         /// </summary>
         /// <param name="invite"></param>
-        public async void ModifierInvite(VMInvite invite)
+        public async Task ModifierInvite(VMInvite invite)
         {
             if (invite != null)
             {
-                this.Notify("VMInvite");
                 await this.inviteDAO.ModifierInvite(invite.Invite);
+                this.Notify("VMInvites");
             }
         }
 
