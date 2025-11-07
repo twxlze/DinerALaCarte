@@ -34,7 +34,7 @@ namespace VM_Footies
         /// <summary>
         // Liste des VMInvite 
         /// </summary>  
-        public List<VMInvite> VMInvites => listeVMInvite;
+        public List<VMInvite> VMInvites =>  listeVMInvite;
 
         #region Constructeurs
         /// <summary>
@@ -69,7 +69,8 @@ namespace VM_Footies
                 VMInvite vmInvite = new VMInvite(invite);
                 this.listeVMInvite.Add(vmInvite);
             }
-            this.Notify("VMInvites");
+           // this.Notify("VMInvites");
+
         }
 
         /// <summary>

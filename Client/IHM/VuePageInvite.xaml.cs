@@ -32,14 +32,14 @@ namespace IHM_Footies
         /// </summary>
         public VuePageInvite()
         {
+            InitializeComponent();
+
             this.vueInvite = new List<VueInvite>();
             this.vmPageInvite = new VMPageInvite();
             this.vmPageInvite.PropertyChanged += VMPageInvite_PropertyChanged;
 
-            InitializeComponent();
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
             this.RafraichirListe();
-            
         }
         #endregion
 
@@ -51,7 +51,7 @@ namespace IHM_Footies
         /// <param name="e"></param>
         private void VMPageInvite_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == "VMInvite") this.RafraichirListe();
+            if (e.PropertyName == "VMInvites") this.RafraichirListe();
         }
 
         /// <summary>
@@ -119,6 +119,10 @@ namespace IHM_Footies
                 await this.vmPageInvite.AjouterInvite(fenetre.Invite);
                 this.RafraichirListe();
             }
+            /*
+               // this.RafraichirListe();
+            }
+            */
         }
 
         /// <summary>

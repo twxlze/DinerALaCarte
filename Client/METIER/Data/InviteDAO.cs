@@ -30,6 +30,7 @@ namespace METIER_Footies.Data
             {
                 throw new Exception("Erreur lors de l'ajout de l'invité : " + ex.Message);
             }
+
         }
 
         /// <summary>
