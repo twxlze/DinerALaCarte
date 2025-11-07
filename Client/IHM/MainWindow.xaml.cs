@@ -21,7 +21,10 @@ public partial class MainWindow : Window
     #region Attributs
     private List<VueInvite> vueInvite;
     private VMPageInvite vmPageInvite;
+    private List<VuePlat> vuePlat;
+    private VMPagePlat vmPagePlat;
     #endregion
+
     /// <summary>
     /// Constructeur par défaut de la fenêtre principale
     /// </summary>
@@ -29,12 +32,15 @@ public partial class MainWindow : Window
     {
         this.vueInvite = new List<VueInvite>();
         this.vmPageInvite = new VMPageInvite();
-
+        this.vuePlat = new List<VuePlat>();
+        this.vmPagePlat = new VMPagePlat();
+        this.vmPagePlat.PropertyChanged += VMPagePlat_PropertyChanged;
         this.vmPageInvite.PropertyChanged += VMPageInvite_PropertyChanged;
 
         InitializeComponent();
         WindowStartupLocation = WindowStartupLocation.CenterScreen;
         this.RafraichirListe();
+        this.RafraichirListePlats();
     }
 
     /// <summary>
@@ -47,6 +53,18 @@ public partial class MainWindow : Window
     }
 
     /// <summary>
+    /// Gestion du changement de propriété dans le VMPagePlat
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void VMPagePlat_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName == "VMPlat")
+            this.RafraichirListePlats();
+    }
+
+
+    /// <summary>
     /// Sélectionne une personne dans la liste des invités
     /// </summary>
     private void SelectionnerPersonne(VueInvite vue)
@@ -55,6 +73,20 @@ public partial class MainWindow : Window
         foreach (VueInvite vueI in this.vueInvite)
         {
             vueI.Deselectionner();
+        }
+        vue.Selectionner();
+    }
+
+    /// <summary>
+    /// Sélectionne un plat dans la liste des plats
+    /// </summary>
+    /// <param name="vue"> La vue du plat à sélectionner </param>
+    private void SelectionnerPlat(VuePlat vue)
+    {
+        this.vmPagePlat.PlatSelectionne = vue.Plat;
+        foreach (VuePlat vueP in this.vuePlat)
+        {
+            vueP.Deselectionner();
         }
         vue.Selectionner();
     }
@@ -71,7 +103,7 @@ public partial class MainWindow : Window
 
     private async void RafraichirListe()
     {
-        this.PanelListeInvitesAccueil.Children.Clear();
+        this.PanelListeInvites.Children.Clear();
         this.vueInvite.Clear();
 
         await this.vmPageInvite.ChargerInvitesAsync();
@@ -88,9 +120,37 @@ public partial class MainWindow : Window
             vue.VerticalAlignment = VerticalAlignment.Center;
 
             this.vueInvite.Add(vue);
-            this.PanelListeInvitesAccueil.Children.Add(vue);
+            this.PanelListeInvites.Children.Add(vue);
         }
     }
+
+    /// <summary>
+    /// Rafraîchit la liste des plats affichés
+    /// </summary>
+    private async void RafraichirListePlats()
+    {
+        this.PanelListePlat.Children.Clear();
+        this.vuePlat.Clear();
+
+        await this.vmPagePlat.ChargerPlatsAsync();
+
+        foreach (VMPlat plat in this.vmPagePlat.VMPlat)
+        {
+            VuePlat vue = new VuePlat(plat);
+
+            vue.MouseDown += (s, e) => this.SelectionnerPlat(vue);
+            // vue.MouseDoubleClick += (s, e) => this.OuvrirModification(vue);
+
+            vue.Height = 20;
+            vue.Width = 580;
+            vue.HorizontalAlignment = HorizontalAlignment.Center;
+            vue.VerticalAlignment = VerticalAlignment.Center;
+
+            this.vuePlat.Add(vue);
+            this.PanelListePlat.Children.Add(vue);
+        }
+    }
+
 
     #region Boutons de navigation
     /// <summary>

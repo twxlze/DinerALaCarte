@@ -115,8 +115,8 @@
         BorderThickness="2"
         CornerRadius="10"
         Padding="5">
-            <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="2" Margin="-7,-7,-8,-7">
-                <StackPanel Orientation="Vertical" x:Name="PanelListeInvitesAccueil" Width="235" Height="141" />
+            <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="2">
+                <StackPanel Orientation="Vertical" x:Name="PanelListeInvites" Width="235" />
             </ScrollViewer>
         </Border>
 
@@ -128,7 +128,7 @@
         CornerRadius="10"
         Padding="5">
             <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="2" Margin="-7,0,-7,0" Height="156" VerticalAlignment="Center">
-                <StackPanel Orientation="Vertical" x:Name="PanelListeGroupesInvitesAccueil" Width="239" Height="152" />
+                <StackPanel Orientation="Vertical" x:Name="PanelListeGroupesInvites" Width="239"  />
             </ScrollViewer>
         </Border>
 
@@ -138,8 +138,8 @@
         BorderThickness="2"
         CornerRadius="10"
         Padding="5" Grid.Row="4">
-            <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="2" Margin="-7,-7,-7,-7">
-                <StackPanel Orientation="Vertical" x:Name="PanelListeMenusAccueil" Width="522" Height="74" />
+            <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="2" >
+                <StackPanel Orientation="Vertical" x:Name="PanelListePlat" Width="522"  />
             </ScrollViewer>
         </Border>
 
@@ -149,15 +149,15 @@
         BorderThickness="2"
         CornerRadius="10"
         Padding="5" Grid.Row="7" Grid.RowSpan="2">
-            <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="2" Margin="-7,-7,-7,-7">
-                <StackPanel Orientation="Vertical" x:Name="PanelListePlatsAccueil" Width="524" Height="71" />
+            <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="2" >
+                <StackPanel Orientation="Vertical" x:Name="PanelListeMenu" Width="524"  />
             </ScrollViewer>
         </Border>
 
         <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="50,6,0,0" TextWrapping="Wrap" Text="Invités" VerticalAlignment="Top" Style="{StaticResource TitleStyle}"/>
-        <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="335,5,0,0" TextWrapping="Wrap" Text="Groupes d'invités" VerticalAlignment="Top" Style="{StaticResource TitleStyle}"/>
-        <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="48,0,0,24" Grid.Row="4" TextWrapping="Wrap" Text="Menus" VerticalAlignment="Bottom" Style="{StaticResource TitleStyle}"/>
-        <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="48,41,0,0" Grid.Row="6" TextWrapping="Wrap" Text="Plats" VerticalAlignment="Top" Grid.RowSpan="2" Style="{StaticResource TitleStyle}"/>
+        <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="335,5,0,0" TextWrapping="Wrap" Text="Plats" VerticalAlignment="Top" Style="{StaticResource TitleStyle}"/>
+        <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="48,0,0,24" Grid.Row="4" TextWrapping="Wrap" Text="Plats" VerticalAlignment="Bottom" Style="{StaticResource TitleStyle}"/>
+        <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="48,41,0,0" Grid.Row="6" TextWrapping="Wrap" Text="Menus" VerticalAlignment="Top" Grid.RowSpan="2" Style="{StaticResource TitleStyle}"/>
         <Image Source="{StaticResource ResourceKey=LogoHostably}" Margin="15,10,121,17" />
     </Grid>
 </Window>
