@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
@@ -22,6 +23,24 @@ namespace METIER_Footies.Data
         {
             HttpResponseMessage reponseHttp = await PostAsync("Plat/AjouterPlat", plat);
             return reponseHttp;
+        }
+
+        /// <summary>
+        /// Modifier un plat
+        /// </summary>
+        /// <param name="invite"> Le plat à modifier </param>
+        /// <returns> Réponse http de l'API </returns>
+        public async Task<HttpResponseMessage> ModifierPlat(Plat plat)
+        {
+            try
+            {
+                HttpResponseMessage reponseHttp = await PutAsync("Invites/ModifierInvite", plat);
+                return reponseHttp;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erreur lors de la modification du plat : " + ex.Message);
+            }
         }
 
         /// <summary>

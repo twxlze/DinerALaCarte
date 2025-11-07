@@ -83,6 +83,18 @@ namespace VM_Footies
         #endregion
 
         #region Méthodes
+
+        /// <summary>
+        /// Modifie les informations du plat
+        /// </summary>
+        /// <param name="plat"> Le plat avec les nouvelles informations </param>
+        public void ModifierPlat(VMPlat plat)
+        {
+            this.Nom = plat.Nom;
+            this.Description = plat.Description;
+            this.Categorie = plat.Categorie;
+        }
+
         /// <summary>
         // Notifie le changement d'une propriété
         /// </summary>

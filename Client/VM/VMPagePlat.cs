@@ -52,6 +52,19 @@ namespace VM_Footies
             this.Notify("VMplat");
         }
 
+        /// <summary>
+        /// Modifie un plat dans la liste des plats
+        /// </summary>
+        /// <param name="plat"></param>
+        public async void ModifierPlat(VMPlat plat)
+        {
+            if (plat != null)
+            {
+                await this.PlatDAO.ModifierPlat(plat.Plat);
+                this.Notify("VMPlat");
+            }
+        }
+
         private void Notify(string message)
         {
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(message));
