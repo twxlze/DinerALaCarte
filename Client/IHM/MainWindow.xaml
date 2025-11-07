@@ -156,7 +156,7 @@
 
 		<TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="50,6,0,0" TextWrapping="Wrap" Text="Invités" VerticalAlignment="Top" Style="{StaticResource TitleStyle}"/>
 		<TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="335,5,0,0" TextWrapping="Wrap" Text="Plats" VerticalAlignment="Top" Style="{StaticResource TitleStyle}"/>
-		<TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="48,0,0,24" Grid.Row="4" TextWrapping="Wrap" Text="Plats" VerticalAlignment="Bottom" Style="{StaticResource TitleStyle}"/>
+		<TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="48,0,0,24" Grid.Row="4" TextWrapping="Wrap" Text="Groupe invité" VerticalAlignment="Bottom" Style="{StaticResource TitleStyle}"/>
 		<TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="48,41,0,0" Grid.Row="6" TextWrapping="Wrap" Text="Menus" VerticalAlignment="Top" Grid.RowSpan="2" Style="{StaticResource TitleStyle}"/>
 		<Image Source="{StaticResource ResourceKey=LogoHostably}" Margin="15,10,121,17" />
 	</Grid>
