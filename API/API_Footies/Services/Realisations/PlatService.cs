@@ -10,7 +10,7 @@ namespace API_Footies.Services.Realisations
     /// </summary>
     public class PlatService : IPlatService
     {
-        #region attributes
+        #region attributs
 
         private IPlatDAO dao;
 
@@ -26,25 +26,21 @@ namespace API_Footies.Services.Realisations
             this.dao = dao;
         }
 
-        #region methods
-        /// <summary>
-        /// Ajoute un plat
-        /// </summary>
-        /// <param name="plat">plat à ajouté</param>
+        #region methodes
         public void AjouterPlat(Plat plat)
         {
             this.dao.AjouterPlat(plat);
         }
 
-        /// <summary>
-        /// Modifie un plat
-        /// </summary>
-        /// <param name="plat">plat à modifier</param>
         public void ModifierPlat(Plat plat)
         {
             this.dao.ModifierPlat(plat);
         }
 
+        public void SupprimerPlat(long id)
+        {
+            this.dao.SupprimerPlat(id);
+        }
         #endregion
 
     }

@@ -18,6 +18,10 @@ namespace API_Footies.Services.Interfaces
         /// <param name="plat">Plat à modifier</param>
         void ModifierPlat(Plat plat);
 
-
+        /// <summary>
+        /// Supprimer un plat
+        /// </summary>
+        /// <param name="id"> Id du plat à supprimer </param>
+        void SupprimerPlat(long id);
     }
 }

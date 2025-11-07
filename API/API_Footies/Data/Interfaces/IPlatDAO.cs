@@ -21,5 +21,11 @@ namespace API_Footies.Data.Interfaces
         /// <param name="plat">Le plat à modifier</param>
         /// <returns>True si modifié False sinon</returns>
         bool ModifierPlat(Plat plat);
+
+        /// <summary>
+        /// Supprimer un plat
+        /// </summary>
+        /// <param name="id"> Id du plat à supprimer </param>
+        void SupprimerPlat(long id);
     }
 }
