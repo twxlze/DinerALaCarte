@@ -133,7 +133,7 @@ namespace IHM_Footies
                 if (result == true)
                 {
                     await this.vmPagePlat.ModifierPlat(fenetre.Plat);
-                    this.RafraichirListe();
+                    // this.RafraichirListe();
                 }
             }
         }
