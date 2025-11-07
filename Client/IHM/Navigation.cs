@@ -54,6 +54,28 @@ namespace IHM_Footies
         }
 
         /// <summary>
+        /// Permet de naviguer vers la fenêtre des groupes d'invités
+        /// </summary>
+        /// <param name="fenetreActuelle">La fenêtre actuelle à ferme</param>
+        public static void AllerGroupesInvites(Window fenetreActuelle)
+        {
+            VuePageGroupeInvite vueGroupesInvites = new VuePageGroupeInvite();
+            vueGroupesInvites.Show();
+            fenetreActuelle.Close();
+        }
+
+        /// <summary>
+        /// Permet de naviguer vers la fenêtre du formulaire de groupe d'invités
+        /// </summary>
+        /// <param name="fenetreActuelle">La fenêtre actuelle à ferme</param>
+        public static void AllerFormulaireGroupeInvite(Window fenetreActuelle)
+        {
+            VueFormulaireGroupeInvite vueFormulaireGroupeInvite = new VueFormulaireGroupeInvite();
+            vueFormulaireGroupeInvite.Show();
+            fenetreActuelle.Close();
+        }
+
+        /// <summary>
         /// Permet de fermer la fenêtre actuelle
         /// </summary>
         /// <param name="fenetreActuelle"> La fenêtre actuelle à fermer</param>

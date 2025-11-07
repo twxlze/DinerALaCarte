@@ -241,5 +241,10 @@ namespace IHM_Footies
             Navigation.FermerFenetre(this);
         }
         #endregion
+
+        private void BoutonGroupeInvite_Click(object sender, RoutedEventArgs e)
+        {
+            Navigation.AllerGroupesInvites(this);
+        }
     }
 }
