@@ -183,6 +183,11 @@ public partial class MainWindow : Window
         Navigation.AllerInvites(this);
     }
 
+    /// <summary>
+    /// Bouton pour aller à la page groupe invité
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void BoutonAllerGroupeInvite_Click(object sender, RoutedEventArgs e)
     {
         Navigation.AllerGroupesInvites(this);

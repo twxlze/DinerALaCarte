@@ -116,8 +116,16 @@ namespace IHM_Footies
             bool? result = fenetre.ShowDialog();
             if (result == true)
             {
+                /*
                 await this.vmPageInvite.AjouterInvite(fenetre.Invite);
                 this.RafraichirListe();
+                */
+                await this.vmPageInvite.AjouterInvite(fenetre.Invite);
+                VueInvite vue = new VueInvite(fenetre.Invite);
+                vue.MouseDown += (s, ev) => this.SelectionnerPersonne(vue);
+                vue.MouseDoubleClick += (s, ev) => this.OuvrirModification(vue);
+                this.vueInvite.Add(vue);
+                this.PanelListeInvites.Children.Add(vue);
             }
             /*
                // this.RafraichirListe();

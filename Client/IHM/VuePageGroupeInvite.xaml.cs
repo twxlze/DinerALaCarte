@@ -104,29 +104,64 @@ namespace IHM_Footies
         #endregion
 
         #region Boutons de navigation
+        /// <summary>
+        /// Bouton pour aller à la vue d'accueil
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BoutonVueAccueil(object sender, RoutedEventArgs e)
         {
             Navigation.AllerAccueil(this);
         }
 
+        /// <summary>
+        /// Bouton pour aller à la vue des invités
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BoutonInvite_Click(object sender, RoutedEventArgs e)
         {
             Navigation.AllerInvites(this);
         }
 
+        /// <summary>
+        /// Bouton pour aller à la vue d'accueil
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BoutonAccueil_Click(object sender, RoutedEventArgs e)
         {
             Navigation.AllerAccueil(this);
         }
 
+        /// <summary>
+        /// Bouton pour fermer la fenêtre
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ButonFermerFenetre_Click(object sender, RoutedEventArgs e)
         {
             Navigation.FermerFenetre(this);
         }
 
+        /// <summary>
+        /// Bouton pour aller à la vue des groupes invités
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BoutonGroupeInvite_Click(object sender, RoutedEventArgs e)
         {
             Navigation.AllerGroupesInvites(this);
+        }
+
+        /// <summary>
+        /// Bouton pour aller à la page plat
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BoutonAllerPlat_Click(object sender, RoutedEventArgs e)
+        {
+            Navigation.AllerPlat(this);
         }
         #endregion
     }
