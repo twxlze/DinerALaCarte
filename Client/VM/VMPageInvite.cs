@@ -110,7 +110,14 @@ namespace VM_Footies
             }
         }
         
-        
+        public async void ModifierInvite(VMInvite invite)
+        {
+            if (invite != null)
+            {
+                await this.inviteDAO.ModifierInvite(invite.Invite);
+                this.Notify("VMInvite");
+            }
+        }
 
         private void Notify(string message)
         {

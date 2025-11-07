@@ -96,7 +96,22 @@ namespace IHM_Footies
             }
         }
 
-        
+        private void BoutonModifierInvite_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.vmPageInvite.InviteSelectionne != null)
+            {
+                VueFormulaireInvite fenetre = new VueFormulaireInvite(this.vmPageInvite.InviteSelectionne);
+                bool? result = fenetre.ShowDialog();
+                if (result == true)
+                {
+                    this.vmPageInvite.ModifierInvite(fenetre.Invite);
+                    this.RafraichirListe();
+                }
+            }
+        }
+
+
+
         private void BoutonSupprimerInvite_Click(object sender, RoutedEventArgs e)
         {
             this.vmPageInvite.SupprimerInvite();
