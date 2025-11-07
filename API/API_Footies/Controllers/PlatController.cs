@@ -88,5 +88,16 @@ namespace API_Footies.Controllers
             return result;
         }
 
+        /// <summary>
+        /// Supprimer un plat
+        /// </summary>
+        /// <param name="id"> id du plat à supprimer </param>
+        /// <returns></returns>
+        [HttpDelete("SupprimerPlat")]
+        public void SupprimerInvite(long id)
+        {
+            this.service.SupprimerPlat(id);
+        }
+
     }
 }

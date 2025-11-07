@@ -62,7 +62,7 @@ namespace API_Footies.Data.DAO
             return modifie;
         }
 
-        public void SupprimerInvite(long id)
+        public void SupprimerPlat(long id)
         {
             using (SQLiteConnector connection = new SQLiteConnector())
             {
@@ -80,6 +80,5 @@ namespace API_Footies.Data.DAO
                 }
             }
         }
-
     }
 }
