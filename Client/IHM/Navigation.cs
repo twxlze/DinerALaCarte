@@ -46,6 +46,13 @@ namespace IHM_Footies
             fenetreActuelle.Close();
         }
 
+        public static void AllerFormulaireMenu(Window fenetreActuelle)
+        {
+            VueFormulaireMenu vueFormulaireMenu = new VueFormulaireMenu();
+            vueFormulaireMenu.Show();
+            fenetreActuelle.Close();
+        }
+
         /// <summary>
         /// Permet de fermer la fenêtre actuelle
         /// </summary>

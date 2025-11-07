@@ -32,4 +32,9 @@ public partial class MainWindow : Window
     {
         Navigation.FermerFenetre(this);
     }
+
+    private void CliqueBoutonMenu(object sender, RoutedEventArgs e)
+    {
+        Navigation.AllerFormulaireMenu(this);
+    }
 }
