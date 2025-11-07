@@ -27,6 +27,14 @@ namespace IHM_Footies
         #endregion
 
         #region Constructeur
+
+        /// <summary>
+        /// constructeur par défaut pour le designer
+        /// </summary>
+        public VueInvite()
+        {
+            InitializeComponent();
+        }
         public VueInvite(VMInvite invite)
         {
             this.invite = invite;
@@ -43,6 +51,9 @@ namespace IHM_Footies
 
             InitializeComponent();
         }
+
+        
+
         #endregion
 
         #region Méthodes
