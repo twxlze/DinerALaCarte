@@ -41,6 +41,15 @@ namespace API_Footies.Services.Realisations
         {
             this.dao.SupprimerPlat(id);
         }
+        public List<Plat> ListPlat()
+        {
+            return this.dao.ListPlat();
+        }
+
+        public bool EstDansUnMenu(long idInvite)
+        {
+            return this.dao.EstDansUnMenu(idInvite);
+        }
         #endregion
 
     }
