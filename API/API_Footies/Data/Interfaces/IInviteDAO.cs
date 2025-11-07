@@ -21,6 +21,11 @@ namespace API_Footies.Data.Interfaces
         bool ModifierInvite(Invite invite);
 
         /// <summary>
+        /// Récupérer la liste des invités de la base de données
+        /// </summary>
+        /// <returns> liste des invités </returns>
+        public List<Invite> ListInvite();
+
         /// Supprimer un invité
         /// </summary>
         /// <param name="id"> id de l'invité à supprimer </param>
