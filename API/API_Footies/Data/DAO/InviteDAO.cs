@@ -64,6 +64,36 @@ namespace API_Footies.Data.DAO
             return modifie;
         }
 
+
+
+        public List<Invite> ListInvite()
+        {
+            List<Invite> listeInvite = new List<Invite>();
+
+            using (SQLiteConnector connection = new SQLiteConnector())
+            {
+                if (connection == null)
+                {
+                    throw new Exception("Erreur de connexion à la base de données");
+                }
+                else
+                {
+                    var dataTable = connection.ExecuteQuery("SELECT * FROM Invite");
+                    foreach (DataRow? row in dataTable.Rows)
+                    {
+
+                        Invite invite = new Invite((long)row["idInvite"], row["nom"].ToString(), row["prenom"].ToString(), row["NumTel"].ToString(), row["mail"].ToString());
+
+                        listeInvite.Add(invite);
+                    }
+                }
+            }
+
+            return listeInvite;
+        }
+
+
+
         public void SupprimerInvite(long id)
         {
             using (SQLiteConnector connection = new SQLiteConnector())
@@ -75,13 +105,16 @@ namespace API_Footies.Data.DAO
                 else
                 {
                     var parameters = new Dictionary<string, object>()
-                    {
-                        {"@Id", id }
-                    };
+            {
+                {"@Id", id }
+            };
                     connection.ExecuteQuery("DELETE FROM Invite WHERE idInvite=@Id", parameters);
                 }
             }
         }
+
+
+
 
     }
 }
