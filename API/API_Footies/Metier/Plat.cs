@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace METIER_Footies.Metier
+﻿namespace API_Footies.Metier
 {
     public class Plat
     {
@@ -17,7 +10,7 @@ namespace METIER_Footies.Metier
         #endregion
 
         #region --- Enumérations ---
-        public enum CategoriePlat { aperitif, entree, plat, dessert }
+        public enum CategoriePlat {apéritif,entrée, plat, dessert }
         #endregion
 
         #region --- Propriétés ---
@@ -28,14 +21,7 @@ namespace METIER_Footies.Metier
         public long Id
         {
             get { return id; }
-            set
-            {
-                if (value < 0)
-                {
-                    throw new ArgumentException("l'id ne peux pas être négatif");
-                }
-                id = value;
-            }
+            set { id = value; }
         }
 
 
@@ -45,24 +31,16 @@ namespace METIER_Footies.Metier
         public string Nom
         {
             get { return nom; }
-            set
-            {
-
-                nom = value.ToUpper();
-            }
+            set { nom = value; }
         }
 
         /// <summary>
         /// Retourne ou modifie le prénom du plat
         /// </summary>
-        public string Description
+        public string? Description
         {
             get { return description; }
-            set
-            {
-
-                description = value;
-            }
+            set { description = value; }
         }
 
         /// <summary>
@@ -82,7 +60,7 @@ namespace METIER_Footies.Metier
         /// <param name="nom">nom du plat</param>
         /// <param name="description">description du plat</param>
         /// <param name="categorie">categorie du plat</param>
-        public Plat(long id, string nom, string description, CategoriePlat categorie)
+        public Plat(long id, string nom, string? description, CategoriePlat categorie)
         {
             this.id = id;
             this.nom = nom;
@@ -90,23 +68,5 @@ namespace METIER_Footies.Metier
             this.categorie = categorie;
         }
 
-        /// <summary>
-        /// Constructeur de copie d'un invité
-        /// </summary>
-        /// <param name="invite"> L'invité à copier </param>
-        public Plat(Plat plat)
-        {
-            this.id = plat.id;
-            this.nom = plat.nom;
-            this.description = plat.description;
-            this.categorie = plat.categorie;
-        }
-
-        public Plat()
-        {
-            this.nom = "";
-            this.description = "";
-            this.categorie = CategoriePlat.entree;
-        }
     }
 }
