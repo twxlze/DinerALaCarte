@@ -21,8 +21,15 @@ namespace METIER_Footies.Data
         /// <returns> Réponse http de l'API </returns>
         public async Task<HttpResponseMessage> AjouterInvite(Invite invite)
         {
-            HttpResponseMessage reponseHttp = await PostAsync("Invites/AjoutInvite", invite); 
-            return reponseHttp;
+            try
+            {
+                HttpResponseMessage reponseHttp = await PostAsync("Invites/AjoutInvite", invite);
+                return reponseHttp;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erreur lors de l'ajout de l'invité : " + ex.Message);
+            }
         }
 
         /// <summary>
@@ -42,5 +49,40 @@ namespace METIER_Footies.Data
             }
             return listeDesInvites;
         }
+
+        /// <summary>
+        /// Supprime un invité
+        /// </summary>
+        public async Task<HttpResponseMessage> SupprimerInvite(int idInvite)
+        {
+            try
+            {
+                HttpResponseMessage reponseHttp = await PostAsync("Invites/SupprimerInvite", idInvite);
+                return reponseHttp;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erreur lors de la suppression de l'invité : " + ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Modifier un invité
+        /// </summary>
+        /// <param name="invite"> L'invité à modifier </param>
+        /// <returns> Réponse http de l'API </returns>
+        public async Task<HttpResponseMessage> ModifierInvite(Invite invite)
+        {
+            try
+            {
+                HttpResponseMessage reponseHttp = await PostAsync("Invites/ModifierInvite", invite);
+                return reponseHttp;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erreur lors de la modification de l'invité : " + ex.Message);
+            }
+        }
+
     }
 }

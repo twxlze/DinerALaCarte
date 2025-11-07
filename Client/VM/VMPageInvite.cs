@@ -14,7 +14,19 @@ namespace VM_Footies
     {
         #region Attributs
         private List<VMInvite> listeVMInvite;
+        private VMInvite inviteSelectionne;
         private InviteDAO inviteDAO;
+        #endregion
+
+        #region Propriétés 
+        /// <summary>
+        /// Invité sélectionné dans la liste
+        /// </summary>
+        public VMInvite InviteSelectionne
+        {
+            get { return inviteSelectionne; }
+            set { this.inviteSelectionne = value; }
+        }
         #endregion
 
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -32,30 +44,74 @@ namespace VM_Footies
         {
             this.inviteDAO = new InviteDAO();
             this.listeVMInvite = new List<VMInvite>();
-
-            foreach (Invite invite in inviteDAO.ObtenirTout().Result)
+            
+            /*
+            foreach ( Invite invite in inviteDAO.ObtenirTout().Result)
             {
                 this.listeVMInvite.Add(new VMInvite(invite));
             }
+            */
+            
         }
         #endregion
 
         #region Méthodes
+        
+        /// <summary>
+        // Charge la liste des invités depuis la base de données
+        /// </summary>
+        public async void ChargerInvites()
+        {
+            this.listeVMInvite.Clear();
+            List<Invite> invites = await this.inviteDAO.ObtenirTout();
+            foreach (Invite invite in invites)
+            {
+                VMInvite vmInvite = new VMInvite(invite);
+                this.listeVMInvite.Add(vmInvite);
+            }
+            this.Notify("VMInvites");
+        }
+        
+
         /// <summary>
         /// Ajoute un invité à la liste des invités
         /// </summary>
         /// <param name="invite"> L'invité à ajouter </param>
-        public void AjouterInvite(VMInvite invite)
+        public async void AjouterInvite(VMInvite invite)
         {
             this.inviteDAO.AjouterInvite(invite.Invite);
             this.listeVMInvite.Add(invite);
             this.Notify("VMInvites");
         }
 
+        
+        /// <summary>
+        /// Supprime un invité de la liste des invités
+        /// </summary>
+        /// <param name="invite">l'invité à supprimer</param>
+        public async void SupprimerInvite()
+        {
+            if (this.inviteSelectionne != null)
+            {
+                int id = this.inviteSelectionne.Invite.Id;
+
+                if (id != 0)
+                    await this.inviteDAO.SupprimerInvite(id);
+
+                this.listeVMInvite.Remove(this.inviteSelectionne);
+                this.inviteSelectionne = null;
+
+                this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(VMInvites)));
+            }
+        }
+        
+        
+
         private void Notify(string message)
         {
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(message));
         }
+
         #endregion
     }
 }

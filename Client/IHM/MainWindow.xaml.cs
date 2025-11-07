@@ -8,6 +8,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using IHM_Footies;
 
 namespace IHM;
 
@@ -19,5 +20,16 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
+        WindowStartupLocation = WindowStartupLocation.CenterScreen;
+    }
+
+    private void ClickBoutonAjouterInvite(object sender, RoutedEventArgs e)
+    {
+        Navigation.AllerInvites(this);
+    }
+
+    private void ButonFermerFenetre_Click(object sender, RoutedEventArgs e)
+    {
+        Navigation.FermerFenetre(this);
     }
 }

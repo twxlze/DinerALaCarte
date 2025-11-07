@@ -28,6 +28,14 @@ namespace VM_Footies
 
         #region Propriétés
         /// <summary>
+        /// Id de l'invité
+        /// </summary>
+        public int Id
+        {
+            get => this.invite.Id;
+        }
+
+        /// <summary>
         // Nom de famille de l'invité
         /// </summary>
         /// <remarks> Le set notifie le changement de la propriété </remarks>
@@ -38,6 +46,7 @@ namespace VM_Footies
             {
                 this.invite.Nom = value;
                 this.Notify("Nom");
+                this.Notify("Identite");
             }
         }
 
@@ -52,6 +61,7 @@ namespace VM_Footies
             {
                 this.invite.Prenom = value;
                 this.Notify("Prenom");
+                this.Notify("Identite");
             }
         }
 
@@ -82,6 +92,11 @@ namespace VM_Footies
                 this.Notify("Email");
             }
         }
+
+        /// <summary>
+        /// Nom complet de l'invité (Prénom + Nom)
+        /// </summary>
+        public string Identite { get => $"{this.Prenom} {this.Nom}"; }
         #endregion
 
         #region Constructeurs
@@ -93,6 +108,16 @@ namespace VM_Footies
         {
             this.invite = invite;
         }
+
+        public VMInvite(VMInvite modele)
+        {
+            this.invite = new Invite(modele.invite);
+        }
+
+        public VMInvite()
+        {
+            this.invite = new Invite();
+        }
         #endregion
 
         #region Méthodes
@@ -103,6 +128,18 @@ namespace VM_Footies
         private void Notify(string message)
         {
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(message));
+        }
+
+        /// <summary>
+        /// Modifie les informations de l'invité
+        /// </summary>
+        /// <param name="invite"> L'invité avec les nouvelles informations </param>
+        public void ModifierInvite(VMInvite invite)
+        {
+            this.Nom = invite.Nom;
+            this.Prenom = invite.Prenom;
+            this.Telephone = invite.Telephone;
+            this.Email = invite.Email;
         }
         #endregion
     }

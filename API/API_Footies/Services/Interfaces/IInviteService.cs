@@ -21,6 +21,10 @@ namespace API_Footies.Services.Interfaces
         /// </summary>
         /// <returns> liste des invités</returns>
         public List<Invite> ListInvite();
+        /// Supprimer un invité de la base de données
+        /// </summary>
+        /// <param name="id"> id de l'invité à supprimer </param>
+        void SupprimerInvite(long id);
 
     }
 }

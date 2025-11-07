@@ -45,5 +45,16 @@ namespace API_Footies.Controllers
             this.service.ModifierInvite(invite);
         }
 
+        /// <summary>
+        /// Supprimer un invité
+        /// </summary>
+        /// <param name="id"> id de l'invité à supprimé </param>
+        /// <returns></returns>
+        [HttpDelete("SupprimerInvite")]
+        public void SupprimerInvite(long id)
+        {
+            this.service.SupprimerInvite(id);
+        }
+
     }
 }

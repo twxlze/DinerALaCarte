@@ -65,7 +65,8 @@ namespace API_Footies.Data.DAO
         }
 
 
-        public List<Invite> ListInvite()
+
+       public List<Invite> ListInvite()
         {
             List<Invite> listeInvite = new List<Invite>();
 
@@ -90,7 +91,29 @@ namespace API_Footies.Data.DAO
 
             return listeInvite;
         }
-
-
+        
+        
+        
+        public void SupprimerInvite(long id)
+        {
+          using (SQLiteConnector connection = new SQLiteConnector())
+          {
+            if (connection == null)
+            {
+              throw new Exception("Erreur de connexion à la base de données");
+            }
+            else
+            {
+               var parameters = new Dictionary<string, object>()
+            {
+                {"@Id", id }
+            };
+            connection.ExecuteQuery("DELETE FROM Invite WHERE idInvite=@Id", parameters);
+        }
     }
+}
+        
+
+
+
 }

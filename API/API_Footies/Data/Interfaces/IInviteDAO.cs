@@ -13,11 +13,11 @@ namespace API_Footies.Data.Interfaces
         /// <param name="invite"> Invité à ajouter </param>
         /// <returns> True si ajouté False sinon </returns>
         bool AjouterInvite(Invite invite);
+
         /// <summary>
         /// Modifier un invité
         /// </summary>
         /// <param name="invite">L'invité</param>
-
         bool ModifierInvite(Invite invite);
 
         /// <summary>
@@ -26,5 +26,9 @@ namespace API_Footies.Data.Interfaces
         /// <returns> liste des invités </returns>
         public List<Invite> ListInvite();
 
+        /// Supprimer un invité
+        /// </summary>
+        /// <param name="id"> id de l'invité à supprimer </param>
+        public void SupprimerInvite(long id);
     }
 }
