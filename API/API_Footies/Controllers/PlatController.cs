@@ -30,31 +30,11 @@ namespace API_Footies.Controllers
         /// </summary>
         /// <param name="plat">plat à ajouter</param>
         /// <returns>Le plat avec Id modifié</returns>
-        [HttpPost("AjoutPlat")]
-        [ProducesResponseType(type: typeof(Plat), StatusCodes.Status201Created)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public IActionResult AjouterPlat(Metier.Plat plat)
+        [HttpPost("Ajoutplat")]
+        public Metier.Plat AjouterInvite(Metier.Plat plat)
         {
-            IActionResult result;
-
-            try
-            {
-                if (string.IsNullOrWhiteSpace(plat.Nom))
-                {
-                    result = BadRequest("Veuillez donner un nom");
-                }
-                else
-                {
-                    this.service.AjouterPlat(plat);
-                    result = Created(" ", plat);
-                }
-            }
-            catch (Exception ex)
-            {
-                result = BadRequest($"Erreur lors de l'ajout du plat : {ex.Message}");
-            }
-
-            return result;
+            this.service.AjouterPlat(plat);
+            return plat;
         }
 
         /// <summary>
@@ -62,42 +42,39 @@ namespace API_Footies.Controllers
         /// </summary>
         /// <param name="plat">le plat</param>
         [HttpPut("ModifierPlat")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public IActionResult ModifierPlat(Metier.Plat plat)
-        {  
-            IActionResult result;
-
-            try
-            {
-                if (string.IsNullOrWhiteSpace(plat.Nom))
-                {
-                    result = BadRequest("Veuillez indiquer le nom");
-                }
-                else
-                {
-                    this.service.ModifierPlat(plat);
-                    result = Ok();
-                }
-            }
-            catch (Exception ex)
-            {
-                result = BadRequest($"Erreur lors de la modification du plat : {ex.Message}");
-            }
-
-            return result;
+        public void ModifierPlat(Metier.Plat plat)
+        {
+            this.service.ModifierPlat(plat);
         }
 
         /// <summary>
         /// Supprimer un plat
         /// </summary>
-        /// <param name="id"> id du plat à supprimer </param>
-        /// <returns></returns>
+        /// <param name="id"> id du plat à supprimé </param>
         [HttpDelete("SupprimerPlat")]
-        public void SupprimerInvite(long id)
+        public void SupprimerPlat(long id)
         {
             this.service.SupprimerPlat(id);
         }
 
+        /// <summary>
+        /// Récupérer la liste des plats
+        ///</summary>
+        [HttpGet("ListePlat")]
+        public List<Metier.Plat> ListPlat()
+        {
+            return this.service.ListPlat();
+        }
+
+        /// <summary>
+        /// Vérifie si un palt est associé à un ou plusieurs menu
+        /// </summary>
+        /// <param name="id">id du plat</param>
+        /// <returns>True si le plat fait partie d'au moins un menu, False sinon</returns>
+        [HttpGet("EstDansUnMenu")]
+        public bool EstDansUnMenu(long id)
+        {
+            return this.service.EstDansUnMenu(id);
+        }
     }
 }

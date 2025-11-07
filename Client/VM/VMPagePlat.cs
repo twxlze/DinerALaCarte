@@ -41,13 +41,6 @@ namespace VM_Footies
         {
             this.PlatDAO = new PlatDAO();
             this.listeVMPlat = new List<VMPlat>();
-
-            /*
-            foreach (Plat plat in PlatDAO.ObtenirTout().Result)
-            {
-                this.listeVMPlat.Add(new VMPlat(plat));
-            }
-            */
         }
         #endregion
 
@@ -67,7 +60,6 @@ namespace VM_Footies
                 VMPlat vmPlat = new VMPlat(plat);
                 this.listeVMPlat.Add(vmPlat);
             }
-            this.Notify("VMPlat");
         }
 
         /// <summary>
@@ -84,9 +76,9 @@ namespace VM_Footies
         /// <param name="vmplat"> Le plat à ajouter </param>
         public async Task AjouterPlat(VMPlat vmplat)
         {
-            this.PlatDAO.AjouterPlat(vmplat.Plat);
+            await this.PlatDAO.AjouterPlat(vmplat.Plat);
             this.listeVMPlat.Add(vmplat);
-            this.Notify("VMplat");
+            this.Notify("VMPlat"); 
         }
 
         /// <summary>
