@@ -11,6 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using IHM;
+using VM_Footies;
 
 namespace IHM_Footies
 {
@@ -19,10 +21,87 @@ namespace IHM_Footies
     /// </summary>
     public partial class VuePagePlat : Window
     {
+        #region Attributs
+        private VMPagePlat vmPagePlat;
+        private List<VuePlat> vuePlat;
+        #endregion
+
+        #region Constructeur
+        /// <summary>
+        /// Constructeur par défaut d'une page de plat
+        /// </summary>
         public VuePagePlat()
         {
+            this.vuePlat = new List<VuePlat>();
+            this.vmPagePlat = new VMPagePlat();
+            this.vmPagePlat.PropertyChanged += VMPagePlat_PropertyChanged;
+
             InitializeComponent();
+            WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            this.RafraichirListe();
         }
+        #endregion
+
+        #region Méthodes
+        /// <summary>
+        /// Gestion du changement de propriété dans le VMPagePlat
+        /// </summary>
+        /// <param name="sender"> </param>
+        /// <param name="e"></param>
+        private void VMPagePlat_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "VMPlat") this.RafraichirListe();
+        }
+
+        /// <summary>
+        /// Rafraîchit la liste des plats affichés
+        /// </summary>
+        private async void RafraichirListe()
+        {
+            this.PanelListePlat.Children.Clear();
+            this.vuePlat.Clear();
+
+            await this.vmPagePlat.ChargerPlatsAsync();
+
+            foreach (VMPlat plat in this.vmPagePlat.VMPlat)
+            {
+                VuePlat vue = new VuePlat(plat);
+                vue.MouseDown += (s, e) => this.SelectionnerPlat(vue);
+                vue.MouseDoubleClick += (s, e) => this.OuvrirModification(vue);
+                this.vuePlat.Add(vue);
+                this.PanelListePlat.Children.Add(vue);
+            }
+        }
+
+        /// <summary>
+        /// Ouvre la fenêtre de modification d'un plat
+        /// </summary>
+        /// <param name="vue"></param>
+        private void OuvrirModification(VuePlat vue)
+        {
+            VMPlat memoire = new VMPlat(vue.Plat);
+            VueFormulairePlat fenetre = new VueFormulairePlat(vue.Plat);
+            bool? result = fenetre.ShowDialog();
+            if (result == false)
+            {
+                vue.Plat.ModifierPlat(memoire);
+            }
+        }
+
+        /// <summary>
+        /// Sélectionne un plat dans la liste des plats
+        /// </summary>
+        /// <param name="vue"> VuePlat sélectionnée </param>
+        public void SelectionnerPlat(VuePlat vue)
+        {
+            this.vmPagePlat.PlatSelectionne = vue.Plat;
+            foreach (VuePlat vueP in this.vuePlat)
+            {
+                vueP.Deselectionner();
+            }
+            vue.Selectionner();
+        }
+        #endregion
 
         #region Boutons 
         /// <summary>
@@ -30,16 +109,15 @@ namespace IHM_Footies
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void BoutonAjouterPlat_Click(object sender, RoutedEventArgs e)
+        private async void BoutonAjouterPlat_Click(object sender, RoutedEventArgs e)
         {
-            /*
             VueFormulairePlat fenetre = new VueFormulairePlat();
             bool? result = fenetre.ShowDialog();
             if (result == true)
             {
-                this.vmPagePlat.AjouterPlat(fenetre.Plat);
+                await this.vmPagePlat.AjouterPlat(fenetre.Plat);
                 this.RafraichirListe();
-            }*/
+            }
         }
 
         /// <summary>
@@ -47,18 +125,18 @@ namespace IHM_Footies
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void BoutonModifierPlat_Click(object sender, RoutedEventArgs e)
-        {/*
+        private async void BoutonModifierPlat_Click(object sender, RoutedEventArgs e)
+        {
             if (this.vmPagePlat.PlatSelectionne != null)
             {
                 VueFormulairePlat fenetre = new VueFormulairePlat(this.vmPagePlat.PlatSelectionne);
                 bool? result = fenetre.ShowDialog();
                 if (result == true)
                 {
-                    this.vmPagePlat.ModifierPlat(fenetre.Plat);
+                    await this.vmPagePlat.ModifierPlat(fenetre.Plat);
                     this.RafraichirListe();
                 }
-            }*/
+            }
         }
 
 
@@ -68,7 +146,7 @@ namespace IHM_Footies
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private async void BoutonSupprimerPlat_Click(object sender, RoutedEventArgs e)
-        {/*
+        {
             if (this.vmPagePlat.PlatSelectionne != null)
             {
                 MessageBoxResult resultat = MessageBox.Show(
@@ -84,7 +162,7 @@ namespace IHM_Footies
                     if (!suppressionReussie)
                     {
                         MessageBox.Show(
-                            "Suppression impossible, le plat fait partie d'un ou plusieurs menus.",
+                            "Suppression impossible, le plat est utilisé dans un ou plusieurs menus.",
                             "Suppression impossible",
                             MessageBoxButton.OK,
                             MessageBoxImage.Warning);
@@ -102,30 +180,31 @@ namespace IHM_Footies
                     "Aucun plat sélectionné",
                     MessageBoxButton.OK,
                     MessageBoxImage.Warning);
-            }*/
+            }
         }
 
         #endregion
 
         #region Boutons de navigation
-        /// <summary>
-        /// Bouton pour aller à la vue d'accueil
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void BoutonVueAccueil(object sender, RoutedEventArgs e)
-        {
-            Navigation.AllerAccueil(this);
-        }
 
         /// <summary>
-        /// Bouton pour aller à la vue du formulaire d'invité
+        /// Bouton pour aller à la vue d'accueil
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void BoutonAccueil_Click(object sender, RoutedEventArgs e)
         {
             Navigation.AllerAccueil(this);
+        }
+
+        /// <summary>
+        /// Bouton pour aller à la vue des invités
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BoutonInvite_Click(object sender, RoutedEventArgs e)
+        {
+            Navigation.AllerInvites(this);
         }
 
         /// <summary>

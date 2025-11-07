@@ -82,7 +82,7 @@ namespace VM_Footies
         /// Ajoute un plat à la liste des plats
         /// </summary>
         /// <param name="vmplat"> Le plat à ajouter </param>
-        public void AjouterPlat(VMPlat vmplat)
+        public async Task AjouterPlat(VMPlat vmplat)
         {
             this.PlatDAO.AjouterPlat(vmplat.Plat);
             this.listeVMPlat.Add(vmplat);
@@ -93,7 +93,7 @@ namespace VM_Footies
         /// Modifie un plat dans la liste des plats
         /// </summary>
         /// <param name="plat"></param>
-        public async void ModifierPlat(VMPlat plat)
+        public async Task ModifierPlat(VMPlat plat)
         {
             if (plat != null)
             {
