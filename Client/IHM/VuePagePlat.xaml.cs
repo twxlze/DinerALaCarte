@@ -60,7 +60,6 @@ namespace IHM_Footies
             this.PanelListePlat.Children.Clear();
             this.vuePlat.Clear();
 
-            // ✅ Charger les plats (sans notification maintenant)
             await this.vmPagePlat.ChargerPlatsAsync();
 
             foreach (VMPlat plat in this.vmPagePlat.VMPlat)
