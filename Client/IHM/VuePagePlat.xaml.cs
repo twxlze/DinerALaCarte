@@ -115,7 +115,7 @@ namespace IHM_Footies
             if (result == true)
             {
                 await this.vmPagePlat.AjouterPlat(fenetre.Plat);
-                this.RafraichirListe();
+               // this.RafraichirListe();
             }
         }
 
