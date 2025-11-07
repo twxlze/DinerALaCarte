@@ -113,7 +113,33 @@ namespace API_Footies.Data.DAO
             }
         }
 
+        
+        public bool EstDansUnGroupe(long idInvite)
+        {
+            using (SQLiteConnector connection = new SQLiteConnector())
+            {
+                if (connection == null)
+                {
+                    throw new Exception("Erreur de connexion à la base de données");
+                }
+                else
+                {
+                    var parameters = new Dictionary<string, object>()
+            {
+                {"@IdInvite", idInvite }
+            };
 
+                    var dataTable = connection.ExecuteQuery("SELECT COUNT(*) as NombreGroupes FROM Invite_Groupe WHERE IdInvite = @IdInvite", parameters);
+
+                    if (dataTable.Rows.Count > 0)
+                    {
+                        int nombreGroupes = Convert.ToInt32(dataTable.Rows[0]["NombreGroupes"]);
+                        return nombreGroupes > 0;
+                    }
+                    return false;
+                }
+            }
+        }
 
 
     }

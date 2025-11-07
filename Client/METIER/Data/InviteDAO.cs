@@ -84,5 +84,29 @@ namespace METIER_Footies.Data
             }
         }
 
+        /// <summary>
+        /// Vérifie si un invité est associé à un ou plusieurs groupes
+        /// </summary>
+        /// <param name="idInvite">L'id de l'invité</param>
+        /// <returns>True si l'invité fait partie d'au moins un groupe, False sinon</returns>
+        public async Task<bool> EstDansUnGroupe(long idInvite)
+        {
+            try
+            {
+                HttpResponseMessage reponseHttp = await GetAsync($"Invites/EstDansUnGroupe?id={idInvite}");
+
+                if (reponseHttp.IsSuccessStatusCode)
+                {
+                    string reponse = await reponseHttp.Content.ReadAsStringAsync();
+                    return JsonSerializer.Deserialize<bool>(reponse, options);
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erreur lors de la vérification de l'association de l'invité aux groupes : " + ex.Message);
+            }
+        }
+
     }
 }

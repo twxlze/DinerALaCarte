@@ -146,20 +146,41 @@ namespace IHM_Footies
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void BoutonSupprimerInvite_Click(object sender, RoutedEventArgs e)
+        private async void BoutonSupprimerInvite_Click(object sender, RoutedEventArgs e)
         {
+            if (this.vmPageInvite.InviteSelectionne == null)
+            {
+                MessageBox.Show(
+                    "Veuillez sélectionner un invité à supprimer.",
+                    "Aucun invité sélectionné",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning);
+                return;
+            }
+
             MessageBoxResult resultat = MessageBox.Show(
-            "Êtes-vous sûr de vouloir supprimer cet invité ?",
-            "Confirmation de suppression",
-            MessageBoxButton.YesNo,
-            MessageBoxImage.Question);
+                "Êtes-vous sûr de vouloir supprimer cet invité ?",
+                "Confirmation de suppression",
+                MessageBoxButton.YesNo,
+                MessageBoxImage.Question);
 
             if (resultat == MessageBoxResult.Yes)
             {
-                this.vmPageInvite.SupprimerInvite();
-                this.RafraichirListe();
+                bool suppressionReussie = await this.vmPageInvite.SupprimerInvite();
+                
+                if (!suppressionReussie)
+                {
+                    MessageBox.Show(
+                        "Suppression impossible, l'invité fait partie d'un ou plusieurs groupes.",
+                        "Suppression impossible",
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Warning);
+                }
+                else
+                {
+                    this.RafraichirListe();
+                }
             }
-
         }
 
         #endregion

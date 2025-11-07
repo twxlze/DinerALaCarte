@@ -48,6 +48,10 @@ namespace API_Footies.Services.Realisations
             this.dao.SupprimerInvite(id);
         }
 
+        public bool EstDansUnGroupe(long idInvite)
+        {
+            return this.dao.EstDansUnGroupe(idInvite);
+        }
         #endregion
 
     }

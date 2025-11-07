@@ -26,5 +26,11 @@ namespace API_Footies.Services.Interfaces
         /// <param name="id"> id de l'invité à supprimer </param>
         void SupprimerInvite(long id);
 
+        /// <summary>
+        /// Vérifie si un invité est associé à un ou plusieurs groupes
+        /// </summary>
+        /// <param name="idInvite">L'id de l'invité</param>
+        /// <returns>True si l'invité fait partie d'au moins un groupe, False sinon</returns>
+        bool EstDansUnGroupe(long idInvite);
     }
 }

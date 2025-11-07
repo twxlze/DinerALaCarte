@@ -94,20 +94,29 @@ namespace VM_Footies
         /// <summary>
         /// Supprime un invité de la liste des invités
         /// </summary>
-        /// <param name="invite">l'invité à supprimer</param>
-        public async void SupprimerInvite()
+        /// <returns>True si la suppression a réussi, False sinon</returns>
+        public async Task<bool> SupprimerInvite()
         {
             if (this.inviteSelectionne != null)
             {
                 long id = this.inviteSelectionne.Invite.Id;
 
                 if (id != 0)
+                {
+                    bool estDansUnGroupe = await this.inviteDAO.EstDansUnGroupe(id);
+                    if (estDansUnGroupe)
+                    {
+                        return false;
+                    }
+                    
                     await this.inviteDAO.SupprimerInvite(id);
+                }
 
                 this.listeVMInvite.Remove(this.inviteSelectionne);
                 this.inviteSelectionne = null;
-                this.Notify("VMInvite");
+                return true;
             }
+            return false;
         }
 
         /// <summary>

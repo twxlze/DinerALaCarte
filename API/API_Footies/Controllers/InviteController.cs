@@ -65,6 +65,17 @@ namespace API_Footies.Controllers
         {
            return this.service.ListInvite();
         }
+
+        /// <summary>
+        /// Vérifie si un invité est associé à un ou plusieurs groupes
+        /// </summary>
+        /// <param name="id">id de l'invité</param>
+        /// <returns>True si l'invité fait partie d'au moins un groupe, False sinon</returns>
+        [HttpGet("EstDansUnGroupe")]
+        public bool EstDansUnGroupe(long id)
+        {
+            return this.service.EstDansUnGroupe(id);
+        }
     }
 
 }
