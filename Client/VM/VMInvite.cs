@@ -59,7 +59,7 @@ namespace VM_Footies
             get => this.invite.Prenom;
             set
             {
-                this.invite.Prenom = value;
+                this.invite.Prenom = char.ToUpper(value[0]) + value.Substring(1);
                 this.Notify("Prenom");
                 this.Notify("Identite");
             }

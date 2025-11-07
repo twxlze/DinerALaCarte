@@ -31,8 +31,16 @@ namespace IHM_Footies
         {
             this.invite = invite;
             this.DataContext = this.invite;
-            this.Height = 20; /// Juste pour tester
-            this.Background = Brushes.AliceBlue; /// Juste pour tester
+
+            this.Height = 30;
+            this.Width = 425;
+            this.Background = Brushes.AliceBlue;
+            this.FontSize = 14;
+            this.HorizontalContentAlignment = HorizontalAlignment.Center;
+            this.VerticalContentAlignment = VerticalAlignment.Center;
+            this.BorderBrush = new SolidColorBrush(Colors.Gray);
+            this.BorderThickness = new Thickness(0.4);
+
             InitializeComponent();
         }
         #endregion

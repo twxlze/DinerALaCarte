@@ -75,7 +75,7 @@ namespace METIER_Footies.Data
         {
             try
             {
-                HttpResponseMessage reponseHttp = await PostAsync("Invites/ModifierInvite", invite);
+                HttpResponseMessage reponseHttp = await PutAsync("Invites/ModifierInvite", invite);
                 return reponseHttp;
             }
             catch (Exception ex)
