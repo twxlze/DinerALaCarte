@@ -35,6 +35,16 @@ namespace API_Footies.Services.Realisations
         {
             this.dao.AjouterPlat(plat);
         }
+
+        /// <summary>
+        /// Modifie un plat
+        /// </summary>
+        /// <param name="plat">plat à modifier</param>
+        public void ModifierPlat(Plat plat)
+        {
+            this.dao.ModifierPlat(plat);
+        }
+
         #endregion
 
     }

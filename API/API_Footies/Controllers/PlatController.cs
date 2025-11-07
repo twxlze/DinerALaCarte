@@ -32,11 +32,60 @@ namespace API_Footies.Controllers
         /// <returns>Le plat avec Id modifié</returns>
         [HttpPost("AjoutPlat")]
         [ProducesResponseType(type: typeof(Plat), StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult AjouterPlat(Metier.Plat plat)
         {
-            this.service.AjouterPlat(plat);
-            return Created(" ", plat);
-            //return plat;
+            IActionResult result;
+
+            try
+            {
+                if (string.IsNullOrWhiteSpace(plat.Nom))
+                {
+                    result = BadRequest("Veuillez donner un nom");
+                }
+                else
+                {
+                    this.service.AjouterPlat(plat);
+                    result = Created(" ", plat);
+                }
+            }
+            catch (Exception ex)
+            {
+                result = BadRequest($"Erreur lors de l'ajout du plat : {ex.Message}");
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Modifier un plat
+        /// </summary>
+        /// <param name="plat">le plat</param>
+        [HttpPut("ModifierPlat")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public IActionResult ModifierPlat(Metier.Plat plat)
+        {  
+            IActionResult result;
+
+            try
+            {
+                if (string.IsNullOrWhiteSpace(plat.Nom))
+                {
+                    result = BadRequest("Veuillez indiquer le nom");
+                }
+                else
+                {
+                    this.service.ModifierPlat(plat);
+                    result = Ok();
+                }
+            }
+            catch (Exception ex)
+            {
+                result = BadRequest($"Erreur lors de la modification du plat : {ex.Message}");
+            }
+
+            return result;
         }
 
     }

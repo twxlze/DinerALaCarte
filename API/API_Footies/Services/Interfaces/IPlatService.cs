@@ -12,6 +12,12 @@ namespace API_Footies.Services.Interfaces
         /// <returns> Plat ajouter </returns>
         void AjouterPlat(Plat plat);
 
+        /// <summary>
+        /// Modifier un plat
+        /// </summary>
+        /// <param name="plat">Plat à modifier</param>
+        void ModifierPlat(Plat plat);
+
 
     }
 }
