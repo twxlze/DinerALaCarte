@@ -76,6 +76,16 @@ namespace VM_Footies
             this.groupeDAO = new GroupeInviteDAO();
         }
 
+        /// <summary>
+        /// Constructeur par défaut
+        /// </summary>
+        public VMGroupeInvite()
+        {
+            this.groupe = new GroupeInvites();
+            this.listeVMInviteDuGroupe = new List<VMInvite>();
+            this.groupeDAO = new GroupeInviteDAO();
+        }
+
         #endregion
 
 
