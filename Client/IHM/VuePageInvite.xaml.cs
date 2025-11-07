@@ -93,7 +93,7 @@ namespace IHM_Footies
         /// Sélectionne une personne dans la liste des invités
         /// </summary>
         /// <param name="vue"> VueInvite sélectionnée </param>
-        private void SelectionnerPersonne(VueInvite vue)
+        public void SelectionnerPersonne(VueInvite vue)
         {
             this.vmPageInvite.InviteSelectionne = vue.Invite;
             foreach (VueInvite vueI in this.vueInvite)
