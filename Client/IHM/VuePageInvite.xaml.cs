@@ -142,5 +142,10 @@ namespace IHM_Footies
             Navigation.FermerFenetre(this);
         }
         #endregion
+
+        private void BoutonGroupes_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
