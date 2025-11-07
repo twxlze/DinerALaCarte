@@ -61,5 +61,25 @@ namespace API_Footies.Data.DAO
             }
             return modifie;
         }
+
+        public void SupprimerInvite(long id)
+        {
+            using (SQLiteConnector connection = new SQLiteConnector())
+            {
+                if (connection == null)
+                {
+                    throw new Exception("Erreur de connexion à la base de données");
+                }
+                else
+                {
+                    var parameters = new Dictionary<string, object>()
+                    {
+                        {"@Id", id }
+                    };
+                    connection.ExecuteQuery("DELETE FROM Plat WHERE idPlat=@Id", parameters);
+                }
+            }
+        }
+
     }
 }
