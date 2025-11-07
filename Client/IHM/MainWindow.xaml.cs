@@ -60,16 +60,6 @@ public partial class MainWindow : Window
     }
 
     /// <summary>
-    /// Bouton pour aller à la vue des invités
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
-    private void ClickBoutonAjouterInvite(object sender, RoutedEventArgs e)
-    {
-        Navigation.AllerInvites(this);
-    }
-
-    /// <summary>
     /// Bouton pour fermer la fenêtre
     /// </summary>
     /// <param name="sender"></param>
@@ -101,6 +91,39 @@ public partial class MainWindow : Window
             this.PanelListeInvitesAccueil.Children.Add(vue);
         }
     }
+
+    #region Boutons de navigation
+    /// <summary>
+    /// Bouton pour aller à la page plat
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void BoutonAllerPlat_Click(object sender, RoutedEventArgs e)
+    {
+        Navigation.AllerPlat(this);
+    }
+
+    /// <summary>
+    /// Bouton pour aller à l'accueil
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void BoutonAllerAccueil_Click(object sender, RoutedEventArgs e)
+    {
+        Navigation.AllerAccueil(this);
+    }
+
+    /// <summary>
+    /// Bouton pour aller à la page invité
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void BoutonAllerInvite_Click(object sender, RoutedEventArgs e)
+    {
+        Navigation.AllerInvites(this);
+    }
+
+    #endregion
 
 
 }

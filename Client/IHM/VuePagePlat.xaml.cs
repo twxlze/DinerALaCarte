@@ -216,6 +216,16 @@ namespace IHM_Footies
         {
             Navigation.FermerFenetre(this);
         }
+
+        /// <summary>
+        /// Bouton pour aller à la page plat
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BoutonPlat_Click(object sender, RoutedEventArgs e)
+        {
+            Navigation.AllerPlat(this);
+        }
         #endregion
     }
 }
