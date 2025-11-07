@@ -6,8 +6,8 @@
         private long id;
         private string nom;
         private string prenom;
-        private string ?telephone;
-        private string ?email;
+        private string telephone;
+        private string email;
         #endregion
 
 
@@ -44,7 +44,7 @@
         /// <summary>
         /// Retourne ou modifie le téléphone de l'invité
         /// </summary>
-        public string ?Telephone
+        public string Telephone
         {
             get { return telephone; }
             set { telephone = value; }
@@ -53,13 +53,36 @@
         /// <summary>
         /// Retourne ou modifie l'email de l'invité
         /// </summary>
-        public string ?Email
+        public string Email
         {
             get { return email; }
             set { email = value; }
         }
 
         #endregion
+
+        /// <summary>
+        /// Constructeur d'un invité
+        /// </summary>
+        /// <param name="nom">nom de l'invité</param>
+        /// <param name="prenom">prénom de l'invité</param>
+        /// <param name="telephone">numéro de téléphone de l'invité</param>
+        /// <param name="email">email de l'invité</param>
+        public Invite(long id, string nom, string prenom, string telephone, string email)
+        {
+            this.id = id;
+            this.nom = nom;
+            this.prenom = prenom;
+            this.telephone = telephone;
+            this.email = email;
+        }
+
+        /// <summary>
+        /// Constructeur par défaut d'un invité
+        /// </summary>
+        public Invite()
+        {
+        }
 
     }
 }
