@@ -46,6 +46,13 @@ namespace IHM_Footies
             fenetreActuelle.Close();
         }
 
+        public static void AllerPlat(Window fenetreActuelle)
+        {
+            VuePagePlat vuePlats = new VuePagePlat();
+            vuePlats.Show();
+            fenetreActuelle.Close();
+        }
+
         /// <summary>
         /// Permet de fermer la fenêtre actuelle
         /// </summary>
