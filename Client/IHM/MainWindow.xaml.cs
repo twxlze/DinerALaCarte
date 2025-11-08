@@ -1,4 +1,4 @@
-﻿using System.Text;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -181,16 +181,6 @@ public partial class MainWindow : Window
     private void BoutonAllerInvite_Click(object sender, RoutedEventArgs e)
     {
         Navigation.AllerInvites(this);
-    }
-
-    /// <summary>
-    /// Bouton pour aller à la page groupe invité
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
-    private void BoutonAllerGroupeInvite_Click(object sender, RoutedEventArgs e)
-    {
-        Navigation.AllerGroupesInvites(this);
     }
 
     #endregion
