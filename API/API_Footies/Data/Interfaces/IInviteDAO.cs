@@ -21,9 +21,21 @@ namespace API_Footies.Data.Interfaces
         bool ModifierInvite(Invite invite);
 
         /// <summary>
+        /// Récupérer la liste des invités de la base de données
+        /// </summary>
+        /// <returns> liste des invités </returns>
+        public List<Invite> ListInvite();
+
         /// Supprimer un invité
         /// </summary>
         /// <param name="id"> id de l'invité à supprimer </param>
         public void SupprimerInvite(long id);
+
+        /// <summary>
+        /// Vérifie si un invité est associé à un ou plusieurs groupes
+        /// </summary>
+        /// <param name="idInvite">L'id de l'invité</param>
+        /// <returns>True si l'invité fait partie d'au moins un groupe, False sinon</returns>
+        bool EstDansUnGroupe(long idInvite);
     }
 }

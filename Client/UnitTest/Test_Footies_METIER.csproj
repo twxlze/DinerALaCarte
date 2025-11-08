@@ -24,6 +24,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\METIER\METIER_Footies.csproj" />
+    <ProjectReference Include="..\VM\VM_Footies.csproj" />
   </ItemGroup>
 
   <ItemGroup>

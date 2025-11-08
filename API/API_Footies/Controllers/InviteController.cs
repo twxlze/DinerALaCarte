@@ -56,5 +56,26 @@ namespace API_Footies.Controllers
             this.service.SupprimerInvite(id);
         }
 
+
+        /// <summary>
+        /// Récupérer la liste des invités
+        ///</summary>
+        [HttpGet("ListeInvite")]
+        public List<Metier.Invite> ListInvite()
+        {
+            return this.service.ListInvite();
+        }
+
+        /// <summary>
+        /// Vérifie si un invité est associé à un ou plusieurs groupes
+        /// </summary>
+        /// <param name="id">id de l'invité</param>
+        /// <returns>True si l'invité fait partie d'au moins un groupe, False sinon</returns>
+        [HttpGet("EstDansUnGroupe")]
+        public bool EstDansUnGroupe(long id)
+        {
+            return this.service.EstDansUnGroupe(id);
+        }
     }
+
 }

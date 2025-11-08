@@ -77,5 +77,12 @@
             this.email = email;
         }
 
+        /// <summary>
+        /// Constructeur par défaut d'un invité
+        /// </summary>
+        public Invite()
+        {
+        }
+
     }
 }
