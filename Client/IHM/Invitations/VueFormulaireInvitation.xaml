@@ -1,0 +1,234 @@
+﻿<Window x:Class="IHM_Footies.Invitations.VueFormulaireInvitation"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:IHM_Footies.Invitations"
+        mc:Ignorable="d"
+                Title="VuePageInvitation" Height="450" Width="800"
+        Background="#F9F9F9"
+        WindowStyle="None"
+        AllowsTransparency="True">
+
+
+    <Window.Resources>
+        <BitmapImage x:Key="LogoHostably" UriSource="/Ressources/LogoHostably.png"/>
+        <Style x:Key="BoutonMenu" TargetType="Button">
+            <Setter Property="Background" Value="#F9F9F9"/>
+            <Setter Property="Foreground" Value="#B44B3E"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="20,0"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="FontFamily" Value="Poppins"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#E0E0E0"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="StyleBoutonMenu" TargetType="Button">
+            <Setter Property="Background" Value="#8C2F26"/>
+            <Setter Property="Foreground" Value="#F9F9F9"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="20,0"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="FontFamily" Value="Poppins"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                    CornerRadius="10"
+                    Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#B44B3E"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+
+    <Grid Cursor="Hand">
+        <!-- Définition des lignes et colonnes pour le menu à gauche -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*"/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Bouton fermer -->
+        <Button x:Name="CloseButton"
+        Content="✖"
+        FontSize="16"
+        FontWeight="Bold"
+        Foreground="#B44B3E"
+        Background="Transparent"
+        BorderThickness="0"
+        Cursor="Hand"
+        HorizontalAlignment="Right"
+        VerticalAlignment="Top"
+        Margin="0,5,8,0"
+        Click="ButonFermerFenetre_Click"
+        Grid.Column="1000"/>
+
+        <!-- Menu à gauche -->
+        <Border BorderBrush="#8C2F26"  BorderThickness="0,0,2,0" Grid.Column="0" Grid.RowSpan="9">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Text="HOSTABLY" FontSize="19" FontWeight="Bold" Foreground="#B44B3E" VerticalAlignment="Center" Height="27" Margin="73,0,23,0" FontFamily="Montserrat"/>
+                <Button x:Name="BoutonAccueil"  Content="🏠 Accueil" Grid.Row="1" Style="{StaticResource BoutonMenu}" Click="BoutonAccueil_Click" />
+                <Button x:Name="BoutonInvites" Content="👤 Invités" Grid.Row="2" Style="{StaticResource BoutonMenu}" Click="BoutonInvite_Click"/>
+                <Button x:Name="BoutonGroupes" Content="👥 Groupes d'invités" Grid.Row="3" Style="{StaticResource BoutonMenu}"/>
+                <Button x:Name="BoutonInvitations" Content="🎟️ Invitations" Background="#BFBFBF" Grid.Row="4" Style="{StaticResource BoutonMenu}"/>
+                <Button x:Name="BoutonMenus" Content="📋 Menus" Grid.Row="5" Style="{StaticResource BoutonMenu}" FontWeight="Bold" Click="BoutonMenu_Click"/>
+                <Button x:Name="BoutonPlats" Content="🍽️ Plats" Grid.Row="6" Style="{StaticResource BoutonMenu}" Click="BoutonPlat_Click"/>
+                <Button x:Name="BoutonUtilisateur" Content="👤" Grid.Row="8" Style="{StaticResource BoutonMenu}" Margin="0,0,100,0" HorizontalContentAlignment="Center" FontSize="25"/>
+                <Button x:Name="BoutonReglage" Content="⚙️" Grid.Row="8" Style="{StaticResource BoutonMenu}" HorizontalContentAlignment="Center" Margin="100,0,0,0" FontSize="25"/>
+            </Grid>
+        </Border>
+
+
+        <Border BorderBrush="#8C2F26" 
+                Grid.Column="1" Grid.RowSpan="7" 
+                Margin="10,52,20,16"
+                BorderThickness="2"
+                CornerRadius="10"
+                Padding="5">
+            <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="2">
+                <StackPanel Orientation="Vertical" x:Name="PanelListeMenu">
+
+                </StackPanel>
+            </ScrollViewer>
+        </Border>
+
+        <!-- Nom du menu -->
+
+        <TextBlock Grid.Column="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Nom de l'invitation : " VerticalAlignment="Top" FontWeight="Bold" FontSize="20" Foreground="#B44B3E" Margin="29,63,0,0" Grid.RowSpan="2"/>
+        <TextBox Grid.Column="1" Margin="228,65,86,33" Height="25" Text="{Binding NomMenu, UpdateSourceTrigger=PropertyChanged}" Grid.RowSpan="2"/>
+
+        <!-- Menus -->
+        <TextBlock Grid.Column="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Menus" VerticalAlignment="Top" FontWeight="Bold" FontSize="20" Foreground="#B44B3E" Margin="77,13,0,0" Grid.Row="1" Grid.RowSpan="2"/>
+
+        <Border BorderBrush="#8C2F26" 
+        Grid.Column="1" Grid.RowSpan="5" 
+        Margin="40,10,424,24"
+        BorderThickness="3"
+        CornerRadius="10"
+        Padding="5" Grid.Row="2">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <ItemsControl ItemsSource="{Binding Menu}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <CheckBox Content="{Binding Nom}"
+                              IsChecked="{Binding MenuSelectionne}"
+                              Margin="5"
+                              FontSize="12"
+                              Foreground="#333333"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+        </Border>
+
+        <!-- Groupe invités -->
+
+        <TextBlock Grid.Column="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Groupe invités" VerticalAlignment="Top" FontWeight="Bold" FontSize="20" Foreground="#B44B3E" Margin="211,13,0,0" Grid.Row="1"/>
+
+        <Border BorderBrush="#8C2F26" 
+        Grid.Column="1" Grid.RowSpan="5" 
+        Margin="195,10,237,25"
+        BorderThickness="3"
+        CornerRadius="10"
+        Padding="5" Grid.Row="2">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <!-- Remplacer par GroupeInvites -->
+                <ItemsControl ItemsSource="{Binding GroupeInvite}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <CheckBox Content="{Binding Nom}"
+                      IsChecked="{Binding GroupeSelectionne}"
+                      Margin="5"
+                      FontSize="12"
+                      Foreground="#333333"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+        </Border>
+
+
+        <!--Calendrier -->
+
+        <TextBlock Grid.Column="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Date" VerticalAlignment="Top" FontWeight="Bold" FontSize="20" Foreground="#B44B3E" Margin="457,18,0,0" Grid.Row="1" Grid.RowSpan="2"/>
+
+        <StackPanel Orientation="Horizontal" Margin="368,8,34,21" Grid.RowSpan="5" Grid.Column="1" Grid.Row="2">
+
+            <Calendar 
+            SelectedDate="1/10/2025"
+            DisplayDate="1/10/2025"
+            DisplayDateStart="1/10/2025"
+            DisplayDateEnd="4/18/2100" Height="183" Width="204"/>
+            <TextBlock TextWrapping="Wrap" Text="Groupe invités" FontWeight="Bold" FontSize="20" Foreground="#B44B3E"/>
+
+            <Calendar
+            xmlns:sys="clr-namespace:System;assembly=mscorlib" Margin="20" SelectionMode="MultipleRange"  
+            IsTodayHighlighted="false" 
+            DisplayDate="1/1/2025"
+            DisplayDateEnd="1/31/2025"
+            >
+                <Calendar.SelectedDates>
+                    <sys:DateTime>1/5/2025</sys:DateTime>
+                    <sys:DateTime>1/12/2025</sys:DateTime>
+                    <sys:DateTime>1/14/2025</sys:DateTime>
+                    <sys:DateTime>1/13/2025</sys:DateTime>
+                    <sys:DateTime>1/15/2025</sys:DateTime>
+                    <sys:DateTime>1/27/2025</sys:DateTime>
+                    <sys:DateTime>4/2/2025</sys:DateTime>
+                </Calendar.SelectedDates>
+            </Calendar>
+        </StackPanel>
+        <TextBlock Grid.Column="1" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Gestion des invitations" VerticalAlignment="Top" FontWeight="Bold" FontSize="20" Foreground="#B44B3E" Margin="0,20,0,0"/>
+        <Image Source="{StaticResource ResourceKey=LogoHostably}" Margin="15,10,121,17" />
+    </Grid>
+</Window>
