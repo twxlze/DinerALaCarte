@@ -60,7 +60,7 @@ namespace IHM_Footies.Menu
             this.PanelListeMenu.Children.Clear();
             this.vueMenu.Clear();
 
-            await this.vmPageMenu.ChargerMenusAsync();
+            await this.vmPageMenu.ChargerMenus();
 
             foreach (VMMenu menu in this.vmPageMenu.VMMenu)
             {

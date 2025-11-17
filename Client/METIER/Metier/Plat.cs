@@ -4,7 +4,6 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using METIER_Footies.Enum;
 
 namespace METIER_Footies.Metier
 {
@@ -15,6 +14,10 @@ namespace METIER_Footies.Metier
         private string nom;
         private string? description;
         private CategoriePlat categorie;
+        #endregion
+
+        #region --- Enumérations ---
+        public enum CategoriePlat { aperitif, entree, plat, dessert }
         #endregion
 
         #region --- Propriétés ---
@@ -45,7 +48,8 @@ namespace METIER_Footies.Metier
             set
             {
 
-                nom = value.ToUpper();
+                nom = value;
+
             }
         }
 
@@ -65,7 +69,7 @@ namespace METIER_Footies.Metier
         /// <summary>
         /// Retourne ou modifie la catégorie du plat
         /// </summary>
-        public CategoriePlat CategoriePlat
+        public CategoriePlat Categorie
         {
             get { return categorie; }
             set { categorie = value; }

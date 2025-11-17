@@ -29,7 +29,7 @@ namespace METIER_Footies.Data
             }
         }
 
-        public async Task<List<Menu>> ObtenirToutLesMenu()
+        public async Task<List<Menu>> ObtenirTousLesMenus()
         {
             List<Menu> listeDesMenus = new List<Menu>();
 

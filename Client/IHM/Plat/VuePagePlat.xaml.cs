@@ -46,8 +46,8 @@ namespace IHM_Footies
         /// <summary>
         /// Gestion du changement de propriété dans le VMPagePlat
         /// </summary>
-        /// <param name="sender"> </param>
-        /// <param name="e"></param>
+        /// <param name="sender"> L'expéditeur </param>
+        /// <param name="e"> Les arguments de l'événement </param>
         private void VMPagePlat_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             if (e.PropertyName == "VMPlat") this.RafraichirListe();
@@ -61,7 +61,7 @@ namespace IHM_Footies
             this.PanelListePlat.Children.Clear();
             this.vuePlat.Clear();
 
-            await this.vmPagePlat.ChargerPlatsAsync();
+            await this.vmPagePlat.ChargerPlats();
 
             foreach (VMPlat plat in this.vmPagePlat.VMPlat)
             {
@@ -76,7 +76,7 @@ namespace IHM_Footies
         /// <summary>
         /// Ouvre la fenêtre de modification d'un plat
         /// </summary>
-        /// <param name="vue"></param>
+        /// <param name="vue"> La vue du plat à modifier </param>
         private void OuvrirModification(VuePlat vue)
         {
             VMPlat memoire = new VMPlat(vue.Plat);
@@ -107,24 +107,30 @@ namespace IHM_Footies
         /// <summary>
         /// Ouvre la fenêtre d'ajout d'un plat
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender"> l'expéditeur </param>
+        /// <param name="e"> Les arguments de l'événement </param>
         private async void BoutonAjouterPlat_Click(object sender, RoutedEventArgs e)
         {
             VueFormulairePlat fenetre = new VueFormulairePlat();
             bool? result = fenetre.ShowDialog();
             if (result == true)
             {
-                await this.vmPagePlat.AjouterPlat(fenetre.Plat);
-               // this.RafraichirListe();
+                try
+                {
+                    await this.vmPagePlat.AjouterPlat(fenetre.Plat);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Une erreur est survenue lors de l'ajout du plat : {ex.Message}", "Erreur d'ajout", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
         }
 
         /// <summary>
         /// Ouvre la fenêtre de modification d'un plat sélectionné
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender"> L'expéditeur </param>
+        /// <param name="e"> Les arguments de l'événement </param>
         private async void BoutonModifierPlat_Click(object sender, RoutedEventArgs e)
         {
             if (this.vmPagePlat.PlatSelectionne != null)
@@ -134,7 +140,6 @@ namespace IHM_Footies
                 if (result == true)
                 {
                     await this.vmPagePlat.ModifierPlat(fenetre.Plat);
-                    // this.RafraichirListe();
                 }
             }
         }
@@ -143,8 +148,8 @@ namespace IHM_Footies
         /// <summary>
         /// Supprime le plat sélectionné
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender"> L'expéditeur </param>
+        /// <param name="e"> Les arguments de l'événement </param>
         private async void BoutonSupprimerPlat_Click(object sender, RoutedEventArgs e)
         {
             if (this.vmPagePlat.PlatSelectionne != null)
@@ -190,8 +195,8 @@ namespace IHM_Footies
         /// <summary>
         /// Bouton pour aller à la vue d'accueil
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender"> L'expéditeur </param>
+        /// <param name="e"> Les arguments de l'événement </param>
         private void BoutonAccueil_Click(object sender, RoutedEventArgs e)
         {
             Navigation.AllerAccueil(this);
@@ -200,8 +205,8 @@ namespace IHM_Footies
         /// <summary>
         /// Bouton pour aller à la vue des invités
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender"> L'expéditeur </param>
+        /// <param name="e"> Les arguments de l'événement </param>
         private void BoutonInvite_Click(object sender, RoutedEventArgs e)
         {
             Navigation.AllerInvites(this);
@@ -210,8 +215,8 @@ namespace IHM_Footies
         /// <summary>
         /// Bouton pour fermer la fenêtre
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender"> L'expéditeur du clic </param>
+        /// <param name="e"> Les arguments de l'événement </param>
         private void ButonFermerFenetre_Click(object sender, RoutedEventArgs e)
         {
             Navigation.FermerFenetre(this);
@@ -220,8 +225,8 @@ namespace IHM_Footies
         /// <summary>
         /// Bouton pour aller à la page plat
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender"> L'expéditeur </param>
+        /// <param name="e"> les arguments de l'événement </param>
         private void BoutonPlat_Click(object sender, RoutedEventArgs e)
         {
             Navigation.AllerPlat(this);

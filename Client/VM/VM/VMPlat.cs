@@ -4,7 +4,6 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using METIER_Footies.Enum;
 using METIER_Footies.Metier;
 using static METIER_Footies.Metier.Plat;
 
@@ -46,9 +45,11 @@ namespace VM_Footies.VM
             get => plat.Nom;
             set
             {
-                plat.Nom = value;
-                Notify("Nom");
-                Notify("Identite");
+                if (!string.IsNullOrWhiteSpace(value))
+                    plat.Nom = char.ToUpper(value[0]) + value.Substring(1);
+                else
+                    plat.Nom = value;
+                Notify("Prenom");
             }
         }
 
@@ -73,20 +74,14 @@ namespace VM_Footies.VM
         /// <remarks> Le set notifie le changement de la propriété </remarks>
         public CategoriePlat Categorie
         {
-            get => plat.CategoriePlat;
+            get => plat.Categorie;
             set
             {
-                plat.CategoriePlat = value;
+                plat.Categorie = value;
                 Notify("Categorie");
                 Notify("Identite");
             }
         }
-
-
-        /// <summary>
-        /// Information du plat (Nom + catégorie)
-        /// </summary>
-        public string Identite { get => $"{Nom} catégorie : {Categorie}"; }
         #endregion
 
         #region Constructeurs

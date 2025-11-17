@@ -27,7 +27,7 @@ namespace METIER_Footies.Data.Interfaces
         /// Obtient tous les menus
         /// </summary>
         /// <returns> Liste de tous les menus </returns>
-        Task<List<Menu>> ObtenirToutLesMenu();
+        Task<List<Menu>> ObtenirTousLesMenus();
 
         /// <summary>
         /// Supprime un menu

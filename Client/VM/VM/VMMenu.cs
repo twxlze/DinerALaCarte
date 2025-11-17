@@ -9,7 +9,6 @@ using METIER_Footies.Data;
 using METIER_Footies.Data.Interfaces;
 using METIER_Footies.Metier;
 using VM_Footies.VM_Element_Selectionne;
-using METIER_Footies.Enum;
 
 namespace VM_Footies.VM
 {
@@ -164,62 +163,13 @@ namespace VM_Footies.VM
         {
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(message));
         }
-        #endregion
-
-        #region Méthodes de gestion des plats
-        /// <summary>
-        /// Charge tous les plats disponibles et les organise par catégorie
-        /// </summary>
-        /// <param name="platDAO">DAO pour accéder aux plats</param>
-        public async Task ChargerPlats(IPlatDAO platDAO)
-        {
-            List<Plat> tousLesPlats = await platDAO.ObtenirTout();
-
-            HashSet<long> idDesPlats = new HashSet<long>();
-            if (menu.Plat != null)
-            {
-                foreach (Plat plat in menu.Plat)
-                {
-                    idDesPlats.Add(plat.Id);
-                }
-            }
-
-            PlatsAperitif.Clear();
-            PlatsEntree.Clear();
-            PlatsPlat.Clear();
-            PlatsDessert.Clear();
-
-            foreach (Plat plat in tousLesPlats)
-            {
-                bool estSelectionne = idDesPlats.Contains(plat.Id);
-                VMPlatSelectionne vmPlat = new VMPlatSelectionne(plat, estSelectionne);
-
-                vmPlat.PropertyChanged += VmPlat_PropertyChanged;
-
-                switch (plat.CategoriePlat)
-                {
-                    case CategoriePlat.aperitif:
-                        PlatsAperitif.Add(vmPlat);
-                        break;
-                    case CategoriePlat.entree:
-                        PlatsEntree.Add(vmPlat);
-                        break;
-                    case CategoriePlat.plat:
-                        PlatsPlat.Add(vmPlat);
-                        break;
-                    case CategoriePlat.dessert:
-                        PlatsDessert.Add(vmPlat);
-                        break;
-                }
-            }
-        }
 
         /// <summary>
         /// Gère le changement de sélection d'un plat
         /// </summary>
         private void VmPlat_PropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == "EstSelectionne")
+            if (e.PropertyName == "PlatSelectionne")
             {
                 SynchroniserPlatsSelectionnes();
             }
@@ -231,7 +181,16 @@ namespace VM_Footies.VM
         public void SynchroniserPlatsSelectionnes()
         {
             List<Plat> platsSelectionnes = new List<Plat>();
+            SynchroniserPlatsAperitifs(platsSelectionnes);
+            SynchroniserPlatsEntree(platsSelectionnes);
+            SynchroniserPlatsPlats(platsSelectionnes);
+            SynchroniserPlatsDesserts(platsSelectionnes);
+            this.menu.Plat = platsSelectionnes;
+            Notify("Plats");
+        }
 
+        private void SynchroniserPlatsAperitifs(List<Plat> platsSelectionnes)
+        {
             foreach (VMPlatSelectionne vmPlat in PlatsAperitif)
             {
                 if (vmPlat.EstSelectionne)
@@ -239,7 +198,10 @@ namespace VM_Footies.VM
                     platsSelectionnes.Add(vmPlat.Plat);
                 }
             }
+        }
 
+        private void SynchroniserPlatsEntree(List<Plat> platsSelectionnes)
+        {
             foreach (VMPlatSelectionne vmPlat in PlatsEntree)
             {
                 if (vmPlat.EstSelectionne)
@@ -247,7 +209,10 @@ namespace VM_Footies.VM
                     platsSelectionnes.Add(vmPlat.Plat);
                 }
             }
+        }
 
+        private void SynchroniserPlatsPlats(List<Plat> platsSelectionnes)
+        {
             foreach (VMPlatSelectionne vmPlat in PlatsPlat)
             {
                 if (vmPlat.EstSelectionne)
@@ -255,7 +220,10 @@ namespace VM_Footies.VM
                     platsSelectionnes.Add(vmPlat.Plat);
                 }
             }
+        }
 
+        private void SynchroniserPlatsDesserts(List<Plat> platsSelectionnes)
+        {
             foreach (VMPlatSelectionne vmPlat in PlatsDessert)
             {
                 if (vmPlat.EstSelectionne)
@@ -263,8 +231,15 @@ namespace VM_Footies.VM
                     platsSelectionnes.Add(vmPlat.Plat);
                 }
             }
-            this.menu.Plat = platsSelectionnes;
-            Notify("Plats");
+        }
+
+        /// <summary>
+        /// Ajoute un gestionnaire d'événement pour un VMPlatSelectionne
+        /// </summary>
+        /// <param name="vmInvite">Le plat sélectionnable</param>
+        public void GestionnaireEvenement(VMPlatSelectionne vmPlat)
+        {
+            vmPlat.PropertyChanged += VmPlat_PropertyChanged;
         }
         #endregion
     }

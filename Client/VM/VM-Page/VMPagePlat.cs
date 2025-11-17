@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using METIER_Footies;
 using METIER_Footies.Data;
+using METIER_Footies.Data.Interfaces;
 using METIER_Footies.Metier;
 using VM_Footies.VM;
 
@@ -16,10 +17,13 @@ namespace VM_Footies
         #region Attributs
         private List<VMPlat> listeVMPlat;
         private VMPlat platSelectionne;
-        private PlatDAO PlatDAO;
+        private IPlatDAO PlatDAO;
         #endregion
 
         #region Propriétés
+        /// <summary>
+        /// Plat sélectionné par l'utilisateur 
+        /// </summary>
         public VMPlat PlatSelectionne
         {
             get { return platSelectionne; }
@@ -50,7 +54,7 @@ namespace VM_Footies
         /// Charge la liste des plats depuis la base de données
         /// </summary>
         /// <returns> Tâche asynchrone </returns>
-        public async Task ChargerPlatsAsync()
+        public async Task ChargerPlats()
         {
             this.listeVMPlat.Clear();
 
@@ -61,25 +65,24 @@ namespace VM_Footies
                 VMPlat vmPlat = new VMPlat(plat);
                 this.listeVMPlat.Add(vmPlat);
             }
-        }
-
-        /// <summary>
-        /// Charge la liste des plats depuis la base de données
-        /// </summary>
-        public async Task ChargerPlats()
-        {
-            await ChargerPlatsAsync();
+            this.listeVMPlat = this.listeVMPlat.OrderBy(vm => vm.Plat.Nom).ToList();
         }
 
         /// <summary>
         /// Ajoute un plat à la liste des plats
         /// </summary>
         /// <param name="vmplat"> Le plat à ajouter </param>
+        /// <returns> Tâche asynchrone </returns>
+        /// <exception cref="Exception"> Lance une exception si le plat existe déjà </exception>
         public async Task AjouterPlat(VMPlat vmplat)
         {
+            if (PlatExiste(vmplat))
+            {
+                throw new Exception("Un plat avec ce nom existe déjà.");
+            }
             await this.PlatDAO.AjouterPlat(vmplat.Plat);
             this.listeVMPlat.Add(vmplat);
-            this.Notify("VMPlat"); 
+            this.Notify("VMPlat");
         }
 
         /// <summary>
@@ -95,6 +98,10 @@ namespace VM_Footies
             }
         }
 
+        /// <summary>
+        /// Supprime le plat sélectionné de la liste des plats
+        /// </summary>
+        /// <returns> true si la suppression a réussi, false sinon </returns>
         public async Task<bool> SupprimerPlat()
         {
             bool suppressionReussie = false;
@@ -125,6 +132,20 @@ namespace VM_Footies
             return suppressionReussie;
         }
 
+        /// <summary>
+        /// Vérifie si un plat existe déjà dans la liste des plats
+        /// </summary>
+        /// <param name="plat"> Le plat à vérifier </param>
+        /// <returns> True si le plat existe, False sinon </returns>
+        public bool PlatExiste(VMPlat plat)
+        {
+            return this.listeVMPlat.Any(p => p.Plat.Nom.Equals(plat.Plat.Nom, StringComparison.OrdinalIgnoreCase));
+        }
+
+        /// <summary>
+        /// Notifie le changement d'une propriété
+        /// </summary>
+        /// <param name="message"></param>
         private void Notify(string message)
         {
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(message));
