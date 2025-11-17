@@ -31,8 +31,15 @@ namespace API_Footies.Controllers
         [HttpPost("AjoutInvite")]
         public Metier.Invite AjouterInvite(Metier.Invite invite)
         {
-            this.service.AjouterInvite(invite);
-            return invite;
+            try
+            {
+                this.service.AjouterInvite(invite);
+                return invite;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erreur lors de l'ajout de l'invité : " + ex.Message);
+            }
         }
 
         /// <summary>
