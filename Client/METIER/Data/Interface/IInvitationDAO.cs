@@ -13,10 +13,11 @@ namespace METIER_Footies.Data.Interface
     public interface IInvitationDAO
     {
         /// <summary>
-        /// Ajoute une invitation
+        /// Ajouter une invitation
         /// </summary>
-        /// <param name="invitation"> Invitation à ajouter </param>
-        /// <returns> Une réponse HTTP </returns>
+        /// <param name="invitation"> L'invitation à ajouter </param>
+        /// <returns>Une réponse HTTP</returns>
+        /// <exception cref="Exception">Lancé si une erreur se produit lors de l'envoi de l'invitation. Le message d'exception comprend des détails sur l'erreur.</exception>
         Task<HttpResponseMessage> AjouterInvitation(Invitation invitation);
 
         /// <summary>
@@ -35,7 +36,7 @@ namespace METIER_Footies.Data.Interface
         /// <summary>
         /// Supprime une invitation
         /// </summary>
-        /// <param name="idInvitation">L'id de l'invitation</param>
+        /// <param name="idInvitation">L'id de l'invitation à supprimer </param>
         /// <returns> Une réponse HTPP</returns>
         Task<HttpResponseMessage> SupprimerInvitation(long idInvitation);
     }
