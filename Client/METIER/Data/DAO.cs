@@ -17,7 +17,7 @@ namespace METIER_Footies.Data
     {
         #region Attributs
         private HttpClient httpClient;
-        private string adressAPI = "https://10.128.207.31:8081/";
+        private string adressAPI = "https://localhost:7230/";
         #endregion
 
         #region Constructeurs
@@ -26,16 +26,7 @@ namespace METIER_Footies.Data
         /// </summary>
         public DAO()
         {
-            HttpClientHandler handler = new HttpClientHandler();
-            handler.ServerCertificateCustomValidationCallback = (message, cert, chain,
-            sslPolicyErrors) => {
-                if (cert.GetCertHashString() == "CB73C7199CFECD6220039863157B859E13E36B63") // empreinte SHA-1
-                {
-                    return true;
-                }
-                return false;
-            };
-            this.httpClient = new HttpClient(handler);
+            httpClient = new HttpClient();
         }
 
         #endregion
@@ -80,7 +71,7 @@ namespace METIER_Footies.Data
         /// </summary>
         /// <param name="demande"> adresse de la demande</param>
         /// <param name="objet"> objet à envoyer dans le body</param>
-        /// <returns></returns>
+        /// <returns> Réponse http de l'API</returns>
         public async Task<HttpResponseMessage> PutAsync(string demande, object objet)
         {
             string adresseEnvoi = adressAPI + demande;
@@ -91,7 +82,7 @@ namespace METIER_Footies.Data
         /// Suppression d'une donnée de façon asynchrone à l'API : DELETE pour supprimer des données
         /// </summary>
         /// <param name="demande"> adresse de la demande</param>
-        /// <returns></returns>
+        /// <returns> Réponse http de l'API</returns>
         public async Task<HttpResponseMessage> DeleteAsync(string demande)
         {
             string adresseEnvoi = adressAPI + demande;
