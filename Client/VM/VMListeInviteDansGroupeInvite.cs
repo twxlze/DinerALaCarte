@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading.Tasks;
+using VM_Footies.VM;
 
 namespace VM_Footies
 {
