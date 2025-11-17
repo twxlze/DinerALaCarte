@@ -196,6 +196,15 @@ public partial class MainWindow : Window
     }
 
     /// <summary>
+    /// Bouton pour aller au menu
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void BoutonAllerMenu_Click(object sender, RoutedEventArgs e)
+    {
+        Navigation.AllerMenu(this);
+    }
+    /// <summary>
     /// Bouton pour aller à la page invité
     /// </summary>
     /// <param name="sender"></param>
