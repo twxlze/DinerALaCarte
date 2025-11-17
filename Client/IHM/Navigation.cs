@@ -72,6 +72,10 @@ namespace IHM_Footies
         {
             VueFormulaireGroupeInvite vueFormulaireGroupeInvite = new VueFormulaireGroupeInvite();
             vueFormulaireGroupeInvite.Show();
+        public static void AllerFormulaireMenu(Window fenetreActuelle)
+        {
+            VueFormulaireMenu vueFormulaireMenu = new VueFormulaireMenu();
+            vueFormulaireMenu.Show();
             fenetreActuelle.Close();
         }
 

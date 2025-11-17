@@ -6,11 +6,13 @@ USER $APP_UID
 WORKDIR /app
 EXPOSE 8080
 EXPOSE 8081
+ENV ASPNETCORE_URLS="https://*:8081;http://*:8080"
 
 
 # Cette phase est utilisée pour générer le projet de service
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
+RUN dotnet dev-certs https --trust
 WORKDIR /src
 COPY ["API_Footies/API_Footies.csproj", "API_Footies/"]
 RUN dotnet restore "./API_Footies/API_Footies.csproj"
@@ -26,5 +28,8 @@ RUN dotnet publish "./API_Footies.csproj" -c $BUILD_CONFIGURATION -o /app/publis
 # Cette phase est utilisée en production ou lors de l’exécution à partir de VS en mode normal (par défaut quand la configuration de débogage n’est pas utilisée)
 FROM base AS final
 WORKDIR /app
+ENV ASPNETCORE_Kestrel__Certificates__Default__Path="/https/thecertif.pfx"
+COPY --from=publish --chmod=555 /root/.dotnet/corefx/cryptography/x509stores/my/* /https/thecertif.pfx
 COPY --from=publish /app/publish .
+COPY --chmod=666 ["API_Footies/DataBase.db", "."]
 ENTRYPOINT ["dotnet", "API_Footies.dll"]

@@ -17,7 +17,7 @@ namespace METIER_Footies.Data
     {
         #region Attributs
         private HttpClient httpClient;
-        private string adressAPI = "https://localhost:7230/";
+        private string adressAPI = "https://10.128.207.31:8081/";
         #endregion
 
         #region Constructeurs
@@ -26,8 +26,18 @@ namespace METIER_Footies.Data
         /// </summary>
         public DAO()
         {
-            httpClient = new HttpClient();
+            HttpClientHandler handler = new HttpClientHandler();
+            handler.ServerCertificateCustomValidationCallback = (message, cert, chain,
+            sslPolicyErrors) => {
+                if (cert.GetCertHashString() == "CB73C7199CFECD6220039863157B859E13E36B63") // empreinte SHA-1
+                {
+                    return true;
+                }
+                return false;
+            };
+            this.httpClient = new HttpClient(handler);
         }
+
         #endregion
 
         #region Méthodes protégées
