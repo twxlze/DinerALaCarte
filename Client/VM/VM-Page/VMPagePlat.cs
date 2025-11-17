@@ -66,7 +66,7 @@ namespace VM_Footies
         /// <summary>
         /// Charge la liste des plats depuis la base de données
         /// </summary>
-        public async void ChargerPlats()
+        public async Task ChargerPlats()
         {
             await ChargerPlatsAsync();
         }
