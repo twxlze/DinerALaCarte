@@ -10,6 +10,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using IHM_Footies;
 using VM_Footies;
+using VM_Footies.VM;
 
 namespace IHM;
 

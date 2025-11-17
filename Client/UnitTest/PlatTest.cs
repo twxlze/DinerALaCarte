@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using METIER_Footies.Metier;
-using VM_Footies;
+using VM_Footies.VM;
 using static METIER_Footies.Metier.Plat;
 
 namespace Test_Footies_METIER

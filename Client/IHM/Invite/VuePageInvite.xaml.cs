@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using IHM;
 using VM_Footies;
+using VM_Footies.VM;
 
 namespace IHM_Footies
 {

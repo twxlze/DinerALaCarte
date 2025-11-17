@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using METIER_Footies.Metier;
 
-namespace VM_Footies
+namespace VM_Footies.VM
 {
     /// <summary>
     /// Classe ViewModel pour un invité
@@ -23,7 +23,7 @@ namespace VM_Footies
         /// <summary>
         /// Invite associée au VMInvite
         /// </summary>
-        public Invite Invite => this.invite;
+        public Invite Invite => invite;
 
 
         #region Propriétés
@@ -32,7 +32,7 @@ namespace VM_Footies
         /// </summary>
         public long Id
         {
-            get => this.invite.Id;
+            get => invite.Id;
         }
 
         /// <summary>
@@ -41,12 +41,12 @@ namespace VM_Footies
         /// <remarks> Le set notifie le changement de la propriété </remarks>
         public string Nom
         {
-            get => this.invite.Nom;
+            get => invite.Nom;
             set
             {
-                this.invite.Nom = value;
-                this.Notify("Nom");
-                this.Notify("Identite");
+                invite.Nom = value;
+                Notify("Nom");
+                Notify("Identite");
             }
         }
 
@@ -56,15 +56,15 @@ namespace VM_Footies
         /// <remarks> Le set notifie le changement de la propriété </remarks>
         public string Prenom
         {
-            get => this.invite.Prenom;
+            get => invite.Prenom;
             set
             {
                 if (!string.IsNullOrWhiteSpace(value))
-                    this.invite.Prenom = char.ToUpper(value[0]) + value.Substring(1);
+                    invite.Prenom = char.ToUpper(value[0]) + value.Substring(1);
                 else
-                    this.invite.Prenom = value;
-                this.Notify("Prenom");
-                this.Notify("Identite");
+                    invite.Prenom = value;
+                Notify("Prenom");
+                Notify("Identite");
             }
         }
 
@@ -74,11 +74,11 @@ namespace VM_Footies
         /// <remarks> Le set notifie le changement de la propriété </remarks>
         public string Telephone
         {
-            get => this.invite.Telephone;
+            get => invite.Telephone;
             set
             {
-                this.invite.Telephone = value;
-                this.Notify("Telephone");
+                invite.Telephone = value;
+                Notify("Telephone");
             }
         }
 
@@ -88,18 +88,18 @@ namespace VM_Footies
         /// <remarks> Le set notifie le changement de la propriété </remarks>
         public string Email
         {
-            get => this.invite.Email;
+            get => invite.Email;
             set
             {
-                this.invite.Email = value;
-                this.Notify("Email");
+                invite.Email = value;
+                Notify("Email");
             }
         }
 
         /// <summary>
         /// Nom complet de l'invité (Prénom + Nom)
         /// </summary>
-        public string Identite { get => $"{this.Prenom} {this.Nom}"; }
+        public string Identite { get => $"{Prenom} {Nom}"; }
         #endregion
 
         #region Constructeurs
@@ -118,7 +118,7 @@ namespace VM_Footies
         /// <param name="modele"> Le VMInvite à copier </param>
         public VMInvite(VMInvite modele)
         {
-            this.invite = new Invite(modele.invite);
+            invite = new Invite(modele.invite);
         }
 
         /// <summary>
@@ -126,7 +126,7 @@ namespace VM_Footies
         /// </summary>
         public VMInvite()
         {
-            this.invite = new Invite();
+            invite = new Invite();
         }
         #endregion
 
@@ -137,7 +137,7 @@ namespace VM_Footies
         /// <param name="message"> Nom de la propriété changée </param>
         private void Notify(string message)
         {
-            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(message));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(message));
         }
 
         /// <summary>
@@ -146,10 +146,10 @@ namespace VM_Footies
         /// <param name="invite"> L'invité avec les nouvelles informations </param>
         public void ModifierInvite(VMInvite invite)
         {
-            this.Nom = invite.Nom;
-            this.Prenom = invite.Prenom;
-            this.Telephone = invite.Telephone;
-            this.Email = invite.Email;
+            Nom = invite.Nom;
+            Prenom = invite.Prenom;
+            Telephone = invite.Telephone;
+            Email = invite.Email;
         }
         #endregion
     }

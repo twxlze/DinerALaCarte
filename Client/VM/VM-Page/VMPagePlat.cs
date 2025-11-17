@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using METIER_Footies;
 using METIER_Footies.Data;
 using METIER_Footies.Metier;
+using VM_Footies.VM;
 
 namespace VM_Footies
 {
