@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using METIER_Footies.Data.Interface;
 using METIER_Footies.Metier;
 
 namespace METIER_Footies.Data
@@ -12,7 +13,7 @@ namespace METIER_Footies.Data
     /// <summary>
     // Classe d'accès aux données pour les plats avec la base de données
     /// </summary>
-    public class PlatDAO : DAO
+    public class PlatDAO : DAO, IPlatDAO
     {
         /// <summary>
         /// Ajoute un plat
