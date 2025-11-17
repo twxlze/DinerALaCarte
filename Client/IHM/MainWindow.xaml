@@ -101,7 +101,7 @@
                 <Button x:Name="BoutonInvites" Content="👤 Invités" Grid.Row="2" Grid.Column="0" Style="{StaticResource BoutonMenu}" Click="BoutonAllerInvite_Click" />
                 <Button x:Name="BoutonGroupes" Content="👥 Groupes d'invités" Grid.Row="3" Grid.Column="0" Style="{StaticResource BoutonMenu}"/>
                 <Button x:Name="BoutonInvitations" Content="🎟️ Invitations" Grid.Row="4" Grid.Column="0" Style="{StaticResource BoutonMenu}"/>
-                <Button x:Name="BoutonMenus" Content="📋 Menus" Grid.Row="5" Grid.Column="0" Style="{StaticResource BoutonMenu}"/>
+                <Button x:Name="BoutonMenus" Content="📋 Menus" Grid.Row="5" Grid.Column="0" Style="{StaticResource BoutonMenu}" Click="BoutonAllerMenu_Click"/>
                 <Button x:Name="BoutonPlats" Content="🍽️ Plats" Grid.Row="6" Grid.Column="0" Style="{StaticResource BoutonMenu}" Click="BoutonAllerPlat_Click"/>
                 <Button x:Name="BoutonUtilisateur" Content="👤" Grid.Row="8" Grid.Column="0" Style="{StaticResource BoutonMenu}" Margin="0,0,100,0" HorizontalContentAlignment="Center" FontSize="25"/>
                 <Button x:Name="BoutonReglage" Content="⚙️" Grid.Row="8" Grid.Column="0" Style="{StaticResource BoutonMenu}" HorizontalContentAlignment="Center" Margin="100,0,0,0" FontSize="25"/>
