@@ -142,6 +142,17 @@ namespace VM_Footies
         }
 
         /// <summary>
+        /// Vérifie si un invité avec le même nom et prénom existe déjà
+        /// </summary>
+        /// <param name="invite">L'invité à vérifier</param>
+        /// <returns>True si un doublon existe, False sinon</returns>
+        public bool InviteExiste(VMInvite invite)
+        {
+            return this.listeVMInvite.Any(vm => vm.Invite.Nom.Equals(invite.Invite.Nom, StringComparison.OrdinalIgnoreCase) &&
+                                                vm.Invite.Prenom.Equals(invite.Invite.Prenom, StringComparison.OrdinalIgnoreCase));
+        }
+
+        /// <summary>
         /// Notifie le changement d'une propriété
         /// </summary>
         /// <param name="message"> Nom de la propriété changée </param>

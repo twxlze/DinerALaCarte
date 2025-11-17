@@ -11,12 +11,14 @@ namespace VM_Footies.VM
     /// <summary>
     /// Classe ViewModel pour un invité
     /// </summary>
+    /// <summary>
+    /// Classe ViewModel pour un invité
+    /// </summary>
     public class VMInvite : INotifyPropertyChanged
     {
         #region Attributs
         private Invite invite;
         #endregion
-
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -106,7 +108,7 @@ namespace VM_Footies.VM
         /// <summary>
         // Constructeur d'un VMInvite à partir d'un Invite
         /// </summary>
-        /// <param name="invite"></param>
+        /// <param name="invite"> L'invité modèle </param>
         public VMInvite(Invite invite)
         {
             this.invite = invite;
