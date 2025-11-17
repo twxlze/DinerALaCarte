@@ -10,7 +10,7 @@
         #endregion
 
         #region --- Enumérations ---
-        public enum CategoriePlat {apéritif,entrée, plat, dessert }
+        public enum CategoriePlat { apéritif, entrée, plat, dessert }
         #endregion
 
         #region --- Propriétés ---
@@ -68,5 +68,6 @@
             this.categorie = categorie;
         }
 
+        public Plat() { }
     }
 }
