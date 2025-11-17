@@ -1,5 +1,6 @@
 using METIER_Footies.Metier;
 using VM_Footies;
+using VM_Footies.VM;
 
 namespace UnitTest
 {

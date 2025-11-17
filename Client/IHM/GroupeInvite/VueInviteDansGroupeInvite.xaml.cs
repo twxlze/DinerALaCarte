@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using VM_Footies;
+using VM_Footies.VM;
 
 namespace IHM_Footies
 {

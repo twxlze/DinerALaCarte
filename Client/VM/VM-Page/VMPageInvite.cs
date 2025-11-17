@@ -6,7 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 using METIER_Footies;
 using METIER_Footies.Data;
+using METIER_Footies.Data.Interface;
 using METIER_Footies.Metier;
+using VM_Footies.VM;
 
 namespace VM_Footies
 {
@@ -15,7 +17,7 @@ namespace VM_Footies
         #region Attributs
         private List<VMInvite> listeVMInvite;
         private VMInvite inviteSelectionne;
-        private InviteDAO inviteDAO;
+        private IInviteDAO inviteDAO;
         #endregion
 
         #region Propriétés 
@@ -34,7 +36,7 @@ namespace VM_Footies
         /// <summary>
         // Liste des VMInvite 
         /// </summary>  
-        public List<VMInvite> VMInvites =>  listeVMInvite;
+        public List<VMInvite> VMInvites => listeVMInvite;
 
         #region Constructeurs
         /// <summary>
@@ -44,22 +46,14 @@ namespace VM_Footies
         {
             this.inviteDAO = new InviteDAO();
             this.listeVMInvite = new List<VMInvite>();
-            
-            
-            //foreach ( Invite invite in inviteDAO.ObtenirTout().Result)
-            //{
-            //    this.listeVMInvite.Add(new VMInvite(invite));
-            //}
-           
-                    }
+        }
         #endregion
 
         #region Méthodes
-
         /// <summary>
         // Charge la liste des invités depuis la base de données
         /// </summary>
-        public async Task ChargerInvitesAsync()
+        public async Task ChargerInvites()
         {
             this.listeVMInvite.Clear();
 
@@ -69,24 +63,24 @@ namespace VM_Footies
                 VMInvite vmInvite = new VMInvite(invite);
                 this.listeVMInvite.Add(vmInvite);
             }
-           // this.Notify("VMInvites");
-
-        }
-
-        /// <summary>
-        // Charge la liste des invités depuis la base de données (version non-async pour compatibilité)
-        /// </summary>
-        public async void ChargerInvites()
-        {
-            await ChargerInvitesAsync();
+            this.listeVMInvite = this.listeVMInvite.OrderBy(vm => vm.Invite.Prenom)
+                                                   .ThenBy(vm => vm.Invite.Nom)
+                                                   .ToList();
         }
 
         /// <summary>
         /// Ajoute un invité à la liste des invités
         /// </summary>
-        /// <param name="invite"> L'invité à ajouter </param>
+        /// <param name="invite"> Le invité à ajouter </param>
+        /// <returns> Tâche asynchrone </returns>
+        /// <exception cref="Exception"> Lance une exception si l'invité existe déjà </exception>
         public async Task AjouterInvite(VMInvite invite)
         {
+            if (InviteExiste(invite))
+            {
+                throw new Exception("Un invité avec le même nom et prénom existe déjà");
+            }
+
             await this.inviteDAO.AjouterInvite(invite.Invite);
             this.listeVMInvite.Add(invite);
             this.Notify("VMInvites");
@@ -130,7 +124,7 @@ namespace VM_Footies
         /// <summary>
         /// Modifie un invité dans la liste des invités
         /// </summary>
-        /// <param name="invite"></param>
+        /// <param name="invite"> L'invité à modifier </param>
         public async Task ModifierInvite(VMInvite invite)
         {
             if (invite != null)
@@ -138,6 +132,17 @@ namespace VM_Footies
                 await this.inviteDAO.ModifierInvite(invite.Invite);
                 this.Notify("VMInvites");
             }
+        }
+
+        /// <summary>
+        /// Vérifie si un invité avec le même nom et prénom existe déjà
+        /// </summary>
+        /// <param name="invite">L'invité à vérifier</param>
+        /// <returns>True si un doublon existe, False sinon</returns>
+        public bool InviteExiste(VMInvite invite)
+        {
+            return this.listeVMInvite.Any(vm => vm.Invite.Nom.Equals(invite.Invite.Nom, StringComparison.OrdinalIgnoreCase) &&
+                                                vm.Invite.Prenom.Equals(invite.Invite.Prenom, StringComparison.OrdinalIgnoreCase));
         }
 
         /// <summary>

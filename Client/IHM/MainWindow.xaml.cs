@@ -10,6 +10,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using IHM_Footies;
 using VM_Footies;
+using VM_Footies.VM;
 
 namespace IHM;
 
@@ -30,44 +31,66 @@ public partial class MainWindow : Window
     /// </summary>
     public MainWindow()
     {
-        this.vueInvite = new List<VueInvite>();
-        this.vmPageInvite = new VMPageInvite();
-        this.vuePlat = new List<VuePlat>();
-        this.vmPagePlat = new VMPagePlat();
-        this.vmPagePlat.PropertyChanged += VMPagePlat_PropertyChanged;
-        this.vmPageInvite.PropertyChanged += VMPageInvite_PropertyChanged;
-
+        InitialiserViewModels();
+        InitialiserEvenements();
         InitializeComponent();
         WindowStartupLocation = WindowStartupLocation.CenterScreen;
-        this.RafraichirListe();
-        this.RafraichirListePlats();
+        ChargerToutesLesDonnees();
+    }
+
+    /// <summary>
+    /// Initialise les ViewModels utilisés dans la fenêtre principale
+    /// </summary>
+    private void InitialiserViewModels()
+    {
+        this.vueInvite = new List<VueInvite>();
+        this.vmPageInvite = new VMPageInvite();
+
+        this.vuePlat = new List<VuePlat>();
+        this.vmPagePlat = new VMPagePlat();
+    }
+
+    /// <summary>
+    /// Initialise les événements pour les ViewModels utilisés dans la fenêtre principale
+    /// </summary>
+    private void InitialiserEvenements()
+    {
+        this.vmPageInvite.PropertyChanged += VMPage_PropertyChanged;
+        this.vmPagePlat.PropertyChanged += VMPage_PropertyChanged;
+    }
+
+    /// <summary>
+    /// Charge toutes les données nécessaires pour la fenêtre principale
+    /// </summary>
+    private async void ChargerToutesLesDonnees()
+    {
+        await Task.WhenAll(
+            ChargerInvites(),
+            ChargerPlats()
+        );
     }
 
     /// <summary>
     /// Gestion du changement de propriété dans le VMPageInvite
     /// </summary>
-    private void VMPageInvite_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+    private void VMPage_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
     {
-        if (e.PropertyName == "VMInvite")
-            this.RafraichirListe();
-    }
-
-    /// <summary>
-    /// Gestion du changement de propriété dans le VMPagePlat
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
-    private void VMPagePlat_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
-    {
-        if (e.PropertyName == "VMPlat")
-            this.RafraichirListePlats();
+        switch (e.PropertyName)
+        {
+            case "VMInvites":
+                this.ChargerInvites();
+                break;
+            case "VMPlat":
+                this.ChargerPlats();
+                break;
+        }
     }
 
 
     /// <summary>
     /// Sélectionne une personne dans la liste des invités
     /// </summary>
-    private void SelectionnerPersonne(VueInvite vue)
+    private void SelectionnerInvite(VueInvite vue)
     {
         this.vmPageInvite.InviteSelectionne = vue.Invite;
         foreach (VueInvite vueI in this.vueInvite)
@@ -92,28 +115,20 @@ public partial class MainWindow : Window
     }
 
     /// <summary>
-    /// Bouton pour fermer la fenêtre
+    /// Rafraîchit la liste des invités affichés
     /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
-    private void ButonFermerFenetre_Click(object sender, RoutedEventArgs e)
-    {
-        Navigation.FermerFenetre(this);
-    }
-
-    private async void RafraichirListe()
+    private async Task ChargerInvites()
     {
         this.PanelListeInvites.Children.Clear();
         this.vueInvite.Clear();
 
-        await this.vmPageInvite.ChargerInvitesAsync();
+        await this.vmPageInvite.ChargerInvites();
 
         foreach (VMInvite invite in this.vmPageInvite.VMInvites)
         {
             VueInvite vue = new VueInvite(invite);
 
-            vue.MouseDown += (s, e) => this.SelectionnerPersonne(vue);
-            // vue.MouseDoubleClick += (s, e) => this.OuvrirModification(vue);
+            vue.MouseDown += (s, e) => this.SelectionnerInvite(vue);
 
             vue.Height = 20;
             vue.HorizontalAlignment = HorizontalAlignment.Center;
@@ -127,23 +142,21 @@ public partial class MainWindow : Window
     /// <summary>
     /// Rafraîchit la liste des plats affichés
     /// </summary>
-    private async void RafraichirListePlats()
+    private async Task ChargerPlats()
     {
         this.PanelListePlat.Children.Clear();
         this.vuePlat.Clear();
 
-        await this.vmPagePlat.ChargerPlatsAsync();
+        await this.vmPagePlat.ChargerPlats();
 
         foreach (VMPlat plat in this.vmPagePlat.VMPlat)
         {
             VuePlat vue = new VuePlat(plat);
 
             vue.MouseDown += (s, e) => this.SelectionnerPlat(vue);
-            // vue.MouseDoubleClick += (s, e) => this.OuvrirModification(vue);
-
             vue.Height = 20;
-            vue.Width = 580;
             vue.HorizontalAlignment = HorizontalAlignment.Center;
+            vue.Margin = new Thickness(0, 0, 20, 0);
             vue.VerticalAlignment = VerticalAlignment.Center;
 
             this.vuePlat.Add(vue);
@@ -151,6 +164,15 @@ public partial class MainWindow : Window
         }
     }
 
+    /// <summary>
+    /// Bouton pour fermer la fenêtre
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void ButonFermerFenetre_Click(object sender, RoutedEventArgs e)
+    {
+        Navigation.FermerFenetre(this);
+    }
 
     #region Boutons de navigation
     /// <summary>

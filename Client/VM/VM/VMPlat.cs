@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using METIER_Footies.Metier;
 using static METIER_Footies.Metier.Plat;
 
-namespace VM_Footies
+namespace VM_Footies.VM
 {
     /// <summary>
     /// Classe ViewModel pour un plat
@@ -24,7 +24,7 @@ namespace VM_Footies
         /// <summary>
         /// Invite associée au VMPlat
         /// </summary>
-        public Plat Plat => this.plat;
+        public Plat Plat => plat;
 
 
         #region Propriétés
@@ -33,7 +33,7 @@ namespace VM_Footies
         /// </summary>
         public long Id
         {
-            get => this.plat.Id;
+            get => plat.Id;
         }
 
         /// <summary>
@@ -42,12 +42,12 @@ namespace VM_Footies
         /// <remarks> Le set notifie le changement de la propriété </remarks>
         public string Nom
         {
-            get => this.plat.Nom;
+            get => plat.Nom;
             set
             {
-                this.plat.Nom = value;
-                this.Notify("Nom");
-                this.Notify("Identite");
+                plat.Nom = value;
+                Notify("Nom");
+                Notify("Identite");
             }
         }
 
@@ -57,11 +57,11 @@ namespace VM_Footies
         /// <remarks> Le set notifie le changement de la propriété </remarks>
         public string Description
         {
-            get => this.plat.Description;
+            get => plat.Description;
             set
             {
-                this.plat.Description = value;
-                this.Notify("Description");
+                plat.Description = value;
+                Notify("Description");
             }
         }
 
@@ -72,12 +72,12 @@ namespace VM_Footies
         /// <remarks> Le set notifie le changement de la propriété </remarks>
         public CategoriePlat Categorie
         {
-            get => this.plat.Categorie;
+            get => plat.Categorie;
             set
             {
-                this.plat.Categorie = value;
-                this.Notify("Categorie");
-                this.Notify("Identite");
+                plat.Categorie = value;
+                Notify("Categorie");
+                Notify("Identite");
             }
         }
 
@@ -85,7 +85,7 @@ namespace VM_Footies
         /// <summary>
         /// Information du plat (Nom + catégorie)
         /// </summary>
-        public string Identite { get => $"{this.Nom} catégorie : {this.Categorie}"; }
+        public string Identite { get => $"{Nom} catégorie : {Categorie}"; }
         #endregion
 
         #region Constructeurs
@@ -104,7 +104,7 @@ namespace VM_Footies
         /// <param name="modele"> Le VMPlat à copier </param>
         public VMPlat(VMPlat modele)
         {
-            this.plat = new Plat(modele.plat);
+            plat = new Plat(modele.plat);
         }
 
         /// <summary>
@@ -112,7 +112,7 @@ namespace VM_Footies
         /// </summary>
         public VMPlat()
         {
-            this.plat = new Plat();
+            plat = new Plat();
         }
         #endregion
 
@@ -123,7 +123,7 @@ namespace VM_Footies
         /// <param name="message"> Nom de la propriété changée </param>
         private void Notify(string message)
         {
-            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(message));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(message));
         }
 
         /// <summary>
@@ -132,9 +132,9 @@ namespace VM_Footies
         /// <param name="plat"> le plat avec les nouvelles informations </param>
         public void ModifierPlat(VMPlat plat)
         {
-            this.Nom = plat.Nom;
-            this.Description = plat.Description;
-            this.Categorie = plat.Categorie;
+            Nom = plat.Nom;
+            Description = plat.Description;
+            Categorie = plat.Categorie;
         }
         #endregion
     }

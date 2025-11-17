@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using METIER_Footies.Data;
 using METIER_Footies.Metier;
 
-namespace VM_Footies
+namespace VM_Footies.VM
 {
     /// <summary>
     /// ViewModel pour gérer un groupe d'invités et ses invités
@@ -29,14 +29,14 @@ namespace VM_Footies
         {
             get
             {
-                return this.groupe.Nom;
+                return groupe.Nom;
             }
             set
             {
-                if (this.groupe.Nom != value)
+                if (groupe.Nom != value)
                 {
-                    this.groupe.Nom = value;
-                    this.Notifier("Nom");
+                    groupe.Nom = value;
+                    Notifier("Nom");
                 }
             }
         }
@@ -48,11 +48,11 @@ namespace VM_Footies
         {
             get
             {
-                return this.listeVMInviteDuGroupe;
+                return listeVMInviteDuGroupe;
             }
         }
 
-        public GroupeInvites Groupe => this.groupe;
+        public GroupeInvites Groupe => groupe;
 
 
         #endregion
@@ -71,9 +71,9 @@ namespace VM_Footies
         /// <param name="groupe">Le groupe à gérer</param>
         public VMGroupeInvite(GroupeInvites groupes)
         {
-            this.groupe = groupes;
-            this.listeVMInviteDuGroupe = new List<VMInvite>();
-            this.groupeDAO = new GroupeInviteDAO();
+            groupe = groupes;
+            listeVMInviteDuGroupe = new List<VMInvite>();
+            groupeDAO = new GroupeInviteDAO();
         }
 
         /// <summary>
@@ -81,9 +81,9 @@ namespace VM_Footies
         /// </summary>
         public VMGroupeInvite()
         {
-            this.groupe = new GroupeInvites();
-            this.listeVMInviteDuGroupe = new List<VMInvite>();
-            this.groupeDAO = new GroupeInviteDAO();
+            groupe = new GroupeInvites();
+            listeVMInviteDuGroupe = new List<VMInvite>();
+            groupeDAO = new GroupeInviteDAO();
         }
 
         #endregion
@@ -115,11 +115,11 @@ namespace VM_Footies
         /// <returns>succes ou pas</returns>
         public async Task<bool> AjouterInviteAuGroupe(VMInvite invite)
         {
-            bool succes = await this.groupeDAO.AjouterInviteAuGroupe(this.groupe.IdGroupeInvites, invite.Invite);
+            bool succes = await groupeDAO.AjouterInviteAuGroupe(groupe.IdGroupeInvites, invite.Invite);
             if (succes)
             {
-                this.listeVMInviteDuGroupe.Add(invite);
-                this.Notifier("ListeVMInviteDuGroupe");
+                listeVMInviteDuGroupe.Add(invite);
+                Notifier("ListeVMInviteDuGroupe");
             }
             return succes;
         }
@@ -134,9 +134,9 @@ namespace VM_Footies
         /// <param name="propriete">Nom de la propriété modifiée</param>
         private void Notifier(string propriete)
         {
-            if (this.PropertyChanged != null)
+            if (PropertyChanged != null)
             {
-                this.PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propriete));
+                PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propriete));
             }
         }
 
