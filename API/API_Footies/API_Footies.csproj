@@ -11,12 +11,11 @@
   <!-- Fichiers à exclure -->
   <ItemGroup>
     <None Remove="Data\SQLLiteConnector.cs~RFb668d2b.TMP" />
-    <None Remove="DataBase.db" />
   </ItemGroup>
 
   <!-- Inclusion de la base de données pour le déploiement -->
   <ItemGroup>
-    <Content Include="DataBase.db">
+    <Content Include="DataBase2.db">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

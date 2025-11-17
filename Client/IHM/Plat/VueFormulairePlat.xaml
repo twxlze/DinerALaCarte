@@ -184,10 +184,14 @@
 
         <!-- Boutons -->
         <Button Grid.RowSpan="2" Grid.Column="1" Content="Enregistrer" HorizontalAlignment="Center" Margin="0,58,0,0" Grid.Row="7" VerticalAlignment="Top" Height="40" Width="240" Style="{StaticResource StyleBoutonEnregistrer}" Click="Enregistrer_Click" />
-        <ComboBox Grid.Column="1" Margin="64,25,336,30" Grid.RowSpan="2" Grid.Row="3">
+        <ComboBox Grid.Column="1" 
+          Margin="64,25,336,30" 
+          Grid.RowSpan="2" 
+          Grid.Row="3"
+          SelectedIndex="{Binding Categorie, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
             <ComboBoxItem>Apéritif</ComboBoxItem>
             <ComboBoxItem>Entrée</ComboBoxItem>
-            <ComboBoxItem IsSelected="True">Plat</ComboBoxItem>
+            <ComboBoxItem>Plat</ComboBoxItem>
             <ComboBoxItem>Dessert</ComboBoxItem>
         </ComboBox>
     </Grid>
