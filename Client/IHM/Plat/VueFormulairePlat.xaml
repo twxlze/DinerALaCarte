@@ -188,7 +188,7 @@
           Margin="64,25,336,30" 
           Grid.RowSpan="2" 
           Grid.Row="3"
-          SelectedIndex="{Binding Categorie, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+          SelectedIndex="{Binding CategorieIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
             <ComboBoxItem>Apéritif</ComboBoxItem>
             <ComboBoxItem>Entrée</ComboBoxItem>
             <ComboBoxItem>Plat</ComboBoxItem>

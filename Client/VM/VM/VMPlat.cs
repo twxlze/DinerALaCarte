@@ -132,6 +132,20 @@ namespace VM_Footies.VM
             Description = plat.Description;
             Categorie = plat.Categorie;
         }
+
+        /// <summary>
+        /// Index de la catégorie pour le ComboBox
+        /// </summary>
+        public int CategorieIndex
+        {
+            get => (int)plat.Categorie;
+            set
+            {
+                plat.Categorie = (CategoriePlat)value;
+                Notify("CategorieIndex");
+                Notify("Categorie");
+            }
+        }
         #endregion
     }
 }
