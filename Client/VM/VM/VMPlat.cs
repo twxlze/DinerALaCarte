@@ -73,10 +73,10 @@ namespace VM_Footies.VM
         /// <remarks> Le set notifie le changement de la propriété </remarks>
         public CategoriePlat Categorie
         {
-            get => plat.Categorie;
+            get => plat.CategoriePlat;
             set
             {
-                plat.Categorie = value;
+                plat.CategoriePlat = value;
                 Notify("Categorie");
                 Notify("Identite");
             }

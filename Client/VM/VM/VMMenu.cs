@@ -9,6 +9,7 @@ using METIER_Footies.Data;
 using METIER_Footies.Data.Interfaces;
 using METIER_Footies.Metier;
 using VM_Footies.VM_Element_Selectionne;
+using METIER_Footies.Enum;
 
 namespace VM_Footies.VM
 {
@@ -195,18 +196,18 @@ namespace VM_Footies.VM
 
                 vmPlat.PropertyChanged += VmPlat_PropertyChanged;
 
-                switch (plat.Categorie)
+                switch (plat.CategoriePlat)
                 {
-                    case Plat.CategoriePlat.aperitif:
+                    case CategoriePlat.aperitif:
                         PlatsAperitif.Add(vmPlat);
                         break;
-                    case Plat.CategoriePlat.entree:
+                    case CategoriePlat.entree:
                         PlatsEntree.Add(vmPlat);
                         break;
-                    case Plat.CategoriePlat.plat:
+                    case CategoriePlat.plat:
                         PlatsPlat.Add(vmPlat);
                         break;
-                    case Plat.CategoriePlat.dessert:
+                    case CategoriePlat.dessert:
                         PlatsDessert.Add(vmPlat);
                         break;
                 }

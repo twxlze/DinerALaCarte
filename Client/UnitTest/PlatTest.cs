@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using METIER_Footies.Enum;
 using METIER_Footies.Metier;
 using VM_Footies.VM;
 using static METIER_Footies.Metier.Plat;
@@ -11,6 +12,7 @@ namespace Test_Footies_METIER
 {
     public class PlatTest
     {
+
         #region Test avec constructeurs
 
         [Fact]
@@ -23,7 +25,7 @@ namespace Test_Footies_METIER
             Assert.Equal(platOriginal.Id, platCopie.Id);
             Assert.Equal(platOriginal.Nom, platCopie.Nom);
             Assert.Equal(platOriginal.Description, platCopie.Description);
-            Assert.Equal(platOriginal.Categorie, platCopie.Categorie);
+            Assert.Equal(platOriginal.CategoriePlat, platCopie.CategoriePlat);
         }
 
         [Fact]
@@ -33,7 +35,7 @@ namespace Test_Footies_METIER
 
             Assert.Equal("", plat.Nom);
             Assert.Equal("", plat.Description);
-            Assert.Equal(CategoriePlat.entree, plat.Categorie);
+            Assert.Equal(CategoriePlat.entree, plat.CategoriePlat);
         }
 
         [Fact]
@@ -44,10 +46,10 @@ namespace Test_Footies_METIER
             Plat platPrincipal = new Plat(3, "Steak", "Plat principal", CategoriePlat.plat);
             Plat dessert = new Plat(4, "Mousse", "Dessert léger", CategoriePlat.dessert);
 
-            Assert.Equal(CategoriePlat.aperitif, aperitif.Categorie);
-            Assert.Equal(CategoriePlat.entree, entree.Categorie);
-            Assert.Equal(CategoriePlat.plat, platPrincipal.Categorie);
-            Assert.Equal(CategoriePlat.dessert, dessert.Categorie);
+            Assert.Equal(CategoriePlat.aperitif, aperitif.CategoriePlat);
+            Assert.Equal(CategoriePlat.entree, entree.CategoriePlat);
+            Assert.Equal(CategoriePlat.plat, platPrincipal.CategoriePlat);
+            Assert.Equal(CategoriePlat.dessert, dessert.CategoriePlat);
         }
 
         #endregion
@@ -90,17 +92,17 @@ namespace Test_Footies_METIER
         {
             Plat plat = new Plat(1, "Plat polyvalent", "Description", CategoriePlat.aperitif);
 
-            plat.Categorie = CategoriePlat.entree;
-            Assert.Equal(CategoriePlat.entree, plat.Categorie);
+            plat.CategoriePlat = CategoriePlat.entree;
+            Assert.Equal(CategoriePlat.entree, plat.CategoriePlat);
 
-            plat.Categorie = CategoriePlat.plat;
-            Assert.Equal(CategoriePlat.plat, plat.Categorie);
+            plat.CategoriePlat = CategoriePlat.plat;
+            Assert.Equal(CategoriePlat.plat, plat.CategoriePlat);
 
-            plat.Categorie = CategoriePlat.dessert;
-            Assert.Equal(CategoriePlat.dessert, plat.Categorie);
+            plat.CategoriePlat = CategoriePlat.dessert;
+            Assert.Equal(CategoriePlat.dessert, plat.CategoriePlat);
 
-            plat.Categorie = CategoriePlat.aperitif;
-            Assert.Equal(CategoriePlat.aperitif, plat.Categorie);
+            plat.CategoriePlat = CategoriePlat.aperitif;
+            Assert.Equal(CategoriePlat.aperitif, plat.CategoriePlat);
         }
 
         #endregion
@@ -117,7 +119,7 @@ namespace Test_Footies_METIER
             Assert.Equal(plat.Id, vmPlat.Id);
             Assert.Equal(plat.Nom, vmPlat.Nom);
             Assert.Equal(plat.Description, vmPlat.Description);
-            Assert.Equal(plat.Categorie, vmPlat.Categorie);
+            Assert.Equal(plat.CategoriePlat, vmPlat.Categorie);
         }
 
         [Fact]
@@ -145,7 +147,7 @@ namespace Test_Footies_METIER
 
             Assert.Equal(10, plat.Id);
             Assert.Equal("NOUVEAU NOM", plat.Nom);
-            Assert.Equal(CategoriePlat.plat, plat.Categorie);
+            Assert.Equal(CategoriePlat.plat, plat.CategoriePlat);
         }
 
         [Fact]

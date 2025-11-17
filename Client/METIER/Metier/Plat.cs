@@ -65,7 +65,7 @@ namespace METIER_Footies.Metier
         /// <summary>
         /// Retourne ou modifie la catégorie du plat
         /// </summary>
-        public CategoriePlat Categorie
+        public CategoriePlat CategoriePlat
         {
             get { return categorie; }
             set { categorie = value; }
