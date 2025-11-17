@@ -48,8 +48,8 @@ namespace IHM_Footies
         /// <summary>
         /// Gestion du changement de propriété dans le VMPageInvite
         /// </summary>
-        /// <param name="sender"> </param>
-        /// <param name="e"></param>
+        /// <param name="sender"> L'expéditeur </param>
+        /// <param name="e"> Les arguments de l'événement </param>
         private void VMPageInvite_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             if (e.PropertyName == "VMInvites") this.RafraichirListe();
@@ -63,7 +63,7 @@ namespace IHM_Footies
             this.PanelListeInvites.Children.Clear();
             this.vueInvite.Clear();
 
-            await this.vmPageInvite.ChargerInvitesAsync();
+            await this.vmPageInvite.ChargerInvites();
 
             foreach (VMInvite invite in this.vmPageInvite.VMInvites)
             {
@@ -78,7 +78,7 @@ namespace IHM_Footies
         /// <summary>
         /// Ouvre la fenêtre de modification d'un invité
         /// </summary>
-        /// <param name="vue"></param>
+        /// <param name="vue"> VueInvite sélectionnée </param>
         private void OuvrirModification(VueInvite vue)
         {
             VMInvite memoire = new VMInvite(vue.Invite);
@@ -109,36 +109,30 @@ namespace IHM_Footies
         /// <summary>
         /// Ouvre la fenêtre d'ajout d'un invité
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender"> L'expéditeur </param>
+        /// <param name="e"> Les arguments de l'événement </param>
         private async void BoutonAjouterInvite_Click(object sender, RoutedEventArgs e)
         {
             VueFormulaireInvite fenetre = new VueFormulaireInvite();
             bool? result = fenetre.ShowDialog();
             if (result == true)
             {
-                /*
-                await this.vmPageInvite.AjouterInvite(fenetre.Invite);
-                this.RafraichirListe();
-                */
-                await this.vmPageInvite.AjouterInvite(fenetre.Invite);
-                VueInvite vue = new VueInvite(fenetre.Invite);
-                vue.MouseDown += (s, ev) => this.SelectionnerPersonne(vue);
-                vue.MouseDoubleClick += (s, ev) => this.OuvrirModification(vue);
-                this.vueInvite.Add(vue);
-                this.PanelListeInvites.Children.Add(vue);
+                try
+                {
+                    await this.vmPageInvite.AjouterInvite(fenetre.Invite);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Une erreur est survenue lors de l'ajout de l'invité : {ex.Message}", "Erreur d'ajout", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
-            /*
-               // this.RafraichirListe();
-            }
-            */
         }
 
         /// <summary>
         /// Ouvre la fenêtre de modification d'un invité sélectionné
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender"> L'expéditeur </param>
+        /// <param name="e"> Les arguments de l'événement </param>
         private async void BoutonModifierInvite_Click(object sender, RoutedEventArgs e)
         {
             if (this.vmPageInvite.InviteSelectionne != null)
@@ -148,7 +142,6 @@ namespace IHM_Footies
                 if (result == true)
                 {
                     await this.vmPageInvite.ModifierInvite(fenetre.Invite);
-                    this.RafraichirListe();
                 }
             }
         }
@@ -157,8 +150,8 @@ namespace IHM_Footies
         /// <summary>
         /// Supprime l'invité sélectionné
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender"> L'expéditeur </param>
+        /// <param name="e"> Les arguments de l'événement </param>
         private async void BoutonSupprimerInvite_Click(object sender, RoutedEventArgs e)
         {
             if (this.vmPageInvite.InviteSelectionne != null)
@@ -203,8 +196,8 @@ namespace IHM_Footies
         /// <summary>
         /// Bouton pour aller à la vue d'accueil
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender"> L'expéditeur </param>
+        /// <param name="e"> Les arguments de l'événement </param>
         private void BoutonVueAccueil(object sender, RoutedEventArgs e)
         {
             Navigation.AllerAccueil(this);
@@ -213,8 +206,8 @@ namespace IHM_Footies
         /// <summary>
         /// Bouton pour aller à la vue des invités
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender"> L'expéditeur </param>
+        /// <param name="e"> Les arguments de l'événement </param>
         private void BoutonInvite_Click(object sender, RoutedEventArgs e)
         {
             Navigation.AllerInvites(this);
@@ -223,8 +216,8 @@ namespace IHM_Footies
         /// <summary>
         /// Bouton pour aller à la vue du formulaire d'invité
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender"> L'expéditeur </param>
+        /// <param name="e"> Les arguments de l'événement </param>
         private void BoutonAccueil_Click(object sender, RoutedEventArgs e)
         {
             Navigation.AllerAccueil(this);
@@ -233,8 +226,8 @@ namespace IHM_Footies
         /// <summary>
         /// Bouton pour aller à la page plat
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender"> L'expéditeur </param>
+        /// <param name="e"> Les arguments de l'événement </param>
         private void BoutonPlat_Click(object sender, RoutedEventArgs e)
         {
             Navigation.AllerPlat(this);
@@ -243,14 +236,19 @@ namespace IHM_Footies
         /// <summary>
         /// Bouton pour fermer la fenêtre
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender"> L'expéditeur du clic </param>
+        /// <param name="e"> Les arguments de l'événement </param>
         private void ButonFermerFenetre_Click(object sender, RoutedEventArgs e)
         {
             Navigation.FermerFenetre(this);
         }
         #endregion
 
+        /// <summary>
+        ///, Bouton pour aller à la vue des groupes invités
+        /// </summary>
+        /// <param name="sender"> L'expéditeur </param>
+        /// <param name="e"> Les arguments de l'événement </param>
         private void BoutonGroupeInvite_Click(object sender, RoutedEventArgs e)
         {
             Navigation.AllerGroupesInvites(this);
