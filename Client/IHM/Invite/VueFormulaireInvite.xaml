@@ -4,6 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:IHM_Footies"
+      xmlns:res="clr-namespace:IHM_Footies.Ressources"
       mc:Ignorable="d" 
       Height="450" Width="800"
       Title="VueFormulaireInvite"
@@ -129,7 +130,7 @@
         VerticalAlignment="Top"
         Margin="0,5,8,0"
         Click="ButonFermerFenetre_Click"
-        Grid.Column="1000"/>
+        Grid.Column="1"/>
 
         <!-- Menu à gauche -->
         <Border BorderBrush="#8C2F26"  BorderThickness="0,0,2,0" Grid.Column="0" Grid.RowSpan="9">
@@ -147,12 +148,12 @@
                 </Grid.RowDefinitions>
 
                 <TextBlock Text="HOSTABLY" FontSize="19" FontWeight="Bold" Foreground="#B44B3E" VerticalAlignment="Center" Height="27" Margin="73,0,23,0" FontFamily="Montserrat"/>
-                <Button x:Name="BoutonAccueil"  Content="🏠 Accueil" Grid.Row="1" Style="{StaticResource BoutonMenu}" Click="BoutonAccueil_Click"/>
-                <Button x:Name="BoutonInvites" Content="👤 Invités" Grid.Row="2" Style="{StaticResource BoutonMenu}" Background="#BFBFBF" FontWeight="Bold" Click="BoutonAllerInvite_Click" />
-                <Button x:Name="BoutonGroupes" Content="👥 Groupes d'invités" Grid.Row="3" Style="{StaticResource BoutonMenu}"/>
-                <Button x:Name="BoutonInvitations" Content="🎟️ Invitations" Grid.Row="4" Style="{StaticResource BoutonMenu}"/>
-                <Button x:Name="BoutonMenus" Content="📋 Menus" Grid.Row="5" Style="{StaticResource BoutonMenu}"/>
-                <Button x:Name="BoutonPlats" Content="🍽️ Plats" Grid.Row="6" Style="{StaticResource BoutonMenu}" Click="BoutonAllerPlat_Click"/>
+                <Button x:Name="BoutonAccueil" Content="{x:Static res:Strings.Accueil}" Grid.Row="1" Style="{StaticResource BoutonMenu}" Click="BoutonAccueil_Click"/>
+                <Button x:Name="BoutonInvites" Content="{x:Static res:Strings.Invites}" Grid.Row="2" Style="{StaticResource BoutonMenu}" Background="#BFBFBF" FontWeight="Bold" Click="BoutonAllerInvite_Click" />
+                <Button x:Name="BoutonGroupes" Content="{x:Static res:Strings.GroupeInvite}" Grid.Row="3" Style="{StaticResource BoutonMenu}"/>
+                <Button x:Name="BoutonInvitations" Content="{x:Static res:Strings.Invitations}" Grid.Row="4" Style="{StaticResource BoutonMenu}"/>
+                <Button x:Name="BoutonMenus" Content="{x:Static res:Strings.Menus}" Grid.Row="5" Style="{StaticResource BoutonMenu}"/>
+                <Button x:Name="BoutonPlats" Content="{x:Static res:Strings.Plats}" Grid.Row="6" Style="{StaticResource BoutonMenu}" Click="BoutonAllerPlat_Click"/>
                 <Button x:Name="BoutonUtilisateur" Content="👤" Grid.Row="8" Style="{StaticResource BoutonMenu}" Margin="0,0,100,0" HorizontalContentAlignment="Center" FontSize="25"/>
                 <Button x:Name="BoutonReglage" Content="⚙️" Grid.Row="8" Style="{StaticResource BoutonMenu}" HorizontalContentAlignment="Center" Margin="100,0,0,0" FontSize="25"/>
             </Grid>
@@ -161,7 +162,7 @@
         <!-- Partie droite  -->
 
         <!-- Titre -->
-        <TextBlock Grid.Column="1" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Gestion des invités" VerticalAlignment="Top" FontWeight="Bold" FontSize="20" Foreground="#B44B3E" Margin="0,20,0,0"/>
+        <TextBlock Grid.Column="1" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{x:Static res:Strings.GestionInvite}" VerticalAlignment="Top" FontWeight="Bold" FontSize="20" Foreground="#B44B3E" Margin="0,20,0,0"/>
 
         <!-- Container formulaire -->
         <Border BorderBrush="#8C2F26" 
@@ -178,23 +179,23 @@
         </Border>
 
         <!-- Sous-titre -->
-        <TextBlock Grid.Column="1" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Informations" VerticalAlignment="Top" FontWeight="SemiBold" FontSize="16" Foreground="#B44B3E" Margin="0,65,0,0" Grid.RowSpan="2"/>
+        <TextBlock Grid.Column="1" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{x:Static res:Strings.Information}" VerticalAlignment="Top" FontWeight="SemiBold" FontSize="16" Foreground="#B44B3E" Margin="0,65,0,0" Grid.RowSpan="2"/>
 
         <!-- Input -->
-        <Label Grid.Column="1" Margin="92,6,300,6" Grid.Row="1"  FontSize="16" Foreground="#B44B3E">Nom*</Label>
+        <Label Grid.Column="1" Margin="92,6,300,6" Grid.Row="1" FontSize="16" Foreground="#B44B3E" Content="{x:Static res:Strings.Nom}"/>
         <TextBox Grid.Column="1" Margin="177,8,35,3" Grid.Row="1" Height="25" Text="{Binding Nom, UpdateSourceTrigger=PropertyChanged}"/>
 
-        <Label Grid.Column="1" Margin="92,0,300,6" Grid.Row="2"  FontSize="16" Foreground="#B44B3E">Prénom*</Label>
+        <Label Grid.Column="1" Margin="92,0,300,6" Grid.Row="2" FontSize="16" Foreground="#B44B3E" Content="{x:Static res:Strings.Prenom}"/>
         <TextBox Grid.Column="1" Margin="177,1,35,10" Grid.Row="2" Height="25" Text="{Binding Prenom, UpdateSourceTrigger=PropertyChanged}"/>
 
-        <Label Grid.Column="1" Margin="92,36,308,6" Grid.Row="2"  FontSize="16" Foreground="#B44B3E" Grid.RowSpan="2">Téléphone</Label>
+        <Label Grid.Column="1" Margin="92,36,308,6" Grid.Row="2" FontSize="16" Foreground="#B44B3E" Grid.RowSpan="2" Content="{x:Static res:Strings.Telephone}"/>
         <TextBox Grid.Column="1" Margin="177,39,35,10" Grid.Row="2" Height="25" Grid.RowSpan="2" Text="{Binding Telephone, UpdateSourceTrigger=PropertyChanged}"/>
 
-        <Label Grid.Column="1" Margin="92,28,308,23" Grid.Row="3"  FontSize="16" Foreground="#B44B3E" Grid.RowSpan="2">Email</Label>
+        <Label Grid.Column="1" Margin="92,28,308,23" Grid.Row="3" FontSize="16" Foreground="#B44B3E" Grid.RowSpan="2" Content="{x:Static res:Strings.Email}"/>
         <TextBox Grid.Column="1" Margin="177,31,35,23" Grid.Row="3" Height="25" Grid.RowSpan="2" Text="{Binding Email, UpdateSourceTrigger=PropertyChanged}"/>
 
         <!-- Boutons -->
-        <Button Grid.RowSpan="2" Grid.Column="1" Content="Enregistrer" HorizontalAlignment="Center" Margin="0,58,0,0" Grid.Row="7" VerticalAlignment="Top" Height="40" Width="240" Style="{StaticResource StyleBoutonEnregistrer}" Click="Enregistrer_Click" />
+        <Button Grid.RowSpan="2" Grid.Column="1" Content="{x:Static res:Strings.Enregistrer}" HorizontalAlignment="Center" Margin="0,58,0,0" Grid.Row="7" VerticalAlignment="Top" Height="40" Width="240" Style="{StaticResource StyleBoutonEnregistrer}" Click="Enregistrer_Click" />
         <Image Source="{StaticResource ResourceKey=LogoHostably}" Margin="15,10,121,17" />
 
     </Grid>

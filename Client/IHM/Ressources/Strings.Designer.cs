@@ -79,7 +79,7 @@ namespace IHM_Footies.Ressources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à email.
+        ///   Recherche une chaîne localisée semblable à Email.
         /// </summary>
         public static string Email {
             get {
