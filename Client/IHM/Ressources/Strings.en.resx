@@ -165,4 +165,55 @@
   <data name="Information" xml:space="preserve">
     <value>Informations</value>
   </data>
+  <data name="GestionMenu" xml:space="preserve">
+    <value>Menu management</value>
+  </data>
+  <data name="GestionMenus" xml:space="preserve">
+    <value>Menu management</value>
+  </data>
+  <data name="AjouterMenu" xml:space="preserve">
+    <value>Add a menu</value>
+  </data>
+  <data name="ModifierMenu" xml:space="preserve">
+    <value>Edit a menu</value>
+  </data>
+  <data name="SupprimerMenu" xml:space="preserve">
+    <value>Remove a menu</value>
+  </data>
+  <data name="NomDuMenu" xml:space="preserve">
+    <value>Name of the menu</value>
+  </data>
+  <data name="CategoriesDansMenu" xml:space="preserve">
+    <value>Categories in the menu</value>
+  </data>
+  <data name="Aperitif" xml:space="preserve">
+    <value>Appetiser</value>
+  </data>
+  <data name="Entree" xml:space="preserve">
+    <value>Starter</value>
+  </data>
+  <data name="Plat" xml:space="preserve">
+    <value>Dish</value>
+  </data>
+  <data name="Dessert" xml:space="preserve">
+    <value>Dessert</value>
+  </data>
+  <data name="GestionPlats" xml:space="preserve">
+    <value>Dish management</value>
+  </data>
+  <data name="AjouterPlat" xml:space="preserve">
+    <value>Add a dish</value>
+  </data>
+  <data name="ModifierPlat" xml:space="preserve">
+    <value>Edit a dish</value>
+  </data>
+  <data name="SupprimerPlat" xml:space="preserve">
+    <value>Remove a dish</value>
+  </data>
+  <data name="Categorie" xml:space="preserve">
+    <value>Category*</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Description</value>
+  </data>
 </root>

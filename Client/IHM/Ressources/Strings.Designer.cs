@@ -79,6 +79,69 @@ namespace IHM_Footies.Ressources {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Ajouter un menu.
+        /// </summary>
+        public static string AjouterMenu {
+            get {
+                return ResourceManager.GetString("AjouterMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Ajouter un plat.
+        /// </summary>
+        public static string AjouterPlat {
+            get {
+                return ResourceManager.GetString("AjouterPlat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Apéritif.
+        /// </summary>
+        public static string Aperitif {
+            get {
+                return ResourceManager.GetString("Aperitif", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Catégorie*.
+        /// </summary>
+        public static string Categorie {
+            get {
+                return ResourceManager.GetString("Categorie", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Catégories dans le menu.
+        /// </summary>
+        public static string CategoriesDansMenu {
+            get {
+                return ResourceManager.GetString("CategoriesDansMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Description.
+        /// </summary>
+        public static string Description {
+            get {
+                return ResourceManager.GetString("Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Dessert.
+        /// </summary>
+        public static string Dessert {
+            get {
+                return ResourceManager.GetString("Dessert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Email.
         /// </summary>
         public static string Email {
@@ -97,11 +160,47 @@ namespace IHM_Footies.Ressources {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Entrée.
+        /// </summary>
+        public static string Entree {
+            get {
+                return ResourceManager.GetString("Entree", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Gestion des invités.
         /// </summary>
         public static string GestionInvite {
             get {
                 return ResourceManager.GetString("GestionInvite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Gestion des Menus.
+        /// </summary>
+        public static string GestionMenu {
+            get {
+                return ResourceManager.GetString("GestionMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Gestion des menus.
+        /// </summary>
+        public static string GestionMenus {
+            get {
+                return ResourceManager.GetString("GestionMenus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Gestion des plats.
+        /// </summary>
+        public static string GestionPlats {
+            get {
+                return ResourceManager.GetString("GestionPlats", resourceCulture);
             }
         }
         
@@ -160,11 +259,47 @@ namespace IHM_Footies.Ressources {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Modifier un menu.
+        /// </summary>
+        public static string ModifierMenu {
+            get {
+                return ResourceManager.GetString("ModifierMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Modifier un plat.
+        /// </summary>
+        public static string ModifierPlat {
+            get {
+                return ResourceManager.GetString("ModifierPlat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Nom*.
         /// </summary>
         public static string Nom {
             get {
                 return ResourceManager.GetString("Nom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Nom du menu.
+        /// </summary>
+        public static string NomDuMenu {
+            get {
+                return ResourceManager.GetString("NomDuMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Plat.
+        /// </summary>
+        public static string Plat {
+            get {
+                return ResourceManager.GetString("Plat", resourceCulture);
             }
         }
         
@@ -192,6 +327,24 @@ namespace IHM_Footies.Ressources {
         public static string SupprimerInvite {
             get {
                 return ResourceManager.GetString("SupprimerInvite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Supprimer un menu.
+        /// </summary>
+        public static string SupprimerMenu {
+            get {
+                return ResourceManager.GetString("SupprimerMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Supprimer un plat.
+        /// </summary>
+        public static string SupprimerPlat {
+            get {
+                return ResourceManager.GetString("SupprimerPlat", resourceCulture);
             }
         }
         
