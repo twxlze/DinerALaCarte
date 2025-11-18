@@ -6,7 +6,7 @@
     public class GroupeInvites
     {
         #region --- Attributs ---
-        private List<Invite> invites = new List<Invite>();
+        private List<Invite> invites;
         private long idGroupeInvites;
         private string nom;
         #endregion
@@ -38,6 +38,7 @@
         }
         #endregion
 
+        #region --- Constructeurs ---
         /// <summary>
         /// Constructeur de la classe GroupeInvites
         /// </summary>
@@ -62,6 +63,6 @@
         {
             this.invites = new List<Invite>();
         }
-
+        #endregion
     }
 }

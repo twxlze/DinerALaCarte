@@ -17,18 +17,16 @@ namespace IHM_Footies
     {
         #region Attributs
         private VMGroupeInvite groupe;
+        #endregion
+
+        #region Propriétés
+        /// <summary>
+        /// Groupe des invités géré par cette vue
+        /// </summary>
         public VMGroupeInvite Groupe => this.groupe;
         #endregion
 
         #region Constructeurs
-        /// <summary>
-        /// Constructeur pour le designer
-        /// </summary>
-        public VueGroupeInvite()
-        {
-            InitializeComponent();
-        }
-
         /// <summary>
         /// Constructeur avec ViewModel
         /// </summary>
@@ -37,16 +35,7 @@ namespace IHM_Footies
         {
             this.groupe = groupe;
             this.DataContext = this.groupe;
-
-            this.Height = 30;
-            this.Width = 425;
-            this.Background = Brushes.AliceBlue;
-            this.FontSize = 14;
-            this.HorizontalContentAlignment = HorizontalAlignment.Center;
-            this.VerticalContentAlignment = VerticalAlignment.Center;
-            this.BorderBrush = new SolidColorBrush(Colors.Gray);
-            this.BorderThickness = new Thickness(0.4);
-
+            this.ConfigurerStyle();
             InitializeComponent();
         }
         #endregion
@@ -54,14 +43,12 @@ namespace IHM_Footies
         #region Méthodes
         public void Deselectionner()
         {
-            this.Background = new SolidColorBrush(Colors.Transparent);
-            this.Foreground = new SolidColorBrush(Colors.Black);
+            ExtensionVue.Deselectionner(this);
         }
 
-        public void Selectionner()
+        public void Selectionner() 
         {
-            this.Background = new SolidColorBrush(Colors.Maroon);
-            this.Foreground = new SolidColorBrush(Colors.White);
+            ExtensionVue.Selectionner(this);
         }
         #endregion
     }
