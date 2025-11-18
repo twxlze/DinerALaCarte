@@ -24,6 +24,7 @@ namespace IHM_Footies
         #region Attributs
         private VMGroupeInvite groupeInvite;
         #endregion
+
         #region Propriétés
         /// <summary>
         /// La viewModel du groupe d'invités
@@ -33,13 +34,6 @@ namespace IHM_Footies
 
 
         #region Constructeurs
-        /// <summary>
-        /// Constructeur par défaut
-        /// </summary>
-        public VueFormulaireGroupeInvite() : this(new VMGroupeInvite())
-        {
-            InitializeComponent();
-        }
         /// <summary>
         /// Constructeur avec ViewModel
         /// </summary>
@@ -51,16 +45,24 @@ namespace IHM_Footies
             InitializeComponent();
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
         }
+
+        /// <summary>
+        /// Constructeur par défaut
+        /// </summary>
+        public VueFormulaireGroupeInvite() : this(new VMGroupeInvite())
+        {
+        }
+        
         #endregion
 
         #region Boutons enregistrer modifications 
         /// <summary>
         /// Gestion du clic sur le bouton Enregistrer
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender"> L'expéditeur </param>
+        /// <param name="e"> Les arguments de l'événement </param>
 
-        private void Enregistrer_Click(object sender, RoutedEventArgs e)
+        private async void Enregistrer_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -70,8 +72,21 @@ namespace IHM_Footies
                 {
                     erreurs.Add("Entrez le nom du groupe d'invités");
                 }
-                this.DialogResult = true;
-                this.Close();
+                if (this.groupeInvite.Invites == null || this.groupeInvite.Invites.Count == 0)
+                {
+                    erreurs.Add("Sélectionnez au moins un invité pour le groupe");
+                }
+                if (erreurs.Count > 0)
+                {
+                    string message = string.Join("\n", erreurs);
+                    MessageBox.Show(message, "Erreur de validation", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+                else
+                {
+                    this.DialogResult = true;
+
+                }
             }
             catch (Exception ex)
             {
@@ -86,8 +101,8 @@ namespace IHM_Footies
         /// <summary>
         /// Bouton pour aller à la vue d'accueil
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender"> L'expéditeur </param>
+        /// <param name="e"> Les arguments de l'événement </param>
 
         private void BoutonAccueil_Click(object sender, RoutedEventArgs e)
         {
@@ -97,8 +112,8 @@ namespace IHM_Footies
         /// <summary>
         /// Bouton pour fermer la fenêtre
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender"> L'expéditeur du clic </param>
+        /// <param name="e"> Les arguments de l'événement </param>
         private void ButonFermerFenetre_Click(object sender, RoutedEventArgs e)
         {
             Navigation.FermerFenetre(this);
@@ -107,24 +122,32 @@ namespace IHM_Footies
         /// <summary>
         /// Bouton pour aller à la vue des invités
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender"> L'expéditeur </param>
+        /// <param name="e"> Les arguments de l'événement </param>
         private void BoutonInvite_Click(object sender, RoutedEventArgs e)
         {
             Navigation.AllerInvites(this);
         }
 
+        /// <summary>
+        /// Bouton pour aller à la vue des plats
+        /// </summary>
+        /// <param name="sender"> L'expéditeur </param>
+        /// <param name="e"> Les arguments de l'événement </param>
         private void BoutonAllerPlat_Click(object sender, RoutedEventArgs e)
         {
             Navigation.AllerPlat(this);
         }
 
+        /// <summary>
+        /// Bouton pour aller à la vue des groupes invités
+        /// </summary>
+        /// <param name="sender"> L'expéditeur </param>
+        /// <param name="e"> Les arguments de l'événement </param>
         private void BoutonGroupeInvite_Click(object sender, RoutedEventArgs e)
         {
             Navigation.AllerGroupesInvites(this);
         }
-
-
         #endregion
     }
 }
