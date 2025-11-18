@@ -27,6 +27,9 @@ builder.Services.AddScoped<IGroupeInvitesService, GroupeInvitesService>();
 builder.Services.AddScoped<IMenuDAO, MenuDAO>();
 builder.Services.AddScoped<IMenuService, MenuService>();
 
+builder.Services.AddScoped<IInvitationDAO, InvitationDAO>();
+builder.Services.AddScoped<IInvitationService, InvitationService>();
+
 SQLitePCL.Batteries.Init();
 
 var app = builder.Build();
