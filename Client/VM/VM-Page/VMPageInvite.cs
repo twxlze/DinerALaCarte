@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using METIER_Footies;
 using METIER_Footies.Data;
-using METIER_Footies.Data.Interface;
+using METIER_Footies.Data.Interfaces;
 using METIER_Footies.Metier;
 using VM_Footies.VM;
 

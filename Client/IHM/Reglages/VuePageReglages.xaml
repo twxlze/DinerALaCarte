@@ -1,16 +1,17 @@
-﻿<Window x:Class="IHM_Footies.VueFormulaireMenu"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:IHM_Footies"
-        mc:Ignorable="d"
-        Title="VueFormulaireMenu" Height="450" Width="800"
-        WindowStyle="None"
-        AllowsTransparency="True"
-        >
+﻿<Window x:Class="IHM_Footies.Reglages.VuePageReglages"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:IHM_Footies"
+      mc:Ignorable="d" 
+      Height="450" Width="800"
+      Title="VueFormulairePlat"
+      Background="#F9F9F9"
+      WindowStyle="None"
+      AllowsTransparency="True">
+
     <Window.Resources>
-        <BitmapImage x:Key="LogoHostably" UriSource="/Ressources/LogoHostably.png"/>
         <Style x:Key="BoutonMenu" TargetType="Button">
             <Setter Property="Background" Value="#F9F9F9"/>
             <Setter Property="Foreground" Value="#B44B3E"/>
@@ -146,20 +147,20 @@
 
                 <TextBlock Text="HOSTABLY" FontSize="19" FontWeight="Bold" Foreground="#B44B3E" VerticalAlignment="Center" Height="27" Margin="73,0,23,0" FontFamily="Montserrat"/>
                 <Button x:Name="BoutonAccueil"  Content="🏠 Accueil" Grid.Row="1" Style="{StaticResource BoutonMenu}" Click="BoutonAccueil_Click"/>
-                <Button x:Name="BoutonInvites" Content="👤 Invités" Grid.Row="2" Style="{StaticResource BoutonMenu}" FontWeight="Bold"/>
-                <Button x:Name="BoutonGroupes" Content="👥 Groupes d'invités" Grid.Row="3" Style="{StaticResource BoutonMenu}"/>
-                <Button x:Name="BoutonInvitations" Content="🎟️ Invitations" Grid.Row="4" Style="{StaticResource BoutonMenu}"/>
-                <Button x:Name="BoutonMenus" Content="📋 Menus" Grid.Row="5" Background="#BFBFBF" Style="{StaticResource BoutonMenu}"/>
+                <Button x:Name="BoutonInvites" Content="👤 Invités" Grid.Row="2" Style="{StaticResource BoutonMenu}" Click="BoutonAllerInvite_Click" />
+                <Button x:Name="BoutonGroupes" Content="👥 Groupes d'invités" Grid.Row="3" Style="{StaticResource BoutonMenu}" Click="BoutonAllerGroupeInvite_Click" />
+                <Button x:Name="BoutonInvitations" Content="🎟️ Invitations" Grid.Row="4" Style="{StaticResource BoutonMenu}" />
+                <Button x:Name="BoutonMenus" Content="📋 Menus" Grid.Row="5" Style="{StaticResource BoutonMenu}"/>
                 <Button x:Name="BoutonPlats" Content="🍽️ Plats" Grid.Row="6" Style="{StaticResource BoutonMenu}"/>
                 <Button x:Name="BoutonUtilisateur" Content="👤" Grid.Row="8" Style="{StaticResource BoutonMenu}" Margin="0,0,100,0" HorizontalContentAlignment="Center" FontSize="25"/>
-                <Button x:Name="BoutonReglage" Content="⚙️" Grid.Row="8" Style="{StaticResource BoutonMenu}" HorizontalContentAlignment="Center" Margin="100,0,0,0" FontSize="25"/>
+                <Button x:Name="BoutonReglage" Content="⚙️" Grid.Row="8" Style="{StaticResource BoutonMenu}" HorizontalContentAlignment="Center" Margin="100,0,0,0" FontSize="25" Background="#BFBFBF" FontWeight="Bold"/>
             </Grid>
         </Border>
 
         <!-- Partie droite  -->
 
         <!-- Titre -->
-        <TextBlock Grid.Column="1" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Gestion des Menus" VerticalAlignment="Top" FontWeight="Bold" FontSize="20" Foreground="#B44B3E" Margin="0,20,0,0"/>
+        <TextBlock Grid.Column="1" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Gestion des plats" VerticalAlignment="Top" FontWeight="Bold" FontSize="20" Foreground="#B44B3E" Margin="0,20,0,0"/>
 
         <!-- Container formulaire -->
         <Border BorderBrush="#8C2F26" 
@@ -168,81 +169,21 @@
                     BorderThickness="3"
                     CornerRadius="10"
                     Padding="5">
-            <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="2">
-                <StackPanel>
-
-                </StackPanel>
-            </ScrollViewer>
+            <ComboBox Margin="158,56,158,200" FontSize="18" x:Name="LanguageComboBox">
+                <ComboBoxItem IsSelected="True" >Français</ComboBoxItem>
+                <ComboBoxItem>Anglais</ComboBoxItem>
+            </ComboBox>
         </Border>
 
         <!-- Sous-titre -->
-        <TextBlock Grid.Column="1" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Informations" VerticalAlignment="Top" FontWeight="SemiBold" FontSize="16" Foreground="#B44B3E" Margin="0,65,0,0" Grid.RowSpan="2"/>
+        <TextBlock Grid.Column="1" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" FontWeight="SemiBold" FontSize="16" Foreground="#B44B3E" Margin="0,81,0,0" Grid.RowSpan="2"><Run Language="fr-fr" Text="Langue choisie :"/><LineBreak/><Run Language="fr-fr"/></TextBlock>
 
         <!-- Input -->
-        <Label Grid.Column="1" Margin="232,4,160,4" Grid.Row="1"  FontSize="16" Foreground="#B44B3E">Nom du menu</Label>
-        <TextBox Grid.Column="1" Margin="106,34,106,20" Grid.Row="1" Height="25" Text="{Binding Nom, UpdateSourceTrigger=PropertyChanged}" Grid.RowSpan="2"/>
 
-
-        <Label Grid.Column="1" Margin="200,18,193,24" Grid.Row="2"  FontSize="16" Foreground="#B44B3E" Grid.RowSpan="2">Catégories dans le menu</Label>
-
-        <Label Grid.Column="1" Margin="51,10,471,31" Grid.Row="3"  FontSize="16" Foreground="#B44B3E" Grid.RowSpan="2">Apéritif</Label>
-
-        <Label Grid.Column="1" Margin="194,7,348,37" Grid.Row="3"  FontSize="16" Foreground="#B44B3E" Grid.RowSpan="2">Entrée</Label>
-        
-        <Label Grid.Column="1" Margin="349,7,193,37" Grid.Row="3"  FontSize="16" Foreground="#B44B3E" Grid.RowSpan="2">Plat</Label>
-        
-        <Label Grid.Column="1" Margin="477,7,59,37" Grid.Row="3"  FontSize="16" Foreground="#B44B3E" Grid.RowSpan="2">Dessert</Label>
-
-        <!-- Container des ingrédients -->
-        <Border BorderBrush="#8C2F26" 
-            Grid.Column="1" Grid.RowSpan="5" 
-            Margin="21,39,459,61"
-            BorderThickness="3"
-            CornerRadius="10"
-            Padding="5" Grid.Row="3">
-            <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="2" Margin="0,-8,2,0">
-                <StackPanel Orientation="Vertical" Margin="5">
-                </StackPanel>
-            </ScrollViewer>
-        </Border>
-        <Border BorderBrush="#8C2F26" 
-        Grid.Column="1" Grid.RowSpan="5" 
-        Margin="162,39,316,61"
-        BorderThickness="3"
-        CornerRadius="10"
-        Padding="5" Grid.Row="3">
-            <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="2" Margin="0,-8,2,0">
-                <StackPanel Orientation="Vertical" Margin="5">
-                </StackPanel>
-            </ScrollViewer>
-        </Border>
-        <Border BorderBrush="#8C2F26" 
-        Grid.Column="1" Grid.RowSpan="5" 
-        Margin="309,39,170,61"
-        BorderThickness="3"
-        CornerRadius="10"
-        Padding="5" Grid.Row="3">
-            <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="2" Margin="0,-8,2,0">
-                <StackPanel Orientation="Vertical" Margin="5">
-                </StackPanel>
-            </ScrollViewer>
-        </Border>
-        <Border BorderBrush="#8C2F26" 
-        Grid.Column="1" Grid.RowSpan="5" 
-        Margin="448,39,30,61"
-        BorderThickness="3"
-        CornerRadius="10"
-        Padding="5" Grid.Row="3">
-            <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="2" Margin="0,-8,2,0">
-                <StackPanel Orientation="Vertical" Margin="5">
-                </StackPanel>
-            </ScrollViewer>
-        </Border>
 
         <!-- Boutons -->
         <Button Grid.RowSpan="2" Grid.Column="1" Content="Enregistrer" HorizontalAlignment="Center" Margin="0,58,0,0" Grid.Row="7" VerticalAlignment="Top" Height="40" Width="240" Style="{StaticResource StyleBoutonEnregistrer}" />
-        <Image Source="{StaticResource ResourceKey=LogoHostably}" Margin="15,10,121,17" />
-
+        
     </Grid>
 
 </Window>

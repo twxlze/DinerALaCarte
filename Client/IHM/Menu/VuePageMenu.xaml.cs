@@ -11,32 +11,31 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using IHM;
-using VM_Footies;
 using VM_Footies.VM;
+using VM_Footies.VM_Page;
 
-namespace IHM_Footies
+namespace IHM_Footies.Menu
 {
     /// <summary>
-    /// Logique d'interaction pour VuePagePlat.xaml
+    /// Logique d'interaction pour VuePageMenu.xaml
     /// </summary>
-    public partial class VuePagePlat : Window
+    public partial class VuePageMenu : Window
     {
         #region Attributs
-        private VMPagePlat vmPagePlat;
-        private List<VuePlat> vuePlat;
+        private VMPageMenu vmPageMenu;
+        private List<VueMenu> vueMenu;
         #endregion
 
         #region Constructeur
         /// <summary>
-        /// Constructeur par défaut d'une page de plat
+        /// Constructeur par défaut d'une page de menu
         /// </summary>
-        public VuePagePlat()
+        public VuePageMenu()
         {
             InitializeComponent();
-            this.vuePlat = new List<VuePlat>();
-            this.vmPagePlat = new VMPagePlat();
-            this.vmPagePlat.PropertyChanged += VMPagePlat_PropertyChanged;
+            this.vueMenu = new List<VueMenu>();
+            this.vmPageMenu = new VMPageMenu();
+            this.vmPageMenu.PropertyChanged += VMPageMenu_PropertyChanged;
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
             this.RafraichirListe();
         }
@@ -44,60 +43,64 @@ namespace IHM_Footies
 
         #region Méthodes
         /// <summary>
-        /// Gestion du changement de propriété dans le VMPagePlat
+        /// Gestion du changement de propriété dans le VMPageMenu
         /// </summary>
         /// <param name="sender"> L'expéditeur </param>
         /// <param name="e"> Les arguments de l'événement </param>
-        private void VMPagePlat_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+        private void VMPageMenu_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == "VMPlat") this.RafraichirListe();
+            if (e.PropertyName == "VMMenu") this.RafraichirListe();
         }
 
         /// <summary>
-        /// Rafraîchit la liste des plats affichés
+        /// Rafraîchit la liste des menus affichés
         /// </summary>
         private async void RafraichirListe()
         {
-            this.PanelListePlat.Children.Clear();
-            this.vuePlat.Clear();
+            this.PanelListeMenu.Children.Clear();
+            this.vueMenu.Clear();
 
-            await this.vmPagePlat.ChargerPlats();
+            await this.vmPageMenu.ChargerMenus();
 
-            foreach (VMPlat plat in this.vmPagePlat.VMPlat)
+            foreach (VMMenu menu in this.vmPageMenu.VMMenu)
             {
-                VuePlat vue = new VuePlat(plat);
-                vue.MouseDown += (s, e) => this.SelectionnerPlat(vue);
+                VueMenu vue = new VueMenu(menu);
+                vue.MouseDown += (s, e) => this.SelectionnerMenu(vue);
                 vue.MouseDoubleClick += (s, e) => this.OuvrirModification(vue);
-                this.vuePlat.Add(vue);
-                this.PanelListePlat.Children.Add(vue);
+                this.vueMenu.Add(vue);
+                this.PanelListeMenu.Children.Add(vue);
             }
         }
 
         /// <summary>
-        /// Ouvre la fenêtre de modification d'un plat
+        /// Ouvre la fenêtre de modification d'un menu
         /// </summary>
-        /// <param name="vue"> La vue du plat à modifier </param>
-        private void OuvrirModification(VuePlat vue)
+        /// <param name="vue"> La vue du menu à modifier </param>
+        private async Task OuvrirModification(VueMenu vue)
         {
-            VMPlat memoire = new VMPlat(vue.Plat);
-            VueFormulairePlat fenetre = new VueFormulairePlat(vue.Plat);
+            VMMenu memoire = new VMMenu(vue.Menu);
+
+            await this.vmPageMenu.ChargerPlatsDansMenu(memoire);
+
+            VueFormulaireMenu fenetre = new VueFormulaireMenu(vue.Menu);
             bool? result = fenetre.ShowDialog();
-            if (result == false)
+            if (result == true)
             {
-                vue.Plat.ModifierPlat(memoire);
+                //vue.Menu.ModifierMenu(memoire);
+                await this.vmPageMenu.ModifierMenu(vue.Menu);
             }
         }
 
         /// <summary>
-        /// Sélectionne un plat dans la liste des plats
+        /// Sélectionne un menu dans la liste des menus
         /// </summary>
-        /// <param name="vue"> VuePlat sélectionnée </param>
-        public void SelectionnerPlat(VuePlat vue)
+        /// <param name="vue"> VueMenu sélectionnée </param>
+        public void SelectionnerMenu(VueMenu vue)
         {
-            this.vmPagePlat.PlatSelectionne = vue.Plat;
-            foreach (VuePlat vueP in this.vuePlat)
+            this.vmPageMenu.MenuSelectionne = vue.Menu;
+            foreach (VueMenu vueM in this.vueMenu)
             {
-                vueP.Deselectionner();
+                vueM.Deselectionner();
             }
             vue.Selectionner();
         }
@@ -105,69 +108,74 @@ namespace IHM_Footies
 
         #region Boutons 
         /// <summary>
-        /// Ouvre la fenêtre d'ajout d'un plat
+        /// Ouvre la fenêtre d'ajout d'un menu
         /// </summary>
         /// <param name="sender"> l'expéditeur </param>
         /// <param name="e"> Les arguments de l'événement </param>
-        private async void BoutonAjouterPlat_Click(object sender, RoutedEventArgs e)
+        private async void BoutonAjouterMenu_Click(object sender, RoutedEventArgs e)
         {
-            VueFormulairePlat fenetre = new VueFormulairePlat();
+            VMMenu nvMenu = new VMMenu();
+            await this.vmPageMenu.ChargerPlatsDansMenu(nvMenu);
+
+            VueFormulaireMenu fenetre = new VueFormulaireMenu(nvMenu);
             bool? result = fenetre.ShowDialog();
             if (result == true)
             {
                 try
                 {
-                    await this.vmPagePlat.AjouterPlat(fenetre.Plat);
+                    await this.vmPageMenu.AjouterMenu(nvMenu);
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Une erreur est survenue lors de l'ajout du plat : {ex.Message}", "Erreur d'ajout", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show($"Erreur lors de l'ajout du menu : {ex.Message}", "Erreur d'ajout", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
         }
 
         /// <summary>
-        /// Ouvre la fenêtre de modification d'un plat sélectionné
+        /// Ouvre la fenêtre de modification d'un menu sélectionné
         /// </summary>
         /// <param name="sender"> L'expéditeur </param>
         /// <param name="e"> Les arguments de l'événement </param>
-        private async void BoutonModifierPlat_Click(object sender, RoutedEventArgs e)
+        private async void BoutonModifierMenu_Click(object sender, RoutedEventArgs e)
         {
-            if (this.vmPagePlat.PlatSelectionne != null)
+            if (this.vmPageMenu.MenuSelectionne != null)
             {
-                VueFormulairePlat fenetre = new VueFormulairePlat(this.vmPagePlat.PlatSelectionne);
+                VMMenu copie = new VMMenu(this.vmPageMenu.MenuSelectionne);
+
+                await this.vmPageMenu.ChargerPlatsDansMenu(copie);
+                VueFormulaireMenu fenetre = new VueFormulaireMenu(copie);
                 bool? result = fenetre.ShowDialog();
                 if (result == true)
                 {
-                    await this.vmPagePlat.ModifierPlat(fenetre.Plat);
+                    await this.vmPageMenu.ModifierMenu(copie);
                 }
             }
         }
 
-
         /// <summary>
-        /// Supprime le plat sélectionné
+        /// Supprime le menu sélectionné
         /// </summary>
         /// <param name="sender"> L'expéditeur </param>
         /// <param name="e"> Les arguments de l'événement </param>
-        private async void BoutonSupprimerPlat_Click(object sender, RoutedEventArgs e)
+        private async void BoutonSupprimerMenu_Click(object sender, RoutedEventArgs e)
         {
-            if (this.vmPagePlat.PlatSelectionne != null)
+            if (this.vmPageMenu.MenuSelectionne != null)
             {
                 MessageBoxResult resultat = MessageBox.Show(
-                    "Êtes-vous sûr de vouloir supprimer ce plat ?",
+                    "Êtes-vous sûr de vouloir supprimer ce menu ?",
                     "Confirmation de suppression",
                     MessageBoxButton.YesNo,
                     MessageBoxImage.Question);
 
                 if (resultat == MessageBoxResult.Yes)
                 {
-                    bool suppressionReussie = await this.vmPagePlat.SupprimerPlat();
+                    bool suppressionReussie = await this.vmPageMenu.SupprimerMenu();
 
                     if (!suppressionReussie)
                     {
                         MessageBox.Show(
-                            "Suppression impossible, le plat est utilisé dans un ou plusieurs menus.",
+                            "Suppression impossible, le menu est utilisé dans une ou plusieurs invitations.",
                             "Suppression impossible",
                             MessageBoxButton.OK,
                             MessageBoxImage.Warning);
@@ -181,17 +189,15 @@ namespace IHM_Footies
             else
             {
                 MessageBox.Show(
-                    "Veuillez sélectionner un plat à supprimer.",
-                    "Aucun plat sélectionné",
+                    "Veuillez sélectionner un menu à supprimer.",
+                    "Aucun menu sélectionné",
                     MessageBoxButton.OK,
                     MessageBoxImage.Warning);
             }
         }
-
         #endregion
 
         #region Boutons de navigation
-
         /// <summary>
         /// Bouton pour aller à la vue d'accueil
         /// </summary>
@@ -220,6 +226,16 @@ namespace IHM_Footies
         private void ButonFermerFenetre_Click(object sender, RoutedEventArgs e)
         {
             Navigation.FermerFenetre(this);
+        }
+
+        /// <summary>
+        /// Bouton pour aller à la page menu
+        /// </summary>
+        /// <param name="sender"> L'expéditeur </param>
+        /// <param name="e"> les arguments de l'événement </param>
+        private void BoutonMenu_Click(object sender, RoutedEventArgs e)
+        {
+            // Navigation.AllerMenu(this);
         }
 
         /// <summary>

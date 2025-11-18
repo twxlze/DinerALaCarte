@@ -1,15 +1,15 @@
-﻿<Window x:Class="IHM_Footies.VueFormulaireGroupeInvite"
+﻿<Window x:Class="IHM_Footies.Menu.VuePageMenu"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:IHM_Footies"
-        xmlns:res="clr-namespace:IHM_Footies.Ressources"
         mc:Ignorable="d"
-        Title="VueFormulaireGroupeInvite" Height="450" Width="800"
+        Title="VuePageMenu" Height="450" Width="800"
         Background="#F9F9F9"
         WindowStyle="None"
         AllowsTransparency="True">
+
     <Window.Resources>
         <BitmapImage x:Key="LogoHostably" UriSource="/Ressources/LogoHostably.png"/>
         <Style x:Key="BoutonMenu" TargetType="Button">
@@ -38,7 +38,7 @@
             </Setter>
         </Style>
 
-        <Style x:Key="StyleBoutonInvite" TargetType="Button">
+        <Style x:Key="StyleBoutonMenu" TargetType="Button">
             <Setter Property="Background" Value="#8C2F26"/>
             <Setter Property="Foreground" Value="#F9F9F9"/>
             <Setter Property="FontSize" Value="15"/>
@@ -52,38 +52,8 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
                         <Border Background="{TemplateBinding Background}" 
-                                CornerRadius="10"
-                                Padding="{TemplateBinding Padding}">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="#B44B3E"/>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-        <Style x:Key="StyleBoutonEnregistrer" TargetType="Button">
-            <Setter Property="Background" Value="#F9F9F9"/>
-            <Setter Property="Foreground" Value="#8C2F26"/>
-            <Setter Property="BorderBrush" Value="#8C2F26"/>
-            <Setter Property="BorderThickness" Value="2"/>
-            <Setter Property="FontSize" Value="15"/>
-            <Setter Property="FontWeight" Value="SemiBold"/>
-            <Setter Property="Padding" Value="20,0"/>
-            <Setter Property="HorizontalContentAlignment" Value="Left"/>
-            <Setter Property="FontFamily" Value="Poppins"/>
-            <Setter Property="Cursor" Value="Hand"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}" 
-                        BorderBrush="{TemplateBinding BorderBrush}"
-                        BorderThickness="{TemplateBinding BorderThickness}"
-                        CornerRadius="10"
-                        Padding="{TemplateBinding Padding}">
+                    CornerRadius="10"
+                    Padding="{TemplateBinding Padding}">
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
                     </ControlTemplate>
@@ -97,7 +67,7 @@
         </Style>
     </Window.Resources>
 
-    <Grid>
+    <Grid Cursor="Hand">
         <!-- Définition des lignes et colonnes pour le menu à gauche -->
         <Grid.RowDefinitions>
             <RowDefinition Height="2*"/>
@@ -128,7 +98,7 @@
         VerticalAlignment="Top"
         Margin="0,5,8,0"
         Click="ButonFermerFenetre_Click"
-        Grid.Column="1"/>
+        Grid.Column="1000"/>
 
         <!-- Menu à gauche -->
         <Border BorderBrush="#8C2F26"  BorderThickness="0,0,2,0" Grid.Column="0" Grid.RowSpan="9">
@@ -144,72 +114,38 @@
                     <RowDefinition Height="2*"/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-                <Image Source="{StaticResource ResourceKey=LogoHostably}" Margin="15,10,121,17" />
+
                 <TextBlock Text="HOSTABLY" FontSize="19" FontWeight="Bold" Foreground="#B44B3E" VerticalAlignment="Center" Height="27" Margin="73,0,23,0" FontFamily="Montserrat"/>
-                <Button x:Name="BoutonAccueil" Content="{x:Static res:Strings.Accueil}" Grid.Row="1" Style="{StaticResource BoutonMenu}" Click="BoutonAccueil_Click"/>
-                <Button x:Name="BoutonInvites" Content="{x:Static res:Strings.Invites}" Grid.Row="2" Style="{StaticResource BoutonMenu}" Click="BoutonInvite_Click"/>
-                <Button x:Name="BoutonGroupes" Content="{x:Static res:Strings.GroupeInvite}" Grid.Row="3" Style="{StaticResource BoutonMenu}" Background="#BFBFBF" FontWeight="Bold" Click="BoutonGroupeInvite_Click"/>
-                <Button x:Name="BoutonInvitations" Content="{x:Static res:Strings.Invitations}" Grid.Row="4" Style="{StaticResource BoutonMenu}"/>
-                <Button x:Name="BoutonMenus" Content="{x:Static res:Strings.Menus}" Grid.Row="5" Style="{StaticResource BoutonMenu}"/>
-                <Button x:Name="BoutonPlats" Content="{x:Static res:Strings.Plats}" Grid.Row="6" Style="{StaticResource BoutonMenu}" Click="BoutonAllerPlat_Click" />
+                <Button x:Name="BoutonAccueil"  Content="🏠 Accueil" Grid.Row="1" Style="{StaticResource BoutonMenu}" Click="BoutonAccueil_Click" />
+                <Button x:Name="BoutonInvites" Content="👤 Invités" Grid.Row="2" Style="{StaticResource BoutonMenu}" Click="BoutonInvite_Click"/>
+                <Button x:Name="BoutonGroupes" Content="👥 Groupes d'invités" Grid.Row="3" Style="{StaticResource BoutonMenu}"/>
+                <Button x:Name="BoutonInvitations" Content="🎟️ Invitations" Grid.Row="4" Style="{StaticResource BoutonMenu}"/>
+                <Button x:Name="BoutonMenus" Content="📋 Menus" Grid.Row="5" Style="{StaticResource BoutonMenu}" Background="#BFBFBF" FontWeight="Bold" Click="BoutonMenu_Click"/>
+                <Button x:Name="BoutonPlats" Content="🍽️ Plats" Grid.Row="6" Style="{StaticResource BoutonMenu}" Click="BoutonPlat_Click"/>
                 <Button x:Name="BoutonUtilisateur" Content="👤" Grid.Row="8" Style="{StaticResource BoutonMenu}" Margin="0,0,100,0" HorizontalContentAlignment="Center" FontSize="25"/>
                 <Button x:Name="BoutonReglage" Content="⚙️" Grid.Row="8" Style="{StaticResource BoutonMenu}" HorizontalContentAlignment="Center" Margin="100,0,0,0" FontSize="25"/>
-                
             </Grid>
         </Border>
 
-        <!-- Partie droite  -->
-
-        <!-- Titre -->
-        <TextBlock Grid.Column="1" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{x:Static res:Strings.GroupeInvite}" VerticalAlignment="Top" FontWeight="Bold" FontSize="20" Foreground="#B44B3E" Margin="0,20,0,0"/>
-
-        <!-- Container formulaire -->
+        <!-- Partie droite -->
         <Border BorderBrush="#8C2F26" 
-                    Grid.Column="1" Grid.RowSpan="8" 
-                    Margin="10,61,10,41"
-                    BorderThickness="3"
-                    CornerRadius="10"
-                    Padding="5">
+                Grid.Column="1" Grid.RowSpan="6" 
+                Margin="80,20,80,16"
+                BorderThickness="2"
+                CornerRadius="10"
+                Padding="5" Grid.Row="1">
             <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="2">
-                <StackPanel>
+                <StackPanel Orientation="Vertical" x:Name="PanelListeMenu">
 
                 </StackPanel>
             </ScrollViewer>
         </Border>
 
-        <!-- Sous-titre -->
-        <TextBlock Grid.Column="1" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{x:Static res:Strings.Information}" VerticalAlignment="Top" FontWeight="SemiBold" FontSize="16" Foreground="#B44B3E" Margin="0,65,0,0" Grid.RowSpan="2"/>
-
-        <!-- Input -->
-        <Label Grid.Column="1" Margin="92,6,300,6" Grid.Row="1" FontSize="16" Foreground="#B44B3E" Content="{x:Static res:Strings.Nom}"/>
-        <TextBox Grid.Column="1" Margin="177,8,35,3" Grid.Row="1" Height="25" Text="{Binding Nom, UpdateSourceTrigger=PropertyChanged}"/>
-
-        <!-- Invités à séléctionner -->
-        <Border BorderBrush="#8C2F26" 
-        Grid.Column="1" Grid.RowSpan="5" 
-        Margin="196,0,211,61"
-        BorderThickness="3"
-        CornerRadius="10"
-        Padding="5" Grid.Row="3">
-            <ScrollViewer VerticalScrollBarVisibility="Auto">
-                <ItemsControl ItemsSource="{Binding InvitesListe}">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <CheckBox Content="{Binding Identite}"
-                              IsChecked="{Binding EstSelectionne}"
-                              Margin="5"
-                              FontSize="12"
-                              Foreground="#333333"/>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-            </ScrollViewer>
-        </Border>
-
         <!-- Boutons -->
-         <Button Grid.RowSpan="2" Grid.Column="1" Content="{x:Static res:Strings.Enregistrer}" HorizontalAlignment="Center" Margin="0,58,0,0" Grid.Row="7" VerticalAlignment="Top" Height="40" Width="240" Style="{StaticResource StyleBoutonEnregistrer}" Click="Enregistrer_Click" />
+        <Button Grid.RowSpan="2" Grid.Column="1" Content="Ajouter un menu" HorizontalAlignment="Left" Margin="40,0,0,30" Grid.Row="6" VerticalAlignment="Bottom" Height="40" Width="240" Style="{StaticResource StyleBoutonMenu}" Click="BoutonAjouterMenu_Click" />
+        <Button Grid.Column="1" Content="Modifier un menu" HorizontalAlignment="Right" Margin="0,0,40,30" Grid.Row="7" VerticalAlignment="Bottom" Height="40" Width="240" Style="{StaticResource StyleBoutonMenu}" Cursor="Hand" Click="BoutonModifierMenu_Click"/>
+        <Button Grid.Column="1" Content="Supprimer un menu" HorizontalAlignment="Center" Grid.Row="7" VerticalAlignment="Top" Height="40" Width="240" Style="{StaticResource StyleBoutonMenu}" Margin="0,64,0,15" Grid.RowSpan="2" Click="BoutonSupprimerMenu_Click"/>
+        <TextBlock Grid.Column="1" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Gestion des menus" VerticalAlignment="Top" FontWeight="Bold" FontSize="20" Foreground="#B44B3E" Margin="0,20,0,0"/>
         <Image Source="{StaticResource ResourceKey=LogoHostably}" Margin="15,10,121,17" />
-
     </Grid>
-
 </Window>

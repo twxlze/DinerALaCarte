@@ -237,6 +237,15 @@ public partial class MainWindow : Window
     }
 
     /// <summary>
+    /// Bouton pour aller au menu
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void BoutonAllerMenu_Click(object sender, RoutedEventArgs e)
+    {
+        Navigation.AllerMenu(this);
+    }
+    /// <summary>
     /// Bouton pour aller à la page invité
     /// </summary>
     /// <param name="sender"></param>
@@ -244,6 +253,11 @@ public partial class MainWindow : Window
     private void BoutonAllerInvite_Click(object sender, RoutedEventArgs e)
     {
         Navigation.AllerInvites(this);
+    }
+
+    private void BoutonAllerReglages_Click(object sender, RoutedEventArgs e)
+    {
+        Navigation.AllerReglages(this);
     }
 
     #endregion
