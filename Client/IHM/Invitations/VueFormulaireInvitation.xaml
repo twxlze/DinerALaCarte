@@ -66,6 +66,70 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
+        
+        <!-- Style bordure de la bare de recherche -->
+        <Style x:Key="StyleContainerRecherche" TargetType="Border">
+            <Setter Property="BorderBrush" Value="#8C2F26"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="CornerRadius" Value="5"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Width" Value="126"/>
+            <Setter Property="Height" Value="18"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+        </Style>
+
+        <Style x:Key="StyleChampRecherche" TargetType="TextBox">
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="8,0,0,0"/>
+            <Setter Property="FontFamily" Value="Poppins"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Foreground" Value="#333333"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Style.Triggers>
+                <Trigger Property="Text" Value="">
+                    <Setter Property="Background">
+                        <Setter.Value>
+                            <VisualBrush Stretch="None" AlignmentX="Left">
+                                <VisualBrush.Visual>
+                                    <TextBlock Text="Rechercher..." Foreground="#BFBFBF" FontSize="12" Margin="8,0,0,0"/>
+                                </VisualBrush.Visual>
+                            </VisualBrush>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- Style loupe de recherche -->
+        <Style x:Key="StyleLoupeRecherche" TargetType="Button">
+            <Setter Property="Content" Value="🔍"/>
+            <Setter Property="Width" Value="30"/>
+            <Setter Property="Height" Value="24"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Foreground" Value="#B44B3E"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="3">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#E0E0E0"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
     </Window.Resources>
 
     <Grid Cursor="Hand">
@@ -129,37 +193,48 @@
 
 
         <Border BorderBrush="#8C2F26" 
-                Grid.Column="1" Grid.RowSpan="7" 
-                Margin="10,52,20,16"
+                Grid.Column="1" Grid.RowSpan="9" 
+                Margin="10,31,20,20"
                 BorderThickness="2"
                 CornerRadius="10"
                 Padding="5">
             <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="2">
                 <StackPanel Orientation="Vertical" x:Name="PanelListeMenu">
-
                 </StackPanel>
             </ScrollViewer>
         </Border>
 
         <!-- Nom du menu -->
 
-        <TextBlock Grid.Column="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Nom de l'invitation : " VerticalAlignment="Top" FontWeight="Bold" FontSize="20" Foreground="#B44B3E" Margin="29,63,0,0" Grid.RowSpan="2"/>
-        <TextBox Grid.Column="1" Margin="228,65,86,33" Height="25" Text="{Binding NomMenu, UpdateSourceTrigger=PropertyChanged}" Grid.RowSpan="2"/>
+        <TextBlock Grid.Column="1" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" FontWeight="Bold" FontSize="20" Foreground="#B44B3E" Margin="95,38,0,0"><Run Language="fr-fr" Text="Nom :"/></TextBlock>
+        <TextBox Grid.Column="1" Margin="163,43,151,17" Text="{Binding NomMenu, UpdateSourceTrigger=PropertyChanged}"/>
 
         <!-- Menus -->
-        <TextBlock Grid.Column="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Menus" VerticalAlignment="Top" FontWeight="Bold" FontSize="20" Foreground="#B44B3E" Margin="77,13,0,0" Grid.Row="1" Grid.RowSpan="2"/>
+        <TextBlock Grid.Column="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Menus" VerticalAlignment="Top" FontWeight="Bold" FontSize="15" Foreground="#B44B3E" Grid.Row="2" RenderTransformOrigin="0.5,0.5" Margin="0,33,0,0" Grid.RowSpan="2">
+            <TextBlock.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-90"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </TextBlock.RenderTransform>
+        </TextBlock>
+
+
+
 
         <Border BorderBrush="#8C2F26" 
-        Grid.Column="1" Grid.RowSpan="5" 
-        Margin="40,10,424,24"
+        Grid.Column="1" Grid.RowSpan="4" 
+        Margin="38,25,426,11"
         BorderThickness="3"
         CornerRadius="10"
-        Padding="5" Grid.Row="2">
+        Padding="5" Grid.Row="1">
             <ScrollViewer VerticalScrollBarVisibility="Auto">
                 <ItemsControl ItemsSource="{Binding Menu}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <CheckBox Content="{Binding Nom}"
+                            <CheckBox Content="{Binding NomMenu}"
                               IsChecked="{Binding MenuSelectionne}"
                               Margin="5"
                               FontSize="12"
@@ -172,21 +247,30 @@
 
         <!-- Groupe invités -->
 
-        <TextBlock Grid.Column="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Groupe invités" VerticalAlignment="Top" FontWeight="Bold" FontSize="20" Foreground="#B44B3E" Margin="211,13,0,0" Grid.Row="1"/>
+        <TextBlock Grid.Column="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Groupe invités" VerticalAlignment="Top" FontWeight="Bold" FontSize="15
+                   " Foreground="#B44B3E" Margin="145,39,0,0" RenderTransformOrigin="0.5,0.5" Grid.Row="2" Grid.RowSpan="2">
+            <TextBlock.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-90"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </TextBlock.RenderTransform>
+        </TextBlock>
 
         <Border BorderBrush="#8C2F26" 
-        Grid.Column="1" Grid.RowSpan="5" 
-        Margin="195,10,237,25"
+        Grid.Column="1" Grid.RowSpan="4" 
+        Margin="210,25,254,8"
         BorderThickness="3"
         CornerRadius="10"
-        Padding="5" Grid.Row="2">
+        Padding="5" Grid.Row="1">
             <ScrollViewer VerticalScrollBarVisibility="Auto">
-                <!-- Remplacer par GroupeInvites -->
                 <ItemsControl ItemsSource="{Binding GroupeInvite}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <CheckBox Content="{Binding Nom}"
-                      IsChecked="{Binding GroupeSelectionne}"
+                            <CheckBox Content="{Binding NomGroupeInvite}"
+                      IsChecked="{Binding MenuSelectionne}"
                       Margin="5"
                       FontSize="12"
                       Foreground="#333333"/>
@@ -199,16 +283,14 @@
 
         <!--Calendrier -->
 
-        <TextBlock Grid.Column="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Date" VerticalAlignment="Top" FontWeight="Bold" FontSize="20" Foreground="#B44B3E" Margin="457,18,0,0" Grid.Row="1" Grid.RowSpan="2"/>
+        <TextBlock Grid.Column="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Date" VerticalAlignment="Top" FontWeight="Bold" FontSize="20" Foreground="#B44B3E" Margin="439,70,0,0" Grid.RowSpan="2"/>
 
-        <StackPanel Orientation="Horizontal" Margin="368,8,34,21" Grid.RowSpan="5" Grid.Column="1" Grid.Row="2">
-
+        <StackPanel Orientation="Horizontal" Margin="366,2,24,18" Grid.RowSpan="5" Grid.Column="1" Grid.Row="1">
             <Calendar 
             SelectedDate="1/10/2025"
             DisplayDate="1/10/2025"
             DisplayDateStart="1/10/2025"
-            DisplayDateEnd="4/18/2100" Height="183" Width="204"/>
-            <TextBlock TextWrapping="Wrap" Text="Groupe invités" FontWeight="Bold" FontSize="20" Foreground="#B44B3E"/>
+            DisplayDateEnd="4/18/2100" Height="164" Width="192"/>
 
             <Calendar
             xmlns:sys="clr-namespace:System;assembly=mscorlib" Margin="20" SelectionMode="MultipleRange"  
@@ -227,7 +309,158 @@
                 </Calendar.SelectedDates>
             </Calendar>
         </StackPanel>
-        <TextBlock Grid.Column="1" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Gestion des invitations" VerticalAlignment="Top" FontWeight="Bold" FontSize="20" Foreground="#B44B3E" Margin="0,20,0,0"/>
+        <TextBlock Grid.Column="1" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Gestion des invitations" VerticalAlignment="Top" FontWeight="Bold" FontSize="20" Foreground="#B44B3E" Margin="0,3,0,0"/>
         <Image Source="{StaticResource ResourceKey=LogoHostably}" Margin="15,10,121,17" />
+
+
+        <!-- Plats -->
+
+        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Plats" VerticalAlignment="Top" FontWeight="Bold" FontSize="15" Foreground="#B44B3E" Margin="6,41,0,0" Grid.Row="6" RenderTransformOrigin="0.539,0.751" Grid.Column="1" Grid.RowSpan="2">
+            <TextBlock.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-90"/>
+                    <TranslateTransform X="3.682" Y="-6.333"/>
+                </TransformGroup>
+            </TextBlock.RenderTransform>
+        </TextBlock>
+
+        <Border BorderBrush="#8C2F26" 
+        Grid.Column="1" Margin="38,31,426,0"
+        BorderThickness="2"
+        CornerRadius="10"
+        Padding="5" Grid.Row="5" Grid.RowSpan="3">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <ItemsControl ItemsSource="{Binding Plats}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <CheckBox Content="{Binding NomPlats}"
+                                IsChecked="{Binding PlatSelectionne}"
+                                Margin="5"
+                                FontSize="12"
+                                Foreground="#333333"/>            
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+        </Border>
+
+        <!-- Invites -->
+
+        <TextBlock Grid.Column="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Invites" VerticalAlignment="Top" FontWeight="Bold" FontSize="15" Foreground="#B44B3E" Grid.Row="6" Margin="176,39,0,0" Grid.RowSpan="2" RenderTransformOrigin="0.5,0.5">
+            <TextBlock.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-90"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </TextBlock.RenderTransform>
+        </TextBlock>
+
+
+        <Border BorderBrush="#8C2F26" 
+        Grid.Column="1" Margin="210,31,254,0"
+        BorderThickness="2"
+        CornerRadius="10"
+        Padding="5" Grid.Row="5" Grid.RowSpan="3">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <ItemsControl ItemsSource="{Binding Invites}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <CheckBox Content="{Binding NomInvite}"
+                              IsChecked="{Binding inviteSelectionne}"
+                              Margin="5"
+                              FontSize="12"
+                              Foreground="#333333"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+        </Border>
+
+        <Button Grid.Column="1" Content="Enregistrer" HorizontalAlignment="Left" Margin="366,39,0,48" Grid.Row="6" Width="200" Style="{StaticResource StyleBoutonMenu}" Grid.RowSpan="2" />
+
+
+        <!-- Barre de recherche pour les Menus -->
+        <Border Style="{StaticResource StyleContainerRecherche}" Grid.Column="1" Grid.Row="1" Margin="42,0,0,0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBox x:Name="zonerechercheMenu" 
+                 Grid.Column="0" 
+                 Style="{StaticResource StyleChampRecherche}"
+                 Text="{Binding TexteRechercheMenus, UpdateSourceTrigger=PropertyChanged}"/>
+
+                <Button x:Name="rechercheMenu" 
+                Grid.Column="1" 
+                Style="{StaticResource StyleLoupeRecherche}"/>
+            </Grid>
+        </Border>
+
+
+
+        <!-- Barre de recherche pour les Groupe Invité -->
+        <Border Style="{StaticResource StyleContainerRecherche}" Grid.Column="1" Grid.Row="1" Margin="215,0,0,0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBox x:Name="zonerechercheGroupeInvite" 
+                 Grid.Column="0" 
+                 Style="{StaticResource StyleChampRecherche}"
+                 Text="{Binding TexteRechercheGroupeInvite, UpdateSourceTrigger=PropertyChanged}"/>
+
+                <Button x:Name="rechercheGroupeInvite" 
+                Grid.Column="1" 
+                Style="{StaticResource StyleLoupeRecherche}"/>
+            </Grid>
+        </Border>
+
+        <!-- Barre de recherche pour les plats -->
+        <Border Style="{StaticResource StyleContainerRecherche}" Grid.Column="1" Grid.Row="5" Margin="42,5,0,0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBox x:Name="zonerecherchePlats" 
+                 Grid.Column="0" 
+                 Style="{StaticResource StyleChampRecherche}"
+                 Text="{Binding TexteRecherchePlats, UpdateSourceTrigger=PropertyChanged}"/>
+
+                <Button x:Name="recherchePlats" 
+                Grid.Column="1" 
+                Style="{StaticResource StyleLoupeRecherche}"/>
+            </Grid>
+        </Border>
+
+
+        <!-- Barre de recherche pour les Invites -->
+        <Border Style="{StaticResource StyleContainerRecherche}" Grid.Column="1" Grid.Row="5" Margin="215,5,0,0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBox x:Name="zonerechercheinvite"
+                 Grid.Column="0" 
+                 Style="{StaticResource StyleChampRecherche}"
+                 Text="{Binding TexteRechercheInvite, UpdateSourceTrigger=PropertyChanged}"/>
+
+                <Button x:Name="rechercheinvite" 
+                Grid.Column="1" 
+                Style="{StaticResource StyleLoupeRecherche}"/>
+            </Grid>
+        </Border>
+
     </Grid>
 </Window>
