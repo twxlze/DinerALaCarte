@@ -15,6 +15,7 @@ namespace METIER_Footies.Metier
         private long idInvitation;
         private string nom;
         private List<GroupeInvites> groupeInvites;
+        private List<Menu> menu;
         private List<Invite> invites;
         private List<Plat> plats;
         private DateTime date;
@@ -44,6 +45,15 @@ namespace METIER_Footies.Metier
         {
             get { return nom; }
             set { nom = value; }
+        }
+
+        /// <summary>
+        /// Liste des menus de l'invitation
+        /// </summary>
+        public List<Menu> Menus
+        {
+            get { return menu; }
+            set { menu = value; }
         }
 
         /// <summary>
@@ -93,6 +103,7 @@ namespace METIER_Footies.Metier
             this.idInvitation = invitation.idInvitation;
             this.nom = invitation.nom;
             this.groupeInvites = invitation.groupeInvites;
+            this.menu = invitation.menu;
             this.invites = invitation.invites;
             this.plats = invitation.plats;
             this.date = invitation.date;
@@ -106,6 +117,7 @@ namespace METIER_Footies.Metier
             this.nom = "";
             this.date = DateTime.Now;
             this.groupeInvites = new List<GroupeInvites>();
+            this.menu = new List<Menu>();
             this.invites = new List<Invite>();
             this.plats = new List<Plat>();
         }
