@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using IHM;
+using IHM_Footies.Reglages;
 using IHM_Footies.Menu;
 
 namespace IHM_Footies
@@ -94,6 +95,13 @@ namespace IHM_Footies
         {
             VueFormulaireMenu vueFormulaireMenu = new VueFormulaireMenu();
             vueFormulaireMenu.Show();
+            fenetreActuelle.Close();
+        }
+
+        public static void AllerReglages(Window fenetreActuelle)
+        {
+            VuePageReglages vueReglages = new VuePageReglages();
+            vueReglages.Show();
             fenetreActuelle.Close();
         }
 
