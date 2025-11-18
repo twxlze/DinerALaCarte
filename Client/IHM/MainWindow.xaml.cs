@@ -205,6 +205,11 @@ public partial class MainWindow : Window
         Navigation.AllerInvites(this);
     }
 
+    private void BoutonAllerReglages_Click(object sender, RoutedEventArgs e)
+    {
+        Navigation.AllerReglages(this);
+    }
+
     #endregion
 
 
