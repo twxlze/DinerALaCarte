@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:IHM"
+        xmlns:res="clr-namespace:IHM_Footies.Ressources"
         mc:Ignorable="d"
         Title="Hostably" Height="450" Width="800"
         Background="#F9F9F9"
@@ -95,12 +96,12 @@
                 </Grid.RowDefinitions>
 
                 <TextBlock Text="HOSTABLY" FontSize="19" FontWeight="Bold" Foreground="#B44B3E" VerticalAlignment="Center" Height="27" Margin="73,0,23,0" FontFamily="Montserrat"/>
-                <Button x:Name="BoutonAccueil" Content="🏠 Accueil" Grid.Row="1" Grid.Column="0" Style="{StaticResource BoutonMenu}" Background="#BFBFBF" FontWeight="Bold" Click="BoutonAllerAccueil_Click"/>
-                <Button x:Name="BoutonInvites" Content="👤 Invités" Grid.Row="2" Grid.Column="0" Style="{StaticResource BoutonMenu}" Click="BoutonAllerInvite_Click"/>
-                <Button x:Name="BoutonGroupes" Content="👥 Groupes d'invités" Grid.Row="3" Grid.Column="0" Style="{StaticResource BoutonMenu}"/>
-                <Button x:Name="BoutonInvitations" Content="🎟️ Invitations" Grid.Row="4" Grid.Column="0" Style="{StaticResource BoutonMenu}"/>
-                <Button x:Name="BoutonMenus" Content="📋 Menus" Grid.Row="5" Grid.Column="0" Style="{StaticResource BoutonMenu}" Cursor="Hand" />
-                <Button x:Name="BoutonPlats" Content="🍽️ Plats" Grid.Row="6" Grid.Column="0" Style="{StaticResource BoutonMenu}" Click="BoutonAllerPlat_Click"/>
+                <Button x:Name="BoutonAccueil" Content="{x:Static res:Strings.Accueil}" Grid.Row="1" Grid.Column="0" Style="{StaticResource BoutonMenu}" Background="#BFBFBF" FontWeight="Bold" Click="BoutonAllerAccueil_Click"/>
+                <Button x:Name="BoutonInvites" Content="{x:Static res:Strings.Invites}" Grid.Row="2" Grid.Column="0" Style="{StaticResource BoutonMenu}" Click="BoutonAllerInvite_Click"/>
+                <Button x:Name="BoutonGroupes" Content="{x:Static res:Strings.GroupeInvite}" Grid.Row="3" Grid.Column="0" Style="{StaticResource BoutonMenu}"/>
+                <Button x:Name="BoutonInvitations" Content="{x:Static res:Strings.Invitations}" Grid.Row="4" Grid.Column="0" Style="{StaticResource BoutonMenu}"/>
+                <Button x:Name="BoutonMenus" Content="{x:Static res:Strings.Menus}" Grid.Row="5" Grid.Column="0" Style="{StaticResource BoutonMenu}" Cursor="Hand" />
+                <Button x:Name="BoutonPlats" Content="{x:Static res:Strings.Plats}" Grid.Row="6" Grid.Column="0" Style="{StaticResource BoutonMenu}" Click="BoutonAllerPlat_Click"/>
                 <Button x:Name="BoutonUtilisateur" Content="👤" Grid.Row="8" Grid.Column="0" Style="{StaticResource BoutonMenu}" Margin="0,0,100,0" HorizontalContentAlignment="Center" FontSize="25"/>
                 <Button x:Name="BoutonReglage" Content="⚙️" Grid.Row="8" Grid.Column="0" Style="{StaticResource BoutonMenu}" HorizontalContentAlignment="Center" Margin="100,0,0,0" FontSize="25" Click="BoutonAllerReglages_Click"/>
             </Grid>
@@ -153,10 +154,10 @@
         </Border>
 
         <!-- Titres -->
-        <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="50,6,0,0" TextWrapping="Wrap" Text="Invités" VerticalAlignment="Top" Style="{StaticResource TitleStyle}"/>
-        <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="335,5,0,0" TextWrapping="Wrap" Text="Plats" VerticalAlignment="Top" Style="{StaticResource TitleStyle}"/>
-        <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="48,0,0,24" Grid.Row="4" TextWrapping="Wrap" Text="Groupe d'invités" VerticalAlignment="Bottom" Style="{StaticResource TitleStyle}"/>
-        <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="48,41,0,0" Grid.Row="6" TextWrapping="Wrap" Text="Menus" VerticalAlignment="Top" Grid.RowSpan="2" Style="{StaticResource TitleStyle}"/>
+        <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="50,6,0,0" TextWrapping="Wrap" Text="{x:Static res:Strings.Invites}" VerticalAlignment="Top" Style="{StaticResource TitleStyle}"/>
+        <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="335,5,0,0" TextWrapping="Wrap" Text="{x:Static res:Strings.Plats}" VerticalAlignment="Top" Style="{StaticResource TitleStyle}"/>
+        <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="48,0,0,24" Grid.Row="4" TextWrapping="Wrap" Text="{x:Static res:Strings.GroupeInvite}" VerticalAlignment="Bottom" Style="{StaticResource TitleStyle}"/>
+        <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="48,41,0,0" Grid.Row="6" TextWrapping="Wrap" Text="{x:Static res:Strings.Menus}" VerticalAlignment="Top" Grid.RowSpan="2" Style="{StaticResource TitleStyle}"/>
         <Image Source="{StaticResource ResourceKey=LogoHostably}" Margin="15,10,121,17"/>
     </Grid>
 </Window>
