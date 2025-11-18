@@ -27,5 +27,10 @@
   <ItemGroup>
     <Folder Include="Data\Enum\" />
   </ItemGroup>
+  <ItemGroup>
+    <None Update="openfoodfacts.db">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 
 </Project>
