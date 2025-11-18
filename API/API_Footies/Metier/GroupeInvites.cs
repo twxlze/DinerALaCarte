@@ -35,8 +35,33 @@
         {
             get { return nom; }
             set { nom = value; }
-        }   
+        }
         #endregion
+
+        /// <summary>
+        /// Constructeur de la classe GroupeInvites
+        /// </summary>
+        /// <param name="idGroupeInvites"> id du groupe d'invités </param>
+        /// <param name="nom"> nom du groupe d'invités </param>
+        /// <param name="invites"> liste des invités du groupe </param>
+        public GroupeInvites(long idGroupeInvites, string nom, List<Invite> invites)
+        {
+            this.idGroupeInvites = idGroupeInvites;
+            this.nom = nom;
+            this.invites = invites;
+        }
+
+        public GroupeInvites(long idGroupeInvites, string nom)
+        {
+            this.idGroupeInvites = idGroupeInvites;
+            this.nom = nom;
+            this.invites = new List<Invite>();
+        }
+
+        public GroupeInvites()
+        {
+            this.invites = new List<Invite>();
+        }
 
     }
 }
