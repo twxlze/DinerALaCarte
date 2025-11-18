@@ -24,6 +24,8 @@ public partial class MainWindow : Window
     private VMPageInvite vmPageInvite;
     private List<VuePlat> vuePlat;
     private VMPagePlat vmPagePlat;
+    private List<VueGroupeInvite> vueGroupeInvites;
+    private VMPageGroupeInvite vmPageGroupeInvite;
     #endregion
 
     /// <summary>
@@ -48,6 +50,9 @@ public partial class MainWindow : Window
 
         this.vuePlat = new List<VuePlat>();
         this.vmPagePlat = new VMPagePlat();
+
+        this.vueGroupeInvites = new List<VueGroupeInvite>();
+        this.vmPageGroupeInvite = new VMPageGroupeInvite();
     }
 
     /// <summary>
@@ -57,6 +62,7 @@ public partial class MainWindow : Window
     {
         this.vmPageInvite.PropertyChanged += VMPage_PropertyChanged;
         this.vmPagePlat.PropertyChanged += VMPage_PropertyChanged;
+        this.vmPageGroupeInvite.PropertyChanged += VMPage_PropertyChanged;
     }
 
     /// <summary>
@@ -66,7 +72,8 @@ public partial class MainWindow : Window
     {
         await Task.WhenAll(
             ChargerInvites(),
-            ChargerPlats()
+            ChargerPlats(),
+            ChargerGroupes()
         );
     }
 
@@ -82,6 +89,9 @@ public partial class MainWindow : Window
                 break;
             case "VMPlat":
                 this.ChargerPlats();
+                break;
+            case "ListeVMGroupeInvite":
+                this.ChargerGroupes();
                 break;
         }
     }
@@ -114,6 +124,15 @@ public partial class MainWindow : Window
         vue.Selectionner();
     }
 
+    private void SelectionnerGroupeInvite(VueGroupeInvite vue)
+    {
+        this.vmPageGroupeInvite.GroupeSelectionne = vue.Groupe;
+        foreach (VueGroupeInvite vueGI in this.vueGroupeInvites)
+        {
+            vueGI.Deselectionner();
+        }
+        vue.Selectionner();
+    }
     /// <summary>
     /// Rafraîchit la liste des invités affichés
     /// </summary>
@@ -163,6 +182,28 @@ public partial class MainWindow : Window
             this.PanelListePlat.Children.Add(vue);
         }
     }
+
+    /// <summary>
+    /// Rafraîchit la liste des groupes d'invités affichés
+    /// </summary>
+    private async Task ChargerGroupes()
+    {
+        this.PanelListeGroupeInvite.Children.Clear();
+        this.vueGroupeInvites.Clear();
+        await this.vmPageGroupeInvite.ChargerGroupeInvites();
+        foreach (VMGroupeInvite groupe in this.vmPageGroupeInvite.VMGroupeInvite)
+        {
+            VueGroupeInvite vue = new VueGroupeInvite(groupe);
+            vue.MouseDown += (s, e) => this.SelectionnerGroupeInvite(vue);
+            vue.Height = 20;
+            vue.Width = 600;
+            vue.HorizontalAlignment = HorizontalAlignment.Center;
+            vue.VerticalAlignment = VerticalAlignment.Center;
+            this.vueGroupeInvites.Add(vue);
+            this.PanelListeGroupeInvite.Children.Add(vue);
+        }
+    }
+
 
     /// <summary>
     /// Bouton pour fermer la fenêtre
