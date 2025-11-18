@@ -5,26 +5,30 @@ namespace API_Footies.Services.Realisations
 {
     public class OpenFoodFactsService : IOpenFoodFactsService
     {
-        private readonly string _connectionString;
+        #region Attributs
+        private string connection;
+        #endregion
 
+        #region Constructeur
         public OpenFoodFactsService(IConfiguration configuration)
         {
-            _connectionString = configuration.GetConnectionString("openfoodfacts") ?? "Data Source=openfoodfacts.db";
+            connection = "Data Source=openfoodfacts.db";
         }
+        #endregion
 
+        #region Méthodes
         public async Task<List<string>> RechercherIngredients(string recherche)
         {
-            List<string> suggestions = new List<string>();
-
+            List<string> resultat = new List<string>();
             try
             {
-                using (var connection = new SqliteConnection(_connectionString))
+                using (var connection = new SqliteConnection(this.connection))
                 {
                     await connection.OpenAsync();
 
                     string query = @"
                         SELECT DISTINCT ingredients_text 
-                        FROM products 
+                        FROM produits 
                         WHERE ingredients_text IS NOT NULL 
                         AND ingredients_text != ''
                         AND LOWER(ingredients_text) LIKE LOWER(@recherche)
@@ -41,7 +45,7 @@ namespace API_Footies.Services.Realisations
                                 string ingredientsText = reader["ingredients_text"]?.ToString();
                                 if (!string.IsNullOrWhiteSpace(ingredientsText))
                                 {
-                                    suggestions.Add(ingredientsText);
+                                    resultat.Add(ingredientsText);
                                 }
                             }
                         }
@@ -52,9 +56,8 @@ namespace API_Footies.Services.Realisations
             {
                 throw new Exception("Erreur lors de la recherche des ingrédients dans la base de données OpenFoodFacts.", ex);
             }
-
-
-                return suggestions;
+            return resultat;
         }
+        #endregion
     }
 }

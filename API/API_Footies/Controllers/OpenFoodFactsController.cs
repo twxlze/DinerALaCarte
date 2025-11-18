@@ -7,12 +7,18 @@ namespace API_Footies.Controllers
     [Route("OpenFoodFacts")]
     public class OpenFoodFactsController : ControllerBase
     {
-        private readonly IOpenFoodFactsService _service;
+        #region Attributs
+        private readonly IOpenFoodFactsService service;
+        #endregion
 
+        #region Constructeur
         public OpenFoodFactsController(IOpenFoodFactsService service)
         {
-            _service = service;
+            this.service = service;
         }
+        #endregion
+
+        #region Méthodes
 
         /// <summary>
         /// Recherche des suggestions d'ingrédients dans OpenFoodFacts
@@ -20,13 +26,14 @@ namespace API_Footies.Controllers
         /// <param name="recherche">Texte de recherche</param>
         /// <returns>Liste de suggestions d'ingrédients</returns>
         [HttpGet("RechercherIngredients")]
-        public async Task<List<string>> RechercherIngredients([FromQuery] string recherche)
+        public async Task<List<string>> RechercherIngredients(string recherche)
         {
             if (string.IsNullOrWhiteSpace(recherche))
             {
                 return new List<string>();
             }
-            return await _service.RechercherIngredients(recherche);
+            return await service.RechercherIngredients(recherche);
         }
+        #endregion
     }
 }
