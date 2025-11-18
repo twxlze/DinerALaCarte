@@ -17,7 +17,7 @@ namespace METIER_Footies.Metier
         #endregion
 
         #region --- Enumérations ---
-        public enum CategoriePlat { aperitif, entree, plat, dessert }
+        public enum CategoriePlat { aperitif = 0, entree = 1, plat = 2, dessert = 3 }
         #endregion
 
         #region --- Propriétés ---
@@ -48,7 +48,8 @@ namespace METIER_Footies.Metier
             set
             {
 
-                nom = value.ToUpper();
+                nom = value;
+
             }
         }
 

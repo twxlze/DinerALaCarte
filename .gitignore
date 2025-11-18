@@ -362,3 +362,5 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 Client/METIER/appsettings.json
+API/API_Footies/DataBase.db
+API/API_Footies/openfoodfacts.db

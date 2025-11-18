@@ -42,7 +42,7 @@ namespace IHM_Footies
         #endregion
 
         #region Méthodes pour boutons
-        
+
         #endregion
     }
 }

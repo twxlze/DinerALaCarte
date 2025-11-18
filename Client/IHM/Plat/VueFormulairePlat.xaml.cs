@@ -54,8 +54,8 @@ namespace IHM_Footies
         /// <summary>
         /// Gestion du clic sur le bouton Enregistrer
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender"> L'expéditeur </param>
+        /// <param name="e"> Les arguments de l'événement </param>
         private void Enregistrer_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -90,8 +90,8 @@ namespace IHM_Footies
         /// <summary>
         /// Bouton pour aller à la vue d'accueil
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender"> L'expéditeur </param>
+        /// <param name="e"> Les arguments de l'événement </param>
         private void BoutonAccueil_Click(object sender, RoutedEventArgs e)
         {
             Navigation.AllerAccueil(this);
@@ -101,8 +101,8 @@ namespace IHM_Footies
         /// <summary>
         /// Bouton pour aller à la vue des plats
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender"> L'expéditeur </param>
+        /// <param name="e"> Les arguments de l'événement </param>
         private void BoutonPlat_Click(object sender, RoutedEventArgs e)
         {
             Navigation.AllerPlat(this);
@@ -111,8 +111,8 @@ namespace IHM_Footies
         /// <summary>
         /// Bouton pour fermer la fenêtre
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender"> L'expéditeur du clic </param>
+        /// <param name="e"> Les arguments de l'événement </param>
         private void ButonFermerFenetre_Click(object sender, RoutedEventArgs e)
         {
             Navigation.FermerFenetre(this);
@@ -121,8 +121,8 @@ namespace IHM_Footies
         /// <summary>
         /// Bouton pour aller à la vue des invités
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender"> L'expéditeur </param>
+        /// <param name="e"> Les arguments de l'événement </param>
         private void BoutonAllerInvite_Click(object sender, RoutedEventArgs e)
         {
             Navigation.AllerInvites(this);
@@ -131,8 +131,8 @@ namespace IHM_Footies
         /// <summary>
         /// Bouton pour aller à la page groupe invité
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender"> L'expéditeur </param>
+        /// <param name="e"> Les arguments de l'événement </param>
         private void BoutonAllerGroupeInvite_Click(object sender, RoutedEventArgs e)
         {
             Navigation.AllerGroupesInvites(this);
