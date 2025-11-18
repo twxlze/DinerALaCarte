@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using METIER_Footies.Data.Interface;
+using METIER_Footies.Data.Interfaces;
 using METIER_Footies.Metier;
 
 namespace METIER_Footies.Data
@@ -15,7 +15,6 @@ namespace METIER_Footies.Data
     /// </summary>
     public class PlatDAO : DAO, IPlatDAO
     {
-
         public async Task<HttpResponseMessage> AjouterPlat(Plat plat)
         {
             try
@@ -43,6 +42,7 @@ namespace METIER_Footies.Data
             return listeDesPlats;
         }
 
+
         public async Task<HttpResponseMessage> SupprimerPlat(long idPlat)
         {
             try
@@ -56,6 +56,7 @@ namespace METIER_Footies.Data
             }
         }
 
+
         public async Task<HttpResponseMessage> ModifierPlat(Plat plat)
         {
             try
@@ -68,6 +69,7 @@ namespace METIER_Footies.Data
                 throw new Exception("Erreur lors de la modification du plat : " + ex.Message);
             }
         }
+
 
         public async Task<bool> EstDansUnMenu(long idPlat)
         {

@@ -1,6 +1,11 @@
-﻿using METIER_Footies.Metier;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using METIER_Footies.Metier;
 
-namespace METIER_Footies.Data.Interface
+namespace METIER_Footies.Data.Interfaces
 {
     public interface IPlatDAO
     {

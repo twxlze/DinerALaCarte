@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using IHM;
 using IHM_Footies.Reglages;
+using IHM_Footies.Menu;
 
 namespace IHM_Footies
 {
@@ -74,6 +75,22 @@ namespace IHM_Footies
             VueFormulaireGroupeInvite vueFormulaireGroupeInvite = new VueFormulaireGroupeInvite();
             vueFormulaireGroupeInvite.Show();
         }
+
+        /// <summary>
+        /// Permet de naviguer vers la fenêtre de la page des menus
+        /// </summary>
+        /// <param name="fenetreActuelle"> La fenêtre actuelle à fermer </param>
+        public static void AllerMenu(Window fenetreActuelle)
+        {
+            VuePageMenu vueMenu = new VuePageMenu();
+            vueMenu.Show();
+            fenetreActuelle.Close();
+        }
+
+        /// <summary>
+        /// Permet de naviguer vers la fenêtre du formulaire menu
+        /// </summary>
+        /// <param name="fenetreActuelle"> La fenêtre actuelle à fermer </param>
         public static void AllerFormulaireMenu(Window fenetreActuelle)
         {
             VueFormulaireMenu vueFormulaireMenu = new VueFormulaireMenu();

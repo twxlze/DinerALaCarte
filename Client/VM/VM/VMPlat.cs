@@ -45,9 +45,11 @@ namespace VM_Footies.VM
             get => plat.Nom;
             set
             {
-                plat.Nom = value;
-                Notify("Nom");
-                Notify("Identite");
+                if (!string.IsNullOrWhiteSpace(value))
+                    plat.Nom = char.ToUpper(value[0]) + value.Substring(1);
+                else
+                    plat.Nom = value;
+                Notify("Prenom");
             }
         }
 
@@ -80,12 +82,6 @@ namespace VM_Footies.VM
                 Notify("Identite");
             }
         }
-
-
-        /// <summary>
-        /// Information du plat (Nom + catégorie)
-        /// </summary>
-        public string Identite { get => $"{Nom} catégorie : {Categorie}"; }
         #endregion
 
         #region Constructeurs
@@ -135,6 +131,20 @@ namespace VM_Footies.VM
             Nom = plat.Nom;
             Description = plat.Description;
             Categorie = plat.Categorie;
+        }
+
+        /// <summary>
+        /// Index de la catégorie pour le ComboBox
+        /// </summary>
+        public int CategorieIndex
+        {
+            get => (int)plat.Categorie;
+            set
+            {
+                plat.Categorie = (CategoriePlat)value;
+                Notify("CategorieIndex");
+                Notify("Categorie");
+            }
         }
         #endregion
     }
