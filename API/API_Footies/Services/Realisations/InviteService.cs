@@ -52,6 +52,11 @@ namespace API_Footies.Services.Realisations
         {
             return this.dao.EstDansUnGroupe(idInvite);
         }
+
+        public List<Invite> ChercherInvite(string texterecherche)
+        {
+            return this.dao.ChercherInvite(texterecherche);
+        }
         #endregion
 
     }

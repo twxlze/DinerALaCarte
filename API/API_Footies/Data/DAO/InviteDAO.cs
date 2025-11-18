@@ -142,6 +142,30 @@ namespace API_Footies.Data.DAO
             return resultat;
         }
 
-
+        public List<Invite> ChercherInvite(string texterecherche)
+        {
+            List<Invite> listeInvite = new List<Invite>();
+            using (SQLiteConnector connection = new SQLiteConnector())
+            {
+                if (connection == null)
+                {
+                    throw new Exception("Erreur de connexion à la base de données");
+                }
+                else
+                {
+                    var parameters = new Dictionary<string, object>()
+                    {
+                        {"@TexteRecherche", $"%{texterecherche}%" }
+                    };
+                    var dataTable = connection.ExecuteQuery("SELECT * FROM Invite WHERE Nom LIKE @TexteRecherche OR Prenom LIKE @TexteRecherche", parameters);
+                    foreach (DataRow? row in dataTable.Rows)
+                    {
+                        Invite invite = new Invite((long)row["idInvite"], row["nom"].ToString(), row["prenom"].ToString(), row["NumTel"].ToString(), row["mail"].ToString());
+                        listeInvite.Add(invite);
+                    }
+                }
+            }
+            return listeInvite;
+        }
     }
 }

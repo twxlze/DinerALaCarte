@@ -32,5 +32,11 @@ namespace API_Footies.Services.Interfaces
         /// <param name="idInvite">L'id de l'invité</param>
         /// <returns>True si l'invité fait partie d'au moins un groupe, False sinon</returns>
         bool EstDansUnGroupe(long idInvite);
+        /// <summary>
+        /// Cherche un inviter via un texte de recherche
+        /// </summary>
+        /// <param name="texterecherche">Le texte permettant de un invitée</param>
+        /// <returns>Une liste d'invité correspondant à la recherche</returns>
+        public List<Invite> ChercherInvite(string texterecherche);
     }
 }
