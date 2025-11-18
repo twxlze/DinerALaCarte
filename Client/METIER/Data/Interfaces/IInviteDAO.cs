@@ -40,5 +40,12 @@ namespace METIER_Footies.Data.Interfaces
         /// Supprime un invité
         /// </summary>
         Task<HttpResponseMessage> SupprimerInvite(long idInvite);
+
+        /// <summary>
+        /// Cherche un inviter via un texte de recherche
+        /// </summary>
+        /// <param name="texterecherche">Le texte permettant de un invitée</param>
+        /// <returns>Une liste d'invité correspondant à la recherche</returns>
+         Task<List<Invite>> ChercherInvite(string texterecherche);
     }
 }
