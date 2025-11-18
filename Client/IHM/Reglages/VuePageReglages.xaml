@@ -172,8 +172,8 @@
                     CornerRadius="10"
                     Padding="5">
             <ComboBox Margin="158,56,158,200" FontSize="18" x:Name="LanguageComboBox">
-                <ComboBoxItem IsSelected="True" Content="{x:Static res:Strings.Francais}"/>
-                <ComboBoxItem Content="{x:Static res:Strings.Anglais}"/>
+                <ComboBoxItem Tag="fr-FR" IsSelected="True" Content="{x:Static res:Strings.Francais}"/>
+                <ComboBoxItem Tag="en-US" Content="{x:Static res:Strings.Anglais}"/>
             </ComboBox>
         </Border>
 
@@ -181,7 +181,7 @@
         <TextBlock Grid.Column="1" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{x:Static res:Strings.LangueChoisie}" VerticalAlignment="Top" FontWeight="SemiBold" FontSize="16" Foreground="#B44B3E" Margin="0,81,0,0" Grid.RowSpan="2"/>
 
         <!-- Boutons -->
-        <Button Grid.RowSpan="2" Grid.Column="1" Content="{x:Static res:Strings.Enregistrer}" HorizontalAlignment="Center" Margin="0,58,0,0" Grid.Row="7" VerticalAlignment="Top" Height="40" Width="240" Style="{StaticResource StyleBoutonEnregistrer}"/>
+        <Button Grid.RowSpan="2" Grid.Column="1" Content="{x:Static res:Strings.Enregistrer}" HorizontalAlignment="Center" Margin="0,58,0,0" Grid.Row="7" VerticalAlignment="Top" Height="40" Width="240" Style="{StaticResource StyleBoutonEnregistrer}" Click="BoutonEnregistrer_Click"/>
         
         <Image Source="{StaticResource ResourceKey=LogoHostably}" Margin="15,10,121,17" />
     </Grid>
