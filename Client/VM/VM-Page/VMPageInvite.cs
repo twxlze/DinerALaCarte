@@ -18,16 +18,30 @@ namespace VM_Footies
         private List<VMInvite> listeVMInvite;
         private VMInvite inviteSelectionne;
         private IInviteDAO inviteDAO;
+        private string texteRecherche;
         #endregion
 
         #region Propriétés 
         /// <summary>
         /// Invité sélectionné dans la liste
-        /// </summary>
+        /// </summary> 
         public VMInvite InviteSelectionne
         {
             get { return inviteSelectionne; }
             set { this.inviteSelectionne = value; }
+        }
+
+        /// <summary>
+        /// Texte de recherche pour filtrer les invités
+        /// </summary>
+        public string TexteRecherche
+            {
+            get { return texteRecherche; }
+            set
+            {
+                texteRecherche = value;
+                Notify("TexteRecherche");
+            }
         }
         #endregion
 
