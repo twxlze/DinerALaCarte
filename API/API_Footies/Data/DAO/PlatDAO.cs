@@ -27,9 +27,10 @@ namespace API_Footies.Data.DAO
                     {
                     {"@Nom",plat.Nom },
                     {"@Categorie",plat.Categorie.ToString() },
-                    {"@Description",plat.Description}
+                    {"@Description",plat.Description ?? ""},
+                    {"@Ingredients", plat.Ingredients ?? ""}
                     };
-                    plat.Id = connection.ExecuteInsert("INSERT INTO Plat (Nom,Categorie,Description) VALUES (@Nom,@Categorie,@Description)", parameters);
+                    plat.Id = connection.ExecuteInsert("INSERT INTO Plat (Nom,Categorie,Description,Ingredients) VALUES (@Nom,@Categorie,@Description,Ingredients)", parameters);
                     ajoute = true;
                 }
 
@@ -85,7 +86,7 @@ namespace API_Footies.Data.DAO
                             categorie = CategoriePlat.plat;
                         }
 
-                        Plat plat = new Plat((long)row["idPlat"], row["nom"].ToString(),row["description"].ToString(),categorie);
+                        Plat plat = new Plat((long)row["idPlat"], row["nom"].ToString(),row["description"].ToString(), categorie, row["ingredients"].ToString());
                         listePlat.Add(plat);
                     }
                 }
@@ -109,10 +110,10 @@ namespace API_Footies.Data.DAO
                         {"@Id", plat.Id },
                         {"@Nom", plat.Nom },
                         {"@Categorie", plat.Categorie.ToString() },
-                        {"@Description", plat.Description }
+                        {"@Description", plat.Description ?? ""},
+                        {"@Ingredients", plat.Ingredients ?? ""}
                     };
-
-                    connection.ExecuteQuery("UPDATE Plat SET Nom = @Nom, Categorie = @Categorie, Description = @Description WHERE IDPlat = @Id", parameters);
+                    connection.ExecuteQuery("UPDATE Plat SET Nom = @Nom, Categorie = @Categorie, Description = @Description, Ingredients = @Ingredients WHERE IDPlat = @Id", parameters);
                     modifie = true;
                 }
             }
