@@ -43,7 +43,29 @@ namespace METIER_Footies.Metier
         {
             get { return nom; }
             set { nom = value; }
-        }   
+        }
+        #endregion
+
+        #region Constructeurs
+        /// <summary>
+        /// Constructeur par copie d'un groupe d'invité
+        /// </summary>
+        /// <param name="groupeInvites"> Groupe d'invité à copier </param>
+        public GroupeInvites(GroupeInvites groupeInvites)
+        {
+            this.nom = groupeInvites.nom;
+            this.invites = groupeInvites.invites;
+            this.idGroupeInvites = groupeInvites.idGroupeInvites;
+        }
+
+        /// <summary>
+        /// Initialise un nouveau groupe d'invités vide
+        /// </summary>
+        public GroupeInvites()
+        {
+            this.nom = "";
+            this.invites = new List<Invite>();
+        }
         #endregion
 
     }

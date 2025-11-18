@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Reflection.PortableExecutable;
 using System.Threading.Tasks;
 using METIER_Footies.Data;
+using METIER_Footies.Data.Interfaces;
 using METIER_Footies.Metier;
+using VM_Footies.VM_Element_Selectionne;
 
 namespace VM_Footies.VM
 {
@@ -13,14 +17,19 @@ namespace VM_Footies.VM
     public class VMGroupeInvite : INotifyPropertyChanged
     {
         #region Attributs
+        private GroupeInvites groupe; 
+        private ObservableCollection<VMInviteSelectionne> invitesListe;
+        #endregion
 
-        private GroupeInvites groupe;               // Le modèle du groupe
-        private List<VMInvite> listeVMInviteDuGroupe;       // Liste des invités du groupe
-        private GroupeInviteDAO groupeDAO; // DAO pour les opérations sur les groupes
-
+        #region Evénement
+        public event PropertyChangedEventHandler? PropertyChanged;
         #endregion
 
         #region Propriétés
+        /// <summary>
+        /// Invité encapsulé
+        /// </summary>
+        public GroupeInvites Groupe => this.groupe;
 
         /// <summary>
         /// Le nom du groupe (modifiable)
@@ -29,117 +38,119 @@ namespace VM_Footies.VM
         {
             get
             {
-                return groupe.Nom;
+                return this.groupe.Nom;
             }
             set
             {
                 if (groupe.Nom != value)
                 {
                     groupe.Nom = value;
-                    Notifier("Nom");
+                    Notify("Nom");
                 }
             }
         }
 
-        /// <summary>
-        /// Liste des VMInvite pour affichage dans l'UI
-        /// </summary>
-        public List<VMInvite> ListeVMInviteDuGroupe
+        public List<Invite> Invites
         {
-            get
-            {
-                return listeVMInviteDuGroupe;
-            }
+            get => this.groupe.Invites;
         }
 
-        public GroupeInvites Groupe => groupe;
-
-
         #endregion
 
-        #region Evénement
-
-        public event PropertyChangedEventHandler? PropertyChanged;
-
+        #region Propriétés pour les invités séléctionnables
+        public ObservableCollection<VMInviteSelectionne> InvitesListe
+        {
+            get => invitesListe;
+            set
+            {
+                invitesListe = value;
+                Notify("InvitesListe");
+            }
+        }
         #endregion
+
 
         #region Constructeurs
-
         /// <summary>
         /// Constructeur d'un VMGroupeInvite à partir d'un modèle GroupeInvites
         /// </summary>
         /// <param name="groupe">Le groupe à gérer</param>
-        public VMGroupeInvite(GroupeInvites groupes)
+        public VMGroupeInvite(GroupeInvites groupeInvite)
         {
-            groupe = groupes;
-            listeVMInviteDuGroupe = new List<VMInvite>();
-            groupeDAO = new GroupeInviteDAO();
+            this.groupe = groupeInvite;
+            this.invitesListe = new ObservableCollection<VMInviteSelectionne>();
         }
 
         /// <summary>
         /// Constructeur par défaut
         /// </summary>
+        public VMGroupeInvite(VMGroupeInvite modele)
+        {
+            this.groupe = new GroupeInvites(modele.Groupe);
+            this.invitesListe = new ObservableCollection<VMInviteSelectionne>();
+        }
+
+        /// <summary>
+        /// Initialise une nouvelle instance de la classe VMGroupeInvite
+        /// </summary>
         public VMGroupeInvite()
         {
-            groupe = new GroupeInvites();
-            listeVMInviteDuGroupe = new List<VMInvite>();
-            groupeDAO = new GroupeInviteDAO();
+            this.groupe = new GroupeInvites();
+            this.invitesListe = new ObservableCollection<VMInviteSelectionne>();
         }
-
         #endregion
 
-
-        #region Méthodes publiques
-
-        /// <summary>
-        /// Charge les invités du groupe depuis le serveur
-        /// </summary>
-        /// <returns>Une tâche représentant l'opération asynchrone</returns>
-        public async Task ChargerInvitesGroupeAsync(VMGroupeInvite vMGroupe)
-        {
-            listeVMInviteDuGroupe.Clear();
-            GroupeInvites? groupes = await groupeDAO.RecupererGroupeParId(vMGroupe.Groupe.IdGroupeInvites);
-            if (groupes != null)
-            {
-                foreach (Invite invite in groupes.Invites)
-                {
-                    listeVMInviteDuGroupe.Add(new VMInvite(invite));
-                }
-            }
-        }
-
-        /// <summary>
-        /// Ajoute un invité au groupe côté serveur et met à jour le ViewModel local si succès
-        /// </summary>
-        /// <param name="invite"> l'invite (sa vue)</param>
-        /// <returns>succes ou pas</returns>
-        public async Task<bool> AjouterInviteAuGroupe(VMInvite invite)
-        {
-            bool succes = await groupeDAO.AjouterInviteAuGroupe(groupe.IdGroupeInvites, invite.Invite);
-            if (succes)
-            {
-                listeVMInviteDuGroupe.Add(invite);
-                Notifier("ListeVMInviteDuGroupe");
-            }
-            return succes;
-        }
-
-        #endregion
 
         #region Méthodes privées
-
         /// <summary>
         /// Notifie l'UI d'un changement de propriété
         /// </summary>
         /// <param name="propriete">Nom de la propriété modifiée</param>
-        private void Notifier(string propriete)
+        private void Notify(string message)
         {
-            if (PropertyChanged != null)
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(message));
+        }
+        #endregion
+
+        #region Méthodes de gestion des invités
+        /// <summary>
+        /// Synchronise la liste des invités sélectionnés avec le modèle
+        /// </summary>
+        /// <param name="sender"> L'expéditeur </param>
+        /// <param name="e"> Les arguments de l'événement </param>
+        private void VmInvite_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "InviteSelectionne")
             {
-                PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propriete));
+                SynchroniserInvitesSelectionnes();
             }
         }
 
+        /// <summary>
+        /// Met à jour la liste des invités sélectionnés dans le modèle
+        /// </summary>
+        public void SynchroniserInvitesSelectionnes()
+        {
+            List<Invite> inviteSelectionne = new List<Invite>();
+            foreach (VMInviteSelectionne vmInvite in this.invitesListe)
+            {
+                if (vmInvite.EstSelectionne)
+                {
+                    inviteSelectionne.Add(vmInvite.Invite);
+                }
+            }
+            this.groupe.Invites = inviteSelectionne;
+            Notify("Invites");
+        }
+
+        /// <summary>
+        /// Ajoute un gestionnaire d'événement pour un VMInviteSelectionne
+        /// </summary>
+        /// <param name="vmInvite">L'invité sélectionnable</param>
+        public void GestionnaireEvenement(VMInviteSelectionne vmInvite)
+        {
+            vmInvite.PropertyChanged += VmInvite_PropertyChanged;
+        }
         #endregion
     }
 }
