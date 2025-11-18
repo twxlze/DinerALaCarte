@@ -9,7 +9,11 @@ namespace API_Footies.Services.Realisations
     /// </summary>
     public class GroupeInvitesService : IGroupeInvitesService
     {
+        #region Attributs
         private IGroupeInviteDAO _groupeInviteDAO;
+        #endregion
+
+        #region constructeurs
         /// <summary>
         /// Constructeur du service de gestion des groupes d'invités
         /// </summary>
@@ -18,35 +22,28 @@ namespace API_Footies.Services.Realisations
         {
             this._groupeInviteDAO = groupeInviteDAO;
         }
+        #endregion
 
-        public GroupeInvites AjouterGroupeInvite(GroupeInvites groupeInvites)
+        #region Méthodes
+        public void AjouterGroupeInvites(GroupeInvites groupeInvites)
         {
-            return _groupeInviteDAO.AjouterGroupeInvite(groupeInvites);
+            this._groupeInviteDAO.AjouterGroupeInvites(groupeInvites);
         }
 
-        public GroupeInvites AjouterInviteAuGroupe(long idGroupeInvites, Invite invite)
+        public List<GroupeInvites> ListeGroupesInvites()
         {
-            return _groupeInviteDAO.AjouterInviteAuGroupe(idGroupeInvites, invite);
+            return this._groupeInviteDAO.ListeGroupesInvites();
         }
 
-        public GroupeInvites ModifierGroupe(GroupeInvites groupeInvite)
+        public void ModifierGroupeInvite(GroupeInvites groupeInvite)
         {
-            return _groupeInviteDAO.ModifierGroupe(groupeInvite);
+            this._groupeInviteDAO.ModifierGroupe(groupeInvite);
         }
 
-        public GroupeInvites RecupereGroupeViaId(long idGroupeInvite)
+        public void SupprimerGroupe(long idGroupeInvite)
         {
-            return _groupeInviteDAO.RecupereGroupeViaId(idGroupeInvite);
+            this._groupeInviteDAO.SupprimerGroupeInvite(idGroupeInvite);
         }
-
-        public List<GroupeInvites> RecupererTousGroupesInvites()
-        {
-            return _groupeInviteDAO.RecupererTousGroupesInvites();
-        }
-
-        public GroupeInvites SupprimerGroupe(long idGroupeInvite)
-        {
-            return _groupeInviteDAO.SupprimerGroupeInvite(idGroupeInvite);
-        }
+        #endregion
     }
 }
