@@ -29,7 +29,7 @@ namespace UnitTest_Footies
             PlatDAO platDAO = new PlatDAO();
             MenuDAO menuDAO = new MenuDAO();
 
-            Plat plat1 = new Plat(0, "Salade César", "Salade romaine", Plat.CategoriePlat.entrée);
+            Plat plat1 = new Plat(0, "Salade César", "Salade romaine", Plat.CategoriePlat.entree);
             platDAO.AjouterPlat(plat1);
             Plat plat2 = new Plat(0, "Poulet rôti", "Poulet au four", Plat.CategoriePlat.plat);
             platDAO.AjouterPlat(plat2);
@@ -147,7 +147,7 @@ namespace UnitTest_Footies
             PlatDAO platDAO = new PlatDAO();
             MenuDAO menuDAO = new MenuDAO();
 
-            Plat plat = new Plat(0, "Soupe", "Soupe à l'oignon", Plat.CategoriePlat.entrée);
+            Plat plat = new Plat(0, "Soupe", "Soupe à l'oignon", Plat.CategoriePlat.entree);
             platDAO.AjouterPlat(plat);
 
             List<Plat> plats = new List<Plat>();
