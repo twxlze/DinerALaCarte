@@ -25,12 +25,12 @@ namespace API_Footies.Data.DAO
                 {
                     var parameters = new Dictionary<string, object>()
                     {
-                    {"@Nom",plat.Nom },
-                    {"@Categorie",plat.Categorie.ToString() },
-                    {"@Description",plat.Description ?? ""},
-                    {"@Ingredients", plat.Ingredients ?? ""}
+                        {"@Nom", plat.Nom },
+                        {"@Categorie", plat.Categorie.ToString() },
+                        {"@Description", plat.Description ?? ""},
+                        {"@Ingredients", plat.Ingredients ?? ""}
                     };
-                    plat.Id = connection.ExecuteInsert("INSERT INTO Plat (Nom,Categorie,Description,Ingredients) VALUES (@Nom,@Categorie,@Description,Ingredients)", parameters);
+                    plat.Id = connection.ExecuteInsert("INSERT INTO Plat (Nom,Categorie,Description,Ingredients) VALUES (@Nom,@Categorie,@Description,@Ingredients)", parameters);
                     ajoute = true;
                 }
 
