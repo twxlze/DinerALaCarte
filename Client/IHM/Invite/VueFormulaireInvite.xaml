@@ -100,7 +100,6 @@
     </Window.Resources>
 
     <Grid Cursor="Hand">
-        <!-- Définition des lignes et colonnes pour le menu à gauche -->
         <Grid.RowDefinitions>
             <RowDefinition Height="2*"/>
             <RowDefinition/>

@@ -14,6 +14,7 @@ namespace METIER_Footies.Metier
         private string nom;
         private string? description;
         private CategoriePlat categorie;
+        private string? ingredients;
         #endregion
 
         #region --- Enumérations ---
@@ -75,6 +76,14 @@ namespace METIER_Footies.Metier
             set { categorie = value; }
         }
 
+        /// <summary>
+        /// Retourne ou modifie les ingrédients du plat
+        /// </summary>
+        public string? Ingredients
+        {
+            get { return ingredients; }
+            set { ingredients = value; }
+        }
         #endregion
 
         /// <summary>
@@ -83,12 +92,13 @@ namespace METIER_Footies.Metier
         /// <param name="nom">nom du plat</param>
         /// <param name="description">description du plat</param>
         /// <param name="categorie">categorie du plat</param>
-        public Plat(long id, string nom, string description, CategoriePlat categorie)
+        public Plat(long id, string nom, string description, CategoriePlat categorie, string? ingredients = null)
         {
             this.id = id;
             this.nom = nom;
             this.description = description;
             this.categorie = categorie;
+            this.ingredients = ingredients;
         }
 
         /// <summary>
@@ -101,6 +111,7 @@ namespace METIER_Footies.Metier
             this.nom = plat.nom;
             this.description = plat.description;
             this.categorie = plat.categorie;
+            this.ingredients = plat.ingredients;
         }
 
         public Plat()
@@ -108,6 +119,7 @@ namespace METIER_Footies.Metier
             this.nom = "";
             this.description = "";
             this.categorie = CategoriePlat.entree;
+            this.ingredients = "";
         }
     }
 }
