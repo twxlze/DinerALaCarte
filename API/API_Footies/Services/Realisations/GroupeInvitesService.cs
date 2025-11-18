@@ -25,9 +25,9 @@ namespace API_Footies.Services.Realisations
         #endregion
 
         #region Méthodes
-        public void AjouterGroupeInvites(GroupeInvites groupeInvites)
+        public bool AjouterGroupeInvites(GroupeInvites groupeInvites)
         {
-            this._groupeInviteDAO.AjouterGroupeInvites(groupeInvites);
+            return this._groupeInviteDAO.AjouterGroupeInvites(groupeInvites);
         }
 
         public List<GroupeInvites> ListeGroupesInvites()
@@ -35,9 +35,9 @@ namespace API_Footies.Services.Realisations
             return this._groupeInviteDAO.ListeGroupesInvites();
         }
 
-        public void ModifierGroupeInvite(GroupeInvites groupeInvite)
+        public bool ModifierGroupeInvite(GroupeInvites groupeInvite)
         {
-            this._groupeInviteDAO.ModifierGroupe(groupeInvite);
+            return this._groupeInviteDAO.ModifierGroupe(groupeInvite);
         }
 
         public void SupprimerGroupe(long idGroupeInvite)

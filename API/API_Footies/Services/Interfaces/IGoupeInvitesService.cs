@@ -11,7 +11,7 @@ namespace API_Footies.Services.Interfaces
         /// créer un groupe d'invités dans la base de données
         /// </summary>
         /// <param name="groupeInvites"> le groupe a ajouter</param>
-        void AjouterGroupeInvites(GroupeInvites groupeInvites);
+        bool AjouterGroupeInvites(GroupeInvites groupeInvites);
 
         /// <summary>
         /// Récupère tous les groupes d'invités
@@ -24,7 +24,7 @@ namespace API_Footies.Services.Interfaces
         /// </summary>
         /// <param name="groupeInvite">le groupe d'invite</param>
         /// <returns>le groupe d'invite modifier</returns>
-        void ModifierGroupeInvite(GroupeInvites groupeInvite);
+        bool ModifierGroupeInvite(GroupeInvites groupeInvite);
 
         /// <summary>
         ///  Supprime un groupe d'invités via son ID
