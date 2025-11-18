@@ -93,6 +93,9 @@
             this.date = date;
         }
 
+        /// <summary>
+        /// Constructeur par défaut de l'invitation
+        /// </summary>
         public Invitation()
         {
             this.groupesInvites = new List<GroupeInvites>();
