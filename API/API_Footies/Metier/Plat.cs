@@ -1,5 +1,8 @@
 ﻿namespace API_Footies.Metier
 {
+    /// <summary>
+    /// Classe représentant un plat
+    /// </summary>
     public class Plat
     {
         #region --- Attributs ---
@@ -79,6 +82,9 @@
             this.ingredients = ingredients;
         }
 
+        /// <summary>
+        /// Constructeur par défaut du plat
+        /// </summary>
         public Plat() { }
     }
 }

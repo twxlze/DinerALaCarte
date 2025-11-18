@@ -10,6 +10,10 @@ namespace API_Footies.Services.Realisations
         #endregion
 
         #region Constructeur
+        /// <summary>
+        /// Constructeur du service OpenFoodFacts
+        /// </summary>
+        /// <param name="configuration"> Injection de dépendance pour la configuration </param>
         public OpenFoodFactsService(IConfiguration configuration)
         {
             connection = "Data Source=openfoodfacts.db";

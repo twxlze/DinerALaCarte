@@ -39,7 +39,6 @@ namespace API_Footies.Services.Realisations
         {
             return this._groupeInviteDAO.ModifierGroupe(groupeInvite);
         }
-
         public void SupprimerGroupe(long idGroupeInvite)
         {
             this._groupeInviteDAO.SupprimerGroupeInvite(idGroupeInvite);

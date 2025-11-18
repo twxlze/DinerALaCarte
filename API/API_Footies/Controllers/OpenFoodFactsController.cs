@@ -3,15 +3,22 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API_Footies.Controllers
 {
+    /// <summary>
+    /// Controlleur en charge de l'intégration avec OpenFoodFacts
+    /// </summary>
     [ApiController]
     [Route("OpenFoodFacts")]
     public class OpenFoodFactsController : ControllerBase
     {
         #region Attributs
-        private readonly IOpenFoodFactsService service;
+        private IOpenFoodFactsService service;
         #endregion
 
         #region Constructeur
+        /// <summary>
+        /// Constructeur du controlleur OpenFoodFacts
+        /// </summary>
+        /// <param name="service"> Injection de dépendance du service OpenFoodFacts </param>
         public OpenFoodFactsController(IOpenFoodFactsService service)
         {
             this.service = service;

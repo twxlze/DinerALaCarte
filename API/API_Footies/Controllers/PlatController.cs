@@ -13,7 +13,6 @@ namespace API_Footies.Controllers
     [Route("Plats")]
     public class PlatController : ControllerBase
     {
-        //Service en charge des plats
         private IPlatService service;
 
         /// <summary>

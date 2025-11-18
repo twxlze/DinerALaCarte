@@ -13,7 +13,11 @@ namespace API_Footies.Controllers
     [Route("GroupeInvites")]
     public class GroupeInvitesController : ControllerBase
     {
+        #region Attribut
         private IGroupeInvitesService _groupeInvitesService;
+        #endregion
+
+        #region Constructeur
 
         /// <summary>
         /// Constructeur du contrôleur de gestion des groupes d'invités
@@ -23,6 +27,7 @@ namespace API_Footies.Controllers
         {
             this._groupeInvitesService = groupeInvitesService;
         }
+        #endregion
 
         #region Méthodes
         /// <summary>

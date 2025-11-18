@@ -2,6 +2,9 @@
 
 namespace API_Footies.Services.Interfaces
 {
+    /// <summary>
+    /// Service en charge de la gestion des invités
+    /// </summary>
     public interface IInviteService
     {
         /// <summary>
