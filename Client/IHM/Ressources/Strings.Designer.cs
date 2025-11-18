@@ -97,6 +97,15 @@ namespace IHM_Footies.Ressources {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Anglais.
+        /// </summary>
+        public static string Anglais {
+            get {
+                return ResourceManager.GetString("Anglais", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Apéritif.
         /// </summary>
         public static string Aperitif {
@@ -169,6 +178,15 @@ namespace IHM_Footies.Ressources {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Français.
+        /// </summary>
+        public static string Francais {
+            get {
+                return ResourceManager.GetString("Francais", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Gestion des invités.
         /// </summary>
         public static string GestionInvite {
@@ -237,6 +255,15 @@ namespace IHM_Footies.Ressources {
         public static string Invites {
             get {
                 return ResourceManager.GetString("Invites", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Langue choisie :.
+        /// </summary>
+        public static string LangueChoisie {
+            get {
+                return ResourceManager.GetString("LangueChoisie", resourceCulture);
             }
         }
         
@@ -318,6 +345,15 @@ namespace IHM_Footies.Ressources {
         public static string Prenom {
             get {
                 return ResourceManager.GetString("Prenom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Réglages.
+        /// </summary>
+        public static string Reglages {
+            get {
+                return ResourceManager.GetString("Reglages", resourceCulture);
             }
         }
         

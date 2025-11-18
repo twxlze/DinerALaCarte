@@ -216,4 +216,16 @@
   <data name="Description" xml:space="preserve">
     <value>Description</value>
   </data>
+  <data name="Reglages" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="LangueChoisie" xml:space="preserve">
+    <value>Chosen language</value>
+  </data>
+  <data name="Francais" xml:space="preserve">
+    <value>French</value>
+  </data>
+  <data name="Anglais" xml:space="preserve">
+    <value>English</value>
+  </data>
 </root>
