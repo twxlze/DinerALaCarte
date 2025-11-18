@@ -146,6 +146,24 @@ namespace VM_Footies
         }
 
         /// <summary>
+        // Charge la liste des invités correspondant au paramètre de recherche depuis la base de données
+        /// </summary>
+        public async Task ChercherInvite(string recherchertexte)
+        {
+            this.listeVMInvite.Clear();
+
+            List<Invite> invites = await this.inviteDAO.ChercherInvite(recherchertexte);
+            foreach (Invite invite in invites)
+            {
+                VMInvite vmInvite = new VMInvite(invite);
+                this.listeVMInvite.Add(vmInvite);
+            }
+            this.listeVMInvite = this.listeVMInvite.OrderBy(vm => vm.Invite.Prenom)
+                                                   .ThenBy(vm => vm.Invite.Nom)
+                                                   .ToList();
+        }
+
+        /// <summary>
         /// Notifie le changement d'une propriété
         /// </summary>
         /// <param name="message"> Nom de la propriété changée </param>
