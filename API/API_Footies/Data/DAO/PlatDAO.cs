@@ -2,6 +2,7 @@
 using System.Data;
 using API_Footies.Data.Interfaces;
 using API_Footies.Metier;
+using API_Footies.Metier.Enum;
 using static API_Footies.Metier.Plat;
 
 namespace API_Footies.Data.DAO
