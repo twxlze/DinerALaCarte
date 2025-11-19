@@ -44,7 +44,7 @@ namespace VM_Footies.VM_Element_Selectionne
                 if (estSelectionne != value)
                 {
                     estSelectionne = value;
-                    Notify("EstSelectionne");
+                    Notify("PlatSelectionne");
                 }
             }
         }

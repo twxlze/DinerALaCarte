@@ -94,12 +94,10 @@ namespace IHM_Footies
             {
                 string texte = textBox.Text;
 
-                // Si le texte est assez long, rechercher des suggestions
                 if (!string.IsNullOrWhiteSpace(texte) && texte.Length >= 2)
                 {
                     await this.plat.RechercherSuggestionsIngredients(texte);
 
-                    // Afficher la liste si on a des suggestions
                     if (this.plat.SuggestionsIngredients.Count > 0)
                     {
                         ListBoxSuggestions.Visibility = Visibility.Visible;
@@ -123,13 +121,10 @@ namespace IHM_Footies
         {
             if (ListBoxSuggestions.SelectedItem is string suggestion)
             {
-                // Remplacer le contenu du TextBox par la suggestion
                 this.plat.Ingredients = suggestion;
                 
-                // Cacher la liste
                 ListBoxSuggestions.Visibility = Visibility.Collapsed;
                 
-                // Remettre le focus sur le TextBox
                 TextBoxIngredients.Focus();
                 TextBoxIngredients.CaretIndex = TextBoxIngredients.Text.Length;
             }
