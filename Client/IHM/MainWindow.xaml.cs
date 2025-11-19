@@ -9,8 +9,10 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using IHM_Footies;
+using IHM_Footies.Invitations;
 using VM_Footies;
 using VM_Footies.VM;
+using VM_Footies.VM_Page;
 
 namespace IHM;
 
@@ -26,6 +28,8 @@ public partial class MainWindow : Window
     private VMPagePlat vmPagePlat;
     private List<VueGroupeInvite> vueGroupeInvites;
     private VMPageGroupeInvite vmPageGroupeInvite;
+    private VMPageInvitation vmPageInvitation;
+    private List<VueInvitation> vueInvitations;
     #endregion
 
     /// <summary>
@@ -53,6 +57,9 @@ public partial class MainWindow : Window
 
         this.vueGroupeInvites = new List<VueGroupeInvite>();
         this.vmPageGroupeInvite = new VMPageGroupeInvite();
+
+        this.vmPageInvitation = new VMPageInvitation();
+        this.vueInvitations = new List<VueInvitation>();
     }
 
     /// <summary>
@@ -63,6 +70,7 @@ public partial class MainWindow : Window
         this.vmPageInvite.PropertyChanged += VMPage_PropertyChanged;
         this.vmPagePlat.PropertyChanged += VMPage_PropertyChanged;
         this.vmPageGroupeInvite.PropertyChanged += VMPage_PropertyChanged;
+        this.vmPageInvitation.PropertyChanged += VMPage_PropertyChanged;
     }
 
     /// <summary>
@@ -255,10 +263,26 @@ public partial class MainWindow : Window
         Navigation.AllerInvites(this);
     }
 
+    /// <summary>
+    /// Bouton pour aller à la page réglages
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void BoutonAllerReglages_Click(object sender, RoutedEventArgs e)
     {
         Navigation.AllerReglages(this);
     }
+
+    /// <summary>
+    /// Bouton pour aller à la page d'invitations
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void BoutonAllerInvitation_Click(object sender, RoutedEventArgs e)
+    {
+        Navigation.AllerInvitations(this);
+    }
+
 
     #endregion
 

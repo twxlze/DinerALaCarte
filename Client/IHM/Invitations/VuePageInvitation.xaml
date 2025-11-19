@@ -95,7 +95,7 @@
         HorizontalAlignment="Right"
         VerticalAlignment="Top"
         Margin="0,5,8,0"
-        Grid.Column="1000"/>
+        Grid.Column="1000" Click="ButonFermerFenetre_Click"/>
 
         <!-- Menu à gauche -->
         <Border BorderBrush="#8C2F26"  BorderThickness="0,0,2,0" Grid.Column="0" Grid.RowSpan="9">

@@ -23,5 +23,19 @@ namespace IHM_Footies.Invitations
         {
             InitializeComponent();
         }
+
+        #region boutons 
+
+        /// <summary>
+        /// Bouton pour fermer la fenêtre
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ButonFermerFenetre_Click(object sender, RoutedEventArgs e)
+        {
+            Navigation.FermerFenetre(this);
+        }
+
+        #endregion
     }
 }
