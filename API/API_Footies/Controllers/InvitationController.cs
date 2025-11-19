@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API_Footies.Controllers
 {
+    /// <summary>
+    /// Controlleur en charge de tout ce qui touche aux invitations
+    /// </summary>
     [ApiController]
     [Route("Invitation")]
     public class InvitationController : ControllerBase
@@ -13,7 +16,7 @@ namespace API_Footies.Controllers
 
         #region Constructeur
         /// <summary>
-        /// Constructeur
+        /// Constructeur du controlleur d'invitation
         /// </summary>
         public InvitationController(IInvitationService service)
         {

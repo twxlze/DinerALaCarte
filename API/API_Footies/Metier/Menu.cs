@@ -1,5 +1,8 @@
 ﻿namespace API_Footies.Metier
 {
+    /// <summary>
+    /// Classe représentant un menu
+    /// </summary>
     public class Menu
     {
         #region --- Attributs ---

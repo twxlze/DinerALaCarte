@@ -6,7 +6,7 @@ namespace API_Footies.Services.Realisations
 {
     public class MenuService : IMenuService
     {
-        #region attributes
+        #region attributs
 
         private IMenuDAO dao;
 
@@ -20,6 +20,8 @@ namespace API_Footies.Services.Realisations
         }
 
         #endregion
+
+        #region Méthodes
         public void AjouterMenu(Menu menu)
         {
             this.dao.AjouterMenu(menu);
@@ -39,5 +41,6 @@ namespace API_Footies.Services.Realisations
         {
             this.dao.SupprimerMenu(idMenu);
         }
+        #endregion
     }
 }

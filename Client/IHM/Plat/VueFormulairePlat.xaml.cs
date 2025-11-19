@@ -84,6 +84,56 @@ namespace IHM_Footies
                 MessageBox.Show($"Erreur lors de l'enregistrement : {ex.Message}", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
+        /// <summary>
+        /// Gère le changement de texte dans le champ ingrédients
+        /// </summary>
+        private async void TextBoxIngredients_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (sender is TextBox textBox)
+            {
+                string texte = textBox.Text;
+
+                // Si le texte est assez long, rechercher des suggestions
+                if (!string.IsNullOrWhiteSpace(texte) && texte.Length >= 2)
+                {
+                    await this.plat.RechercherSuggestionsIngredients(texte);
+
+                    // Afficher la liste si on a des suggestions
+                    if (this.plat.SuggestionsIngredients.Count > 0)
+                    {
+                        ListBoxSuggestions.Visibility = Visibility.Visible;
+                    }
+                    else
+                    {
+                        ListBoxSuggestions.Visibility = Visibility.Collapsed;
+                    }
+                }
+                else
+                {
+                    ListBoxSuggestions.Visibility = Visibility.Collapsed;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gère la sélection d'une suggestion
+        /// </summary>
+        private void ListBoxSuggestions_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (ListBoxSuggestions.SelectedItem is string suggestion)
+            {
+                // Remplacer le contenu du TextBox par la suggestion
+                this.plat.Ingredients = suggestion;
+                
+                // Cacher la liste
+                ListBoxSuggestions.Visibility = Visibility.Collapsed;
+                
+                // Remettre le focus sur le TextBox
+                TextBoxIngredients.Focus();
+                TextBoxIngredients.CaretIndex = TextBoxIngredients.Text.Length;
+            }
+        }
         #endregion
 
         #region Boutons de navigation
@@ -103,10 +153,10 @@ namespace IHM_Footies
         /// </summary>
         /// <param name="sender"> L'expéditeur </param>
         /// <param name="e"> Les arguments de l'événement </param>
-        private void BoutonPlat_Click(object sender, RoutedEventArgs e)
+        private void BoutonAllerPlat_Click(object sender, RoutedEventArgs e)
         {
             Navigation.AllerPlat(this);
-        }
+        }   
 
         /// <summary>
         /// Bouton pour fermer la fenêtre

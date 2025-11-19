@@ -3,6 +3,9 @@ using API_Footies.Metier;
 
 namespace API_Footies.Services.Interfaces
 {
+    /// <summary>
+    /// Fournit des services pour gérer les plats
+    /// </summary>
     public interface IPlatService
     {
         /// <summary>

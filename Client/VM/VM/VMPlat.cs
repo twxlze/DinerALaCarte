@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using METIER_Footies.Data;
 using METIER_Footies.Metier;
 using static METIER_Footies.Metier.Plat;
 
@@ -16,16 +17,16 @@ namespace VM_Footies.VM
     {
         #region Attributs
         private Plat plat;
+        private OpenFoodFactsDAO openFoodFactsDAO;
+        private List<string> suggestionsIngredients;
         #endregion
-
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
         /// <summary>
-        /// Invite associée au VMPlat
+        /// Plat associé au VMPlat
         /// </summary>
         public Plat Plat => plat;
-
 
         #region Propriétés
         /// <summary>
@@ -33,23 +34,27 @@ namespace VM_Footies.VM
         /// </summary>
         public long Id
         {
-            get => plat.Id;
+            get { return plat.Id; }
         }
 
         /// <summary>
-        // Nom du plat
+        /// Nom du plat
         /// </summary>
         /// <remarks> Le set notifie le changement de la propriété </remarks>
         public string Nom
         {
-            get => plat.Nom;
+            get { return plat.Nom; }
             set
             {
                 if (!string.IsNullOrWhiteSpace(value))
+                {
                     plat.Nom = char.ToUpper(value[0]) + value.Substring(1);
+                }
                 else
+                {
                     plat.Nom = value;
-                Notify("Prenom");
+                }
+                Notify("Nom");
             }
         }
 
@@ -59,7 +64,7 @@ namespace VM_Footies.VM
         /// <remarks> Le set notifie le changement de la propriété </remarks>
         public string Description
         {
-            get => plat.Description;
+            get { return plat.Description; }
             set
             {
                 plat.Description = value;
@@ -67,54 +72,103 @@ namespace VM_Footies.VM
             }
         }
 
-
         /// <summary>
-        /// catégorie du plat
+        /// Catégorie du plat
         /// </summary>
         /// <remarks> Le set notifie le changement de la propriété </remarks>
         public CategoriePlat Categorie
         {
-            get => plat.Categorie;
+            get { return plat.Categorie; }
             set
             {
                 plat.Categorie = value;
                 Notify("Categorie");
-                Notify("Identite");
+            }
+        }
+
+        /// <summary>
+        /// Ingrédients du plat
+        /// </summary>
+        public string? Ingredients
+        {
+            get { return plat.Ingredients; }
+            set
+            {
+                plat.Ingredients = value;
+                Notify("Ingredients");
+            }
+        }
+
+        /// <summary>
+        /// Liste des suggestions d'ingrédients
+        /// </summary>
+        public List<string> SuggestionsIngredients
+        {
+            get { return suggestionsIngredients; }
+            set
+            {
+                suggestionsIngredients = value;
+                Notify("SuggestionsIngredients");
+            }
+        }
+
+        /// <summary>
+        /// Index de la catégorie pour le ComboBox
+        /// </summary>
+        public int CategorieIndex
+        {
+            get
+            {
+                return (int)plat.Categorie;
+            }
+            set
+            {
+                plat.Categorie = (CategoriePlat)value;
+                Notify("CategorieIndex");
+                Notify("Categorie");
             }
         }
         #endregion
 
         #region Constructeurs
         /// <summary>
-        // Constructeur d'un VMPlat à partir d'un plat
+        /// Constructeur d'un VMPlat à partir d'un Plat
         /// </summary>
-        /// <param name="plat">le plat</param>
+        /// <param name="plat"> Le plat à utiliser </param>
         public VMPlat(Plat plat)
         {
             this.plat = plat;
+            InitialiserDAO();
         }
 
         /// <summary>
-        /// Constructeur d'un VMPlat à partir d'un autre VMPlat
+        /// Construit un VMPlat à partir d'un autre VMPlat (constructeur de copie)
         /// </summary>
         /// <param name="modele"> Le VMPlat à copier </param>
-        public VMPlat(VMPlat modele)
+        public VMPlat(VMPlat modele) : this(new Plat(modele.Plat))
         {
-            plat = new Plat(modele.plat);
         }
 
         /// <summary>
         /// Constructeur par défaut d'un VMPlat
         /// </summary>
-        public VMPlat()
+        public VMPlat() : this(new Plat())
         {
-            plat = new Plat();
+        }
+
+        /// <summary>
+        /// Initialise le DAO et les collections
+        /// </summary>
+        private void InitialiserDAO()
+        {
+            this.openFoodFactsDAO = new OpenFoodFactsDAO();
+            this.suggestionsIngredients = new List<string>();
         }
         #endregion
 
         #region Méthodes
         /// <summary>
-        // Notifie le changement d'une propriété
+        /// Notifie le changement d'une propriété
         /// </summary>
         /// <param name="message"> Nom de la propriété changée </param>
         private void Notify(string message)
@@ -131,20 +185,29 @@ namespace VM_Footies.VM
             Nom = plat.Nom;
             Description = plat.Description;
             Categorie = plat.Categorie;
+            Ingredients = plat.Ingredients;
         }
 
         /// <summary>
-        /// Index de la catégorie pour le ComboBox
+        /// Recherche des suggestions d'ingrédients
         /// </summary>
-        public int CategorieIndex
+        /// <param name="recherche">Texte de recherche</param>
+        public async Task RechercherSuggestionsIngredients(string recherche)
         {
-            get => (int)plat.Categorie;
-            set
+            List<string> suggestions = new List<string>();
+            if (!string.IsNullOrWhiteSpace(recherche) && recherche.Length >= 2)
             {
-                plat.Categorie = (CategoriePlat)value;
-                Notify("CategorieIndex");
-                Notify("Categorie");
+                try
+                {
+                    suggestions = await openFoodFactsDAO.RechercherIngredients(recherche);
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Erreur lors de la recherche des suggestions d'ingrédients : " + ex.Message);
+                }
             }
+            this.suggestionsIngredients = suggestions;
+            Notify("SuggestionsIngredients");
         }
         #endregion
     }

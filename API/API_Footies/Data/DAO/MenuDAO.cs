@@ -33,7 +33,7 @@ namespace API_Footies.Data.DAO
                             {"@IdMenu", menu.IdMenu },
                             {"@IdPlat", plat.Id }
                         };
-                        connection.ExecuteQuery("INSERT INTO Menu_Plat (IdMenu, IdPlat) VALUES (@IdMenu, @IdPlat)", parametersPlat);
+                        connection.ExecuteQuery("INSERT INTO Menu_Plat (IDMenu, IDPlat) VALUES (@IdMenu, @IdPlat)", parametersPlat);
                     }
 
                     ajoute = true;
@@ -57,7 +57,7 @@ namespace API_Footies.Data.DAO
                     var dataTable = connection.ExecuteQuery("SELECT * FROM Menu");
                     foreach (DataRow? row in dataTable.Rows)
                     {
-                        long idMenu = (long)row["IdMenu"];
+                        long idMenu = (long)row["IDMenu"];
                         string nom = row["Nom"].ToString();
 
                         List<Plat> platsMenu = new List<Plat>();
@@ -67,9 +67,10 @@ namespace API_Footies.Data.DAO
                         };
 
                         var dataTablePlats = connection.ExecuteQuery(
-                            @"SELECT p.* FROM Plat p
-                              INNER JOIN 
-                             Menu_Plat mp ON p.IdPlat = mp.IdPlat WHERE mp.IdMenu = @IdMenu",
+                            @"SELECT p.IDPlat, p.Nom, p.Description, p.Categorie, p.Ingredients 
+                              FROM Plat p
+                              INNER JOIN Menu_Plat mp ON p.IDPlat = mp.IDPlat 
+                              WHERE mp.IDMenu = @IdMenu",
                             parametersPlat);
 
                         foreach (DataRow? rowPlat in dataTablePlats.Rows)
@@ -80,11 +81,18 @@ namespace API_Footies.Data.DAO
                                 categorie = Plat.CategoriePlat.plat;
                             }
 
+                            string? ingredients = null;
+                            if (dataTablePlats.Columns.Contains("Ingredients") && rowPlat["Ingredients"] != DBNull.Value)
+                            {
+                                ingredients = rowPlat["Ingredients"]?.ToString();
+                            }
+
                             Plat plat = new Plat(
-                                (long)rowPlat["IdPlat"],
+                                (long)rowPlat["IDPlat"],
                                 rowPlat["Nom"].ToString(),
-                                rowPlat["Description"].ToString(),
-                                categorie
+                                rowPlat["Description"]?.ToString() ?? "",
+                                categorie,
+                                ingredients
                             );
                             platsMenu.Add(plat);
                         }
@@ -114,12 +122,13 @@ namespace API_Footies.Data.DAO
                         {"@IdMenu", menu.IdMenu },
                         {"@Nom", menu.Nom }
                     };
-                    connection.ExecuteQuery("UPDATE Menu SET Nom = @Nom WHERE IdMenu = @IdMenu", parameters);
+                    connection.ExecuteQuery("UPDATE Menu SET Nom = @Nom WHERE IDMenu = @IdMenu", parameters);
+
                     var parametersDelete = new Dictionary<string, object>()
                     {
                         {"@IdMenu", menu.IdMenu }
                     };
-                    connection.ExecuteQuery("DELETE FROM Menu_Plat WHERE IdMenu = @IdMenu", parametersDelete);
+                    connection.ExecuteQuery("DELETE FROM Menu_Plat WHERE IDMenu = @IdMenu", parametersDelete);
 
                     foreach (Plat plat in menu.Plat)
                     {
@@ -128,7 +137,7 @@ namespace API_Footies.Data.DAO
                             {"@IdMenu", menu.IdMenu },
                             {"@IdPlat", plat.Id }
                         };
-                        connection.ExecuteQuery("INSERT INTO Menu_Plat (IdMenu, IdPlat) VALUES (@IdMenu, @IdPlat)", parametersPlat);
+                        connection.ExecuteQuery("INSERT INTO Menu_Plat (IDMenu, IDPlat) VALUES (@IdMenu, @IdPlat)", parametersPlat);
                     }
                     modifie = true;
                 }
@@ -150,13 +159,13 @@ namespace API_Footies.Data.DAO
                     {
                         {"@IdMenu", idMenu }
                     };
-                    connection.ExecuteQuery("DELETE FROM Menu_Plat WHERE IdMenu = @IdMenu", parametersLiaison);
+                    connection.ExecuteQuery("DELETE FROM Menu_Plat WHERE IDMenu = @IdMenu", parametersLiaison);
 
                     var parameters = new Dictionary<string, object>()
                     {
                         {"@IdMenu", idMenu }
                     };
-                    connection.ExecuteQuery("DELETE FROM Menu WHERE IdMenu = @IdMenu", parameters);
+                    connection.ExecuteQuery("DELETE FROM Menu WHERE IDMenu = @IdMenu", parameters);
                 }
             }
         }

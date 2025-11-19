@@ -14,6 +14,10 @@ namespace API_Footies.Services.Realisations
         #endregion
 
         #region Constructeur
+        /// <summary>
+        /// Constructeur du service d'invitation
+        /// </summary>
+        /// <param name="dao"> Injection de dépendance </param>
         public InvitationService(IInvitationDAO dao)
         {
             this.invitationDAO = dao;
