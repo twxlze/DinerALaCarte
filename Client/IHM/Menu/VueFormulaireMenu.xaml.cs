@@ -57,6 +57,7 @@ namespace IHM_Footies
         {
             try
             {
+                this.menu.SynchroniserPlatsSelectionnes();
                 List<string> erreurs = new List<string>();
 
                 if (string.IsNullOrWhiteSpace(this.menu.Nom))
