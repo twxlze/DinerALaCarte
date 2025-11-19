@@ -38,6 +38,7 @@ namespace IHM_Footies
             this.vueInvite = new List<VueInvite>();
             this.vmPageInvite = new VMPageInvite();
             this.vmPageInvite.PropertyChanged += VMPageInvite_PropertyChanged;
+            this.DataContext = this.vmPageInvite;
 
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
             this.RafraichirListe();
@@ -252,6 +253,35 @@ namespace IHM_Footies
         private void BoutonGroupeInvite_Click(object sender, RoutedEventArgs e)
         {
             Navigation.AllerGroupesInvites(this);
+        }
+
+        /// <summary>
+        /// Recherche les invités selon le texte saisi
+        /// </summary>
+        /// <param name="sender"> L'expéditeur </param>
+        /// <param name="e"> Les arguments de l'événement </param>
+        private async void RechercheInvite_Click(object sender, RoutedEventArgs e)
+        {
+            if (!string.IsNullOrWhiteSpace(this.vmPageInvite.TexteRecherche))
+            {
+                this.PanelListeInvites.Children.Clear();
+                this.vueInvite.Clear();
+
+                await this.vmPageInvite.ChercherInvite(this.vmPageInvite.TexteRecherche);
+
+                foreach (VMInvite invite in this.vmPageInvite.VMInvites)
+                {
+                    VueInvite vue = new VueInvite(invite);
+                    vue.MouseDown += (s, e) => this.SelectionnerPersonne(vue);
+                    vue.MouseDoubleClick += (s, e) => this.OuvrirModification(vue);
+                    this.vueInvite.Add(vue);
+                    this.PanelListeInvites.Children.Add(vue);
+                }
+            }
+            else
+            {
+                this.RafraichirListe();
+            }
         }
     }
 }

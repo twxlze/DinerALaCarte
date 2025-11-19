@@ -81,6 +81,17 @@ namespace API_Footies.Controllers
         {
             return this.service.EstDansUnGroupe(id);
         }
+
+        /// <summary>
+        /// Recherche des invités via un texte de recherche
+        /// </summary>
+        /// <param name="texterecherche">Le texte permettant de rechercher un invité</param>
+        /// <returns>Une liste d'invités correspondant à la recherche</returns>
+        [HttpGet("ChercherInvite")]
+        public List<Metier.Invite> ChercherInvite(string texterecherche)
+        {
+            return this.service.ChercherInvite(texterecherche);
+        }
     }
 
 }
