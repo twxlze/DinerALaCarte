@@ -148,6 +148,5 @@
         <Button Grid.Column="1" Content="{x:Static res:Strings.ModifierMenu}" HorizontalAlignment="Right" Margin="0,0,40,30" Grid.Row="7" VerticalAlignment="Bottom" Height="40" Width="240" Style="{StaticResource StyleBoutonMenu}" Cursor="Hand" Click="BoutonModifierMenu_Click"/>
         <Button Grid.Column="1" Content="{x:Static res:Strings.SupprimerMenu}" HorizontalAlignment="Center" Grid.Row="7" VerticalAlignment="Top" Height="40" Width="240" Style="{StaticResource StyleBoutonMenu}" Margin="0,64,0,15" Grid.RowSpan="2" Click="BoutonSupprimerMenu_Click"/>
         <TextBlock Grid.Column="1" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{x:Static res:Strings.GestionMenus}" VerticalAlignment="Top" FontWeight="Bold" FontSize="20" Foreground="#B44B3E" Margin="0,20,0,0"/>
-        <Image Source="{StaticResource ResourceKey=LogoHostably}" Margin="15,10,121,17" />
     </Grid>
 </Window>
