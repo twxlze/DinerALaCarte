@@ -40,5 +40,12 @@ namespace API_Footies.Data.Interfaces
         /// <param name="idInvite"> Id du plat </param>
         /// <returns></returns>
         bool EstDansUnMenu(long idInvite);
+
+        /// <summary>
+        /// Cherche un plat via un texte de recherche
+        /// </summary>
+        /// <param name="texterecherche">Le texte permettant d'un plat</param>
+        /// <returns>Une liste de plats correspondant à la recherche</returns>
+        public List<Plat> ChercherPlat(string texterecherche);
     }
 }

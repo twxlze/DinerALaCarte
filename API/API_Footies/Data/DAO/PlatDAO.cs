@@ -138,5 +138,41 @@ namespace API_Footies.Data.DAO
                 }
             }
         }
+
+        public List<Plat> ChercherPlat(string texterecherche)
+        {
+            List<Plat> listePlat = new List<Plat>();
+            using (SQLiteConnector connection = new SQLiteConnector())
+            {
+                if (connection == null)
+                {
+                    throw new Exception("Erreur de connexion à la base de données");
+                }
+                else
+                {
+                    var parameters = new Dictionary<string, object>()
+                    {
+                        {"@Texte", $"%{texterecherche}%"} 
+                    };
+
+                    DataTable dataTable = connection.ExecuteQuery(
+                        "SELECT * FROM Plat WHERE Nom LIKE @Texte OR Description LIKE @Texte",
+                        parameters);
+
+                    foreach (DataRow? row in dataTable.Rows)
+                    {
+                        CategoriePlat categorie;
+                        if (!Enum.TryParse(row["categorie"].ToString(), true, out categorie))
+                        {
+                            categorie = CategoriePlat.plat;
+                        }
+
+                        Plat plat = new Plat((long)row["idPlat"], row["nom"].ToString(), row["description"]?.ToString(), categorie);
+                        listePlat.Add(plat);
+                    }
+                }
+            }
+            return listePlat;
+        }
     }
 }

@@ -18,6 +18,7 @@ namespace VM_Footies
         private List<VMPlat> listeVMPlat;
         private VMPlat platSelectionne;
         private IPlatDAO PlatDAO;
+        private string texteRecherche;
         #endregion
 
         #region Propriétés
@@ -28,6 +29,19 @@ namespace VM_Footies
         {
             get { return platSelectionne; }
             set { platSelectionne = value; }
+        }
+
+        /// <summary>
+        /// Texte de recherche pour filtrer les plats
+        /// </summary>
+        public string TexteRecherche
+        {
+            get { return texteRecherche; }
+            set
+            {
+                texteRecherche = value;
+                Notify("TexteRecherche");
+            }
         }
         #endregion
 
@@ -140,6 +154,23 @@ namespace VM_Footies
         public bool PlatExiste(VMPlat plat)
         {
             return this.listeVMPlat.Any(p => p.Plat.Nom.Equals(plat.Plat.Nom, StringComparison.OrdinalIgnoreCase));
+        }
+
+        /// <summary>
+        // Charge la liste des plats correspondant au paramètre de recherche depuis la base de données
+        /// </summary>
+        public async Task ChercherPlat(string recherchertexte)
+        {
+            this.listeVMPlat.Clear();
+
+            List<Plat> plats = await this.PlatDAO.ChercherPlat(recherchertexte);
+            foreach (Plat plat in plats)
+            {
+                VMPlat vmPlat = new VMPlat(plat);
+                this.listeVMPlat.Add(vmPlat);
+            }
+            this.listeVMPlat = this.listeVMPlat.OrderBy(vm => vm.Plat.Nom)
+                                                   .ToList();
         }
 
         /// <summary>
