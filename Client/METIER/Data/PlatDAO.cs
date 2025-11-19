@@ -91,5 +91,17 @@ namespace METIER_Footies.Data
             return resultat;
         }
 
+        public async Task<List<Plat>> ChercherPlat(string texteRecherche)
+        {
+            List<Plat> listeDesPlats = new List<Plat>();
+            HttpResponseMessage reponseHttp = await GetAsync($"Plats/ChercherPlat?texterecherche={texteRecherche}");
+            if (reponseHttp.IsSuccessStatusCode)
+            {
+                string reponse = await reponseHttp.Content.ReadAsStringAsync();
+                listeDesPlats = JsonSerializer.Deserialize<List<Plat>>(reponse, options);
+            }
+            return listeDesPlats;
+        }
+
     }
 }

@@ -37,6 +37,7 @@ namespace IHM_Footies
             this.vuePlat = new List<VuePlat>();
             this.vmPagePlat = new VMPagePlat();
             this.vmPagePlat.PropertyChanged += VMPagePlat_PropertyChanged;
+            this.DataContext = this.vmPagePlat;
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
             this.RafraichirListe();
         }
@@ -232,5 +233,34 @@ namespace IHM_Footies
             Navigation.AllerPlat(this);
         }
         #endregion
+
+        /// <summary>
+        /// Recherche les plats selon le texte saisi
+        /// </summary>
+        /// <param name="sender"> L'expéditeur </param>
+        /// <param name="e"> Les arguments de l'événement </param>
+        private async void RecherchePlat_Click(object sender, RoutedEventArgs e)
+        {
+            if (!string.IsNullOrWhiteSpace(this.vmPagePlat.TexteRecherche))
+            {
+                this.PanelListePlat.Children.Clear();
+                this.vuePlat.Clear();
+
+                await this.vmPagePlat.ChercherPlat(this.vmPagePlat.TexteRecherche);
+
+                foreach (VMPlat plat in this.vmPagePlat.VMPlat)
+                {
+                    VuePlat vue = new VuePlat(plat);
+                    vue.MouseDown += (s, e) => this.SelectionnerPlat(vue);
+                    vue.MouseDoubleClick += (s, e) => this.OuvrirModification(vue);
+                    this.vuePlat.Add(vue);
+                    this.PanelListePlat.Children.Add(vue);
+                }
+            }
+            else
+            {
+                this.RafraichirListe();
+            }
+        }
     }
 }

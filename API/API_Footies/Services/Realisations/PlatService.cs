@@ -53,6 +53,11 @@ namespace API_Footies.Services.Realisations
         {
             return this.dao.EstDansUnMenu(idInvite);
         }
+
+        public List<Plat> ChercherPlat(string texterecherche)
+        {
+            return this.dao.ChercherPlat(texterecherche);
+        }
         #endregion
 
     }

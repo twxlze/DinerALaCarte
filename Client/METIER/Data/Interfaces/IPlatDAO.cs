@@ -40,5 +40,13 @@ namespace METIER_Footies.Data.Interfaces
         /// Supprime un invité
         /// </summary>
         Task<HttpResponseMessage> SupprimerPlat(long idPlat);
+
+        /// <summary>
+        /// Cherche un plat via un texte de recherche
+        /// </summary>
+        /// <param name="texterecherche">Le texte permettant de un plat</param>
+        /// <returns>Une liste de plats correspondant à la recherche</returns>
+        Task<List<Plat>> ChercherPlat(string texterecherche);
     }
 }
+
