@@ -18,7 +18,7 @@ namespace VM_Footies.VM
     {
         #region Attributs
         private Plat plat;
-        private OpenFoodFactsDAO openFoodFactsDAO;
+        private IngredientsDAO openFoodFactsDAO;
         private List<string> suggestionsIngredients;
         #endregion
 
@@ -162,7 +162,7 @@ namespace VM_Footies.VM
         /// </summary>
         private void InitialiserDAO()
         {
-            this.openFoodFactsDAO = new OpenFoodFactsDAO();
+            this.openFoodFactsDAO = new IngredientsDAO();
             this.suggestionsIngredients = new List<string>();
         }
         #endregion

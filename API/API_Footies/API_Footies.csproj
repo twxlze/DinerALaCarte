@@ -8,13 +8,6 @@
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="Data\Enum\**" />
-    <Content Remove="Data\Enum\**" />
-    <EmbeddedResource Remove="Data\Enum\**" />
-    <None Remove="Data\Enum\**" />
-  </ItemGroup>
-
   <!-- Fichiers à exclure -->
   <ItemGroup>
     <None Remove="Data\SQLLiteConnector.cs~RFb668d2b.TMP" />
@@ -32,9 +25,7 @@
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.14" />
   </ItemGroup>
   <ItemGroup>
-    <None Update="openfoodfacts.db">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <Folder Include="Data\Enum\" />
   </ItemGroup>
 
 </Project>

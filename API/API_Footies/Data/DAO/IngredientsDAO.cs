@@ -1,20 +1,19 @@
-﻿using API_Footies.Services.Interfaces;
+﻿using API_Footies.Data.Interfaces;
 using Microsoft.Data.Sqlite;
 
-namespace API_Footies.Services.Realisations
+namespace API_Footies.Data.DAO
 {
-    public class OpenFoodFactsService : IOpenFoodFactsService
+    /// <summary>
+    /// Classe en charge de tout ce qui touche les ingrédients dans la base de données OpenFoodFacts
+    /// </summary>
+    public class IngredientsDAO : IIngredientsDAO
     {
         #region Attributs
         private string connection;
         #endregion
 
         #region Constructeur
-        /// <summary>
-        /// Constructeur du service OpenFoodFacts
-        /// </summary>
-        /// <param name="configuration"> Injection de dépendance pour la configuration </param>
-        public OpenFoodFactsService(IConfiguration configuration)
+        public IngredientsDAO(IConfiguration configuration)
         {
             connection = "Data Source=openfoodfacts.db";
         }
@@ -30,13 +29,21 @@ namespace API_Footies.Services.Realisations
                 {
                     await connection.OpenAsync();
 
+                    using (var pragmaCmd = new SqliteCommand("PRAGMA case_sensitive_like = OFF;", connection))
+                    {
+                        await pragmaCmd.ExecuteNonQueryAsync();
+                    }
+
                     string query = @"
-                        SELECT DISTINCT ingredients_text 
-                        FROM produits 
-                        WHERE ingredients_text IS NOT NULL 
-                        AND ingredients_text != ''
-                        AND LOWER(ingredients_text) LIKE LOWER(@recherche)
-                        LIMIT 20";
+                    SELECT DISTINCT product_name, (LENGTH(product_name) - LENGTH(REPLACE(product_name, ' ', '')) + 1) as word_count
+                    FROM produits 
+                    WHERE product_name IS NOT NULL 
+                    AND product_name != ''
+                    AND product_name LIKE @recherche
+                    AND product_name NOT GLOB '*[0-9]*'
+                    AND word_count <= 3
+                    ORDER BY word_count, LENGTH(product_name)
+                    LIMIT 10";
 
                     using (var command = new SqliteCommand(query, connection))
                     {
@@ -46,10 +53,10 @@ namespace API_Footies.Services.Realisations
                         {
                             while (await reader.ReadAsync())
                             {
-                                string ingredientsText = reader["ingredients_text"]?.ToString();
-                                if (!string.IsNullOrWhiteSpace(ingredientsText))
+                                string productName = reader["product_name"]?.ToString();
+                                if (!string.IsNullOrWhiteSpace(productName))
                                 {
-                                    resultat.Add(ingredientsText);
+                                    resultat.Add(productName);
                                 }
                             }
                         }

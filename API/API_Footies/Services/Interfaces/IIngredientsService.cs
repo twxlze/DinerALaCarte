@@ -3,7 +3,7 @@
     /// <summary>
     /// Fournit des services pour interagir avec l'API OpenFoodFacts
     /// </summary>
-    public interface IOpenFoodFactsService
+    public interface IIngredientsService
     {
         /// <summary>
         /// Recherche des ingrédients correspondant à la chaîne de recherche donnée

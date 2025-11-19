@@ -3,23 +3,16 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API_Footies.Controllers
 {
-    /// <summary>
-    /// Controlleur en charge de l'intégration avec OpenFoodFacts
-    /// </summary>
     [ApiController]
     [Route("OpenFoodFacts")]
-    public class OpenFoodFactsController : ControllerBase
+    public class IngredientsController : ControllerBase
     {
         #region Attributs
-        private IOpenFoodFactsService service;
+        private readonly IIngredientsService service;
         #endregion
 
         #region Constructeur
-        /// <summary>
-        /// Constructeur du controlleur OpenFoodFacts
-        /// </summary>
-        /// <param name="service"> Injection de dépendance du service OpenFoodFacts </param>
-        public OpenFoodFactsController(IOpenFoodFactsService service)
+        public IngredientsController(IIngredientsService service)
         {
             this.service = service;
         }
@@ -34,7 +27,7 @@ namespace API_Footies.Controllers
         /// <returns>Liste de suggestions d'ingrédients</returns>
         [HttpGet("RechercherIngredients")]
         public async Task<List<string>> RechercherIngredients(string recherche)
-        {
+        {   
             if (string.IsNullOrWhiteSpace(recherche))
             {
                 return new List<string>();
