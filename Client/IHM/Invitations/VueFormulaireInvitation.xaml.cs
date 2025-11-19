@@ -22,6 +22,7 @@ namespace IHM_Footies.Invitations
         public VueFormulaireInvitation()
         {
             InitializeComponent();
+            WindowStartupLocation = WindowStartupLocation.CenterScreen;
         }
 
         #region boutons 
