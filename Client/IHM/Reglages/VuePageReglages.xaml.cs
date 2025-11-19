@@ -171,6 +171,20 @@ namespace IHM_Footies.Reglages
         {
             Navigation.AllerGroupesInvites(this);
         }
+
+        /// <summary>
+        /// Aller à la page d'invitations
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BoutonAllerInvitation_Click(object sender, RoutedEventArgs e)
+        {
+            Navigation.AllerInvitations(this);
+        }
+
+
         #endregion
+
+
     }
 }

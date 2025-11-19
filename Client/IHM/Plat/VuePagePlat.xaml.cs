@@ -231,6 +231,19 @@ namespace IHM_Footies
         {
             Navigation.AllerPlat(this);
         }
+
+        /// <summary>
+        /// Aller à la pge d'invitations
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BoutonAllerInvitation_Click(object sender, RoutedEventArgs e)
+        {
+            Navigation.AllerInvitations(this);
+        }
+
         #endregion
+
+
     }
 }
