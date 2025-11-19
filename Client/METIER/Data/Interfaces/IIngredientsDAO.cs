@@ -3,7 +3,7 @@
     /// <summary>
     /// Interface d'accès aux données pour OpenFoodFacts
     /// </summary>
-    public interface IOpenFoodFactsDAO
+    public interface IIngredientsDAO
     {
         /// <summary>
         /// Recherche des suggestions d'ingrédients dans OpenFoodFacts

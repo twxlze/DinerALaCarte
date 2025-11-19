@@ -11,7 +11,7 @@ namespace METIER_Footies.Data
     /// <summary>
     /// Classe d'accès aux données pour OpenFoodFacts avec la base de données
     /// </summary>
-    public class OpenFoodFactsDAO : DAO, IOpenFoodFactsDAO
+    public class IngredientsDAO : DAO, IIngredientsDAO
     {
         /// <summary>
         /// Recherche des suggestions d'ingrédients dans OpenFoodFacts
