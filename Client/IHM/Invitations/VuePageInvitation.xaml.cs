@@ -102,6 +102,16 @@ namespace IHM_Footies.Invitations
         }
 
         /// <summary>
+        /// Aller à la page des réglages
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BoutonAllerReglages_Click(object sender, RoutedEventArgs e)
+        {
+            Navigation.AllerReglages(this);
+        }
+
+        /// <summary>
         /// Bouton pour aller à la page plat
         /// </summary>
         /// <param name="sender"> L'expéditeur </param>
@@ -110,11 +120,12 @@ namespace IHM_Footies.Invitations
         {
             Navigation.AllerPlat(this);
         }
+
         #endregion
 
-        private void BoutonAllerReglages_Click(object sender, RoutedEventArgs e)
+        private void BoutonAllerFormulaireInvitation_Click(object sender, RoutedEventArgs e)
         {
-            Navigation.AllerReglages(this);
+            Navigation.AllerFormulaireInvitation(this);
         }
     }
 }

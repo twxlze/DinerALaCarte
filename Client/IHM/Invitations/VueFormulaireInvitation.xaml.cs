@@ -25,7 +25,7 @@ namespace IHM_Footies.Invitations
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
         }
 
-        #region boutons 
+        #region boutons de navigations
 
         /// <summary>
         /// Bouton pour fermer la fenêtre
@@ -38,5 +38,55 @@ namespace IHM_Footies.Invitations
         }
 
         #endregion
+
+        /// <summary>
+        /// Aller à la vue d'accueil
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BoutonVueAccueil(object sender, RoutedEventArgs e)
+        {
+            Navigation.AllerAccueil(this);
+        }
+
+        /// <summary>
+        /// Aller à la page d'invité
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BoutonInvite_Click(object sender, RoutedEventArgs e)
+        {
+            Navigation.AllerInvites(this);
+        }
+
+        /// <summary>
+        /// Aller à la page groupe invité
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BoutonGroupeInvite_Click(object sender, RoutedEventArgs e)
+        {
+            Navigation.AllerGroupesInvites(this);
+        }
+
+        /// <summary>
+        /// Aller à la page des réglages
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BoutonAllerReglages_Click(object sender, RoutedEventArgs e)
+        {
+            Navigation.AllerReglages(this);
+        }
+
+        /// <summary>
+        /// Aller à la page plats
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BoutonAllerPlat_Click(object sender, RoutedEventArgs e)
+        {
+            Navigation.AllerPlat(this);
+        }
     }
 }

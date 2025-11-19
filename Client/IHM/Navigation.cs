@@ -134,5 +134,16 @@ namespace IHM_Footies
             fenetreActuelle.Close();
         }
 
+        /// <summary>
+        /// Aller au formulaire d'invitation
+        /// </summary>
+        /// <param name="fenetreActuelle"> LA fenêtre actuelle à fermer </param>
+        public static void AllerFormulaireInvitation(Window fenetreActuelle)
+        {
+            VueFormulaireInvitation vueFormulaireInvitation = new VueFormulaireInvitation();
+            vueFormulaireInvitation.Show();
+            fenetreActuelle.Close();
+        }
+
     }
 }
