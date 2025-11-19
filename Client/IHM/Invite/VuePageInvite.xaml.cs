@@ -195,65 +195,84 @@ namespace IHM_Footies
 
         #region Boutons de navigation
         /// <summary>
-        /// Bouton pour aller à la vue d'accueil
-        /// </summary>
-        /// <param name="sender"> L'expéditeur </param>
-        /// <param name="e"> Les arguments de l'événement </param>
-        private void BoutonVueAccueil(object sender, RoutedEventArgs e)
-        {
-            Navigation.AllerAccueil(this);
-        }
-
-        /// <summary>
-        /// Bouton pour aller à la vue des invités
-        /// </summary>
-        /// <param name="sender"> L'expéditeur </param>
-        /// <param name="e"> Les arguments de l'événement </param>
-        private void BoutonInvite_Click(object sender, RoutedEventArgs e)
-        {
-            Navigation.AllerInvites(this);
-        }
-
-        /// <summary>
-        /// Bouton pour aller à la vue du formulaire d'invité
-        /// </summary>
-        /// <param name="sender"> L'expéditeur </param>
-        /// <param name="e"> Les arguments de l'événement </param>
-        private void BoutonAccueil_Click(object sender, RoutedEventArgs e)
-        {
-            Navigation.AllerAccueil(this);
-        }
-
-        /// <summary>
         /// Bouton pour aller à la page plat
         /// </summary>
-        /// <param name="sender"> L'expéditeur </param>
-        /// <param name="e"> Les arguments de l'événement </param>
-        private void BoutonPlat_Click(object sender, RoutedEventArgs e)
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BoutonAllerPlat_Click(object sender, RoutedEventArgs e)
         {
             Navigation.AllerPlat(this);
         }
 
         /// <summary>
+        /// Bouton pour aller à l'accueil
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BoutonAllerAccueil_Click(object sender, RoutedEventArgs e)
+        {
+            Navigation.AllerAccueil(this);
+        }
+
+        /// <summary>
+        /// Bouton pour aller au menu
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BoutonAllerMenu_Click(object sender, RoutedEventArgs e)
+        {
+            Navigation.AllerMenu(this);
+        }
+        /// <summary>
+        /// Bouton pour aller à la page invité
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BoutonAllerInvite_Click(object sender, RoutedEventArgs e)
+        {
+            Navigation.AllerInvites(this);
+        }
+
+        /// <summary>
+        /// Bouton pour aller à la page des réglages
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BoutonAllerReglages_Click(object sender, RoutedEventArgs e)
+        {
+            Navigation.AllerReglages(this);
+        }
+
+        /// <summary>
+        /// Bouton pour aller à la page des groupes d'invités
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BoutonAllerGroupeInvite_Click(object sender, RoutedEventArgs e)
+        {
+            Navigation.AllerGroupesInvites(this);
+        }
+
+        /// <summary>
+        /// Bouton pour aller à la page des invitations
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BoutonAllerInvitation_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        /// <summary>
         /// Bouton pour fermer la fenêtre
         /// </summary>
-        /// <param name="sender"> L'expéditeur du clic </param>
-        /// <param name="e"> Les arguments de l'événement </param>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ButonFermerFenetre_Click(object sender, RoutedEventArgs e)
         {
             Navigation.FermerFenetre(this);
         }
-        #endregion
 
-        /// <summary>
-        ///, Bouton pour aller à la vue des groupes invités
-        /// </summary>
-        /// <param name="sender"> L'expéditeur </param>
-        /// <param name="e"> Les arguments de l'événement </param>
-        private void BoutonGroupeInvite_Click(object sender, RoutedEventArgs e)
-        {
-            Navigation.AllerGroupesInvites(this);
-        }
+        #endregion
 
         /// <summary>
         /// Recherche les invités selon le texte saisi
