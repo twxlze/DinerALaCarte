@@ -1,6 +1,7 @@
 ﻿using System.Data;
 using API_Footies.Data.Interfaces;
 using API_Footies.Metier;
+using API_Footies.Metier.Enum;
 
 namespace API_Footies.Data.DAO
 {
@@ -75,10 +76,10 @@ namespace API_Footies.Data.DAO
 
                         foreach (DataRow? rowPlat in dataTablePlats.Rows)
                         {
-                            Plat.CategoriePlat categorie;
+                            CategoriePlat categorie;
                             if (!Enum.TryParse(rowPlat["Categorie"].ToString(), true, out categorie))
                             {
-                                categorie = Plat.CategoriePlat.plat;
+                                categorie = CategoriePlat.plat;
                             }
 
                             string? ingredients = null;

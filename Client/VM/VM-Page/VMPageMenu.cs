@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using METIER_Footies.Data;
 using METIER_Footies.Data.Interfaces;
+using METIER_Footies.Enum;
 using METIER_Footies.Metier;
 using VM_Footies.VM;
 using VM_Footies.VM_Element_Selectionne;
@@ -93,16 +94,16 @@ namespace VM_Footies.VM_Page
                     menu.GestionnaireEvenement(vmPlatSelectionne);
                     switch (vMPlat.Plat.Categorie)
                     {
-                        case Plat.CategoriePlat.aperitif:
+                        case CategoriePlat.aperitif:
                             menu.PlatsAperitif.Add(vmPlatSelectionne);
                             break;
-                        case Plat.CategoriePlat.entree:
+                        case CategoriePlat.entree:
                             menu.PlatsEntree.Add(vmPlatSelectionne);
                             break;
-                        case Plat.CategoriePlat.plat:
+                        case CategoriePlat.plat:
                             menu.PlatsPlat.Add(vmPlatSelectionne);
                             break;
-                        case Plat.CategoriePlat.dessert:
+                        case CategoriePlat.dessert:
                             menu.PlatsDessert.Add(vmPlatSelectionne);
                             break;
                         default:

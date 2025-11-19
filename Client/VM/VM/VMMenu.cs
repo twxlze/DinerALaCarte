@@ -169,7 +169,7 @@ namespace VM_Footies.VM
         /// </summary>
         private void VmPlat_PropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == "PlatSelectionne")
+            if (e.PropertyName == "EstSelectionne")
             {
                 SynchroniserPlatsSelectionnes();
             }

@@ -101,7 +101,7 @@
                 <Button x:Name="BoutonInvites" Content="{x:Static res:Strings.Invites}" Grid.Row="2" Grid.Column="0" Style="{StaticResource BoutonMenu}" Click="BoutonAllerInvite_Click"/>
                 <Button x:Name="BoutonGroupes" Content="{x:Static res:Strings.GroupeInvite}" Grid.Row="3" Grid.Column="0" Style="{StaticResource BoutonMenu}"/>
                 <Button x:Name="BoutonInvitations" Content="{x:Static res:Strings.Invitations}" Grid.Row="4" Grid.Column="0" Style="{StaticResource BoutonMenu}"/>
-                <Button x:Name="BoutonMenus" Content="{x:Static res:Strings.Menus}" Grid.Row="5" Grid.Column="0" Style="{StaticResource BoutonMenu}" Cursor="Hand" />
+                <Button x:Name="BoutonMenus" Content="{x:Static res:Strings.Menus}" Grid.Row="5" Grid.Column="0" Style="{StaticResource BoutonMenu}" Cursor="Hand" Click="BoutonAllerMenu_Click"/>
                 <Button x:Name="BoutonPlats" Content="{x:Static res:Strings.Plats}" Grid.Row="6" Grid.Column="0" Style="{StaticResource BoutonMenu}" Click="BoutonAllerPlat_Click"/>
                 <Button x:Name="BoutonUtilisateur" Content="👤" Grid.Row="8" Grid.Column="0" Style="{StaticResource BoutonMenu}" Margin="0,0,100,0" HorizontalContentAlignment="Center" FontSize="25"/>
                 <Button x:Name="BoutonReglage" Content="⚙️" Grid.Row="8" Grid.Column="0" Style="{StaticResource BoutonMenu}" HorizontalContentAlignment="Center" Margin="100,0,0,0" FontSize="25" Click="BoutonAllerReglages_Click"/>

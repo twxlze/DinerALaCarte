@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using METIER_Footies.Data;
+using METIER_Footies.Enum;
 using METIER_Footies.Metier;
 using static METIER_Footies.Metier.Plat;
 
