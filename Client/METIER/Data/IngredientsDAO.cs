@@ -13,40 +13,41 @@ namespace METIER_Footies.Data
     /// </summary>
     public class IngredientsDAO : DAO, IIngredientsDAO
     {
-        /// <summary>
-        /// Recherche des suggestions d'ingrédients dans OpenFoodFacts
-        /// </summary>
-        /// <param name="recherche">Texte de recherche</param>
-        /// <returns>Liste de suggestions d'ingrédients</returns>
         public async Task<List<string>> RechercherIngredients(string recherche)
         {
             List<string> suggestions = new List<string>();
+
             if (string.IsNullOrWhiteSpace(recherche))
             {
-                suggestions = new List<string>();
+                return suggestions;
             }
-            else
-            {
-                try
-                {
-                    string rechercheEncodee = Uri.EscapeDataString(recherche); // = encode la recherche pour l'URL pr éviter les problèmes avec les espaces et caractères spéciaux
-                    string url = $"OpenFoodFacts/RechercherIngredients?recherche={rechercheEncodee}";
 
-                    HttpResponseMessage reponseHttp = await GetAsync(url);
-                    if (reponseHttp.IsSuccessStatusCode)
+            try
+            {
+                string rechercheEncodee = Uri.EscapeDataString(recherche);
+                string url = $"OpenFoodFacts/RechercherIngredients?recherche={rechercheEncodee}";
+
+                HttpResponseMessage reponseHttp = await GetAsync(url);
+
+                if (reponseHttp.IsSuccessStatusCode)
+                {
+                    string reponse = await reponseHttp.Content.ReadAsStringAsync();
+
+                    List<string> resultat = JsonSerializer.Deserialize<List<string>>(reponse, options);
+
+                    if (resultat != null)
                     {
-                        string reponse = await reponseHttp.Content.ReadAsStringAsync();
-                        List<string> resultat = JsonSerializer.Deserialize<List<string>>(reponse, options);
-                        if (resultat != null)
-                        {
-                            suggestions = resultat;
-                        }
+                        suggestions = resultat;
                     }
                 }
-                catch (Exception ex)
+                else
                 {
-                    throw new Exception("Erreur lors de la recherche des ingrédients : " + ex.Message);
+                    throw new Exception($"Erreur HTTP lors de la recherche des ingrédients : {reponseHttp.StatusCode}");
                 }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erreur lors de la recherche des ingrédients : " + ex.Message);
             }
             return suggestions;
         }

@@ -27,7 +27,7 @@ namespace API_Footies.Controllers
         /// <returns>Liste de suggestions d'ingrédients</returns>
         [HttpGet("RechercherIngredients")]
         public async Task<List<string>> RechercherIngredients(string recherche)
-        {
+        {   
             if (string.IsNullOrWhiteSpace(recherche))
             {
                 return new List<string>();

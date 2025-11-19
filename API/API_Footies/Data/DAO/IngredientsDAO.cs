@@ -28,15 +28,21 @@ namespace API_Footies.Data.DAO
                 using (var connection = new SqliteConnection(this.connection))
                 {
                     await connection.OpenAsync();
+
+                    using (var pragmaCmd = new SqliteCommand("PRAGMA case_sensitive_like = OFF;", connection))
+                    {
+                        await pragmaCmd.ExecuteNonQueryAsync();
+                    }
+
                     string query = @"
-                    SELECT DISTINCT product_name
+                    SELECT DISTINCT product_name, (LENGTH(product_name) - LENGTH(REPLACE(product_name, ' ', '')) + 1) as word_count
                     FROM produits 
                     WHERE product_name IS NOT NULL 
                     AND product_name != ''
-                    AND LOWER(product_name) LIKE LOWER(@recherche)
+                    AND product_name LIKE @recherche
                     AND product_name NOT GLOB '*[0-9]*'
-                    AND (LENGTH(product_name) - LENGTH(REPLACE(product_name, ' ', '')) + 1) <= 3
-                    ORDER BY (LENGTH(product_name) - LENGTH(REPLACE(product_name, ' ', '')) + 1)
+                    AND word_count <= 3
+                    ORDER BY word_count, LENGTH(product_name)
                     LIMIT 10";
 
                     using (var command = new SqliteCommand(query, connection))
