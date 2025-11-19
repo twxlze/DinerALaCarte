@@ -1,16 +1,19 @@
-﻿using API_Footies.Services.Interfaces;
+﻿using API_Footies.Data.Interfaces;
 using Microsoft.Data.Sqlite;
 
-namespace API_Footies.Services.Realisations
+namespace API_Footies.Data.DAO
 {
-    public class OpenFoodFactsService : IOpenFoodFactsService
+    /// <summary>
+    /// Classe en charge de tout ce qui touche les ingrédients dans la base de données OpenFoodFacts
+    /// </summary>
+    public class IngredientsDAO : IIngredientsDAO
     {
         #region Attributs
         private string connection;
         #endregion
 
         #region Constructeur
-        public OpenFoodFactsService(IConfiguration configuration)
+        public IngredientsDAO(IConfiguration configuration)
         {
             connection = "Data Source=openfoodfacts.db";
         }

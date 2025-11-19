@@ -5,14 +5,14 @@ namespace API_Footies.Controllers
 {
     [ApiController]
     [Route("OpenFoodFacts")]
-    public class OpenFoodFactsController : ControllerBase
+    public class IngredientsController : ControllerBase
     {
         #region Attributs
-        private readonly IOpenFoodFactsService service;
+        private readonly IIngredientsService service;
         #endregion
 
         #region Constructeur
-        public OpenFoodFactsController(IOpenFoodFactsService service)
+        public IngredientsController(IIngredientsService service)
         {
             this.service = service;
         }
