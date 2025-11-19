@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using VM_Footies.VM;
 
 namespace IHM_Footies.Invitations
 {
@@ -19,11 +20,31 @@ namespace IHM_Footies.Invitations
     /// </summary>
     public partial class VueFormulaireInvitation : Window
     {
-        public VueFormulaireInvitation()
+
+        #region Attributs
+        private VMInvitation invitation;
+
+        #endregion
+
+        #region proprietes 
+
+        public VMInvitation Menu => this.invitation;
+
+        #endregion
+
+        #region Constructeurs
+        public VueFormulaireInvitation(VMInvitation invitation)
         {
+            this.invitation = invitation;
             InitializeComponent();
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
         }
+
+        public VueFormulaireInvitation() : this(new VMInvitation())
+        {
+        }
+
+        #endregion
 
         #region boutons de navigations
 
@@ -36,8 +57,6 @@ namespace IHM_Footies.Invitations
         {
             Navigation.FermerFenetre(this);
         }
-
-        #endregion
 
         /// <summary>
         /// Aller à la vue d'accueil
@@ -88,5 +107,10 @@ namespace IHM_Footies.Invitations
         {
             Navigation.AllerPlat(this);
         }
+
+
+        #endregion
+
+
     }
 }

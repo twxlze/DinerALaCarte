@@ -132,7 +132,7 @@
                 CornerRadius="10"
                 Padding="5" Grid.Row="1">
             <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="2">
-                <StackPanel Orientation="Vertical" x:Name="PanelListeGroupeInvites" >
+                <StackPanel Orientation="Vertical" x:Name="PanelListeInvitation" >
 
                 </StackPanel>
             </ScrollViewer>

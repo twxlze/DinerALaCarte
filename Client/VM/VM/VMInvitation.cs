@@ -320,6 +320,22 @@ namespace VM_Footies.VM
             this.invitation.Plats = platsSelectionnes;
             Notify("Plats");
         }
+
+        /// <summary>
+        /// Modifie les informations d'une invitation
+        /// </summary>
+        /// <param name="invite"> L'invitation avec les nouvelles informations </param>
+        public void ModifierInvitation(VMInvitation invitation)
+        {
+            Nom = invitation.Nom;
+            Date = invitation.Date;
+            Menu = invitation.Menu;
+            GroupeInvites = invitation.GroupeInvites;
+            Invites = invitation.Invites;
+            Plats = invitation.Plats;
+
+        }
+
         #endregion
 
         #region METHODES privées

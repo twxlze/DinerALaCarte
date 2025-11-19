@@ -1,16 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+﻿using System.Windows;
+using VM_Footies.VM;
 using VM_Footies.VM_Page;
 
 namespace IHM_Footies.Invitations
@@ -30,7 +19,7 @@ namespace IHM_Footies.Invitations
             InitializeComponent();
             this.vmPageInvitation.PropertyChanged += VmPageInvitation_PropertyChanged;
             this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-            //this.RafraichirListe();
+            this.RafraichirListe();
         }
 
         #region Méthodes
@@ -41,23 +30,66 @@ namespace IHM_Footies.Invitations
         /// <param name="e"> Les arguments de l'événement </param>
         private void VmPageInvitation_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            //if (e.PropertyName == "VMGroupeInvite") this.RafraichirListe();
+            if (e.PropertyName == "VMGroupeInvite") this.RafraichirListe();
         }
+
+        /// <summary>
+        /// Rafraîchit la liste des invitations affichés
+        /// </summary>
+        private async void RafraichirListe()
+        {
+            this.PanelListeInvitation.Children.Clear();
+            this.vueInvitations.Clear();
+
+            await this.vmPageInvitation.ChargerInvitations();
+
+            foreach (VMInvitation invite in this.vmPageInvitation.VMInvitations)
+            {
+                VueInvitation vue = new VueInvitation(invite);
+                vue.MouseDown += (s, e) => this.SelectionnerInvitation(vue);
+                vue.MouseDoubleClick += (s, e) => this.OuvrirModification(vue);
+                this.vueInvitations.Add(vue);
+                this.PanelListeInvitation.Children.Add(vue);
+            }
+        }
+
+        /// <summary>
+        /// Ouvre la fenêtre de modification d'une invitation
+        /// </summary>
+        /// <param name="vue"> La vue de l'invitation à modifier </param>
+        private async Task OuvrirModification(VueInvitation vue)
+        {
+            VMInvitation memoire = new VMInvitation(vue.Invitation);
+
+            await this.vmPageInvitation.ChargerElementsDansInvitation(memoire);
+
+            VueFormulaireInvitation fenetre = new VueFormulaireInvitation(vue.Invitation);
+            bool? result = fenetre.ShowDialog();
+            if (result == true)
+            {
+                vue.Invitation.ModifierInvitation(memoire);
+            }
+        }
+
+
+        /// <summary>
+        /// Sélectionne un menu dans la liste d'invitations
+        /// </summary>
+        /// <param name="vue"> VueInvitation sélectionnée </param>
+        public void SelectionnerInvitation(VueInvitation vue)
+        {
+            this.vmPageInvitation.InvitationSelectionnee = vue.Invitation;
+            foreach (VueInvitation vueM in this.vueInvitations)
+            {
+                vueM.Deselectionner();
+            }
+            vue.Selectionner();
+        }
+
+
         #endregion
 
-        #region Boutons d'action
-        private void BoutonAjouterInvitation_Click(object sender, RoutedEventArgs e)
-        {
-        }
 
-        private void BoutonModifierInvitation_Click(object sender, RoutedEventArgs e)
-        {
-        }
-
-        private void BoutonSupprimerInvitation_Click(object sender, RoutedEventArgs e)
-        {
-        }
-        #endregion
 
         #region Boutons de navigation
 
@@ -121,11 +153,18 @@ namespace IHM_Footies.Invitations
             Navigation.AllerPlat(this);
         }
 
-        #endregion
-
+        /// <summary>
+        /// Bouton pour aller au formulaire d'invitation
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BoutonAllerFormulaireInvitation_Click(object sender, RoutedEventArgs e)
         {
             Navigation.AllerFormulaireInvitation(this);
         }
+
+        #endregion
+
+
     }
 }
