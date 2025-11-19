@@ -28,14 +28,16 @@ namespace API_Footies.Data.DAO
                 using (var connection = new SqliteConnection(this.connection))
                 {
                     await connection.OpenAsync();
-
                     string query = @"
-                        SELECT DISTINCT ingredients_text 
-                        FROM produits 
-                        WHERE ingredients_text IS NOT NULL 
-                        AND ingredients_text != ''
-                        AND LOWER(ingredients_text) LIKE LOWER(@recherche)
-                        LIMIT 20";
+                    SELECT DISTINCT product_name
+                    FROM produits 
+                    WHERE product_name IS NOT NULL 
+                    AND product_name != ''
+                    AND LOWER(product_name) LIKE LOWER(@recherche)
+                    AND product_name NOT GLOB '*[0-9]*'
+                    AND (LENGTH(product_name) - LENGTH(REPLACE(product_name, ' ', '')) + 1) <= 3
+                    ORDER BY (LENGTH(product_name) - LENGTH(REPLACE(product_name, ' ', '')) + 1)
+                    LIMIT 10";
 
                     using (var command = new SqliteCommand(query, connection))
                     {
@@ -45,10 +47,10 @@ namespace API_Footies.Data.DAO
                         {
                             while (await reader.ReadAsync())
                             {
-                                string ingredientsText = reader["ingredients_text"]?.ToString();
-                                if (!string.IsNullOrWhiteSpace(ingredientsText))
+                                string productName = reader["product_name"]?.ToString();
+                                if (!string.IsNullOrWhiteSpace(productName))
                                 {
-                                    resultat.Add(ingredientsText);
+                                    resultat.Add(productName);
                                 }
                             }
                         }
