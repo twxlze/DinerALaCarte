@@ -7,6 +7,7 @@ using System.Windows;
 using IHM;
 using IHM_Footies.Reglages;
 using IHM_Footies.Menu;
+using IHM_Footies.Invitations;
 
 namespace IHM_Footies
 {
@@ -48,6 +49,10 @@ namespace IHM_Footies
             fenetreActuelle.Close();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="fenetreActuelle"></param>
         public static void AllerPlat(Window fenetreActuelle)
         {
             VuePagePlat vuePlats = new VuePagePlat();
@@ -98,6 +103,10 @@ namespace IHM_Footies
             fenetreActuelle.Close();
         }
 
+        /// <summary>
+        /// Aller à la page des réglages
+        /// </summary>
+        /// <param name="fenetreActuelle">La fenêtre actuelle</param>
         public static void AllerReglages(Window fenetreActuelle)
         {
             VuePageReglages vueReglages = new VuePageReglages();
@@ -113,5 +122,28 @@ namespace IHM_Footies
         {
             fenetreActuelle.Close();
         }
+
+        /// <summary>
+        /// Aller à la page invitations
+        /// </summary>
+        /// <param name="fenetreActuelle">La fenêtre actuelle</param>
+        public static void AllerInvitations(Window fenetreActuelle)
+        {
+            VuePageInvitation vueInvitations = new VuePageInvitation();
+            vueInvitations.Show();
+            fenetreActuelle.Close();
+        }
+
+        /// <summary>
+        /// Aller au formulaire d'invitation
+        /// </summary>
+        /// <param name="fenetreActuelle"> LA fenêtre actuelle à fermer </param>
+        public static void AllerFormulaireInvitation(Window fenetreActuelle)
+        {
+            VueFormulaireInvitation vueFormulaireInvitation = new VueFormulaireInvitation();
+            vueFormulaireInvitation.Show();
+            fenetreActuelle.Close();
+        }
+
     }
 }

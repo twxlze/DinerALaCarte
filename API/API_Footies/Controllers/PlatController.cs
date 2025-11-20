@@ -75,5 +75,16 @@ namespace API_Footies.Controllers
         {
             return this.service.EstDansUnMenu(id);
         }
+
+        /// <summary>
+        /// Recherche des plats via un texte de recherche
+        /// </summary>
+        /// <param name="texterecherche">Le texte permettant de rechercher un plat</param>
+        /// <returns>Une liste de plats correspondant à la recherche</returns>
+        [HttpGet("ChercherPlat")]
+        public List<Metier.Plat> ChercherPlat(string texterecherche)
+        {
+            return this.service.ChercherPlat(texterecherche);
+        }
     }
 }

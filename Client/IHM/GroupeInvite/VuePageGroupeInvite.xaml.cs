@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IHM_Footies.GroupeInvite;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -65,7 +66,7 @@ namespace IHM_Footies
             {
                 VueGroupeInvite vue = new VueGroupeInvite(groupe);
                 vue.MouseDown += (s, e) => this.SelectionnerGroupe(vue);
-                vue.MouseDoubleClick += (s, e) => this.OuvrirModificationGroupe(vue);
+                vue.MouseDoubleClick += (s, e) => this.OuvrirDetailGroupe(vue);
                 this.vueGroupeInvite.Add(vue);
                 this.PanelListeGroupeInvites.Children.Add(vue);
             }
@@ -73,19 +74,19 @@ namespace IHM_Footies
 
 
         /// <summary>
-        /// Ouvre la fenêtre de modification d'un groupe invité
+        /// Ouvre la fenêtre des details d'un groupe invité
         /// </summary>
-        /// <param name="vue"> La vue du groupe invité à modifier </param>
-        private async Task OuvrirModificationGroupe(VueGroupeInvite vue)
+        /// <param name="vue"> La vue du groupe invité pour lequelle on veut ces details </param>
+        private void OuvrirDetailGroupe(VueGroupeInvite vue)
         {
-            VMGroupeInvite memoire = new VMGroupeInvite(vue.Groupe);
-
-            await this.vmPageGroupeInvite.ChargerInvitesDansGroupe(memoire);
-            VueFormulaireGroupeInvite fenetre = new VueFormulaireGroupeInvite(vue.Groupe);
-            bool? result = fenetre.ShowDialog();
-            if (result == true)
+            if (this.vmPageGroupeInvite.GroupeSelectionne != null)
             {
-                await this.vmPageGroupeInvite.ModifierGroupe(vue.Groupe);
+                VuePageDetailInviteDansGroupe fenetre = new VuePageDetailInviteDansGroupe(vue.Groupe);
+                fenetre.Show();
+            }
+            else
+            {
+                MessageBox.Show("Veuillez sélectionner un groupe pour voir ses détails.", "Aucun groupe sélectionné", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 
@@ -178,68 +179,92 @@ namespace IHM_Footies
                 MessageBox.Show("Veuillez sélectionner un groupe à supprimer.","Aucun groupe sélectionné",MessageBoxButton.OK,MessageBoxImage.Warning);
             }
         }
+
+
         #endregion
 
         #region Boutons de navigation
         /// <summary>
-        /// Bouton pour aller à la vue d'accueil
+        /// Bouton pour aller à la page plat
         /// </summary>
-        /// <param name="sender"> L'expéditeur </param>
-        /// <param name="e"> Les arguments de l'événement </param>
-        private void BoutonVueAccueil(object sender, RoutedEventArgs e)
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BoutonAllerPlat_Click(object sender, RoutedEventArgs e)
+        {
+            Navigation.AllerPlat(this);
+        }
+
+        /// <summary>
+        /// Bouton pour aller à l'accueil
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BoutonAllerAccueil_Click(object sender, RoutedEventArgs e)
         {
             Navigation.AllerAccueil(this);
         }
 
         /// <summary>
-        /// Bouton pour aller à la vue des invités
+        /// Bouton pour aller au menu
         /// </summary>
-        /// <param name="sender"> L'expéditeur </param>
-        /// <param name="e"> Les arguments de l'événement </param>
-        private void BoutonInvite_Click(object sender, RoutedEventArgs e)
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BoutonAllerMenu_Click(object sender, RoutedEventArgs e)
+        {
+            Navigation.AllerMenu(this);
+        }
+        /// <summary>
+        /// Bouton pour aller à la page invité
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BoutonAllerInvite_Click(object sender, RoutedEventArgs e)
         {
             Navigation.AllerInvites(this);
         }
 
         /// <summary>
-        /// Bouton pour aller à la vue d'accueil
+        /// Bouton pour aller à la page des réglages
         /// </summary>
-        /// <param name="sender"> L'expéditeur </param>
-        /// <param name="e"> Les arguments de l'événement </param>
-        private void BoutonAccueil_Click(object sender, RoutedEventArgs e)
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BoutonAllerReglages_Click(object sender, RoutedEventArgs e)
         {
-            Navigation.AllerAccueil(this);
+            Navigation.AllerReglages(this);
         }
 
         /// <summary>
+        /// Bouton pour aller à la page des groupes d'invités
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BoutonAllerGroupeInvite_Click(object sender, RoutedEventArgs e)
+        {
+            Navigation.AllerGroupesInvites(this);
+        }
+
+
+        /// <summary>
+        /// Bouton pour aller à la page des invitations
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BoutonAllerInvitation_Click(object sender, RoutedEventArgs e)
+        {
+            Navigation.AllerInvitations(this);
+        }
+
         /// Bouton pour fermer la fenêtre
         /// </summary>
-        /// <param name="sender"> L'expéditeur du clic </param>
-        /// <param name="e"> Les arguments de l'événement </param>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ButonFermerFenetre_Click(object sender, RoutedEventArgs e)
         {
             Navigation.FermerFenetre(this);
         }
 
-        /// <summary>
-        /// Bouton pour aller à la vue des groupes invités
-        /// </summary>
-        /// <param name="sender"> L'expéditeur </param>
-        /// <param name="e"> Les arguments de l'événement </param>
-        private void BoutonGroupeInvite_Click(object sender, RoutedEventArgs e)
-        {
-            Navigation.AllerGroupesInvites(this);
-        }
-
-        /// <summary>
-        /// Bouton pour aller à la page plat
-        /// </summary>
-        /// <param name="sender"> L'expéditeur </param>
-        /// <param name="e"> Les arguments de l'événement </param>
-        private void BoutonAllerPlat_Click(object sender, RoutedEventArgs e)
-        {
-            Navigation.AllerPlat(this);
-        }
         #endregion
+
+
     }
 }

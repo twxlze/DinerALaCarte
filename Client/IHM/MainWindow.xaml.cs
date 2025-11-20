@@ -9,8 +9,11 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using IHM_Footies;
+using IHM_Footies.Invitations;
+using IHM_Footies.Menu;
 using VM_Footies;
 using VM_Footies.VM;
+using VM_Footies.VM_Page;
 
 namespace IHM;
 
@@ -26,6 +29,10 @@ public partial class MainWindow : Window
     private VMPagePlat vmPagePlat;
     private List<VueGroupeInvite> vueGroupeInvites;
     private VMPageGroupeInvite vmPageGroupeInvite;
+    private VMPageInvitation vmPageInvitation;
+    private List<VueInvitation> vueInvitations;
+    private List<VueMenu> vueMenu;
+    private VMPageMenu vmPageMenu;
     #endregion
 
     /// <summary>
@@ -53,6 +60,11 @@ public partial class MainWindow : Window
 
         this.vueGroupeInvites = new List<VueGroupeInvite>();
         this.vmPageGroupeInvite = new VMPageGroupeInvite();
+
+        this.vmPageInvitation = new VMPageInvitation();
+        this.vueInvitations = new List<VueInvitation>();
+        this.vueMenu = new List<VueMenu>();
+        this.vmPageMenu = new VMPageMenu();
     }
 
     /// <summary>
@@ -63,6 +75,8 @@ public partial class MainWindow : Window
         this.vmPageInvite.PropertyChanged += VMPage_PropertyChanged;
         this.vmPagePlat.PropertyChanged += VMPage_PropertyChanged;
         this.vmPageGroupeInvite.PropertyChanged += VMPage_PropertyChanged;
+        this.vmPageInvitation.PropertyChanged += VMPage_PropertyChanged;
+        this.vmPageMenu.PropertyChanged += VMPage_PropertyChanged;
     }
 
     /// <summary>
@@ -73,7 +87,8 @@ public partial class MainWindow : Window
         await Task.WhenAll(
             ChargerInvites(),
             ChargerPlats(),
-            ChargerGroupes()
+            ChargerGroupes(),
+            ChargerMenus()
         );
     }
 
@@ -92,6 +107,9 @@ public partial class MainWindow : Window
                 break;
             case "ListeVMGroupeInvite":
                 this.ChargerGroupes();
+                break;
+            case "VMMenu":
+                this.ChargerMenus();
                 break;
         }
     }
@@ -133,6 +151,17 @@ public partial class MainWindow : Window
         }
         vue.Selectionner();
     }
+
+    private void SelectionnerMenu(VueMenu vue)
+    {
+        this.vmPageMenu.MenuSelectionne = vue.Menu;
+        foreach (VueMenu vueM in this.vueMenu)
+        {
+            vueM.Deselectionner();
+        }
+        vue.Selectionner();
+    }
+
     /// <summary>
     /// Rafraîchit la liste des invités affichés
     /// </summary>
@@ -204,6 +233,23 @@ public partial class MainWindow : Window
         }
     }
 
+    private async Task ChargerMenus()
+    {
+        this.PanelListeMenu.Children.Clear();
+        this.vueMenu.Clear();
+        await this.vmPageMenu.ChargerMenus();
+        foreach (VMMenu menu in this.vmPageMenu.VMMenu)
+        {
+            VueMenu vue = new VueMenu(menu);
+            vue.MouseDown += (s, e) => this.SelectionnerMenu(vue);
+            vue.Height = 20;
+            vue.Width = 600;
+            vue.HorizontalAlignment = HorizontalAlignment.Center;
+            vue.VerticalAlignment = VerticalAlignment.Center;
+            this.vueMenu.Add(vue);
+            this.PanelListeMenu.Children.Add(vue);
+        }
+    }
 
     /// <summary>
     /// Bouton pour fermer la fenêtre
@@ -255,10 +301,36 @@ public partial class MainWindow : Window
         Navigation.AllerInvites(this);
     }
 
+    /// <summary>
+    /// Bouton pour aller à la page des réglages
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void BoutonAllerReglages_Click(object sender, RoutedEventArgs e)
     {
         Navigation.AllerReglages(this);
     }
+
+    /// <summary>
+    /// Bouton pour aller à la page des groupes d'invités
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void BoutonAllerGroupeInvite_Click(object sender, RoutedEventArgs e)
+    {
+        Navigation.AllerGroupesInvites(this);
+    }
+
+    /// <summary>
+    /// Bouton pour aller à la page des invitations
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void BoutonAllerInvitation_Click(object sender, RoutedEventArgs e)
+    {
+        Navigation.AllerInvitations(this);
+    }
+
 
     #endregion
 

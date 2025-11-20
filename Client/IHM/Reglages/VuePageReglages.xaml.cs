@@ -122,25 +122,64 @@ namespace IHM_Footies.Reglages
 
         #region Boutons de navigation
         /// <summary>
-        /// Bouton pour aller à la vue d'accueil
+        /// Bouton pour aller à la page plat
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void BoutonAccueil_Click(object sender, RoutedEventArgs e)
+        private void BoutonAllerPlat_Click(object sender, RoutedEventArgs e)
+        {
+            Navigation.AllerPlat(this);
+        }
+
+        /// <summary>
+        /// Bouton pour aller à l'accueil
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BoutonAllerAccueil_Click(object sender, RoutedEventArgs e)
         {
             Navigation.AllerAccueil(this);
         }
 
-
         /// <summary>
-        /// Bouton pour aller à la vue des plats
+        /// Bouton pour aller au menu
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void BoutonPlat_Click(object sender, RoutedEventArgs e)
+        private void BoutonAllerMenu_Click(object sender, RoutedEventArgs e)
         {
-            Navigation.AllerPlat(this);
+            Navigation.AllerMenu(this);
         }
+        /// <summary>
+        /// Bouton pour aller à la page invité
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BoutonAllerInvite_Click(object sender, RoutedEventArgs e)
+        {
+            Navigation.AllerInvites(this);
+        }
+
+        /// <summary>
+        /// Bouton pour aller à la page des réglages
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BoutonAllerReglages_Click(object sender, RoutedEventArgs e)
+        {
+            Navigation.AllerReglages(this);
+        }
+
+        /// <summary>
+        /// Bouton pour aller à la page des groupes d'invités
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BoutonAllerGroupeInvite_Click(object sender, RoutedEventArgs e)
+        {
+            Navigation.AllerGroupesInvites(this);
+        }
+
 
         /// <summary>
         /// Bouton pour fermer la fenêtre
@@ -152,25 +191,22 @@ namespace IHM_Footies.Reglages
             Navigation.FermerFenetre(this);
         }
 
-        /// <summary>
-        /// Bouton pour aller à la vue des invités
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void BoutonAllerInvite_Click(object sender, RoutedEventArgs e)
-        {
-            Navigation.AllerInvites(this);
-        }
+
 
         /// <summary>
-        /// Bouton pour aller à la page groupe invité
+        /// Aller à la page d'invitations
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void BoutonAllerGroupeInvite_Click(object sender, RoutedEventArgs e)
+        private void BoutonAllerInvitation_Click(object sender, RoutedEventArgs e)
         {
-            Navigation.AllerGroupesInvites(this);
+            Navigation.AllerInvitations(this);
         }
+
+
+
         #endregion
+
+
     }
 }

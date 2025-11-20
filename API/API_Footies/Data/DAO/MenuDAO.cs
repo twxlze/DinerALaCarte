@@ -1,6 +1,7 @@
 ﻿using System.Data;
 using API_Footies.Data.Interfaces;
 using API_Footies.Metier;
+using API_Footies.Metier.Enum;
 
 namespace API_Footies.Data.DAO
 {
@@ -75,10 +76,10 @@ namespace API_Footies.Data.DAO
 
                         foreach (DataRow? rowPlat in dataTablePlats.Rows)
                         {
-                            Plat.CategoriePlat categorie;
+                            CategoriePlat categorie;
                             if (!Enum.TryParse(rowPlat["Categorie"].ToString(), true, out categorie))
                             {
-                                categorie = Plat.CategoriePlat.plat;
+                                categorie = CategoriePlat.plat;
                             }
 
                             string? ingredients = null;
@@ -169,5 +170,34 @@ namespace API_Footies.Data.DAO
                 }
             }
         }
+
+        public List<Menu> ChercherMenus(string menuRechercher)
+        {
+            List<Menu> listeMenu = new List<Menu>();
+            using (SQLiteConnector connection = new SQLiteConnector())
+            {
+                if (connection == null)
+                {
+                    throw new Exception("Erreur de connexion à la base de données");
+                }
+                else
+                {
+                    var parameters = new Dictionary<string, object>()
+                    {
+                        {"@Texte", $"%{menuRechercher}%" }
+                    };
+                    var dataTable = connection.ExecuteQuery("SELECT * FROM Menu WHERE Nom LIKE @Texte", parameters);
+                    foreach (DataRow? row in dataTable.Rows)
+                    {
+                        long idMenu = (long)row["IDMenu"];
+                        string nom = row["Nom"].ToString();
+                        Menu menu = new Menu(new List<Plat>(), idMenu, nom);
+                        listeMenu.Add(menu);
+                    }
+                }
+            }
+            return listeMenu;
+        }
+
     }
 }

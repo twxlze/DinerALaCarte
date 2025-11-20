@@ -7,7 +7,7 @@ namespace API_Footies.Controllers
     /// Controlleur en charge de tout ce qui touche aux invitations
     /// </summary>
     [ApiController]
-    [Route("Invitation")]
+    [Route("Invitations")]
     public class InvitationController : ControllerBase
     {
         #region Attributs
@@ -61,7 +61,7 @@ namespace API_Footies.Controllers
         /// Obtenir toutes les Invitations
         /// </summary>
         /// <returns> La liste de toutes les invitations </returns>
-        [HttpGet("ObtenirToutInvitations")]
+        [HttpGet("ListeInvitations")]
         public List<Metier.Invitation> ObtenirToutInvitations()
         {
             return this.service.ObtenirToutInvitations();

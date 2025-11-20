@@ -95,7 +95,7 @@
         HorizontalAlignment="Right"
         VerticalAlignment="Top"
         Margin="0,5,8,0"
-        Grid.Column="1000"/>
+        Grid.Column="1000" Click="ButonFermerFenetre_Click"/>
 
         <!-- Menu à gauche -->
         <Border BorderBrush="#8C2F26"  BorderThickness="0,0,2,0" Grid.Column="0" Grid.RowSpan="9">
@@ -113,14 +113,14 @@
                 </Grid.RowDefinitions>
                 <Image Source="{StaticResource ResourceKey=LogoHostably}" Margin="15,10,121,17" />
                 <TextBlock Text="HOSTABLY" FontSize="19" FontWeight="Bold" Foreground="#B44B3E" VerticalAlignment="Center" Height="27" Margin="73,0,23,0" FontFamily="Montserrat"/>
-                <Button x:Name="BoutonAccueil"  Content="🏠 Accueil" Grid.Row="1" Style="{StaticResource BoutonInvitation}" />
-                <Button x:Name="BoutonInvites" Content="👤 Invités" Grid.Row="2" Style="{StaticResource BoutonInvitation}" />
-                <Button x:Name="BoutonGroupes" Content="👥 Groupes d'invités" Grid.Row="3" Style="{StaticResource BoutonInvitation}" />
+                <Button x:Name="BoutonAccueil"  Content="🏠 Accueil" Grid.Row="1" Style="{StaticResource BoutonInvitation}" Click="BoutonVueAccueil" />
+                <Button x:Name="BoutonInvites" Content="👤 Invités" Grid.Row="2" Style="{StaticResource BoutonInvitation}" Click="BoutonInvite_Click" />
+                <Button x:Name="BoutonGroupes" Content="👥 Groupes d'invités" Grid.Row="3" Style="{StaticResource BoutonInvitation}" Click="BoutonGroupeInvite_Click"/>
                 <Button x:Name="BoutonInvitations" Content="🎟️ Invitations" Grid.Row="4" Style="{StaticResource BoutonInvitation}" Background="#BFBFBF" FontWeight="Bold"/>
-                <Button x:Name="BoutonMenus" Content="📋 Menus" Grid.Row="5" Style="{StaticResource BoutonInvitation}"/>
-                <Button x:Name="BoutonPlats" Content="🍽️ Plats" Grid.Row="6" Style="{StaticResource BoutonInvitation}" />
+                <Button x:Name="BoutonMenus" Content="📋 Menus" Grid.Row="5" Style="{StaticResource BoutonInvitation}" Click="BoutonAllerMenu_Click"/>
+                <Button x:Name="BoutonPlats" Content="🍽️ Plats" Grid.Row="6" Style="{StaticResource BoutonInvitation}" Click="BoutonAllerPlat_Click"/>
                 <Button x:Name="BoutonUtilisateur" Content="👤" Grid.Row="8" Style="{StaticResource BoutonInvitation}" Margin="0,0,100,0" HorizontalContentAlignment="Center" FontSize="25"/>
-                <Button x:Name="BoutonReglage" Content="⚙️" Grid.Row="8" Style="{StaticResource BoutonInvitation}" HorizontalContentAlignment="Center" Margin="100,0,0,0" FontSize="25"/>
+                <Button x:Name="BoutonReglage" Content="⚙️" Grid.Row="8" Style="{StaticResource BoutonInvitation}" HorizontalContentAlignment="Center" Margin="100,0,0,0" FontSize="25" Click="BoutonAllerReglages_Click"/>
             </Grid>
         </Border>
 
@@ -132,16 +132,16 @@
                 CornerRadius="10"
                 Padding="5" Grid.Row="1">
             <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="2">
-                <StackPanel Orientation="Vertical" x:Name="PanelListeGroupeInvites" >
+                <StackPanel Orientation="Vertical" x:Name="PanelListeInvitation" >
 
                 </StackPanel>
             </ScrollViewer>
         </Border>
 
         <!-- Boutons -->
-        <Button Grid.RowSpan="2" Grid.Column="1" Content="Ajouter une invitation" HorizontalAlignment="Left" Margin="40,0,0,30" Grid.Row="6" VerticalAlignment="Bottom" Height="40" Width="240" Style="{StaticResource StyleBoutonInvitation}" />
+        <Button Grid.RowSpan="2" Grid.Column="1" Content="Ajouter une invitation" HorizontalAlignment="Left" Margin="40,0,0,30" Grid.Row="6" VerticalAlignment="Bottom" Height="40" Width="240" Style="{StaticResource StyleBoutonInvitation}" Click="BoutonAllerFormulaireInvitation_Click" />
         <Button Grid.Column="1" Content="Modifier une invitation" HorizontalAlignment="Right" Margin="0,0,40,30" Grid.Row="7" VerticalAlignment="Bottom" Height="40" Width="240" Style="{StaticResource StyleBoutonInvitation}" Cursor="Hand" />
-        <Button Grid.Column="1" Content="Supprimer une invitation" HorizontalAlignment="Center" Grid.Row="7" VerticalAlignment="Top" Height="40" Width="240" Style="{StaticResource StyleBoutonInvitation}" Margin="0,63,0,0" Grid.RowSpan="2" />
+        <Button Grid.Column="1" Content="Supprimer une invitation" HorizontalAlignment="Center" Grid.Row="7" VerticalAlignment="Top" Height="40" Width="240" Style="{StaticResource StyleBoutonInvitation}" Margin="0,63,0,0" Grid.RowSpan="2" Click="BoutonSupprimerInvitation_Click" />
         <TextBlock Grid.Column="1" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Gestion des invitations" VerticalAlignment="Top" FontWeight="Bold" FontSize="20" Foreground="#B44B3E" Margin="0,20,0,0"/>
 
     </Grid>

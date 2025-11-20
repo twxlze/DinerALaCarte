@@ -94,12 +94,10 @@ namespace IHM_Footies
             {
                 string texte = textBox.Text;
 
-                // Si le texte est assez long, rechercher des suggestions
                 if (!string.IsNullOrWhiteSpace(texte) && texte.Length >= 2)
                 {
                     await this.plat.RechercherSuggestionsIngredients(texte);
 
-                    // Afficher la liste si on a des suggestions
                     if (this.plat.SuggestionsIngredients.Count > 0)
                     {
                         ListBoxSuggestions.Visibility = Visibility.Visible;
@@ -123,13 +121,10 @@ namespace IHM_Footies
         {
             if (ListBoxSuggestions.SelectedItem is string suggestion)
             {
-                // Remplacer le contenu du TextBox par la suggestion
                 this.plat.Ingredients = suggestion;
                 
-                // Cacher la liste
                 ListBoxSuggestions.Visibility = Visibility.Collapsed;
                 
-                // Remettre le focus sur le TextBox
                 TextBoxIngredients.Focus();
                 TextBoxIngredients.CaretIndex = TextBoxIngredients.Text.Length;
             }
@@ -138,55 +133,85 @@ namespace IHM_Footies
 
         #region Boutons de navigation
         /// <summary>
-        /// Bouton pour aller à la vue d'accueil
+        /// Bouton pour aller à la page plat
         /// </summary>
-        /// <param name="sender"> L'expéditeur </param>
-        /// <param name="e"> Les arguments de l'événement </param>
-        private void BoutonAccueil_Click(object sender, RoutedEventArgs e)
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BoutonAllerPlat_Click(object sender, RoutedEventArgs e)
+        {
+            Navigation.AllerPlat(this);
+        }
+
+        /// <summary>
+        /// Bouton pour aller à l'accueil
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BoutonAllerAccueil_Click(object sender, RoutedEventArgs e)
         {
             Navigation.AllerAccueil(this);
         }
 
-
         /// <summary>
-        /// Bouton pour aller à la vue des plats
+        /// Bouton pour aller au menu
         /// </summary>
-        /// <param name="sender"> L'expéditeur </param>
-        /// <param name="e"> Les arguments de l'événement </param>
-        private void BoutonAllerPlat_Click(object sender, RoutedEventArgs e)
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BoutonAllerMenu_Click(object sender, RoutedEventArgs e)
         {
-            Navigation.AllerPlat(this);
-        }   
-
-        /// <summary>
-        /// Bouton pour fermer la fenêtre
-        /// </summary>
-        /// <param name="sender"> L'expéditeur du clic </param>
-        /// <param name="e"> Les arguments de l'événement </param>
-        private void ButonFermerFenetre_Click(object sender, RoutedEventArgs e)
-        {
-            Navigation.FermerFenetre(this);
+            Navigation.AllerMenu(this);
         }
-
         /// <summary>
-        /// Bouton pour aller à la vue des invités
+        /// Bouton pour aller à la page invité
         /// </summary>
-        /// <param name="sender"> L'expéditeur </param>
-        /// <param name="e"> Les arguments de l'événement </param>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BoutonAllerInvite_Click(object sender, RoutedEventArgs e)
         {
             Navigation.AllerInvites(this);
         }
 
         /// <summary>
-        /// Bouton pour aller à la page groupe invité
+        /// Bouton pour aller à la page des réglages
         /// </summary>
-        /// <param name="sender"> L'expéditeur </param>
-        /// <param name="e"> Les arguments de l'événement </param>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BoutonAllerReglages_Click(object sender, RoutedEventArgs e)
+        {
+            Navigation.AllerReglages(this);
+        }
+
+        /// <summary>
+        /// Bouton pour aller à la page des groupes d'invités
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BoutonAllerGroupeInvite_Click(object sender, RoutedEventArgs e)
         {
             Navigation.AllerGroupesInvites(this);
         }
+
+        /// <summary>
+        /// Bouton pour aller à la page des invitations
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BoutonAllerInvitation_Click(object sender, RoutedEventArgs e)
+        {
+            Navigation.AllerInvitations(this);
+        }
+          
+
+        /// <summary>
+        /// Bouton pour fermer la fenêtre
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ButonFermerFenetre_Click(object sender, RoutedEventArgs e)
+        {
+            Navigation.FermerFenetre(this);
+        }
+
         #endregion
     }
 }
