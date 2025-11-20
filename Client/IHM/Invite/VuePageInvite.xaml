@@ -191,7 +191,7 @@
         <Image Source="{StaticResource ResourceKey=LogoHostably}" Margin="14,10,122,17"/>
 
 
-        <Border Style="{StaticResource StyleContainerRecherche}" Grid.Column="1" Margin="0,64,0,0" Width="280" Grid.RowSpan="2" HorizontalAlignment="Center">
+        <Border Style="{StaticResource StyleContainerRecherche}" Grid.Column="1" Margin="0,64,0,0" Width="440" Grid.RowSpan="2" HorizontalAlignment="Center" Height="27">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -199,13 +199,13 @@
                 </Grid.ColumnDefinitions>
 
                 <TextBox x:Name="zonerechercheInvite" 
-         Grid.Column="0" 
-         Style="{StaticResource StyleChampRecherche}"
-         Text="{Binding TexteRecherche, UpdateSourceTrigger=PropertyChanged}"/>
+    Grid.Column="0" 
+    Style="{StaticResource StyleChampRecherche}"
+    Text="{Binding TexteRecherche, UpdateSourceTrigger=PropertyChanged}" Margin="10,0,0,0"/>
 
                 <Button x:Name="rechercheInvite" Click="RechercheInvite_Click" 
-        Grid.Column="1" 
-        Style="{StaticResource StyleLoupeRecherche}"/>
+    Grid.Column="1" 
+    Style="{StaticResource StyleLoupeRecherche}"/>
             </Grid>
         </Border>
 
