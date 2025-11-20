@@ -511,7 +511,8 @@ namespace API_Footies.Data.DAO
                 (long)row["IdPlat"],
                 row["Nom"].ToString(),
                 row["Description"].ToString(),
-                categorie
+                categorie,
+                row["Ingredients"]?.ToString()
             );
         }
 
