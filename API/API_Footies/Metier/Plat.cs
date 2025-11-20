@@ -67,7 +67,7 @@
         /// <param name="nom">nom du plat</param>
         /// <param name="description">description du plat</param>
         /// <param name="categorie">categorie du plat</param>
-        public Plat(long id, string nom, string? description, Enum.CategoriePlat categorie, string? ingredients = null)
+        public Plat(long id, string nom, string? description, Enum.CategoriePlat categorie, string? ingredients)
         {
             this.id = id;
             this.nom = nom;

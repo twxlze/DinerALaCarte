@@ -30,8 +30,6 @@ builder.Services.AddScoped<IMenuService, MenuService>();
 builder.Services.AddScoped<IInvitationDAO, InvitationDAO>();
 builder.Services.AddScoped<IInvitationService, InvitationService>();
 
-builder.Services.AddScoped<IIngredientsDAO, IngredientsDAO>();
-builder.Services.AddScoped<IIngredientsService, IngredientsService>();
 
 SQLitePCL.Batteries.Init();
 
