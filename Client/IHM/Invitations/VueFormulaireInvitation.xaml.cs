@@ -128,6 +128,16 @@ namespace IHM_Footies.Invitations
             Navigation.AllerMenu(this);
         }
 
+        /// <summary>
+        /// Bouton pour aller à la page de formulaire d'invitation plat/menu
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BoutonFormulaireInvitationMenuPlat_Click(object sender, RoutedEventArgs e)
+        {
+            Navigation.AllerFormulaireInvitationPlatMenu(this);
+        }
+
 
         #endregion
 

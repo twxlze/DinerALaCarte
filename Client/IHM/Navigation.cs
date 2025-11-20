@@ -145,5 +145,16 @@ namespace IHM_Footies
             fenetreActuelle.Close();
         }
 
+        /// <summary>
+        /// Aller au formulaire d'invitation des menus et des plats
+        /// </summary>
+        /// <param name="fenetreActuelle"></param>
+        public static void AllerFormulaireInvitationPlatMenu(Window fenetreActuelle)
+        {
+            VueFormulaireMenuEtPlat_Invitation vueFormulaireInvitation = new VueFormulaireMenuEtPlat_Invitation();
+            vueFormulaireInvitation.Show();
+            fenetreActuelle.Close();
+        }
+
     }
 }

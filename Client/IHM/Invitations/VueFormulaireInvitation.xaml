@@ -288,7 +288,7 @@
             </ScrollViewer>
         </Border>
 
-        <Button Grid.Column="1" Content="Page suivante" HorizontalAlignment="Left" Margin="366,39,0,48" Grid.Row="6" Width="200" Style="{StaticResource StyleBoutonMenu}" Grid.RowSpan="2" />
+        <Button Grid.Column="1" Content="Page suivante" HorizontalAlignment="Left" Margin="366,39,0,48" Grid.Row="6" Width="200" Style="{StaticResource StyleBoutonMenu}" Grid.RowSpan="2" Click="BoutonFormulaireInvitationMenuPlat_Click" />
 
 
         <!-- Barre de recherche pour les Menus -->
