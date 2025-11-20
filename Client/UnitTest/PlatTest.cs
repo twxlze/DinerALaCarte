@@ -1,4 +1,5 @@
-﻿using METIER_Footies.Metier;
+﻿using METIER_Footies.Enum;
+using METIER_Footies.Metier;
 using VM_Footies.VM;
 using static METIER_Footies.Metier.Plat;
 
