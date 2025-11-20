@@ -41,6 +41,11 @@ namespace API_Footies.Services.Realisations
         {
             this.dao.SupprimerMenu(idMenu);
         }
+
+        public List<Menu> ChercherMenus(string menuRechercher)
+        {
+            return this.dao.ChercherMenus(menuRechercher);
+        }
         #endregion
     }
 }

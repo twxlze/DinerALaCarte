@@ -170,5 +170,34 @@ namespace API_Footies.Data.DAO
                 }
             }
         }
+
+        public List<Menu> ChercherMenus(string menuRechercher)
+        {
+            List<Menu> listeMenu = new List<Menu>();
+            using (SQLiteConnector connection = new SQLiteConnector())
+            {
+                if (connection == null)
+                {
+                    throw new Exception("Erreur de connexion à la base de données");
+                }
+                else
+                {
+                    var parameters = new Dictionary<string, object>()
+                    {
+                        {"@Texte", $"%{menuRechercher}%" }
+                    };
+                    var dataTable = connection.ExecuteQuery("SELECT * FROM Menu WHERE Nom LIKE @Texte", parameters);
+                    foreach (DataRow? row in dataTable.Rows)
+                    {
+                        long idMenu = (long)row["IDMenu"];
+                        string nom = row["Nom"].ToString();
+                        Menu menu = new Menu(new List<Plat>(), idMenu, nom);
+                        listeMenu.Add(menu);
+                    }
+                }
+            }
+            return listeMenu;
+        }
+
     }
 }

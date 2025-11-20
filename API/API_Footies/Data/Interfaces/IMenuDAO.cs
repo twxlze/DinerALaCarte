@@ -30,5 +30,13 @@ namespace API_Footies.Data.Interfaces
         /// </summary>
         /// <param name="id"> id du menu à supprimer </param>
         public void SupprimerMenu(long idMenu);
+
+        /// <summary>
+        /// Chercher des menus par nom
+        /// </summary>
+        /// <param name="menuRechercher"> le nom ou une partie du nom du menu à rechercher </param>
+        /// <returns> la liste des menus correspondants </returns>
+        List<Menu> ChercherMenus(string menuRechercher);
+
     }
 }
