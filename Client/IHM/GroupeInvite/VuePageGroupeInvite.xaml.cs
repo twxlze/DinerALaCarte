@@ -81,8 +81,7 @@ namespace IHM_Footies
         {
             if (this.vmPageGroupeInvite.GroupeSelectionne != null)
             {
-                VuePageDetailInviteDansGroupe fenetre = new VuePageDetailInviteDansGroupe(vue.Groupe);
-                fenetre.Show();
+                Navigation.AllerDetailGroupeInvite(this, this.vmPageGroupeInvite.GroupeSelectionne);
             }
             else
             {

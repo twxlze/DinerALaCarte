@@ -5,9 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using IHM;
-using IHM_Footies.Reglages;
-using IHM_Footies.Menu;
+using IHM_Footies.GroupeInvite;
 using IHM_Footies.Invitations;
+using IHM_Footies.Invite;
+using IHM_Footies.Menu;
+using IHM_Footies.Reglages;
+using VM_Footies.VM;
 
 namespace IHM_Footies
 {
@@ -49,6 +52,13 @@ namespace IHM_Footies
             fenetreActuelle.Close();
         }
 
+        public static void AllerDetailInvite(Window fenetreActuelle, VMInvite invite)
+        {
+            VuePageInviteDetail fenetre = new VuePageInviteDetail(invite);
+            fenetre.Show();
+            fenetreActuelle.Close();
+        }
+
         /// <summary>
         /// 
         /// </summary>
@@ -79,6 +89,14 @@ namespace IHM_Footies
         {
             VueFormulaireGroupeInvite vueFormulaireGroupeInvite = new VueFormulaireGroupeInvite();
             vueFormulaireGroupeInvite.Show();
+            fenetreActuelle.Close();
+        }
+
+        public static void AllerDetailGroupeInvite(Window fenetreActuelle, VMGroupeInvite groupeInvite)
+        {
+            VuePageDetailInviteDansGroupe fenetre = new VuePageDetailInviteDansGroupe(groupeInvite);
+            fenetre.Show();
+            fenetreActuelle.Close();
         }
 
         /// <summary>
