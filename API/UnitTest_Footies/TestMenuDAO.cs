@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using API_Footies.Data.DAO;
 using API_Footies.Metier;
+using API_Footies.Metier.Enum;
 
 namespace UnitTest_Footies
 {
@@ -29,9 +30,9 @@ namespace UnitTest_Footies
             PlatDAO platDAO = new PlatDAO();
             MenuDAO menuDAO = new MenuDAO();
 
-            Plat plat1 = new Plat(0, "Salade César", "Salade romaine", Plat.CategoriePlat.entree);
+            Plat plat1 = new Plat(0, "Salade César", "Salade romaine", CategoriePlat.entree);
             platDAO.AjouterPlat(plat1);
-            Plat plat2 = new Plat(0, "Poulet rôti", "Poulet au four", Plat.CategoriePlat.plat);
+            Plat plat2 = new Plat(0, "Poulet rôti", "Poulet au four", CategoriePlat.plat);
             platDAO.AjouterPlat(plat2);
 
             List<Plat> plats = new List<Plat>();
@@ -97,10 +98,10 @@ namespace UnitTest_Footies
             PlatDAO platDAO = new PlatDAO();
             MenuDAO menuDAO = new MenuDAO();
 
-            Plat plat1 = new Plat(0, "Tarte", "Tarte aux pommes", Plat.CategoriePlat.dessert);
+            Plat plat1 = new Plat(0, "Tarte", "Tarte aux pommes", CategoriePlat.dessert);
             platDAO.AjouterPlat(plat1);
 
-            Plat plat2 = new Plat(0, "Glace", "Glace vanille", Plat.CategoriePlat.dessert);
+            Plat plat2 = new Plat(0, "Glace", "Glace vanille", CategoriePlat.dessert);
             platDAO.AjouterPlat(plat2);
 
             List<Plat> platsInitiaux = new List<Plat>();
@@ -147,7 +148,7 @@ namespace UnitTest_Footies
             PlatDAO platDAO = new PlatDAO();
             MenuDAO menuDAO = new MenuDAO();
 
-            Plat plat = new Plat(0, "Soupe", "Soupe à l'oignon", Plat.CategoriePlat.entree);
+            Plat plat = new Plat(0, "Soupe", "Soupe à l'oignon", CategoriePlat.entree);
             platDAO.AjouterPlat(plat);
 
             List<Plat> plats = new List<Plat>();

@@ -1,6 +1,7 @@
 ﻿using System.Data;
 using API_Footies.Data.Interfaces;
 using API_Footies.Metier;
+using API_Footies.Metier.Enum;
 
 namespace API_Footies.Data.DAO
 {
@@ -500,10 +501,10 @@ namespace API_Footies.Data.DAO
         /// </summary>
         private Plat CreerPlat(DataRow row)
         {
-            Plat.CategoriePlat categorie;
+            CategoriePlat categorie;
             if (!Enum.TryParse(row["Categorie"].ToString(), true, out categorie))
             {
-                categorie = Plat.CategoriePlat.plat;
+                categorie = CategoriePlat.plat;
             }
 
             return new Plat(

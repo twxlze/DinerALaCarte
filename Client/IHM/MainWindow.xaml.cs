@@ -264,7 +264,7 @@ public partial class MainWindow : Window
     }
 
     /// <summary>
-    /// Bouton pour aller à la page réglages
+    /// Bouton pour aller à la page des réglages
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
@@ -274,7 +274,17 @@ public partial class MainWindow : Window
     }
 
     /// <summary>
-    /// Bouton pour aller à la page d'invitations
+    /// Bouton pour aller à la page des groupes d'invités
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void BoutonAllerGroupeInvite_Click(object sender, RoutedEventArgs e)
+    {
+        Navigation.AllerGroupesInvites(this);
+    }
+
+    /// <summary>
+    /// Bouton pour aller à la page des invitations
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>

@@ -91,5 +91,16 @@ namespace METIER_Footies.Data
             return resultat;
         }
 
+        public async Task<List<Invite>> ChercherInvite(string texteRecherche)
+        {
+            List<Invite> listeDesInvites = new List<Invite>();
+            HttpResponseMessage reponseHttp = await GetAsync($"Invites/ChercherInvite?texterecherche={texteRecherche}");
+            if (reponseHttp.IsSuccessStatusCode)
+            {
+                string reponse = await reponseHttp.Content.ReadAsStringAsync();
+                listeDesInvites = JsonSerializer.Deserialize<List<Invite>>(reponse, options);
+            }
+            return listeDesInvites;
+        }
     }
 }

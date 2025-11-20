@@ -94,19 +94,20 @@
                     <RowDefinition Height="2*"/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-              
 
-                <TextBlock Text="HOSTABLY" FontSize="19" FontWeight="Bold" Foreground="#B44B3E" VerticalAlignment="Center" Height="27" Margin="73,0,23,0" FontFamily="Montserrat"/>
+
+                <TextBlock Text="À table !" FontSize="20" FontWeight="Bold" Foreground="#B44B3E" VerticalAlignment="Top" Height="27" Margin="82,34,33,0" FontFamily="Montserrat"/>
                 <Button x:Name="BoutonAccueil" Content="{x:Static res:Strings.Accueil}" Grid.Row="1" Grid.Column="0" Style="{StaticResource BoutonMenu}" Background="#BFBFBF" FontWeight="Bold" Click="BoutonAllerAccueil_Click"/>
                 <Button x:Name="BoutonInvites" Content="{x:Static res:Strings.Invites}" Grid.Row="2" Grid.Column="0" Style="{StaticResource BoutonMenu}" Click="BoutonAllerInvite_Click"/>
-                <Button x:Name="BoutonGroupes" Content="{x:Static res:Strings.GroupeInvite}" Grid.Row="3" Grid.Column="0" Style="{StaticResource BoutonMenu}"/>
+                <Button x:Name="BoutonGroupes" Content="{x:Static res:Strings.GroupeInvite}" Grid.Row="3" Grid.Column="0" Style="{StaticResource BoutonMenu}" Click="BoutonAllerGroupeInvite_Click"/>
                 <Button x:Name="BoutonInvitations" Content="{x:Static res:Strings.Invitations}" Grid.Row="4" Grid.Column="0" Style="{StaticResource BoutonMenu}" Click="BoutonAllerInvitation_Click"/>
-                <Button x:Name="BoutonMenus" Content="{x:Static res:Strings.Menus}" Grid.Row="5" Grid.Column="0" Style="{StaticResource BoutonMenu}" Cursor="Hand" />
+                <Button x:Name="BoutonMenus" Content="{x:Static res:Strings.Menus}" Grid.Row="5" Grid.Column="0" Style="{StaticResource BoutonMenu}" Cursor="Hand" Click="BoutonAllerMenu_Click"/>
                 <Button x:Name="BoutonPlats" Content="{x:Static res:Strings.Plats}" Grid.Row="6" Grid.Column="0" Style="{StaticResource BoutonMenu}" Click="BoutonAllerPlat_Click"/>
                 <Button x:Name="BoutonUtilisateur" Content="👤" Grid.Row="8" Grid.Column="0" Style="{StaticResource BoutonMenu}" Margin="0,0,100,0" HorizontalContentAlignment="Center" FontSize="25"/>
                 <Button x:Name="BoutonReglage" Content="⚙️" Grid.Row="8" Grid.Column="0" Style="{StaticResource BoutonMenu}" HorizontalContentAlignment="Center" Margin="100,0,0,0" FontSize="25" Click="BoutonAllerReglages_Click"/>
             </Grid>
         </Border>
+        <Image Source="{StaticResource ResourceKey=LogoHostably}" Margin="14,10,122,17"/>
 
         <Border BorderBrush="#8C2F26" 
                 Grid.Column="1" Grid.RowSpan="4" 
@@ -130,7 +131,7 @@
             </ScrollViewer>
         </Border>
 
-        
+
         <Border BorderBrush="#8C2F26" 
                 Grid.Column="1" Grid.RowSpan="3" Margin="38,19,38,20"
                 BorderThickness="2"
@@ -141,7 +142,7 @@
             </ScrollViewer>
         </Border>
 
-        
+
         <Border BorderBrush="#8C2F26" 
                 Grid.Column="1" Margin="38,23,38,19"
                 BorderThickness="2"
@@ -157,6 +158,5 @@
         <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="335,5,0,0" TextWrapping="Wrap" Text="{x:Static res:Strings.Plats}" VerticalAlignment="Top" Style="{StaticResource TitleStyle}"/>
         <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="48,0,0,24" Grid.Row="4" TextWrapping="Wrap" Text="{x:Static res:Strings.GroupeInvite}" VerticalAlignment="Bottom" Style="{StaticResource TitleStyle}"/>
         <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="48,41,0,0" Grid.Row="6" TextWrapping="Wrap" Text="{x:Static res:Strings.Menus}" VerticalAlignment="Top" Grid.RowSpan="2" Style="{StaticResource TitleStyle}"/>
-        <Image Source="{StaticResource ResourceKey=LogoHostably}" Margin="15,10,121,17"/>
     </Grid>
 </Window>

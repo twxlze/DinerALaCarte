@@ -18,16 +18,30 @@ namespace VM_Footies
         private List<VMInvite> listeVMInvite;
         private VMInvite inviteSelectionne;
         private IInviteDAO inviteDAO;
+        private string texteRecherche;
         #endregion
 
         #region Propriétés 
         /// <summary>
         /// Invité sélectionné dans la liste
-        /// </summary>
+        /// </summary> 
         public VMInvite InviteSelectionne
         {
             get { return inviteSelectionne; }
             set { this.inviteSelectionne = value; }
+        }
+
+        /// <summary>
+        /// Texte de recherche pour filtrer les invités
+        /// </summary>
+        public string TexteRecherche
+            {
+            get { return texteRecherche; }
+            set
+            {
+                texteRecherche = value;
+                Notify("TexteRecherche");
+            }
         }
         #endregion
 
@@ -143,6 +157,24 @@ namespace VM_Footies
         {
             return this.listeVMInvite.Any(vm => vm.Invite.Nom.Equals(invite.Invite.Nom, StringComparison.OrdinalIgnoreCase) &&
                                                 vm.Invite.Prenom.Equals(invite.Invite.Prenom, StringComparison.OrdinalIgnoreCase));
+        }
+
+        /// <summary>
+        // Charge la liste des invités correspondant au paramètre de recherche depuis la base de données
+        /// </summary>
+        public async Task ChercherInvite(string recherchertexte)
+        {
+            this.listeVMInvite.Clear();
+
+            List<Invite> invites = await this.inviteDAO.ChercherInvite(recherchertexte);
+            foreach (Invite invite in invites)
+            {
+                VMInvite vmInvite = new VMInvite(invite);
+                this.listeVMInvite.Add(vmInvite);
+            }
+            this.listeVMInvite = this.listeVMInvite.OrderBy(vm => vm.Invite.Prenom)
+                                                   .ThenBy(vm => vm.Invite.Nom)
+                                                   .ToList();
         }
 
         /// <summary>

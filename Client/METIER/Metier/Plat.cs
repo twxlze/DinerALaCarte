@@ -13,12 +13,8 @@ namespace METIER_Footies.Metier
         private long id;
         private string nom;
         private string? description;
-        private CategoriePlat categorie;
+        private Enum.CategoriePlat categorie;
         private string? ingredients;
-        #endregion
-
-        #region --- Enumérations ---
-        public enum CategoriePlat { aperitif = 0, entree = 1, plat = 2, dessert = 3 }
         #endregion
 
         #region --- Propriétés ---
@@ -70,7 +66,7 @@ namespace METIER_Footies.Metier
         /// <summary>
         /// Retourne ou modifie la catégorie du plat
         /// </summary>
-        public CategoriePlat Categorie
+        public Enum.CategoriePlat Categorie
         {
             get { return categorie; }
             set { categorie = value; }
@@ -92,7 +88,7 @@ namespace METIER_Footies.Metier
         /// <param name="nom">nom du plat</param>
         /// <param name="description">description du plat</param>
         /// <param name="categorie">categorie du plat</param>
-        public Plat(long id, string nom, string description, CategoriePlat categorie, string? ingredients = null)
+        public Plat(long id, string nom, string description, Enum.CategoriePlat categorie, string? ingredients = null)
         {
             this.id = id;
             this.nom = nom;
@@ -118,7 +114,7 @@ namespace METIER_Footies.Metier
         {
             this.nom = "";
             this.description = "";
-            this.categorie = CategoriePlat.entree;
+            this.categorie = Enum.CategoriePlat.entree;
             this.ingredients = "";
         }
     }

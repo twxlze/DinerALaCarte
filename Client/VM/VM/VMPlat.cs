@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using METIER_Footies.Data;
+using METIER_Footies.Enum;
 using METIER_Footies.Metier;
 using static METIER_Footies.Metier.Plat;
 
@@ -17,7 +18,7 @@ namespace VM_Footies.VM
     {
         #region Attributs
         private Plat plat;
-        private OpenFoodFactsDAO openFoodFactsDAO;
+        private IngredientsDAO openFoodFactsDAO;
         private List<string> suggestionsIngredients;
         #endregion
 
@@ -161,7 +162,7 @@ namespace VM_Footies.VM
         /// </summary>
         private void InitialiserDAO()
         {
-            this.openFoodFactsDAO = new OpenFoodFactsDAO();
+            this.openFoodFactsDAO = new IngredientsDAO();
             this.suggestionsIngredients = new List<string>();
         }
         #endregion

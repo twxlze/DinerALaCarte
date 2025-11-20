@@ -9,14 +9,9 @@
         private long id;
         private string nom;
         private string? description;
-        private CategoriePlat categorie;
+        private Enum.CategoriePlat categorie;
         private string? ingredients;
         #endregion
-
-        #region --- Enumérations ---
-        public enum CategoriePlat { aperitif = 0, entree = 1, plat = 2, dessert = 3 }
-        #endregion
-
         #region --- Propriétés ---
 
         /// <summary>
@@ -27,7 +22,6 @@
             get { return id; }
             set { id = value; }
         }
-
 
         /// <summary>
         /// Retourne ou modifie le nom du plat
@@ -50,7 +44,7 @@
         /// <summary>
         /// Retourne ou modifie la catégorie du plat
         /// </summary>
-        public CategoriePlat Categorie
+        public Enum.CategoriePlat Categorie
         {
             get { return categorie; }
             set { categorie = value; }
@@ -73,7 +67,7 @@
         /// <param name="nom">nom du plat</param>
         /// <param name="description">description du plat</param>
         /// <param name="categorie">categorie du plat</param>
-        public Plat(long id, string nom, string? description, CategoriePlat categorie, string? ingredients = null)
+        public Plat(long id, string nom, string? description, Enum.CategoriePlat categorie, string? ingredients = null)
         {
             this.id = id;
             this.nom = nom;

@@ -28,9 +28,9 @@
     <Folder Include="Data\Enum\" />
   </ItemGroup>
   <ItemGroup>
-    <None Update="openfoodfacts.db">
+    <Compile Update="Program.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    </Compile>
   </ItemGroup>
 
 </Project>
