@@ -84,8 +84,6 @@ namespace IHM_Footies.GroupeInvite
         {
             Navigation.AllerGroupesInvites(this);
         }
-        
-
         #endregion
     }
 }
