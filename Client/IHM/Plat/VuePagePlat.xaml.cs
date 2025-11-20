@@ -252,15 +252,6 @@ namespace IHM_Footies
         }
 
         /// <summary>
-        /// Bouton pour aller à la page des invitations
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void BoutonAllerInvitation_Click(object sender, RoutedEventArgs e)
-        {
-        }
-
-        /// <summary>
         /// Bouton pour fermer la fenêtre
         /// </summary>
         /// <param name="sender"></param>
@@ -270,8 +261,21 @@ namespace IHM_Footies
             Navigation.FermerFenetre(this);
         }
 
+
+        /// <summary>
+        /// Bouton pour aller à la page d'invitations
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BoutonAllerInvitation_Click(object sender, RoutedEventArgs e)
+        {
+            Navigation.AllerInvitations(this);
+        }
+
         #endregion
 
+
+        #region Méthodes
         /// <summary>
         /// Recherche les plats selon le texte saisi
         /// </summary>
@@ -301,15 +305,7 @@ namespace IHM_Footies
             }
         }
 
-        /// <summary>
-        /// Bouton pour aller à la page d'invitations
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void BoutonAllerInvitation_Click(object sender, RoutedEventArgs e)
-        {
-            Navigation.AllerInvitations(this);
-        }
+        
 
         #endregion
 

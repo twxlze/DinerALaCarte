@@ -163,6 +163,15 @@ namespace IHM_Footies.Invitations
             Navigation.AllerFormulaireInvitation(this);
         }
 
+        /// <summary>
+        /// Bouton pour aller à la page des menus
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BoutonAllerMenu_Click(object sender, RoutedEventArgs e)
+        {
+            Navigation.AllerMenu(this);
+        }
 
         #endregion
 
@@ -213,5 +222,6 @@ namespace IHM_Footies.Invitations
 
         #endregion
 
+        
     }
 }

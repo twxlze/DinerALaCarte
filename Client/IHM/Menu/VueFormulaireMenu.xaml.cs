@@ -151,14 +151,6 @@ namespace IHM_Footies
             Navigation.AllerGroupesInvites(this);
         }
 
-        /// <summary>
-        /// Bouton pour aller à la page des invitations
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void BoutonAllerInvitation_Click(object sender, RoutedEventArgs e)
-        {
-        }
 
         /// <summary>
         /// Bouton pour fermer la fenêtre

@@ -180,14 +180,6 @@ namespace IHM_Footies.Reglages
             Navigation.AllerGroupesInvites(this);
         }
 
-        /// <summary>
-        /// Bouton pour aller à la page des invitations
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void BoutonAllerInvitation_Click(object sender, RoutedEventArgs e)
-        {
-        }
 
         /// <summary>
         /// Bouton pour fermer la fenêtre
@@ -200,25 +192,6 @@ namespace IHM_Footies.Reglages
         }
 
 
-        /// <summary>
-        /// Bouton pour aller à la vue des invités
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void BoutonAllerInvite_Click(object sender, RoutedEventArgs e)
-        {
-            Navigation.AllerInvites(this);
-        }
-
-        /// <summary>
-        /// Bouton pour aller à la page groupe invité
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void BoutonAllerGroupeInvite_Click(object sender, RoutedEventArgs e)
-        {
-            Navigation.AllerGroupesInvites(this);
-        }
 
         /// <summary>
         /// Aller à la page d'invitations
