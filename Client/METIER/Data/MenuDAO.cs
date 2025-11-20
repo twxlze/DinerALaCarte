@@ -70,6 +70,18 @@ namespace METIER_Footies.Data
                 throw new Exception("Erreur lors de la modification du menu : " + ex.Message);
             }
         }
+
+        public async Task<List<Menu>> ChercherMenus(string menuRechercher)
+        {
+            List<Menu> listeDesMenus = new List<Menu>();
+            HttpResponseMessage reponseHttp = await GetAsync($"Menus/ChercherMenus?menuRechercher={menuRechercher}");
+            if (reponseHttp.IsSuccessStatusCode)
+            {
+                string reponse = await reponseHttp.Content.ReadAsStringAsync();
+                listeDesMenus = JsonSerializer.Deserialize<List<Menu>>(reponse, options);
+            }
+            return listeDesMenus;
+        }
         #endregion
 
     }

@@ -20,6 +20,7 @@ namespace VM_Footies.VM_Page
         private VMMenu menuSelectionne;
         private IMenuDAO menuDAO;
         private VMPagePlat vmPagePlat;
+        private string texteRecherche;
         #endregion
 
         #region Propriétés
@@ -39,6 +40,16 @@ namespace VM_Footies.VM_Page
         #endregion
 
         public event PropertyChangedEventHandler? PropertyChanged;
+
+        public string TexteRecherche
+        {
+            get { return texteRecherche; }
+            set
+            {
+                texteRecherche = value;
+                Notify("TexteRecherche");
+            }
+        }
 
         #region Constructeurs
         /// <summary>
@@ -191,6 +202,23 @@ namespace VM_Footies.VM_Page
         public bool MenuExiste(VMMenu menu)
         {
             return this.listeVMMenu.Any(m => m.Menu.Nom.Equals(menu.Menu.Nom, StringComparison.OrdinalIgnoreCase));
+        }
+
+        /// <summary>
+        /// Cherche des menus par nom
+        /// </summary>
+        /// <param name="menuRecherche"> Le nom ou une partie du nom du menu à rechercher </param>
+        /// <returns> Tâche asynchrone </returns>
+        public async Task ChercherMenus(string menuRechercher)
+        {
+            this.listeVMMenu.Clear();
+            List<Menu> menus = await this.menuDAO.ChercherMenus(menuRechercher);
+            foreach (Menu menu in menus)
+            {
+                VMMenu vmMenu = new VMMenu(menu);
+                this.listeVMMenu.Add(vmMenu);
+            }
+            this.listeVMMenu = this.listeVMMenu.OrderBy(vm => vm.Menu.Nom).ToList();
         }
 
         /// <summary>

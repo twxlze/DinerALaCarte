@@ -35,6 +35,7 @@ namespace IHM_Footies.Menu
             InitializeComponent();
             this.vueMenu = new List<VueMenu>();
             this.vmPageMenu = new VMPageMenu();
+            this.DataContext = this.vmPageMenu;
             this.vmPageMenu.PropertyChanged += VMPageMenu_PropertyChanged;
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
             this.RafraichirListe();
@@ -103,6 +104,28 @@ namespace IHM_Footies.Menu
                 vueM.Deselectionner();
             }
             vue.Selectionner();
+        }
+
+        private async void RechercheMenu_Click(object sender, RoutedEventArgs e)
+        {
+            if (!string.IsNullOrWhiteSpace(this.vmPageMenu.TexteRecherche))
+            {
+                this.PanelListeMenu.Children.Clear();
+                this.vueMenu.Clear();
+                await this.vmPageMenu.ChercherMenus(this.vmPageMenu.TexteRecherche);
+                foreach (VMMenu menu in this.vmPageMenu.VMMenu)
+                {
+                    VueMenu vue = new VueMenu(menu);
+                    vue.MouseDown += (s, ev) => this.SelectionnerMenu(vue);
+                    vue.MouseDoubleClick += (s, ev) => this.OuvrirModification(vue);
+                    this.vueMenu.Add(vue);
+                    this.PanelListeMenu.Children.Add(vue);
+                }
+            }
+            else
+            {
+                this.RafraichirListe();
+            }
         }
         #endregion
 
