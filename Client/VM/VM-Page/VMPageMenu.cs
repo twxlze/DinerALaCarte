@@ -194,6 +194,23 @@ namespace VM_Footies.VM_Page
         }
 
         /// <summary>
+        /// Cherche des menus par nom
+        /// </summary>
+        /// <param name="menuRecherche"> Le nom ou une partie du nom du menu à rechercher </param>
+        /// <returns> Tâche asynchrone </returns>
+        public async Task ChercherMenu(string menuRecherche)
+        {
+            this.listeVMMenu.Clear();
+            List<Menu> menus = await this.menuDAO.ChercherMenu(menuRecherche);
+            foreach (Menu menu in menus)
+            {
+                VMMenu vmMenu = new VMMenu(menu);
+                this.listeVMMenu.Add(vmMenu);
+            }
+            this.listeVMMenu = this.listeVMMenu.OrderBy(vm => vm.Menu.Nom).ToList();
+        }
+
+        /// <summary>
         /// Notifie le changement d'une propriété
         /// </summary>
         /// <param name="message"></param>
