@@ -38,6 +38,46 @@ namespace VM_Footies
         }
 
         /// <summary>
+        /// Liste des VMInvite dans le groupe sélectionné
+        /// </summary>
+        public List<VMInvite> ListeVMInviteGroupe
+        {
+            get
+            {
+                List<VMInvite> invites = new List<VMInvite>();
+                if (this.GroupeSelectionne != null)
+                {
+                    foreach (VMInviteSelectionne vmInviteSel in this.GroupeSelectionne.InvitesListe)
+                    {
+                        if (vmInviteSel.EstSelectionne)
+                        {
+                            invites.Add(new VMInvite(vmInviteSel.Invite));
+                        }
+                    }
+                }
+                return invites;
+            }
+        }
+
+        /// <summary>
+        /// Nom du groupe sélectionné
+        /// </summary>
+        public string NomGroupeSelectionne
+        {
+            get
+            {
+                if (this.GroupeSelectionne != null)
+                {
+                    return this.GroupeSelectionne.Groupe.Nom;
+                }
+                else
+                {
+                    return string.Empty;
+                }
+            }
+        }
+
+        /// <summary>
         /// Liste des VMGroupeInvite
         /// </summary>
         public List<VMGroupeInvite> VMGroupeInvite => listeVMGroupeInvite;

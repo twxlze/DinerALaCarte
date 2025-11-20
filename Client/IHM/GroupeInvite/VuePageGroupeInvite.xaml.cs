@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IHM_Footies.GroupeInvite;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -65,7 +66,7 @@ namespace IHM_Footies
             {
                 VueGroupeInvite vue = new VueGroupeInvite(groupe);
                 vue.MouseDown += (s, e) => this.SelectionnerGroupe(vue);
-                vue.MouseDoubleClick += (s, e) => this.OuvrirModificationGroupe(vue);
+                vue.MouseDoubleClick += (s, e) => this.OuvrirDetailGroupe(vue);
                 this.vueGroupeInvite.Add(vue);
                 this.PanelListeGroupeInvites.Children.Add(vue);
             }
@@ -73,19 +74,19 @@ namespace IHM_Footies
 
 
         /// <summary>
-        /// Ouvre la fenêtre de modification d'un groupe invité
+        /// Ouvre la fenêtre des details d'un groupe invité
         /// </summary>
-        /// <param name="vue"> La vue du groupe invité à modifier </param>
-        private async Task OuvrirModificationGroupe(VueGroupeInvite vue)
+        /// <param name="vue"> La vue du groupe invité pour lequelle on veut ces details </param>
+        private void OuvrirDetailGroupe(VueGroupeInvite vue)
         {
-            VMGroupeInvite memoire = new VMGroupeInvite(vue.Groupe);
-
-            await this.vmPageGroupeInvite.ChargerInvitesDansGroupe(memoire);
-            VueFormulaireGroupeInvite fenetre = new VueFormulaireGroupeInvite(vue.Groupe);
-            bool? result = fenetre.ShowDialog();
-            if (result == true)
+            if (this.vmPageGroupeInvite.GroupeSelectionne != null)
             {
-                await this.vmPageGroupeInvite.ModifierGroupe(vue.Groupe);
+                VuePageDetailInviteDansGroupe fenetre = new VuePageDetailInviteDansGroupe(vue.Groupe);
+                fenetre.Show();
+            }
+            else
+            {
+                MessageBox.Show("Veuillez sélectionner un groupe pour voir ses détails.", "Aucun groupe sélectionné", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 
