@@ -179,7 +179,7 @@
                     <RowDefinition/>
                 </Grid.RowDefinitions>
 
-                <TextBlock Text="HOSTABLY" FontSize="19" FontWeight="Bold" Foreground="#B44B3E" VerticalAlignment="Center" Height="27" Margin="73,0,23,0" FontFamily="Montserrat"/>
+                <TextBlock Text="A table !" FontSize="19" FontWeight="Bold" Foreground="#B44B3E" VerticalAlignment="Center" Height="27" Margin="73,0,23,0" FontFamily="Montserrat"/>
                 <Button x:Name="BoutonAccueil"  Content="🏠 Accueil" Grid.Row="1" Style="{StaticResource BoutonMenu}" Click="BoutonVueAccueil"  />
                 <Button x:Name="BoutonInvites" Content="👤 Invités" Grid.Row="2" Style="{StaticResource BoutonMenu}" Click="BoutonInvite_Click" />
                 <Button x:Name="BoutonGroupes" Content="👥 Groupes d'invités" Grid.Row="3" Style="{StaticResource BoutonMenu}" Click="BoutonGroupeInvite_Click"/>
@@ -206,7 +206,7 @@
 
 
         <!-- Menus -->
-        <TextBlock Grid.Column="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Menus" VerticalAlignment="Top" FontWeight="Bold" FontSize="15" Foreground="#B44B3E" RenderTransformOrigin="0.5,0.5" Margin="86,62,0,0" Grid.RowSpan="2">
+        <TextBlock Grid.Column="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Menus" VerticalAlignment="Top" FontWeight="Bold" FontSize="15" Foreground="#B44B3E" RenderTransformOrigin="0.5,0.5" Margin="76,68,0,0" Grid.RowSpan="2">
             <TextBlock.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -221,7 +221,7 @@
 
         <Border BorderBrush="#8C2F26" 
         Grid.Column="1" Grid.RowSpan="6" 
-        Margin="42,2,422,59"
+        Margin="26,2,422,59"
         BorderThickness="3"
         CornerRadius="10"
         Padding="5" Grid.Row="2">
@@ -277,7 +277,7 @@
 
         <!-- Plats -->
 
-        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Plats" VerticalAlignment="Top" FontWeight="Bold" FontSize="15" Foreground="#B44B3E" Margin="273,62,0,0" RenderTransformOrigin="0.539,0.751" Grid.Column="1" Grid.RowSpan="2">
+        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Plats" VerticalAlignment="Top" FontWeight="Bold" FontSize="15" Foreground="#B44B3E" Margin="261,68,0,0" RenderTransformOrigin="0.539,0.751" Grid.Column="1" Grid.RowSpan="2">
             <TextBlock.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -287,7 +287,7 @@
         </TextBlock>
 
         <Border BorderBrush="#8C2F26" 
-        Grid.Column="1" Margin="222,2,242,59"
+        Grid.Column="1" Margin="208,2,242,59"
         BorderThickness="3"
         CornerRadius="10"
         Padding="5" Grid.Row="2" Grid.RowSpan="6">
@@ -311,20 +311,21 @@
 
 
         <!-- Barre de recherche pour les Menus -->
-        <Border Style="{StaticResource StyleContainerRecherche}" Grid.Column="1" Grid.Row="1" Margin="42,10,0,0">
+        <Border Style="{StaticResource StyleContainerRecherche}" Grid.Column="1" Grid.Row="1" Margin="36,0,0,0" Width="133" VerticalAlignment="Center" Height="21">
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="21*"/>
+                    <ColumnDefinition Width="71*"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
                 <TextBox x:Name="zonerechercheMenu" 
                  Grid.Column="0" 
                  Style="{StaticResource StyleChampRecherche}"
-                 Text="{Binding TexteRechercheMenus, UpdateSourceTrigger=PropertyChanged}"/>
+                 Text="{Binding TexteRechercheMenus, UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="3" Margin="2,-2,28,-2"/>
 
                 <Button x:Name="rechercheMenu" 
-                Grid.Column="1" 
+                Grid.Column="2" 
                 Style="{StaticResource StyleLoupeRecherche}"/>
             </Grid>
         </Border>
@@ -332,7 +333,7 @@
 
         <!-- Barre de recherche pour les plats -->
 
-        <Border Style="{StaticResource StyleContainerRecherche}" Grid.Column="1" Grid.Row="1" Margin="227,10,0,0">
+        <Border Style="{StaticResource StyleContainerRecherche}" Grid.Column="1" Grid.Row="1" Margin="218,0,0,0" Width="131" Height="23" VerticalAlignment="Center">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -342,7 +343,7 @@
                 <TextBox x:Name="zonerecherchePlats" 
                     Grid.Column="0" 
                     Style="{StaticResource StyleChampRecherche}"
-                    Text="{Binding TexteRechercheMenus, UpdateSourceTrigger=PropertyChanged}"/>
+                    Text="{Binding TexteRechercheMenus, UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="2" Margin="1,0,29,0"/>
 
                 <Button x:Name="recherchePlats" 
                     Grid.Column="1" 

@@ -179,7 +179,7 @@
                     <RowDefinition/>
                 </Grid.RowDefinitions>
 
-                <TextBlock Text="HOSTABLY" FontSize="19" FontWeight="Bold" Foreground="#B44B3E" VerticalAlignment="Center" Height="27" Margin="73,0,23,0" FontFamily="Montserrat"/>
+                <TextBlock Text="A table !" FontSize="19" FontWeight="Bold" Foreground="#B44B3E" VerticalAlignment="Center" Height="27" Margin="73,0,23,0" FontFamily="Montserrat"/>
                 <Button x:Name="BoutonAccueil"  Content="🏠 Accueil" Grid.Row="1" Style="{StaticResource BoutonMenu}" Click="BoutonVueAccueil"  />
                 <Button x:Name="BoutonInvites" Content="👤 Invités" Grid.Row="2" Style="{StaticResource BoutonMenu}" Click="BoutonInvite_Click" />
                 <Button x:Name="BoutonGroupes" Content="👥 Groupes d'invités" Grid.Row="3" Style="{StaticResource BoutonMenu}" Click="BoutonGroupeInvite_Click"/>
@@ -214,7 +214,7 @@
         <!-- Groupe invités -->
 
         <TextBlock Grid.Column="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Groupe invités" VerticalAlignment="Top" FontWeight="Bold" FontSize="15
-                   " Foreground="#B44B3E" Margin="228,9,0,0" RenderTransformOrigin="0.5,0.5" Grid.Row="1">
+                   " Foreground="#B44B3E" Margin="385,9,0,0" RenderTransformOrigin="0.5,0.5" Grid.Row="1">
             <TextBlock.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -226,7 +226,7 @@
 
         <Border BorderBrush="#8C2F26" 
         Grid.Column="1" Grid.RowSpan="6" 
-        Margin="210,38,254,41"
+        Margin="338,28,60,38"
         BorderThickness="3"
         CornerRadius="10"
         Padding="5" Grid.Row="2">
@@ -245,19 +245,9 @@
             </ScrollViewer>
         </Border>
 
-
-        <!--Calendrier -->
-
-        <StackPanel Orientation="Horizontal" Margin="366,2,24,18" Grid.RowSpan="5" Grid.Column="1" Grid.Row="1"/>
-        <TextBlock Grid.Column="1" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Gestion des invitations" VerticalAlignment="Top" FontWeight="Bold" FontSize="20" Foreground="#B44B3E" Margin="0,3,0,0"/>
-        <Image Source="{StaticResource ResourceKey=LogoHostably}" Margin="15,10,121,17" />
-
-
-        <!-- Plats -->
-
         <!-- Invites -->
 
-        <TextBlock Grid.Column="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Invites" VerticalAlignment="Top" FontWeight="Bold" FontSize="15" Foreground="#B44B3E" Margin="80,9,0,0" RenderTransformOrigin="0.5,0.5" Grid.Row="1">
+        <TextBlock Grid.Column="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Invites" VerticalAlignment="Top" FontWeight="Bold" FontSize="15" Foreground="#B44B3E" Margin="119,9,0,0" RenderTransformOrigin="0.5,0.5" Grid.Row="1">
             <TextBlock.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -269,8 +259,8 @@
 
 
         <Border BorderBrush="#8C2F26" 
-        Grid.Column="1" Margin="40,36,424,41"
-        BorderThickness="2"
+        Grid.Column="1" Margin="53,28,355,40"
+        BorderThickness="3"
         CornerRadius="10"
         Padding="5" Grid.Row="2" Grid.RowSpan="6">
             <ScrollViewer VerticalScrollBarVisibility="Auto">
@@ -288,7 +278,7 @@
             </ScrollViewer>
         </Border>
 
-        <Button Grid.Column="1" Content="Page suivante" HorizontalAlignment="Left" Margin="366,39,0,48" Grid.Row="6" Width="200" Style="{StaticResource StyleBoutonMenu}" Grid.RowSpan="2" Click="BoutonFormulaireInvitationMenuPlat_Click" />
+        <Button Grid.Column="1" Content="Page suivante" HorizontalAlignment="Left" Margin="195,58,0,29" Grid.Row="7" Width="200" Style="{StaticResource StyleBoutonMenu}" Click="BoutonFormulaireInvitationMenuPlat_Click" Grid.RowSpan="2" />
 
 
         <!-- Barre de recherche pour les Menus -->
@@ -296,7 +286,7 @@
 
 
         <!-- Barre de recherche pour les Groupe Invité -->
-        <Border Style="{StaticResource StyleContainerRecherche}" Grid.Column="1" Grid.Row="2" Margin="220,0,0,0">
+        <Border Style="{StaticResource StyleContainerRecherche}" Grid.Column="1" Grid.Row="1" Margin="350,34,0,0" Width="173" Height="25" Grid.RowSpan="2">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -318,7 +308,7 @@
 
 
         <!-- Barre de recherche pour les Invites -->
-        <Border Style="{StaticResource StyleContainerRecherche}" Grid.Column="1" Grid.Row="2" Margin="40,0,0,0">
+        <Border Style="{StaticResource StyleContainerRecherche}" Grid.Column="1" Grid.Row="1" Margin="65,34,0,0" Width="162" Height="25" Grid.RowSpan="2">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
