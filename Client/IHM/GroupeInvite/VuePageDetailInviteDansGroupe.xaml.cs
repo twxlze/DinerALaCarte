@@ -23,7 +23,6 @@ namespace IHM_Footies.GroupeInvite
     {
         #region Attributs
         private VMPageGroupeInvite vmPageGroupeInvite;
-        private List<VueGroupeInvite> vueGroupeInvite;
         private List<VueInvite> vueInvite;
         private VMGroupeInvite groupeInviteSelectionne;
         #endregion
@@ -34,7 +33,6 @@ namespace IHM_Footies.GroupeInvite
         {
             InitializeComponent();
             this.groupeInviteSelectionne = groupeInvite;
-            this.vueGroupeInvite = new List<VueGroupeInvite>();
             this.vueInvite = new List<VueInvite>();
 
             this.vmPageGroupeInvite = new VMPageGroupeInvite();
@@ -66,7 +64,6 @@ namespace IHM_Footies.GroupeInvite
         private async void RafraichirListe()
         {
             this.PanelInvitesDansGroupe.Children.Clear();
-            this.vueGroupeInvite.Clear();
 
             await this.vmPageGroupeInvite.ChargerInvitesDansGroupe(groupeInviteSelectionne);
 
