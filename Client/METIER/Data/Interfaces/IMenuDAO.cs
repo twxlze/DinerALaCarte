@@ -39,7 +39,7 @@ namespace METIER_Footies.Data.Interfaces
         /// </summary>
         /// <param name="menuRecherche"> Le nom ou la partie du nom du menu à rechercher </param>
         /// <returns> Liste des menus correspondant à la recherche </returns>
-        Task<List<Menu>> ChercherMenu(string menuRecherche);
+        Task<List<Menu>> ChercherMenus(string menuRecherche);
 
     }
 }
