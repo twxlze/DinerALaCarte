@@ -164,6 +164,7 @@ namespace IHM_Footies
         /// <param name="e"></param>
         private void BoutonAllerInvitation_Click(object sender, RoutedEventArgs e)
         {
+            Navigation.AllerInvitations(this);
         }
 
         /// <summary>
@@ -177,5 +178,7 @@ namespace IHM_Footies
         }
 
         #endregion
+
+
     }
 }

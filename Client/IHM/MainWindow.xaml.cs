@@ -9,6 +9,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using IHM_Footies;
+using IHM_Footies.Invitations;
 using IHM_Footies.Menu;
 using VM_Footies;
 using VM_Footies.VM;
@@ -28,6 +29,8 @@ public partial class MainWindow : Window
     private VMPagePlat vmPagePlat;
     private List<VueGroupeInvite> vueGroupeInvites;
     private VMPageGroupeInvite vmPageGroupeInvite;
+    private VMPageInvitation vmPageInvitation;
+    private List<VueInvitation> vueInvitations;
     private List<VueMenu> vueMenu;
     private VMPageMenu vmPageMenu;
     #endregion
@@ -58,6 +61,8 @@ public partial class MainWindow : Window
         this.vueGroupeInvites = new List<VueGroupeInvite>();
         this.vmPageGroupeInvite = new VMPageGroupeInvite();
 
+        this.vmPageInvitation = new VMPageInvitation();
+        this.vueInvitations = new List<VueInvitation>();
         this.vueMenu = new List<VueMenu>();
         this.vmPageMenu = new VMPageMenu();
     }
@@ -70,6 +75,7 @@ public partial class MainWindow : Window
         this.vmPageInvite.PropertyChanged += VMPage_PropertyChanged;
         this.vmPagePlat.PropertyChanged += VMPage_PropertyChanged;
         this.vmPageGroupeInvite.PropertyChanged += VMPage_PropertyChanged;
+        this.vmPageInvitation.PropertyChanged += VMPage_PropertyChanged;
         this.vmPageMenu.PropertyChanged += VMPage_PropertyChanged;
     }
 
@@ -322,7 +328,9 @@ public partial class MainWindow : Window
     /// <param name="e"></param>
     private void BoutonAllerInvitation_Click(object sender, RoutedEventArgs e)
     {
+        Navigation.AllerInvitations(this);
     }
+
 
     #endregion
 

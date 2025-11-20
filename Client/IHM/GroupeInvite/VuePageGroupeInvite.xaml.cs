@@ -179,6 +179,8 @@ namespace IHM_Footies
                 MessageBox.Show("Veuillez sélectionner un groupe à supprimer.","Aucun groupe sélectionné",MessageBoxButton.OK,MessageBoxImage.Warning);
             }
         }
+
+
         #endregion
 
         #region Boutons de navigation
@@ -241,6 +243,7 @@ namespace IHM_Footies
             Navigation.AllerGroupesInvites(this);
         }
 
+
         /// <summary>
         /// Bouton pour aller à la page des invitations
         /// </summary>
@@ -248,9 +251,9 @@ namespace IHM_Footies
         /// <param name="e"></param>
         private void BoutonAllerInvitation_Click(object sender, RoutedEventArgs e)
         {
+            Navigation.AllerInvitations(this);
         }
 
-        /// <summary>
         /// Bouton pour fermer la fenêtre
         /// </summary>
         /// <param name="sender"></param>
@@ -261,5 +264,7 @@ namespace IHM_Footies
         }
 
         #endregion
+
+
     }
 }
