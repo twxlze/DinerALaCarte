@@ -65,5 +65,16 @@ namespace API_Footies.Controllers
         {
             return this.service.ListMenu();
         }
+
+        /// <summary>
+        /// Chercher des menus par nom
+        /// </summary>
+        /// <param name="menuRechercher"> le nom ou une partie du nom du menu à rechercher </param>
+        /// <returns> la liste des menus correspondants </returns>
+        [HttpGet("ChercherMenus")]
+        public List<Metier.Menu> ChercherMenus(string menuRechercher)
+        {
+            return this.service.ChercherMenus(menuRechercher);
+        }
     }
 }
