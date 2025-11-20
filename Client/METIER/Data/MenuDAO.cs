@@ -71,10 +71,10 @@ namespace METIER_Footies.Data
             }
         }
 
-        public async Task<List<Menu>> ChercherMenu(string menuRecherche)
+        public async Task<List<Menu>> ChercherMenus(string menuRechercher)
         {
             List<Menu> listeDesMenus = new List<Menu>();
-            HttpResponseMessage reponseHttp = await this.GetAsync($"Menus/ChercherMenus?menuRecherche={menuRecherche}");
+            HttpResponseMessage reponseHttp = await GetAsync($"Menus/ChercherMenus?menuRechercher={menuRechercher}");
             if (reponseHttp.IsSuccessStatusCode)
             {
                 string reponse = await reponseHttp.Content.ReadAsStringAsync();
