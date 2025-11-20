@@ -163,8 +163,55 @@ namespace IHM_Footies.Invitations
             Navigation.AllerFormulaireInvitation(this);
         }
 
+
         #endregion
 
+        #region boutons
+
+        /// <summary>
+        /// Supprimer une invitation
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void BoutonSupprimerInvitation_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.vmPageInvitation.InvitationSelectionnee != null)
+            {
+                MessageBoxResult resultat = MessageBox.Show(
+                    "Êtes-vous sûr de vouloir supprimer cette invitation ?",
+                    "Confirmation de suppression",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Question);
+
+                if (resultat == MessageBoxResult.Yes)
+                {
+                    bool suppressionReussie = await this.vmPageInvitation.SupprimerInvitation();
+
+                    if (!suppressionReussie)
+                    {
+                        MessageBox.Show(
+                            "Suppression impossible.",
+                            "Suppression impossible",
+                            MessageBoxButton.OK,
+                            MessageBoxImage.Warning);
+                    }
+                    else
+                    {
+                        this.RafraichirListe();
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show(
+                    "Veuillez sélectionner une invitation à supprimer.",
+                    "Aucune invitation sélectionné",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning);
+            }
+        }
+
+        #endregion
 
     }
 }
