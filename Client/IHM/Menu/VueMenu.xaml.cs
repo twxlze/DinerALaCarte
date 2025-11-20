@@ -5,38 +5,35 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
 using System.Windows.Media;
-using VM_Footies;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
+using VM_Footies.VM;
 
-namespace IHM_Footies
+namespace IHM_Footies.Menu
 {
     /// <summary>
-    /// Logique d'interaction pour VueGroupeInvite.xaml
+    /// Logique d'interaction pour VueMenu.xaml
     /// </summary>
-    public partial class VueGroupeInvite : UserControl
+    public partial class VueMenu : UserControl
     {
         #region Attributs
-        private VMGroupeInvite groupe;
-        public VMGroupeInvite Groupe => this.groupe;
+        private VMMenu menu;
+        public VMMenu Menu => this.menu;
         #endregion
 
-        #region Constructeurs
+        #region Constructeur
         /// <summary>
-        /// Constructeur pour le designer
+        /// Constructeur d'une vue de menu
         /// </summary>
-        public VueGroupeInvite()
+        /// <param name="menu"> Le VMMenu à afficher </param>
+        public VueMenu(VMMenu menu)
         {
-            InitializeComponent();
-        }
-
-        /// <summary>
-        /// Constructeur avec ViewModel
-        /// </summary>
-        /// <param name="groupe">Le groupe à afficher</param>
-        public VueGroupeInvite(VMGroupeInvite groupe)
-        {
-            this.groupe = groupe;
-            this.DataContext = this.groupe;
+            this.menu = menu;
+            this.DataContext = this.menu;
 
             this.Height = 30;
             this.Width = 425;
@@ -46,23 +43,29 @@ namespace IHM_Footies
             this.VerticalContentAlignment = VerticalAlignment.Center;
             this.BorderBrush = new SolidColorBrush(Colors.Gray);
             this.BorderThickness = new Thickness(0.4);
-
             InitializeComponent();
         }
         #endregion
 
         #region Méthodes
+        /// <summary>
+        /// Désélectionne la vue de menu (remet les couleurs par défaut)
+        /// </summary>
         public void Deselectionner()
         {
             this.Background = new SolidColorBrush(Colors.Transparent);
             this.Foreground = new SolidColorBrush(Colors.Black);
         }
 
+        /// <summary>
+        /// Sélectionne la vue de menu (change les couleurs pour indiquer la sélection)
+        /// </summary>
         public void Selectionner()
         {
             this.Background = new SolidColorBrush(Colors.Maroon);
             this.Foreground = new SolidColorBrush(Colors.White);
         }
         #endregion
+
     }
 }

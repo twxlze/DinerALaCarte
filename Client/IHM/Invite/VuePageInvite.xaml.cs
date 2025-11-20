@@ -12,7 +12,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using IHM;
+using IHM_Footies.GroupeInvite;
+using IHM_Footies.Invite;
 using VM_Footies;
+using VM_Footies.VM;
 
 namespace IHM_Footies
 {
@@ -37,6 +40,7 @@ namespace IHM_Footies
             this.vueInvite = new List<VueInvite>();
             this.vmPageInvite = new VMPageInvite();
             this.vmPageInvite.PropertyChanged += VMPageInvite_PropertyChanged;
+            this.DataContext = this.vmPageInvite;
 
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
             this.RafraichirListe();
@@ -47,8 +51,8 @@ namespace IHM_Footies
         /// <summary>
         /// Gestion du changement de propriété dans le VMPageInvite
         /// </summary>
-        /// <param name="sender"> </param>
-        /// <param name="e"></param>
+        /// <param name="sender"> L'expéditeur </param>
+        /// <param name="e"> Les arguments de l'événement </param>
         private void VMPageInvite_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             if (e.PropertyName == "VMInvites") this.RafraichirListe();
@@ -62,30 +66,32 @@ namespace IHM_Footies
             this.PanelListeInvites.Children.Clear();
             this.vueInvite.Clear();
 
-            await this.vmPageInvite.ChargerInvitesAsync();
+            await this.vmPageInvite.ChargerInvites();
 
             foreach (VMInvite invite in this.vmPageInvite.VMInvites)
             {
                 VueInvite vue = new VueInvite(invite);
                 vue.MouseDown += (s, e) => this.SelectionnerPersonne(vue);
-                vue.MouseDoubleClick += (s, e) => this.OuvrirModification(vue);
+                vue.MouseDoubleClick += (s, e) => this.OuvrirDetailGroupe(vue);
                 this.vueInvite.Add(vue);
                 this.PanelListeInvites.Children.Add(vue);
             }
         }
 
         /// <summary>
-        /// Ouvre la fenêtre de modification d'un invité
+        /// Ouvre la fenêtre des details d'un groupe invité
         /// </summary>
-        /// <param name="vue"></param>
-        private void OuvrirModification(VueInvite vue)
+        /// <param name="vue"> La vue du groupe invité pour lequelle on veut ces details </param>
+        private void OuvrirDetailGroupe(VueInvite vue)
         {
-            VMInvite memoire = new VMInvite(vue.Invite);
-            VueFormulaireInvite fenetre = new VueFormulaireInvite(vue.Invite);
-            bool? result = fenetre.ShowDialog();
-            if (result == false)
+            if (this.vmPageInvite.InviteSelectionne != null)
             {
-                vue.Invite.ModifierInvite(memoire);
+                VuePageInviteDetail fenetre = new VuePageInviteDetail(vue.Invite);
+                fenetre.Show();
+            }
+            else
+            {
+                MessageBox.Show("Veuillez sélectionner un groupe pour voir ses détails.", "Aucun groupe sélectionné", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 
@@ -108,36 +114,30 @@ namespace IHM_Footies
         /// <summary>
         /// Ouvre la fenêtre d'ajout d'un invité
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender"> L'expéditeur </param>
+        /// <param name="e"> Les arguments de l'événement </param>
         private async void BoutonAjouterInvite_Click(object sender, RoutedEventArgs e)
         {
             VueFormulaireInvite fenetre = new VueFormulaireInvite();
             bool? result = fenetre.ShowDialog();
             if (result == true)
             {
-                /*
-                await this.vmPageInvite.AjouterInvite(fenetre.Invite);
-                this.RafraichirListe();
-                */
-                await this.vmPageInvite.AjouterInvite(fenetre.Invite);
-                VueInvite vue = new VueInvite(fenetre.Invite);
-                vue.MouseDown += (s, ev) => this.SelectionnerPersonne(vue);
-                vue.MouseDoubleClick += (s, ev) => this.OuvrirModification(vue);
-                this.vueInvite.Add(vue);
-                this.PanelListeInvites.Children.Add(vue);
+                try
+                {
+                    await this.vmPageInvite.AjouterInvite(fenetre.Invite);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Une erreur est survenue lors de l'ajout de l'invité : {ex.Message}", "Erreur d'ajout", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
-            /*
-               // this.RafraichirListe();
-            }
-            */
         }
 
         /// <summary>
         /// Ouvre la fenêtre de modification d'un invité sélectionné
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender"> L'expéditeur </param>
+        /// <param name="e"> Les arguments de l'événement </param>
         private async void BoutonModifierInvite_Click(object sender, RoutedEventArgs e)
         {
             if (this.vmPageInvite.InviteSelectionne != null)
@@ -147,7 +147,6 @@ namespace IHM_Footies
                 if (result == true)
                 {
                     await this.vmPageInvite.ModifierInvite(fenetre.Invite);
-                    this.RafraichirListe();
                 }
             }
         }
@@ -156,8 +155,8 @@ namespace IHM_Footies
         /// <summary>
         /// Supprime l'invité sélectionné
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender"> L'expéditeur </param>
+        /// <param name="e"> Les arguments de l'événement </param>
         private async void BoutonSupprimerInvite_Click(object sender, RoutedEventArgs e)
         {
             if (this.vmPageInvite.InviteSelectionne != null)
@@ -200,44 +199,65 @@ namespace IHM_Footies
 
         #region Boutons de navigation
         /// <summary>
-        /// Bouton pour aller à la vue d'accueil
+        /// Bouton pour aller à la page plat
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void BoutonVueAccueil(object sender, RoutedEventArgs e)
+        private void BoutonAllerPlat_Click(object sender, RoutedEventArgs e)
+        {
+            Navigation.AllerPlat(this);
+        }
+
+        /// <summary>
+        /// Bouton pour aller à l'accueil
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BoutonAllerAccueil_Click(object sender, RoutedEventArgs e)
         {
             Navigation.AllerAccueil(this);
         }
 
         /// <summary>
-        /// Bouton pour aller à la vue des invités
+        /// Bouton pour aller au menu
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void BoutonInvite_Click(object sender, RoutedEventArgs e)
+        private void BoutonAllerMenu_Click(object sender, RoutedEventArgs e)
+        {
+            Navigation.AllerMenu(this);
+        }
+        /// <summary>
+        /// Bouton pour aller à la page invité
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BoutonAllerInvite_Click(object sender, RoutedEventArgs e)
         {
             Navigation.AllerInvites(this);
         }
 
         /// <summary>
-        /// Bouton pour aller à la vue du formulaire d'invité
+        /// Bouton pour aller à la page des réglages
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void BoutonAccueil_Click(object sender, RoutedEventArgs e)
+        private void BoutonAllerReglages_Click(object sender, RoutedEventArgs e)
         {
-            Navigation.AllerAccueil(this);
+            Navigation.AllerReglages(this);
         }
 
         /// <summary>
-        /// Bouton pour aller à la page plat
+        /// Bouton pour aller à la page des groupes d'invités
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void BoutonPlat_Click(object sender, RoutedEventArgs e)
+        private void BoutonAllerGroupeInvite_Click(object sender, RoutedEventArgs e)
         {
-            Navigation.AllerPlat(this);
+            Navigation.AllerGroupesInvites(this);
         }
+
+ 
 
         /// <summary>
         /// Bouton pour fermer la fenêtre
@@ -248,11 +268,54 @@ namespace IHM_Footies
         {
             Navigation.FermerFenetre(this);
         }
+
+        /// <summary>
+        /// Bouton pour aller à la page d'invitations
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BoutonAllerInvitation_Click(object sender, RoutedEventArgs e)
+        {
+            Navigation.AllerInvitations(this);
+        }
+
         #endregion
 
-        private void BoutonGroupeInvite_Click(object sender, RoutedEventArgs e)
+
+        #region Méthodes
+        /// <summary>
+        /// Recherche les invités selon le texte saisi
+        /// </summary>
+        /// <param name="sender"> L'expéditeur </param>
+        /// <param name="e"> Les arguments de l'événement </param>
+        private async void RechercheInvite_Click(object sender, RoutedEventArgs e)
         {
-            Navigation.AllerGroupesInvites(this);
+            if (!string.IsNullOrWhiteSpace(this.vmPageInvite.TexteRecherche))
+            {
+                this.PanelListeInvites.Children.Clear();
+                this.vueInvite.Clear();
+
+                await this.vmPageInvite.ChercherInvite(this.vmPageInvite.TexteRecherche);
+
+                foreach (VMInvite invite in this.vmPageInvite.VMInvites)
+                {
+                    VueInvite vue = new VueInvite(invite);
+                    vue.MouseDown += (s, e) => this.SelectionnerPersonne(vue);
+                    vue.MouseDoubleClick += (s, e) => this.OuvrirDetailGroupe(vue);
+                    this.vueInvite.Add(vue);
+                    this.PanelListeInvites.Children.Add(vue);
+                }
+            }
+            else
+            {
+                this.RafraichirListe();
+            }
         }
+
+        
+
+        #endregion
+
+
     }
 }

@@ -6,7 +6,7 @@
     public class GroupeInvites
     {
         #region --- Attributs ---
-        private List<Invite> invites = new List<Invite>();
+        private List<Invite> invites;
         private long idGroupeInvites;
         private string nom;
         #endregion
@@ -35,8 +35,42 @@
         {
             get { return nom; }
             set { nom = value; }
-        }   
+        }
         #endregion
 
+        #region --- Constructeurs ---
+        /// <summary>
+        /// Constructeur de la classe GroupeInvites
+        /// </summary>
+        /// <param name="idGroupeInvites"> id du groupe d'invités </param>
+        /// <param name="nom"> nom du groupe d'invités </param>
+        /// <param name="invites"> liste des invités du groupe </param>
+        public GroupeInvites(long idGroupeInvites, string nom, List<Invite> invites)
+        {
+            this.idGroupeInvites = idGroupeInvites;
+            this.nom = nom;
+            this.invites = invites;
+        }
+
+        /// <summary>
+        /// Constructeur de la classe GroupeInvites sans la liste des invités
+        /// </summary>
+        /// <param name="idGroupeInvites"> id du groupe d'invités </param>
+        /// <param name="nom"> nom du groupe d'invités </param>
+        public GroupeInvites(long idGroupeInvites, string nom)
+        {
+            this.idGroupeInvites = idGroupeInvites;
+            this.nom = nom;
+            this.invites = new List<Invite>();
+        }
+
+        /// <summary>
+        /// Constructeur par défaut de la classe GroupeInvites
+        /// </summary>
+        public GroupeInvites()
+        {
+            this.invites = new List<Invite>();
+        }
+        #endregion
     }
 }

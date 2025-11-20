@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using METIER_Footies.Metier;
-using VM_Footies;
+using VM_Footies.VM;
 
 namespace IHM_Footies
 {
@@ -36,37 +36,19 @@ namespace IHM_Footies
         {
             this.plat = plat;
             this.DataContext = this.plat;
-
-            this.Height = 30;
-            this.Width = 425;
-            this.Background = Brushes.AliceBlue;
-            this.FontSize = 14;
-            this.HorizontalContentAlignment = HorizontalAlignment.Center;
-            this.VerticalContentAlignment = VerticalAlignment.Center;
-            this.BorderBrush = new SolidColorBrush(Colors.Gray);
-            this.BorderThickness = new Thickness(0.4);
-
+            this.ConfigurerStyle();
             InitializeComponent();
         }
         #endregion
 
         #region Méthodes
-        /// <summary>
-        /// Désélectionne la vue d'invité (remet les couleurs par défaut)
-        /// </summary>
         public void Deselectionner()
         {
-            this.Background = new SolidColorBrush(Colors.Transparent);
-            this.Foreground = new SolidColorBrush(Colors.Black);
+            ExtensionVue.Deselectionner(this);
         }
-
-        /// <summary>
-        /// Sélectionne la vue d'invité (change les couleurs pour indiquer la sélection)
-        /// </summary>
         public void Selectionner()
         {
-            this.Background = new SolidColorBrush(Colors.Maroon);
-            this.Foreground = new SolidColorBrush(Colors.White);
+            ExtensionVue.Selectionner(this);
         }
         #endregion
     }

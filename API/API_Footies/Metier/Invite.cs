@@ -1,5 +1,8 @@
 ﻿namespace API_Footies.Metier
 {
+    /// <summary>
+    /// Classe représentant un invité 
+    /// </summary>
     public class Invite
     {
         #region --- Attributs ---

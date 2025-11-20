@@ -1,18 +1,17 @@
 ﻿namespace API_Footies.Metier
 {
+    /// <summary>
+    /// Classe représentant un plat
+    /// </summary>
     public class Plat
     {
         #region --- Attributs ---
         private long id;
         private string nom;
         private string? description;
-        private CategoriePlat categorie;
+        private Enum.CategoriePlat categorie;
+        private string? ingredients;
         #endregion
-
-        #region --- Enumérations ---
-        public enum CategoriePlat {apéritif,entrée, plat, dessert }
-        #endregion
-
         #region --- Propriétés ---
 
         /// <summary>
@@ -23,7 +22,6 @@
             get { return id; }
             set { id = value; }
         }
-
 
         /// <summary>
         /// Retourne ou modifie le nom du plat
@@ -46,10 +44,19 @@
         /// <summary>
         /// Retourne ou modifie la catégorie du plat
         /// </summary>
-        public CategoriePlat Categorie
+        public Enum.CategoriePlat Categorie
         {
             get { return categorie; }
             set { categorie = value; }
+        }
+
+        /// <summary>
+        /// Retourne ou modifie les ingrédients du plat
+        /// </summary>
+        public string? Ingredients
+        {
+            get { return ingredients; }
+            set { ingredients = value; }
         }
 
         #endregion
@@ -60,13 +67,18 @@
         /// <param name="nom">nom du plat</param>
         /// <param name="description">description du plat</param>
         /// <param name="categorie">categorie du plat</param>
-        public Plat(long id, string nom, string? description, CategoriePlat categorie)
+        public Plat(long id, string nom, string? description, Enum.CategoriePlat categorie, string? ingredients = null)
         {
             this.id = id;
             this.nom = nom;
             this.description = description;
             this.categorie = categorie;
+            this.ingredients = ingredients;
         }
 
+        /// <summary>
+        /// Constructeur par défaut du plat
+        /// </summary>
+        public Plat() { }
     }
 }

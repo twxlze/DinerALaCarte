@@ -11,7 +11,6 @@ namespace API_Footies.Controllers
     [Route("Invites")]
     public class InviteController : ControllerBase
     {
-        //Service en charge des invités
         private IInviteService service;
 
         /// <summary>
@@ -31,8 +30,15 @@ namespace API_Footies.Controllers
         [HttpPost("AjoutInvite")]
         public Metier.Invite AjouterInvite(Metier.Invite invite)
         {
-            this.service.AjouterInvite(invite);
-            return invite;
+            try
+            {
+                this.service.AjouterInvite(invite);
+                return invite;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erreur lors de l'ajout de l'invité : " + ex.Message);
+            }
         }
 
         /// <summary>
@@ -49,7 +55,6 @@ namespace API_Footies.Controllers
         /// Supprimer un invité
         /// </summary>
         /// <param name="id"> id de l'invité à supprimé </param>
-        /// <returns></returns>
         [HttpDelete("SupprimerInvite")]
         public void SupprimerInvite(long id)
         {
@@ -75,6 +80,17 @@ namespace API_Footies.Controllers
         public bool EstDansUnGroupe(long id)
         {
             return this.service.EstDansUnGroupe(id);
+        }
+
+        /// <summary>
+        /// Recherche des invités via un texte de recherche
+        /// </summary>
+        /// <param name="texterecherche">Le texte permettant de rechercher un invité</param>
+        /// <returns>Une liste d'invités correspondant à la recherche</returns>
+        [HttpGet("ChercherInvite")]
+        public List<Metier.Invite> ChercherInvite(string texterecherche)
+        {
+            return this.service.ChercherInvite(texterecherche);
         }
     }
 

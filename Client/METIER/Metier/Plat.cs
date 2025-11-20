@@ -13,11 +13,8 @@ namespace METIER_Footies.Metier
         private long id;
         private string nom;
         private string? description;
-        private CategoriePlat categorie;
-        #endregion
-
-        #region --- Enumérations ---
-        public enum CategoriePlat { aperitif, entree, plat, dessert }
+        private Enum.CategoriePlat categorie;
+        private string? ingredients;
         #endregion
 
         #region --- Propriétés ---
@@ -48,7 +45,8 @@ namespace METIER_Footies.Metier
             set
             {
 
-                nom = value.ToUpper();
+                nom = value;
+
             }
         }
 
@@ -68,12 +66,20 @@ namespace METIER_Footies.Metier
         /// <summary>
         /// Retourne ou modifie la catégorie du plat
         /// </summary>
-        public CategoriePlat Categorie
+        public Enum.CategoriePlat Categorie
         {
             get { return categorie; }
             set { categorie = value; }
         }
 
+        /// <summary>
+        /// Retourne ou modifie les ingrédients du plat
+        /// </summary>
+        public string? Ingredients
+        {
+            get { return ingredients; }
+            set { ingredients = value; }
+        }
         #endregion
 
         /// <summary>
@@ -82,12 +88,13 @@ namespace METIER_Footies.Metier
         /// <param name="nom">nom du plat</param>
         /// <param name="description">description du plat</param>
         /// <param name="categorie">categorie du plat</param>
-        public Plat(long id, string nom, string description, CategoriePlat categorie)
+        public Plat(long id, string nom, string description, Enum.CategoriePlat categorie, string? ingredients = null)
         {
             this.id = id;
             this.nom = nom;
             this.description = description;
             this.categorie = categorie;
+            this.ingredients = ingredients;
         }
 
         /// <summary>
@@ -100,13 +107,15 @@ namespace METIER_Footies.Metier
             this.nom = plat.nom;
             this.description = plat.description;
             this.categorie = plat.categorie;
+            this.ingredients = plat.ingredients;
         }
 
         public Plat()
         {
             this.nom = "";
             this.description = "";
-            this.categorie = CategoriePlat.entree;
+            this.categorie = Enum.CategoriePlat.entree;
+            this.ingredients = "";
         }
     }
 }

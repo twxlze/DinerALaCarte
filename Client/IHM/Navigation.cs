@@ -5,6 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using IHM;
+using IHM_Footies.Reglages;
+using IHM_Footies.Menu;
+using IHM_Footies.Invitations;
 
 namespace IHM_Footies
 {
@@ -46,6 +49,10 @@ namespace IHM_Footies
             fenetreActuelle.Close();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="fenetreActuelle"></param>
         public static void AllerPlat(Window fenetreActuelle)
         {
             VuePagePlat vuePlats = new VuePagePlat();
@@ -73,10 +80,37 @@ namespace IHM_Footies
             VueFormulaireGroupeInvite vueFormulaireGroupeInvite = new VueFormulaireGroupeInvite();
             vueFormulaireGroupeInvite.Show();
         }
+
+        /// <summary>
+        /// Permet de naviguer vers la fenêtre de la page des menus
+        /// </summary>
+        /// <param name="fenetreActuelle"> La fenêtre actuelle à fermer </param>
+        public static void AllerMenu(Window fenetreActuelle)
+        {
+            VuePageMenu vueMenu = new VuePageMenu();
+            vueMenu.Show();
+            fenetreActuelle.Close();
+        }
+
+        /// <summary>
+        /// Permet de naviguer vers la fenêtre du formulaire menu
+        /// </summary>
+        /// <param name="fenetreActuelle"> La fenêtre actuelle à fermer </param>
         public static void AllerFormulaireMenu(Window fenetreActuelle)
         {
             VueFormulaireMenu vueFormulaireMenu = new VueFormulaireMenu();
             vueFormulaireMenu.Show();
+            fenetreActuelle.Close();
+        }
+
+        /// <summary>
+        /// Aller à la page des réglages
+        /// </summary>
+        /// <param name="fenetreActuelle">La fenêtre actuelle</param>
+        public static void AllerReglages(Window fenetreActuelle)
+        {
+            VuePageReglages vueReglages = new VuePageReglages();
+            vueReglages.Show();
             fenetreActuelle.Close();
         }
 
@@ -88,5 +122,28 @@ namespace IHM_Footies
         {
             fenetreActuelle.Close();
         }
+
+        /// <summary>
+        /// Aller à la page invitations
+        /// </summary>
+        /// <param name="fenetreActuelle">La fenêtre actuelle</param>
+        public static void AllerInvitations(Window fenetreActuelle)
+        {
+            VuePageInvitation vueInvitations = new VuePageInvitation();
+            vueInvitations.Show();
+            fenetreActuelle.Close();
+        }
+
+        /// <summary>
+        /// Aller au formulaire d'invitation
+        /// </summary>
+        /// <param name="fenetreActuelle"> LA fenêtre actuelle à fermer </param>
+        public static void AllerFormulaireInvitation(Window fenetreActuelle)
+        {
+            VueFormulaireInvitation vueFormulaireInvitation = new VueFormulaireInvitation();
+            vueFormulaireInvitation.Show();
+            fenetreActuelle.Close();
+        }
+
     }
 }

@@ -13,7 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using VM_Footies;
+using VM_Footies.VM;
 
 namespace IHM_Footies
 {
@@ -54,8 +54,8 @@ namespace IHM_Footies
         /// <summary>
         /// Gestion du clic sur le bouton Enregistrer
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender"> L'expéditeur </param>
+        /// <param name="e"> Les arguments de l'événement </param>
         private void Enregistrer_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -116,27 +116,36 @@ namespace IHM_Footies
 
         #region Boutons de navigation
         /// <summary>
-        /// Bouton pour aller à la vue d'accueil
+        /// Bouton pour aller à la page plat
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void BoutonAccueil_Click(object sender, RoutedEventArgs e)
+        private void BoutonAllerPlat_Click(object sender, RoutedEventArgs e)
+        {
+            Navigation.AllerPlat(this);
+        }
+
+        /// <summary>
+        /// Bouton pour aller à l'accueil
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BoutonAllerAccueil_Click(object sender, RoutedEventArgs e)
         {
             Navigation.AllerAccueil(this);
         }
 
         /// <summary>
-        /// Bouton pour aller à la vue des invités
+        /// Bouton pour aller au menu
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void ButonFermerFenetre_Click(object sender, RoutedEventArgs e)
+        private void BoutonAllerMenu_Click(object sender, RoutedEventArgs e)
         {
-            Navigation.FermerFenetre(this);
+            Navigation.AllerMenu(this);
         }
-
         /// <summary>
-        /// Bouton pour aller à la vue des invités
+        /// Bouton pour aller à la page invité
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -146,14 +155,47 @@ namespace IHM_Footies
         }
 
         /// <summary>
-        /// Bouton pour aller à la vue des plats
+        /// Bouton pour aller à la page des réglages
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void BoutonAllerPlat_Click(object sender, RoutedEventArgs e)
+        private void BoutonAllerReglages_Click(object sender, RoutedEventArgs e)
         {
-            Navigation.AllerPlat(this);
+            Navigation.AllerReglages(this);
         }
+
+        /// <summary>
+        /// Bouton pour aller à la page des groupes d'invités
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BoutonAllerGroupeInvite_Click(object sender, RoutedEventArgs e)
+        {
+            Navigation.AllerGroupesInvites(this);
+        }
+
+        /// <summary>
+        /// Bouton pour aller à la page des invitations
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BoutonAllerInvitation_Click(object sender, RoutedEventArgs e)
+        {
+            Navigation.AllerInvitations(this);
+        }
+
+        /// <summary>
+        /// Bouton pour fermer la fenêtre
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ButonFermerFenetre_Click(object sender, RoutedEventArgs e)
+        {
+            Navigation.FermerFenetre(this);
+        }
+
         #endregion
+
+
     }
 }

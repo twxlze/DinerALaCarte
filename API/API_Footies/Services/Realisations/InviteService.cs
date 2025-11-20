@@ -9,11 +9,13 @@ namespace API_Footies.Services.Realisations
     /// </summary>
     public class InviteService : IInviteService
     {
-        #region attributes
+        #region attributs
 
         private IInviteDAO dao;
 
         #endregion
+
+        #region Constructeur
 
         /// <summary>
         /// Initialise une nouvelle instance de la classe InviteService.
@@ -24,9 +26,9 @@ namespace API_Footies.Services.Realisations
         {
             this.dao = dao;
         }
+        #endregion
 
-        #region methods
-
+        #region methodes
         public void AjouterInvite(Invite invite)
         {
             this.dao.AjouterInvite(invite);
@@ -37,7 +39,6 @@ namespace API_Footies.Services.Realisations
             this.dao.ModifierInvite(invite);
         }
 
-
         public List<Invite> ListInvite()
         {
             return this.dao.ListInvite();
@@ -47,12 +48,15 @@ namespace API_Footies.Services.Realisations
         {
             this.dao.SupprimerInvite(id);
         }
-
         public bool EstDansUnGroupe(long idInvite)
         {
             return this.dao.EstDansUnGroupe(idInvite);
         }
-        #endregion
 
+        public List<Invite> ChercherInvite(string texterecherche)
+        {
+            return this.dao.ChercherInvite(texterecherche);
+        }
+        #endregion
     }
 }

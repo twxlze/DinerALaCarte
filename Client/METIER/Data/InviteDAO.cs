@@ -6,19 +6,16 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using METIER_Footies.Metier;
+using METIER_Footies.Data.Interfaces;
 
 namespace METIER_Footies.Data
 {
     /// <summary>
     // Classe d'accès aux données pour les invités avec la base de données
     /// </summary>
-    public class InviteDAO : DAO
+    public class InviteDAO : DAO, IInviteDAO
     {
-        /// <summary>
-        /// Ajoute un invité
-        /// </summary>
-        /// <param name="invite"> l'invité à ajouter </param>
-        /// <returns> Réponse http de l'API </returns>
+
         public async Task<HttpResponseMessage> AjouterInvite(Invite invite)
         {
             try
@@ -33,15 +30,11 @@ namespace METIER_Footies.Data
 
         }
 
-        /// <summary>
-        /// Obtient tous les invités
-        /// </summary>
-        /// <returns> Liste de tous les invités </returns>
         public async Task<List<Invite>> ObtenirTout()
         {
             List<Invite> listeDesInvites = new List<Invite>();
 
-            HttpResponseMessage reponseHttp = await this.GetAsync("Invites/ListeInvite");
+            HttpResponseMessage reponseHttp = await GetAsync("Invites/ListeInvite");
 
             if (reponseHttp.IsSuccessStatusCode)
             {
@@ -51,9 +44,6 @@ namespace METIER_Footies.Data
             return listeDesInvites;
         }
 
-        /// <summary>
-        /// Supprime un invité
-        /// </summary>
         public async Task<HttpResponseMessage> SupprimerInvite(long idInvite)
         {
             try
@@ -67,11 +57,7 @@ namespace METIER_Footies.Data
             }
         }
 
-        /// <summary>
-        /// Modifier un invité
-        /// </summary>
-        /// <param name="invite"> L'invité à modifier </param>
-        /// <returns> Réponse http de l'API </returns>
+
         public async Task<HttpResponseMessage> ModifierInvite(Invite invite)
         {
             try
@@ -85,11 +71,6 @@ namespace METIER_Footies.Data
             }
         }
 
-        /// <summary>
-        /// Vérifie si un invité est associé à un ou plusieurs groupes
-        /// </summary>
-        /// <param name="idInvite">L'id de l'invité</param>
-        /// <returns>True si l'invité fait partie d'au moins un groupe, False sinon</returns>
         public async Task<bool> EstDansUnGroupe(long idInvite)
         {
             bool resultat = false;
@@ -110,5 +91,16 @@ namespace METIER_Footies.Data
             return resultat;
         }
 
+        public async Task<List<Invite>> ChercherInvite(string texteRecherche)
+        {
+            List<Invite> listeDesInvites = new List<Invite>();
+            HttpResponseMessage reponseHttp = await GetAsync($"Invites/ChercherInvite?texterecherche={texteRecherche}");
+            if (reponseHttp.IsSuccessStatusCode)
+            {
+                string reponse = await reponseHttp.Content.ReadAsStringAsync();
+                listeDesInvites = JsonSerializer.Deserialize<List<Invite>>(reponse, options);
+            }
+            return listeDesInvites;
+        }
     }
 }

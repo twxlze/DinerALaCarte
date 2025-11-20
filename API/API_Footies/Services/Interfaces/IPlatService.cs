@@ -3,6 +3,9 @@ using API_Footies.Metier;
 
 namespace API_Footies.Services.Interfaces
 {
+    /// <summary>
+    /// Fournit des services pour gérer les plats
+    /// </summary>
     public interface IPlatService
     {
         /// <summary>
@@ -36,5 +39,12 @@ namespace API_Footies.Services.Interfaces
         /// <param name="idInvite"> Id du plat </param>
         /// <returns> retourne true si le plat est dans un menu </returns>
         bool EstDansUnMenu(long idInvite);
+
+        /// <summary>
+        /// Cherche un plat via un texte de recherche
+        /// </summary>
+        /// <param name="texterecherche">Le texte permettant d'un plat</param>
+        /// <returns>Une liste de plats correspondant à la recherche</returns>
+        public List<Plat> ChercherPlat(string texterecherche);
     }
 }

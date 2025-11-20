@@ -16,6 +16,8 @@ namespace API_Footies.Services.Realisations
 
         #endregion
 
+        #region Constructeur
+
         /// <summary>
         /// Initialise une nouvelle instance de la classe PlatService.
         /// </summary>
@@ -25,6 +27,7 @@ namespace API_Footies.Services.Realisations
         {
             this.dao = dao;
         }
+        #endregion
 
         #region methodes
         public void AjouterPlat(Plat plat)
@@ -49,6 +52,11 @@ namespace API_Footies.Services.Realisations
         public bool EstDansUnMenu(long idInvite)
         {
             return this.dao.EstDansUnMenu(idInvite);
+        }
+
+        public List<Plat> ChercherPlat(string texterecherche)
+        {
+            return this.dao.ChercherPlat(texterecherche);
         }
         #endregion
 
