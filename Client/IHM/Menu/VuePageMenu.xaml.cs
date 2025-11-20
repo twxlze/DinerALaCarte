@@ -280,14 +280,6 @@ namespace IHM_Footies.Menu
             Navigation.AllerGroupesInvites(this);
         }
 
-        /// <summary>
-        /// Bouton pour aller à la page des invitations
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void BoutonAllerInvitation_Click(object sender, RoutedEventArgs e)
-        {
-        }
 
         /// <summary>
         /// Bouton pour fermer la fenêtre
@@ -299,6 +291,39 @@ namespace IHM_Footies.Menu
             Navigation.FermerFenetre(this);
         }
 
+        /// <summary>
+        /// Bouton pour aller à la page menu
+        /// </summary>
+        /// <param name="sender"> L'expéditeur </param>
+        /// <param name="e"> les arguments de l'événement </param>
+        private void BoutonMenu_Click(object sender, RoutedEventArgs e)
+        {
+            // Navigation.AllerMenu(this);
+        }
+
+        /// <summary>
+        /// Bouton pour aller à la page plat
+        /// </summary>
+        /// <param name="sender"> L'expéditeur </param>
+        /// <param name="e"> les arguments de l'événement </param>
+        private void BoutonPlat_Click(object sender, RoutedEventArgs e)
+        {
+            Navigation.AllerPlat(this);
+        }
+
+        /// <summary>
+        /// Bouton pour aller à la page invitation
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BoutonAllerInvitation_Click(object sender, RoutedEventArgs e)
+        {
+            Navigation.AllerInvitations(this);
+        }
+
+
         #endregion
+
+
     }
 }
