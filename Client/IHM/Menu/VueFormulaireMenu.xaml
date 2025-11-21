@@ -140,28 +140,29 @@
 
         <!-- Sous-titre -->
         <TextBlock Grid.Column="1" HorizontalAlignment="Center" TextWrapping="Wrap" 
-                   Text="Informations" VerticalAlignment="Top" 
+                   Text="{x:Static res:Strings.Information}" VerticalAlignment="Top" 
                    FontWeight="SemiBold" FontSize="16" Foreground="#B44B3E" 
                    Margin="0,65,0,0" Grid.RowSpan="2"/>
 
         <!-- Nom du menu -->
-        <Label Grid.Column="1" Margin="232,4,160,4" Grid.Row="1" FontSize="16" Foreground="#B44B3E">Nom du menu</Label>
+        <Label Grid.Column="1" Margin="232,4,160,4" Grid.Row="1" FontSize="16" 
+               Foreground="#B44B3E" Content="{x:Static res:Strings.NomDuMenu}"/>
         <TextBox Grid.Column="1" Margin="106,34,106,20" Grid.Row="1" Height="25" 
                  Text="{Binding Nom, UpdateSourceTrigger=PropertyChanged}" Grid.RowSpan="2"/>
 
         <!-- Titre des catégories -->
         <Label Grid.Column="1" Margin="200,18,193,24" Grid.Row="2" FontSize="16" 
-               Foreground="#B44B3E" Grid.RowSpan="2">Catégories dans le menu</Label>
+               Foreground="#B44B3E" Grid.RowSpan="2" Content="{x:Static res:Strings.CategoriesDansMenu}"/>
 
         <!-- Labels des catégories -->
         <Label Grid.Column="1" Margin="51,10,471,31" Grid.Row="3" FontSize="16" 
-               Foreground="#B44B3E" Grid.RowSpan="2">Apéritif</Label>
+               Foreground="#B44B3E" Grid.RowSpan="2" Content="{x:Static res:Strings.Aperitif}"/>
         <Label Grid.Column="1" Margin="194,7,348,37" Grid.Row="3" FontSize="16" 
-               Foreground="#B44B3E" Grid.RowSpan="2">Entrée</Label>
+               Foreground="#B44B3E" Grid.RowSpan="2" Content="{x:Static res:Strings.Entree}"/>
         <Label Grid.Column="1" Margin="349,7,193,37" Grid.Row="3" FontSize="16" 
-               Foreground="#B44B3E" Grid.RowSpan="2">Plat</Label>
+               Foreground="#B44B3E" Grid.RowSpan="2" Content="{x:Static res:Strings.Plat}"/>
         <Label Grid.Column="1" Margin="477,7,59,37" Grid.Row="3" FontSize="16" 
-               Foreground="#B44B3E" Grid.RowSpan="2">Dessert</Label>
+               Foreground="#B44B3E" Grid.RowSpan="2" Content="{x:Static res:Strings.Dessert}"/>
 
         <!-- Container Apéritif -->
         <Border BorderBrush="#8C2F26" 
@@ -252,7 +253,7 @@
         </Border>
 
         <!-- Bouton Enregistrer -->
-        <Button Grid.RowSpan="2" Grid.Column="1" Content="Enregistrer" 
+        <Button Grid.RowSpan="2" Grid.Column="1" Content="{x:Static res:Strings.Enregistrer}" 
                 HorizontalAlignment="Center" Margin="0,58,0,0" Grid.Row="7" 
                 VerticalAlignment="Top" Height="40" Width="240" 
                 Style="{StaticResource StyleBoutonEnregistrer}" 

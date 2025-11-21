@@ -276,4 +276,22 @@
   <data name="mail" xml:space="preserve">
     <value>Email :</value>
   </data>
+  <data name="MenuAperitif" xml:space="preserve">
+    <value>Apéritif(s)</value>
+  </data>
+  <data name="MenuPlat" xml:space="preserve">
+    <value>Plat(s)</value>
+  </data>
+  <data name="MenuEntree" xml:space="preserve">
+    <value>Entrée(s)</value>
+  </data>
+  <data name="MenuDessert" xml:space="preserve">
+    <value>Dessert(s)</value>
+  </data>
+  <data name="Ingredient" xml:space="preserve">
+    <value>Ingrédient(s)</value>
+  </data>
+  <data name="Allergene" xml:space="preserve">
+    <value>Allergène(s)</value>
+  </data>
 </root>

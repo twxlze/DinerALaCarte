@@ -196,7 +196,7 @@
 
         <!-- Titre de la section allergènes -->
         <TextBlock Grid.Row="4"
-       Text="Allergies" 
+       Text="{x:Static res:Strings.Allergene}" 
        FontSize="14" 
        FontWeight="SemiBold"
        Foreground="#B44B3E"

@@ -307,7 +307,7 @@
 
                         <!-- Ligne 4: Ingrédients -->
                         <Label Grid.Row="3" Grid.Column="0"
-                               Content="Ingrédients" 
+                               Content="{x:Static res:Strings.Ingredient}" 
                                FontSize="14" 
                                Foreground="#B44B3E" 
                                VerticalAlignment="Top"
@@ -340,7 +340,7 @@
 
                         <!-- Titre de la section allergènes -->
                         <TextBlock Grid.Row="0"
-                                   Text="Allergènes" 
+                                   Text="{x:Static res:Strings.Allergene}" 
                                    FontSize="14" 
                                    FontWeight="SemiBold"
                                    Foreground="#B44B3E"

@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:IHM_Footies.Invite"
+        xmlns:res="clr-namespace:IHM_Footies.Ressources"
         mc:Ignorable="d"
         Title="VuePageInviteDetail" Height="450" Width="800"
         Background="#F9F9F9"
@@ -84,19 +85,19 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
-                        <TextBlock Text="Nom :" FontWeight="Bold" FontSize="14"/>
+                        <TextBlock Text="{x:Static res:Strings.Nom}" FontWeight="Bold" FontSize="14"/>
                         <TextBlock Text="{Binding PlatSelectionne.Nom, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1"
                                    FontSize="14" Foreground="#333" TextWrapping="Wrap"/>
 
-                        <TextBlock Text="Catégorie :" FontWeight="Bold" FontSize="14" Grid.Row="1"/>
+                        <TextBlock Text="{x:Static res:Strings.Categorie}" FontWeight="Bold" FontSize="14" Grid.Row="1"/>
                         <TextBlock Text="{Binding PlatSelectionne.Categorie, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Grid.Column="1"
                                    FontSize="14" Foreground="#333"/>
 
-                        <TextBlock Text="Description :" FontWeight="Bold" FontSize="14" Grid.Row="2" VerticalAlignment="Top"/>
+                        <TextBlock Text="{x:Static res:Strings.Description}" FontWeight="Bold" FontSize="14" Grid.Row="2" VerticalAlignment="Top"/>
                         <TextBlock Text="{Binding PlatSelectionne.Description, UpdateSourceTrigger=PropertyChanged}" Grid.Row="2" Grid.Column="1" 
                                    FontSize="14" Foreground="#333" TextWrapping="Wrap"/>
 
-                        <TextBlock Text="Ingrédients :" FontWeight="Bold" FontSize="14" Grid.Row="3" VerticalAlignment="Top"/>
+                        <TextBlock Text="{x:Static res:Strings.Ingredient}" FontWeight="Bold" FontSize="14" Grid.Row="3" VerticalAlignment="Top"/>
                         <TextBlock Text="{Binding PlatSelectionne.Ingredients, UpdateSourceTrigger=PropertyChanged}" Grid.Row="3" Grid.Column="1" FontSize="14" Foreground="#333" TextWrapping="Wrap"/>
                     </Grid>
                 </Border>
