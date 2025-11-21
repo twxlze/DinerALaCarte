@@ -142,6 +142,26 @@ public partial class MainWindow : Window
         vue.Selectionner();
     }
 
+    /// <summary>
+    /// Ouvre la fenêtre des détails d'un plat
+    /// </summary>
+    /// <param name="vue">La vue du plat montrant les détails du plat</param>
+    private void OuvrirDetailPlat(VuePlat vue)
+    {
+        if (this.vmPagePlat.PlatSelectionne != null)
+        {
+            Navigation.AllerDetailPlat(this, this.vmPagePlat.PlatSelectionne, "Accueil");
+        }
+        else
+        {
+            MessageBox.Show("Veuillez sélectionner un plat pour voir ses détails.", "Aucun plat sélectionné", MessageBoxButton.OK, MessageBoxImage.Warning);
+        }
+    }
+
+    /// <summary>
+    /// Sélectionne un groupe d'invités dans la liste
+    /// </summary>
+    /// <param name="vue">La vue du groupe à sélectionner</param>
     private void SelectionnerGroupeInvite(VueGroupeInvite vue)
     {
         this.vmPageGroupeInvite.GroupeSelectionne = vue.Groupe;
@@ -152,6 +172,10 @@ public partial class MainWindow : Window
         vue.Selectionner();
     }
 
+    /// <summary>
+    /// Sélectionne un menu dans la liste
+    /// </summary>
+    /// <param name="vue">La vue du menu à sélectionner</param>
     private void SelectionnerMenu(VueMenu vue)
     {
         this.vmPageMenu.MenuSelectionne = vue.Menu;
@@ -202,6 +226,8 @@ public partial class MainWindow : Window
             VuePlat vue = new VuePlat(plat);
 
             vue.MouseDown += (s, e) => this.SelectionnerPlat(vue);
+            vue.MouseDoubleClick += (s, e) => this.OuvrirDetailPlat(vue);
+
             vue.Height = 20;
             vue.HorizontalAlignment = HorizontalAlignment.Center;
             vue.Margin = new Thickness(0, 0, 20, 0);
@@ -233,6 +259,9 @@ public partial class MainWindow : Window
         }
     }
 
+    /// <summary>
+    /// Rafraîchit la liste des menus affichés
+    /// </summary>
     private async Task ChargerMenus()
     {
         this.PanelListeMenu.Children.Clear();

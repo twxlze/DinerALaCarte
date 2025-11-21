@@ -65,9 +65,9 @@ namespace IHM_Footies
         #region Plat
 
         /// <summary>
-        /// 
+        /// Permet de naviguer vers la page des plats
         /// </summary>
-        /// <param name="fenetreActuelle"></param>
+        /// <param name="fenetreActuelle">La fenêtre actuelle à fermer</param>
         public static void AllerPlat(Window fenetreActuelle)
         {
             VuePagePlat vuePlats = new VuePagePlat();
@@ -75,9 +75,15 @@ namespace IHM_Footies
             fenetreActuelle.Close();
         }
 
-        public static void AllerDetailPlat(Window fenetreActuelle, VMPlat plat)
+        /// <summary>
+        /// Permet de naviguer vers la fenêtre de détail d'un plat
+        /// </summary>
+        /// <param name="fenetreActuelle">La fenêtre actuelle à fermer</param>
+        /// <param name="plat">Le plat à afficher en détail</param>
+        /// <param name="provenance">La fenêtre de provenance (optionnel, par défaut "Plat")</param>
+        public static void AllerDetailPlat(Window fenetreActuelle, VMPlat plat, string provenance = "Plat")
         {
-            VuePagePlatDetail fenetre = new VuePagePlatDetail(plat);
+            VuePagePlatDetail fenetre = new VuePagePlatDetail(plat, provenance);
             fenetre.Show();
             fenetreActuelle.Close();
         }

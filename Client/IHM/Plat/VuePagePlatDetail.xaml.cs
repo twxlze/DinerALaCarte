@@ -23,23 +23,40 @@ namespace IHM_Footies.Plat
     {
         #region Attributs
         private VMPagePlat vmPagePlat;
+        private string provenance;
         #endregion
 
         #region Constructeurs
-        public VuePagePlatDetail(VMPlat vmPlat)
+        /// <summary>
+        /// Constructeur de la vue de détail d'un plat
+        /// </summary>
+        /// <param name="vmPlat">Le plat à afficher</param>
+        /// <param name="provenance">La page de provenance ("Plat" ou "Accueil")</param>
+        public VuePagePlatDetail(VMPlat vmPlat, string provenance = "Plat")
         {
             InitializeComponent();
             this.vmPagePlat = new VMPagePlat();
             this.vmPagePlat.PlatSelectionne = vmPlat;
+            this.provenance = provenance;
             this.DataContext = this.vmPagePlat;
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
         }
         #endregion
 
         #region Méthodes
+        /// <summary>
+        /// Gère le clic sur le bouton Retour en fonction de la page de provenance
+        /// </summary>
         private void RetourAPlat_Click(object sender, RoutedEventArgs e)
         {
-            Navigation.AllerPlat(this);
+            if (this.provenance == "Accueil")
+            {
+                Navigation.AllerAccueil(this);
+            }
+            else
+            {
+                Navigation.AllerPlat(this);
+            }
         }
         #endregion
     }
