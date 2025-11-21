@@ -205,7 +205,7 @@ namespace IHM_Footies
                 }
             }
             else 
-            {
+            {   
                 TextBlock aucunResultat = new TextBlock
                 {
                     Text = "Aucun résultat trouvé",

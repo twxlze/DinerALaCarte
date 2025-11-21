@@ -105,11 +105,12 @@ namespace IHM_Footies.Menu
 
         private async void RechercheMenu_Click(object sender, RoutedEventArgs e)
         {
-            if (!string.IsNullOrWhiteSpace(this.vmPageMenu.TexteRecherche))
+            this.PanelListeMenu.Children.Clear();
+            this.vueMenu.Clear();
+            await this.vmPageMenu.ChercherMenus(this.vmPageMenu.TexteRecherche);
+
+            if (this.vmPageMenu.VMMenu.Count > 0)
             {
-                this.PanelListeMenu.Children.Clear();
-                this.vueMenu.Clear();
-                await this.vmPageMenu.ChercherMenus(this.vmPageMenu.TexteRecherche);
                 foreach (VMMenu menu in this.vmPageMenu.VMMenu)
                 {
                     VueMenu vue = new VueMenu(menu);
@@ -121,7 +122,15 @@ namespace IHM_Footies.Menu
             }
             else
             {
-                this.RafraichirListe();
+                TextBlock aucunResultat = new TextBlock
+                {
+                    Text = "Aucun résultat trouvé",
+                    Foreground = Brushes.Gray,
+                    FontSize = 16,
+                    HorizontalAlignment = HorizontalAlignment.Center,
+                    Margin = new Thickness(0, 20, 0, 0)
+                };
+                this.PanelListeMenu.Children.Add(aucunResultat);
             }
         }
         #endregion
@@ -214,6 +223,11 @@ namespace IHM_Footies.Menu
                     MessageBoxButton.OK,
                     MessageBoxImage.Warning);
             }
+        }
+
+        private void BoutonRetour_Click(object sender, RoutedEventArgs e)
+        {
+            this.RafraichirListe();
         }
         #endregion
 
