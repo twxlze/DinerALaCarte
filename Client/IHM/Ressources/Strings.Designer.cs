@@ -106,7 +106,7 @@ namespace IHM_Footies.Ressources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Allergies :.
+        ///   Recherche une chaîne localisée semblable à Allergies.
         /// </summary>
         public static string Allergie {
             get {
@@ -277,7 +277,7 @@ namespace IHM_Footies.Ressources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Goûts :.
+        ///   Recherche une chaîne localisée semblable à Goûts.
         /// </summary>
         public static string Gout {
             get {
@@ -354,6 +354,42 @@ namespace IHM_Footies.Ressources {
         public static string mail {
             get {
                 return ResourceManager.GetString("mail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Apéritif(s).
+        /// </summary>
+        public static string MenuAperitif {
+            get {
+                return ResourceManager.GetString("MenuAperitif", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Dessert(s).
+        /// </summary>
+        public static string MenuDessert {
+            get {
+                return ResourceManager.GetString("MenuDessert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Entrée(s).
+        /// </summary>
+        public static string MenuEntree {
+            get {
+                return ResourceManager.GetString("MenuEntree", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Plat(s).
+        /// </summary>
+        public static string MenuPlat {
+            get {
+                return ResourceManager.GetString("MenuPlat", resourceCulture);
             }
         }
         
@@ -439,7 +475,7 @@ namespace IHM_Footies.Ressources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Plat favori :.
+        ///   Recherche une chaîne localisée semblable à Plat favori.
         /// </summary>
         public static string PlatFavori {
             get {

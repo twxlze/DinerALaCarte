@@ -3,9 +3,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:IHM_Footies.GroupeInvite"
+        xmlns:local="clr-namespace:IHM_Footies.Menu"
+        xmlns:res="clr-namespace:IHM_Footies.Ressources"
         mc:Ignorable="d"
-        Title="VuePageDetailInviteDansGroupe" Height="450" Width="800"
+        Title="VuePageDetailMenu" Height="450" Width="800"
         Background="#F9F9F9"
         WindowStyle="None"
         AllowsTransparency="True">
@@ -52,7 +53,7 @@
         </Border>
 
         <StackPanel Grid.Column="0" Margin="5" VerticalAlignment="Bottom">
-            <Button Content="Retour" Height="40"
+            <Button Content="{x:Static res:Strings.BoutonRetour}" Height="40"
             Style="{StaticResource StyleBouton}"
             Click="RetourAuMenu_Click"/>
         </StackPanel>
@@ -70,7 +71,7 @@
 
                 <!-- apéritifs -->
                 <StackPanel Grid.Row="0" Grid.Column="0" Margin="5">
-                    <TextBlock Text="Apéritif(s)" FontSize="14" FontWeight="SemiBold" 
+                    <TextBlock Text="{x:Static res:Strings.MenuAperitif}" FontSize="14" FontWeight="SemiBold" 
                                Foreground="#B44B3E" Margin="0,0,0,5" HorizontalAlignment="Center"/>
                     <Border BorderBrush="Gray" BorderThickness="1" MaxHeight="150">
                         <ScrollViewer VerticalScrollBarVisibility="Auto">
@@ -81,7 +82,7 @@
 
                 <!-- entrées -->
                 <StackPanel Grid.Row="0" Grid.Column="1" Margin="5">
-                    <TextBlock Text="Entrée(s)" FontSize="14" FontWeight="SemiBold" 
+                    <TextBlock Text="{x:Static res:Strings.MenuEntree}" FontSize="14" FontWeight="SemiBold" 
                                Foreground="#B44B3E" Margin="0,0,0,5" HorizontalAlignment="Center"/>
                     <Border BorderBrush="Gray" BorderThickness="1" MaxHeight="150">
                         <ScrollViewer VerticalScrollBarVisibility="Auto">
@@ -92,7 +93,7 @@
 
                 <!-- plats -->
                 <StackPanel Grid.Row="1" Grid.Column="0" Margin="5">
-                    <TextBlock Text="Plat(s)" FontSize="14" FontWeight="SemiBold" 
+                    <TextBlock Text="{x:Static res:Strings.MenuPlat}" FontSize="14" FontWeight="SemiBold" 
                                Foreground="#B44B3E" Margin="0,0,0,5" HorizontalAlignment="Center"/>
                     <Border BorderBrush="Gray" BorderThickness="1" MaxHeight="150">
                         <ScrollViewer VerticalScrollBarVisibility="Auto">
@@ -103,7 +104,7 @@
 
                 <!-- desserts -->
                 <StackPanel Grid.Row="1" Grid.Column="1" Margin="5">
-                    <TextBlock Text="Dessert(s)" FontSize="14" FontWeight="SemiBold" 
+                    <TextBlock Text="{x:Static res:Strings.MenuDessert}" FontSize="14" FontWeight="SemiBold" 
                                Foreground="#B44B3E" Margin="0,0,0,5" HorizontalAlignment="Center"/>
                     <Border BorderBrush="Gray" BorderThickness="1" MaxHeight="150">
                         <ScrollViewer VerticalScrollBarVisibility="Auto">
