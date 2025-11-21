@@ -259,10 +259,10 @@
         </Border>
 
         <!-- Boutons -->
-        <Button Grid.RowSpan="2" Grid.Column="1" Content="Ajouter un groupe d'invités" HorizontalAlignment="Left" Margin="40,0,0,30" Grid.Row="6" VerticalAlignment="Bottom" Height="40" Width="240" Style="{StaticResource StyleBoutonInvite}" Click="BoutonAjouterGroupeInvite_Click" />
-        <Button Grid.Column="1" Content="Modifier un groupe d'invités" HorizontalAlignment="Right" Margin="0,0,40,30" Grid.Row="7" VerticalAlignment="Bottom" Height="40" Width="240" Style="{StaticResource StyleBoutonInvite}" Cursor="Hand" Click="BoutonModifierGroupeInvite_Click"/>
-        <Button Grid.Column="1" Content="Supprimer un groupe d'invités" HorizontalAlignment="Center" Grid.Row="7" VerticalAlignment="Top" Height="40" Width="270" Style="{StaticResource StyleBoutonInvite}" Margin="0,64,0,0" Grid.RowSpan="2" Click="BoutonSupprimerGroupeInvite_Click"/>
-        <TextBlock Grid.Column="1" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Gestion des Groupe d'invités" VerticalAlignment="Top" FontWeight="Bold" FontSize="20" Foreground="#B44B3E" Margin="0,20,0,0"/>
+        <Button Grid.RowSpan="2" Grid.Column="1" Content="{x:Static res:Strings.AjouterGroupeInvite}" HorizontalAlignment="Left" Margin="40,0,0,30" Grid.Row="6" VerticalAlignment="Bottom" Height="40" Width="240" Style="{StaticResource StyleBoutonInvite}" Click="BoutonAjouterGroupeInvite_Click" />
+        <Button Grid.Column="1" Content="{x:Static res:Strings.ModifierGroupeInvite}" HorizontalAlignment="Right" Margin="0,0,40,30" Grid.Row="7" VerticalAlignment="Bottom" Height="40" Width="240" Style="{StaticResource StyleBoutonInvite}" Cursor="Hand" Click="BoutonModifierGroupeInvite_Click"/>
+        <Button Grid.Column="1" Content="{x:Static res:Strings.SupprimerGroupeInvite}" HorizontalAlignment="Center" Grid.Row="7" VerticalAlignment="Top" Height="40" Width="270" Style="{StaticResource StyleBoutonInvite}" Margin="0,64,0,0" Grid.RowSpan="2" Click="BoutonSupprimerGroupeInvite_Click"/>
+        <TextBlock Grid.Column="1" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{x:Static res:Strings.GestionGroupeInvite}" VerticalAlignment="Top" FontWeight="Bold" FontSize="20" Foreground="#B44B3E" Margin="0,20,0,0"/>
 
     </Grid>
 </Window>
