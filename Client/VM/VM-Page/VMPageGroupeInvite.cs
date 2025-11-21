@@ -61,6 +61,7 @@ namespace VM_Footies
 
         /// <summary>
         /// Nom du groupe sélectionné
+        /// Sert à afficher le nom du groupe pour la VueDetailInviteDansGroupe
         /// </summary>
         public string NomGroupeSelectionne
         {

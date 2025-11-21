@@ -67,7 +67,7 @@ namespace IHM_Footies.Menu
             {
                 VueMenu vue = new VueMenu(menu);
                 vue.MouseDown += (s, e) => this.SelectionnerMenu(vue);
-                vue.MouseDoubleClick += (s, e) => this.OuvrirModification(vue);
+                vue.MouseDoubleClick += (s, e) => this.OuvrirDetailMenu(vue);
                 this.vueMenu.Add(vue);
                 this.PanelListeMenu.Children.Add(vue);
             }
@@ -77,18 +77,15 @@ namespace IHM_Footies.Menu
         /// Ouvre la fenêtre de modification d'un menu
         /// </summary>
         /// <param name="vue"> La vue du menu à modifier </param>
-        private async Task OuvrirModification(VueMenu vue)
+        private async Task OuvrirDetailMenu(VueMenu vue)
         {
-            VMMenu memoire = new VMMenu(vue.Menu);
-
-            await this.vmPageMenu.ChargerPlatsDansMenu(memoire);
-
-            VueFormulaireMenu fenetre = new VueFormulaireMenu(vue.Menu);
-            bool? result = fenetre.ShowDialog();
-            if (result == true)
+            if (this.vmPageMenu.MenuSelectionne != null)
             {
-                //vue.Menu.ModifierMenu(memoire);
-                await this.vmPageMenu.ModifierMenu(vue.Menu);
+               Navigation.AllerDetailMenu(this, this.vmPageMenu.MenuSelectionne);
+            }
+            else
+            {
+                MessageBox.Show( "Veuillez sélectionner un menu à modifier.","Aucun menu sélectionné",MessageBoxButton.OK,MessageBoxImage.Warning);
             }
         }
 
@@ -117,7 +114,7 @@ namespace IHM_Footies.Menu
                 {
                     VueMenu vue = new VueMenu(menu);
                     vue.MouseDown += (s, ev) => this.SelectionnerMenu(vue);
-                    vue.MouseDoubleClick += (s, ev) => this.OuvrirModification(vue);
+                    vue.MouseDoubleClick += (s, ev) => this.OuvrirDetailMenu(vue);
                     this.vueMenu.Add(vue);
                     this.PanelListeMenu.Children.Add(vue);
                 }

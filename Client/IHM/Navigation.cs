@@ -9,6 +9,7 @@ using IHM_Footies.GroupeInvite;
 using IHM_Footies.Invitations;
 using IHM_Footies.Invite;
 using IHM_Footies.Menu;
+using IHM_Footies.Plat;
 using IHM_Footies.Reglages;
 using VM_Footies.VM;
 
@@ -30,6 +31,7 @@ namespace IHM_Footies
             fenetreActuelle.Close();
         }
 
+        #region Invite
         /// <summary>
         /// Permet de naviguer vers la fenêtre des invités
         /// </summary>
@@ -58,17 +60,37 @@ namespace IHM_Footies
             fenetre.Show();
             fenetreActuelle.Close();
         }
+        #endregion
+
+        #region Plat
 
         /// <summary>
-        /// 
+        /// Permet de naviguer vers la page des plats
         /// </summary>
-        /// <param name="fenetreActuelle"></param>
+        /// <param name="fenetreActuelle">La fenêtre actuelle à fermer</param>
         public static void AllerPlat(Window fenetreActuelle)
         {
             VuePagePlat vuePlats = new VuePagePlat();
             vuePlats.Show();
             fenetreActuelle.Close();
         }
+
+        /// <summary>
+        /// Permet de naviguer vers la fenêtre de détail d'un plat
+        /// </summary>
+        /// <param name="fenetreActuelle">La fenêtre actuelle à fermer</param>
+        /// <param name="plat">Le plat à afficher en détail</param>
+        /// <param name="provenance">La fenêtre de provenance (optionnel, par défaut "Plat")</param>
+        public static void AllerDetailPlat(Window fenetreActuelle, VMPlat plat, string provenance = "Plat")
+        {
+            VuePagePlatDetail fenetre = new VuePagePlatDetail(plat, provenance);
+            fenetre.Show();
+            fenetreActuelle.Close();
+        }
+
+        #endregion
+
+        #region Groupe invités
 
         /// <summary>
         /// Permet de naviguer vers la fenêtre des groupes d'invités
@@ -98,6 +120,9 @@ namespace IHM_Footies
             fenetre.Show();
             fenetreActuelle.Close();
         }
+        #endregion
+
+        #region Menu
 
         /// <summary>
         /// Permet de naviguer vers la fenêtre de la page des menus
@@ -122,6 +147,19 @@ namespace IHM_Footies
         }
 
         /// <summary>
+        /// Permet de naviguer vers la fenêtre de détail d'un menu
+        /// </summary>
+        /// <param name="fenetreActuelle"> La fenêtre actuelle à fermer </param>
+        /// <param name="menu"> Le menu à afficher en détail </param>
+        public static void AllerDetailMenu(Window fenetreActuelle, VMMenu menu)
+        {
+            VuePageMenuDetail fenetre = new VuePageMenuDetail(menu);
+            fenetre.Show();
+            fenetreActuelle.Close();
+        }
+        #endregion
+
+        /// <summary>
         /// Aller à la page des réglages
         /// </summary>
         /// <param name="fenetreActuelle">La fenêtre actuelle</param>
@@ -140,6 +178,8 @@ namespace IHM_Footies
         {
             fenetreActuelle.Close();
         }
+
+        #region Invitation
 
         /// <summary>
         /// Aller à la page invitations
@@ -162,6 +202,7 @@ namespace IHM_Footies
             vueFormulaireInvitation.Show();
             fenetreActuelle.Close();
         }
+        #endregion
 
     }
 }
