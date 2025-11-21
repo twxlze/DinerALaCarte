@@ -37,6 +37,8 @@ namespace IHM_Footies
             this.vueGroupeInvite = new List<VueGroupeInvite>();
             this.vmPageGroupeInvite = new VMPageGroupeInvite();
             this.vmPageGroupeInvite.PropertyChanged += VMPageGroupeInvite_PropertyChanged;
+
+            this.DataContext = this.vmPageGroupeInvite;
             this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             this.RafraichirListe();
         }
@@ -177,6 +179,49 @@ namespace IHM_Footies
             {
                 MessageBox.Show("Veuillez sélectionner un groupe à supprimer.","Aucun groupe sélectionné",MessageBoxButton.OK,MessageBoxImage.Warning);
             }
+        }
+
+        /// <summary>
+        /// Recherche les groupe invités selon le texte saisi
+        /// </summary>
+        /// <param name="sender"> L'expéditeur </param>
+        /// <param name="e"> Les arguments de l'événement </param>
+        private async void RecherchegroupeInvite_Click(object sender, RoutedEventArgs e)
+        {
+            this.PanelListeGroupeInvites.Children.Clear();
+            this.vueGroupeInvite.Clear();
+
+            await this.vmPageGroupeInvite.ChercherGroupeInvite(this.vmPageGroupeInvite.TexteRechercheGroupe);
+
+            if (this.vmPageGroupeInvite.VMGroupeInvite.Count != 0)
+            {
+                foreach (VMGroupeInvite groupe in this.vmPageGroupeInvite.VMGroupeInvite)
+                {
+                    VueGroupeInvite vue = new VueGroupeInvite(groupe);
+                    vue.MouseDown += (s, e) => this.SelectionnerGroupe(vue);
+                    vue.MouseDoubleClick += (s, e) => this.OuvrirDetailGroupe(vue);
+                    this.vueGroupeInvite.Add(vue);
+                    this.PanelListeGroupeInvites.Children.Add(vue);
+                }
+            }
+            else 
+            {
+                TextBlock aucunResultat = new TextBlock
+                {
+                    Text = "Aucun résultat trouvé",
+                    Foreground = Brushes.Gray,
+                    FontSize = 16,
+                    HorizontalAlignment = HorizontalAlignment.Center,
+                    Margin = new Thickness(0, 20, 0, 0)
+                };
+
+                this.PanelListeGroupeInvites.Children.Add(aucunResultat);
+            }
+        }
+
+        private void BoutonRetour_Click(object sender, RoutedEventArgs e)
+        {
+            this.RafraichirListe();
         }
 
 
