@@ -32,6 +32,32 @@ namespace API_Footies.Data.DAO
                         {"@Ingredients", plat.Ingredients ?? ""}
                     };
                     plat.Id = connection.ExecuteInsert("INSERT INTO Plat (Nom,Categorie,Description,Ingredients) VALUES (@Nom,@Categorie,@Description,@Ingredients)", parameters);
+
+                    // Ajouter les allergènes dans la table de liaison
+                    if (plat.Allergenes != null && plat.Allergenes.Count > 0)
+                    {
+                        foreach (NomAllergene allergene in plat.Allergenes)
+                        {
+                            // Récupérer l'ID de l'allergène à partir de son nom
+                            var parametersAllergene = new Dictionary<string, object>()
+                            {
+                                {"@Nom", allergene.ToString() }
+                            };
+                            var dataTableAllergene = connection.ExecuteQuery("SELECT IDAllergene FROM Allergene WHERE Nom = @Nom", parametersAllergene);
+                            
+                            if (dataTableAllergene.Rows.Count > 0)
+                            {
+                                long idAllergene = (long)dataTableAllergene.Rows[0]["IDAllergene"];
+                                var parametersLiaison = new Dictionary<string, object>()
+                                {
+                                    {"@IdPlat", plat.Id },
+                                    {"@IdAllergene", idAllergene }
+                                };
+                                connection.ExecuteQuery("INSERT INTO Plat_Allergene (IDPlat, IDAllergene) VALUES (@IdPlat, @IdAllergene)", parametersLiaison);
+                            }
+                        }
+                    }
+
                     ajoute = true;
                 }
 
@@ -87,7 +113,32 @@ namespace API_Footies.Data.DAO
                             categorie = CategoriePlat.plat;
                         }
 
-                        Plat plat = new Plat((long)row["idPlat"], row["nom"].ToString(),row["description"].ToString(), categorie, row["ingredients"].ToString());
+                        long idPlat = (long)row["idPlat"];
+
+                        // Récupérer les allergènes du plat
+                        List<NomAllergene> allergenesPlat = new List<NomAllergene>();
+                        var parametersAllergene = new Dictionary<string, object>()
+                        {
+                            {"@IdPlat", idPlat }
+                        };
+
+                        var dataTableAllergenes = connection.ExecuteQuery(
+                            @"SELECT a.Nom 
+                              FROM Allergene a
+                              INNER JOIN Plat_Allergene pa ON a.IDAllergene = pa.IDAllergene 
+                              WHERE pa.IDPlat = @IdPlat",
+                            parametersAllergene);
+
+                        foreach (DataRow? rowAllergene in dataTableAllergenes.Rows)
+                        {
+                            NomAllergene allergene;
+                            if (Enum.TryParse(rowAllergene["Nom"].ToString(), true, out allergene))
+                            {
+                                allergenesPlat.Add(allergene);
+                            }
+                        }
+
+                        Plat plat = new Plat(idPlat, row["nom"].ToString(), row["description"].ToString(), categorie, row["ingredients"].ToString(), allergenesPlat.Count > 0 ? allergenesPlat : null);
                         listePlat.Add(plat);
                     }
                 }
@@ -115,6 +166,39 @@ namespace API_Footies.Data.DAO
                         {"@Ingredients", plat.Ingredients ?? ""}
                     };
                     connection.ExecuteQuery("UPDATE Plat SET Nom = @Nom, Categorie = @Categorie, Description = @Description, Ingredients = @Ingredients WHERE IDPlat = @Id", parameters);
+
+                    // Supprimer les anciennes liaisons avec les allergènes
+                    var parametersDelete = new Dictionary<string, object>()
+                    {
+                        {"@IdPlat", plat.Id }
+                    };
+                    connection.ExecuteQuery("DELETE FROM Plat_Allergene WHERE IDPlat = @IdPlat", parametersDelete);
+
+                    // Ajouter les nouvelles liaisons avec les allergènes
+                    if (plat.Allergenes != null && plat.Allergenes.Count > 0)
+                    {
+                        foreach (NomAllergene allergene in plat.Allergenes)
+                        {
+                            // Récupérer l'ID de l'allergène à partir de son nom
+                            var parametersAllergene = new Dictionary<string, object>()
+                            {
+                                {"@Nom", allergene.ToString() }
+                            };
+                            var dataTableAllergene = connection.ExecuteQuery("SELECT IDAllergene FROM Allergene WHERE Nom = @Nom", parametersAllergene);
+                            
+                            if (dataTableAllergene.Rows.Count > 0)
+                            {
+                                long idAllergene = (long)dataTableAllergene.Rows[0]["IDAllergene"];
+                                var parametersLiaison = new Dictionary<string, object>()
+                                {
+                                    {"@IdPlat", plat.Id },
+                                    {"@IdAllergene", idAllergene }
+                                };
+                                connection.ExecuteQuery("INSERT INTO Plat_Allergene (IDPlat, IDAllergene) VALUES (@IdPlat, @IdAllergene)", parametersLiaison);
+                            }
+                        }
+                    }
+
                     modifie = true;
                 }
             }
@@ -131,6 +215,14 @@ namespace API_Footies.Data.DAO
                 }
                 else
                 {
+                    // Supprimer les liaisons avec les allergènes
+                    var parametersLiaison = new Dictionary<string, object>()
+                    {
+                        {"@IdPlat", id }
+                    };
+                    connection.ExecuteQuery("DELETE FROM Plat_Allergene WHERE IDPlat = @IdPlat", parametersLiaison);
+
+                    // Supprimer le plat
                     var parameters = new Dictionary<string, object>()
                     {
                         {"@Id", id }
@@ -168,7 +260,32 @@ namespace API_Footies.Data.DAO
                             categorie = CategoriePlat.plat;
                         }
 
-                        Plat plat = new Plat((long)row["idPlat"], row["nom"].ToString(), row["description"]?.ToString(), categorie, row["Ingredients"]?.ToString());
+                        long idPlat = (long)row["idPlat"];
+
+                        // Récupérer les allergènes du plat
+                        List<NomAllergene> allergenesPlat = new List<NomAllergene>();
+                        var parametersAllergene = new Dictionary<string, object>()
+                        {
+                            {"@IdPlat", idPlat }
+                        };
+
+                        var dataTableAllergenes = connection.ExecuteQuery(
+                            @"SELECT a.Nom 
+                              FROM Allergene a
+                              INNER JOIN Plat_Allergene pa ON a.IDAllergene = pa.IDAllergene 
+                              WHERE pa.IDPlat = @IdPlat",
+                            parametersAllergene);
+
+                        foreach (DataRow? rowAllergene in dataTableAllergenes.Rows)
+                        {
+                            NomAllergene allergene;
+                            if (Enum.TryParse(rowAllergene["Nom"].ToString(), true, out allergene))
+                            {
+                                allergenesPlat.Add(allergene);
+                            }
+                        }
+
+                        Plat plat = new Plat(idPlat, row["nom"].ToString(), row["description"]?.ToString(), categorie, row["Ingredients"]?.ToString(), allergenesPlat.Count > 0 ? allergenesPlat : null);
                         listePlat.Add(plat);
                     }
                 }
