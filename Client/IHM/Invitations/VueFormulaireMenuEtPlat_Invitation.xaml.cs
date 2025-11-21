@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using METIER_Footies.Metier;
 using VM_Footies.VM;
 
 namespace IHM_Footies.Invitations
@@ -60,6 +61,9 @@ namespace IHM_Footies.Invitations
         {
             await this.invitation.ChargerMenu();
         }
+
+
+        
 
         #endregion
 

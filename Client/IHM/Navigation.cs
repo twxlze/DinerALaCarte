@@ -50,7 +50,7 @@ namespace IHM_Footies
         }
 
         /// <summary>
-        /// 
+        /// Aller à la page des plats
         /// </summary>
         /// <param name="fenetreActuelle"></param>
         public static void AllerPlat(Window fenetreActuelle)
@@ -155,6 +155,5 @@ namespace IHM_Footies
             vueFormulaireInvitation.Show();
             fenetreActuelle.Close();
         }
-
     }
 }

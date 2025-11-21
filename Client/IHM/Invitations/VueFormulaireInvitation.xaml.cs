@@ -150,7 +150,32 @@ namespace IHM_Footies.Invitations
         /// <param name="e"></param>
         private void BoutonFormulaireInvitationMenuPlat_Click(object sender, RoutedEventArgs e)
         {
-            Navigation.AllerFormulaireInvitationPlatMenu(this);
+            //Navigation.AllerFormulaireInvitationPlatMenu(this);
+            // Validation des données de la première fenêtre
+            if (string.IsNullOrWhiteSpace(this.invitation.Nom))
+            {
+                MessageBox.Show("Veuillez saisir un nom pour l'invitation.", "Validation", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            if (!this.invitation.InvitesListe.Any(i => i.EstSelectionne))
+            {
+                MessageBox.Show("Veuillez sélectionner au moins un invité.", "Validation", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            if (!this.invitation.GroupesInvitesListe.Any(g => g.EstSelectionne))
+            {
+                MessageBox.Show("Veuillez sélectionner un groupe d'invités.", "Validation", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            // Ouvrir la deuxième fenêtre en passant le même ViewModel
+            VueFormulaireMenuEtPlat_Invitation fenetreMenuPlat = new VueFormulaireMenuEtPlat_Invitation(invitation);
+            fenetreMenuPlat.ShowDialog();
+
+            // Fermer la première fenêtre si nécessaire
+            this.Close();
         }
 
 

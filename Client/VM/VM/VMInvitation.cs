@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -25,6 +26,13 @@ namespace VM_Footies.VM
         #endregion
 
         public event PropertyChangedEventHandler? PropertyChanged;
+
+        // Méthode pour récupérer les éléments sélectionnés
+        public List<Invite> ObtenirInvitesSelectionnes()
+        {
+            return InvitesListe.Where(i => i.EstSelectionne).Select(i => i.Invite).ToList();
+        }
+
 
         #region PROPRIETES
         /// <summary>
@@ -342,7 +350,7 @@ namespace VM_Footies.VM
         /// <summary>
         /// Charge les invités depuis l'API et remplit la liste sélectionnable
         /// </summary>
-        public async Task ChargerInvites()
+        public async Task<List<Invite>> ChargerInvites()
         {
             InviteDAO inviteDAO = new InviteDAO();
             List<Invite> tousLesInvites = await inviteDAO.ObtenirTout();
@@ -366,12 +374,13 @@ namespace VM_Footies.VM
                     vmInviteExistant.EstSelectionne = true;
                 }
             }
+            return tousLesInvites;
         }
 
         /// <summary>
         /// Charger tous les groupes d'invités
         /// </summary>
-        public async Task ChargerGroupeInvite()
+        public async Task<List<GroupeInvites>> ChargerGroupeInvite()
         {
             GroupeInviteDAO groupeInviteDAO = new GroupeInviteDAO();
             List<GroupeInvites> tousLesGroupeInvites = await groupeInviteDAO.ListeGroupeInvites();
@@ -395,12 +404,13 @@ namespace VM_Footies.VM
                     vmGroupeInviteExistant.EstSelectionne = true;
                 }
             }
+            return tousLesGroupeInvites;
         }
 
         /// <summary>
         /// Charger tous les menus
         /// </summary>
-        public async Task ChargerMenu()
+        public async Task<List<Menu>> ChargerMenu()
         {
             MenuDAO menuDAO = new MenuDAO();
             List<Menu> tousLesMenus = await menuDAO.ObtenirTousLesMenus();
@@ -422,6 +432,7 @@ namespace VM_Footies.VM
                     vmMenuExistant.EstSelectionne = true;
                 }
             }
+            return tousLesMenus;
         }
 
 
