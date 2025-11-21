@@ -11,8 +11,11 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using IHM_Footies.Allergenes;
+using METIER_Footies.Metier;
 using VM_Footies;
 using VM_Footies.VM;
+using VM_Footies.VM_Element_Selectionne;
 
 namespace IHM_Footies.Plat
 {
@@ -40,10 +43,35 @@ namespace IHM_Footies.Plat
             this.provenance = provenance;
             this.DataContext = this.vmPagePlat;
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            this.RafraichirListe();
         }
         #endregion
 
         #region Méthodes
+        /// <summary>
+        /// Rafraîchit la liste des allergènes affichés pour le plat
+        /// </summary>
+        private void RafraichirListe()
+        {
+            this.PanelAllergenes.Children.Clear();
+            
+            if (this.vmPagePlat.PlatSelectionne != null)
+            {
+                this.vmPagePlat.ChargerAllergenesDansPlat(this.vmPagePlat.PlatSelectionne);
+                
+                foreach (VMAllergeneSelectionne allergene in this.vmPagePlat.PlatSelectionne.AllergenesListe)
+                {
+                    if (allergene.EstSelectionne)
+                    {
+                        Allergene allergeneMetier = new Allergene(0, allergene.Nom);
+                        VMAllergene vmAllergene = new VMAllergene(allergeneMetier);
+                        VueAllergenes vueAllergene = new VueAllergenes(vmAllergene);
+                        this.PanelAllergenes.Children.Add(vueAllergene);
+                    }
+                }
+            }
+        }
+
         /// <summary>
         /// Gère le clic sur le bouton Retour en fonction de la page de provenance
         /// </summary>

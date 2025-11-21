@@ -59,6 +59,25 @@ namespace VM_Footies
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
+        public List<VMAllergeneSelectionne> ListeVMAllergenes
+        {
+            get
+            {
+                List<VMAllergeneSelectionne> allergenes = new List<VMAllergeneSelectionne>();
+                if (this.PlatSelectionne != null)
+                {
+                    foreach (VMAllergeneSelectionne vMAllergene in this.PlatSelectionne.AllergenesListe)
+                    {
+                        if (vMAllergene.EstSelectionne)
+                        {
+                            allergenes.Add(vMAllergene);
+                        }
+                    }
+                }
+                return allergenes;
+            }
+        }
+
         #region Constructeurs
         /// <summary>
         // Constructeur par défaut d'une page d'un plat
@@ -193,14 +212,12 @@ namespace VM_Footies
         /// Charge tous les allergènes disponibles pour un plat
         /// </summary>
         /// <param name="plat">Le VMPlat pour lequel charger les allergènes</param>
-        public void ChargerAllergenesDansPlat(VMPlat plat)
+        public async Task ChargerAllergenesDansPlat(VMPlat plat)
         {
             try
             {
-                // Récupère tous les allergènes de l'énumération
                 var tousLesAllergenes = System.Enum.GetValues(typeof(NomAllergene)).Cast<NomAllergene>();
 
-                // Récupère les allergènes déjà sélectionnés pour ce plat
                 HashSet<NomAllergene> allergenesSelectionnes = new HashSet<NomAllergene>();
                 if (plat.Plat.Allergenes != null)
                 {
@@ -210,7 +227,6 @@ namespace VM_Footies
                     }
                 }
 
-                // Crée la liste des VMAllergeneSelectionne
                 plat.AllergenesListe.Clear();
                 foreach (NomAllergene allergene in tousLesAllergenes)
                 {
