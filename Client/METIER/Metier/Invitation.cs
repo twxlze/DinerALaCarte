@@ -83,6 +83,7 @@ namespace METIER_Footies.Metier
             set { invites = value; }
         }
 
+
         /// <summary>
         /// Liste des plats de l'invitation
         /// </summary>
@@ -91,6 +92,8 @@ namespace METIER_Footies.Metier
             get { return plats; }
             set { plats = value; }
         }
+        
+
         #endregion
 
         #region --- Constructeurs ---

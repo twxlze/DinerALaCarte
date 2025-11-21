@@ -177,11 +177,6 @@ namespace IHM_Footies.Invitations
 
         #region boutons
 
-        /// <summary>
-        /// Supprimer une invitation
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private async void BoutonSupprimerInvitation_Click(object sender, RoutedEventArgs e)
         {
             if (this.vmPageInvitation.InvitationSelectionnee != null)
@@ -220,8 +215,28 @@ namespace IHM_Footies.Invitations
             }
         }
 
+        
+        private async void BoutonModifierInvitation_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.vmPageInvitation.InvitationSelectionnee == null)
+            {
+                MessageBox.Show(
+                    "Veuillez sélectionner une invitation à modifier.",
+                    "Aucune invitation sélectionnée",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning);
+                return;
+            }
+            VMInvitation invitationAModifier = new VMInvitation(this.vmPageInvitation.InvitationSelectionnee);
+            await this.vmPageInvitation.ChargerElementsDansInvitation(invitationAModifier);
+            VueFormulaireInvitation fenetre = new VueFormulaireInvitation(invitationAModifier);
+            fenetre.ShowDialog();
+            this.RafraichirListe();
+        }
+        
+
         #endregion
 
-        
+
     }
 }

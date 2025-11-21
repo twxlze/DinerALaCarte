@@ -10,8 +10,10 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Media.TextFormatting;
 using System.Windows.Shapes;
 using VM_Footies.VM;
+using VM_Footies.VM_Page;
 
 namespace IHM_Footies.Invitations
 {
@@ -23,6 +25,7 @@ namespace IHM_Footies.Invitations
 
         #region Attributs
         private VMInvitation invitation;
+        private VMPageInvitation vmPageInvitation;
 
         #endregion
 
@@ -36,12 +39,27 @@ namespace IHM_Footies.Invitations
         public VueFormulaireInvitation(VMInvitation invitation)
         {
             this.invitation = invitation;
+            this.vmPageInvitation = new VMPageInvitation();
+            this.DataContext = this.invitation;
             InitializeComponent();
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            ChargerDonnees();
         }
 
         public VueFormulaireInvitation() : this(new VMInvitation())
         {
+        }
+
+        #endregion
+
+        #region methodes
+
+        /// <summary>
+        /// Charge les données depuis l'API
+        /// </summary>
+        private async Task ChargerDonnees()
+        {
+            await this.vmPageInvitation.ChargerElementsDansInvitation(invitation);
         }
 
         #endregion
@@ -129,8 +147,44 @@ namespace IHM_Footies.Invitations
         }
 
 
+
+
         #endregion
 
+        #region boutons 
+
+        /// <summary>
+        /// Bouton pour aller à la page de formulaire d'invitation plat/menu
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BoutonFormulaireInvitationMenuPlat_Click(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(this.invitation.Nom))
+            {
+                MessageBox.Show("Veuillez saisir un nom pour l'invitation.", "Validation", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            if (!this.invitation.InvitesListe.Any(i => i.EstSelectionne))
+            {
+                MessageBox.Show("Veuillez sélectionner au moins un invité.", "Validation", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            if (!this.invitation.GroupesInvitesListe.Any(g => g.EstSelectionne))
+            {
+                MessageBox.Show("Veuillez sélectionner un groupe d'invités.", "Validation", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            VueFormulaireMenuEtPlat_Invitation fenetreMenuPlat = new VueFormulaireMenuEtPlat_Invitation(invitation);
+            fenetreMenuPlat.ShowDialog();
+
+            this.Close();
+        }
+
+        #endregion
 
     }
 }
