@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using METIER_Footies.Enum;
 using METIER_Footies.Metier;
+using VM_Footies.VM_Element_Selectionne;
 
 namespace VM_Footies.VM
 {
@@ -18,6 +21,7 @@ namespace VM_Footies.VM
     {
         #region Attributs
         private Invite invite;
+        private ObservableCollection<VMAllergeneSelectionne> allergenesListe;
         #endregion
 
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -101,6 +105,27 @@ namespace VM_Footies.VM
         /// Nom complet de l'invité (Prénom + Nom)
         /// </summary>
         public string Identite { get => $"{Prenom} {Nom}"; }
+
+        /// <summary>
+        /// Liste des allergènes du plat
+        /// </summary>
+        public List<NomAllergene>? Allergenes
+        {
+            get => invite.Allergenes;
+        }
+
+        /// <summary>
+        /// Liste observable des allergènes sélectionnables
+        /// </summary>
+        public ObservableCollection<VMAllergeneSelectionne> AllergenesListe
+        {
+            get => allergenesListe;
+            set
+            {
+                allergenesListe = value;
+                Notify("AllergenesListe");
+            }
+        }
         #endregion
 
         #region Constructeurs
@@ -111,23 +136,22 @@ namespace VM_Footies.VM
         public VMInvite(Invite invite)
         {
             this.invite = invite;
+            this.allergenesListe = new ObservableCollection<VMAllergeneSelectionne>();
         }
 
         /// <summary>
         /// Constructeur d'un VMInvite à partir d'un autre VMInvite
         /// </summary>
         /// <param name="modele"> Le VMInvite à copier </param>
-        public VMInvite(VMInvite modele)
+        public VMInvite(VMInvite modele) : this(new Invite(modele.Invite))
         {
-            invite = new Invite(modele.invite);
         }
 
         /// <summary>
         /// Constructeur par défaut d'un VMInvite
         /// </summary>
-        public VMInvite()
+        public VMInvite() : this(new Invite())
         {
-            invite = new Invite();
         }
         #endregion
 
@@ -142,15 +166,42 @@ namespace VM_Footies.VM
         }
 
         /// <summary>
-        /// Modifie les informations de l'invité
+        /// Synchronise la liste des allergènes sélectionnés avec le modèle
         /// </summary>
-        /// <param name="invite"> L'invité avec les nouvelles informations </param>
-        public void ModifierInvite(VMInvite invite)
+        /// <param name="sender">L'expéditeur</param>
+        /// <param name="e">Les arguments de l'événement</param>
+        private void VmAllergene_PropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
-            Nom = invite.Nom;
-            Prenom = invite.Prenom;
-            Telephone = invite.Telephone;
-            Email = invite.Email;
+            if (e.PropertyName == "AllergeneSelectionne")
+            {
+                SynchroniserAllergenesSelectionnes();
+            }
+        }
+
+        /// <summary>
+        /// Met à jour la liste des allergènes sélectionnés dans le modèle
+        /// </summary>
+        public void SynchroniserAllergenesSelectionnes()
+        {
+            List<NomAllergene> allergenesSelectionnes = new List<NomAllergene>();
+            foreach (VMAllergeneSelectionne vmAllergene in this.allergenesListe)
+            {
+                if (vmAllergene.EstSelectionne)
+                {
+                    allergenesSelectionnes.Add(vmAllergene.Allergene);
+                }
+            }
+            this.invite.Allergenes = allergenesSelectionnes;
+            Notify("Allergenes");
+        }
+
+        /// <summary>
+        /// Ajoute un gestionnaire d'événement pour un VMAllergeneSelectionne
+        /// </summary>
+        /// <param name="vmAllergene">L'allergène sélectionnable</param>
+        public void GestionnaireEvenement(VMAllergeneSelectionne vmAllergene)
+        {
+            vmAllergene.PropertyChanged += VmAllergene_PropertyChanged;
         }
         #endregion
     }

@@ -33,12 +33,10 @@ namespace API_Footies.Data.DAO
                     };
                     plat.Id = connection.ExecuteInsert("INSERT INTO Plat (Nom,Categorie,Description,Ingredients) VALUES (@Nom,@Categorie,@Description,@Ingredients)", parameters);
 
-                    // Ajouter les allergènes dans la table de liaison
                     if (plat.Allergenes != null && plat.Allergenes.Count > 0)
                     {
                         foreach (NomAllergene allergene in plat.Allergenes)
                         {
-                            // Récupérer l'ID de l'allergène à partir de son nom
                             var parametersAllergene = new Dictionary<string, object>()
                             {
                                 {"@Nom", allergene.ToString() }

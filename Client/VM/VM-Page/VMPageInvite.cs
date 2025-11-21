@@ -7,8 +7,10 @@ using System.Threading.Tasks;
 using METIER_Footies;
 using METIER_Footies.Data;
 using METIER_Footies.Data.Interfaces;
+using METIER_Footies.Enum;
 using METIER_Footies.Metier;
 using VM_Footies.VM;
+using VM_Footies.VM_Element_Selectionne;
 
 namespace VM_Footies
 {
@@ -151,6 +153,35 @@ namespace VM_Footies
                 this.Notify("VMInvites");
             }
         }
+
+        public async Task ChargerAllergenesDansInvite(VMInvite invite)
+        {
+            try
+            {
+                var tousLesAllergenes = Enum.GetValues(typeof(NomAllergene)).Cast<NomAllergene>();
+                HashSet<NomAllergene> allergenesSelectionnes = new HashSet<NomAllergene>();
+
+                if (invite.Invite.Allergenes != null)
+                {
+                   foreach (NomAllergene allergene in invite.Invite.Allergenes)
+                    {
+                        allergenesSelectionnes.Add(allergene);
+                    }
+                }
+                invite.AllergenesListe.Clear();
+                foreach (NomAllergene allergene in tousLesAllergenes)
+                {
+                    bool estSelectionne = allergenesSelectionnes.Contains(allergene);
+                    VMAllergeneSelectionne vmAllergeneSelectionne = new VMAllergeneSelectionne(allergene, estSelectionne);
+                    invite.GestionnaireEvenement(vmAllergeneSelectionne);
+                    invite.AllergenesListe.Add(vmAllergeneSelectionne);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erreur lors du chargement des allergènes pour l'invité : " + ex.Message);
+            }
+        }   
 
         /// <summary>
         /// Vérifie si un invité avec le même nom et prénom existe déjà

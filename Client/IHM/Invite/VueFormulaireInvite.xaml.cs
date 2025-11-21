@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using VM_Footies;
 using VM_Footies.VM;
 
 namespace IHM_Footies
@@ -24,9 +25,16 @@ namespace IHM_Footies
     {
         #region Attributs
         private VMInvite invite;
-        public VMInvite Invite => this.invite;
+        private VMPageInvite vmPageInvite;
         #endregion
 
+        #region Propriétés
+        /// <summary>
+        /// Invite associée au VMInvite
+        /// </summary>
+        public VMInvite Invite => this.invite;
+
+        #endregion
 
         #region Constructeurs
         /// <summary>
@@ -36,8 +44,9 @@ namespace IHM_Footies
         public VueFormulaireInvite(VMInvite invite)
         {
             this.invite = invite;
+            this.vmPageInvite = new VMPageInvite();
             this.DataContext = this.invite;
-
+            this.vmPageInvite.ChargerAllergenesDansInvite(this.invite);
             InitializeComponent();
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
         }

@@ -19,6 +19,7 @@ namespace METIER_Footies.Metier
         private string prenom;
         private string? telephone; // string pour simplifier avec l'API
         private string? email;
+        private List<Enum.NomAllergene>? allergenes;
         #endregion
 
         #region Propriétés
@@ -89,6 +90,15 @@ namespace METIER_Footies.Metier
             {
                 email = value?.Trim();
             }
+        }
+
+        /// <summary>
+        /// Retourne ou modifie la liste des allergènes du plat
+        /// </summary>
+        public List<Enum.NomAllergene>? Allergenes
+        {
+            get { return allergenes; }
+            set { allergenes = value; }
         }
         #endregion
 

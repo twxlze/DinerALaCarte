@@ -11,8 +11,8 @@
         private string prenom;
         private string telephone;
         private string email;
+        private List<Enum.NomAllergene>? allergenes;
         #endregion
-
 
         #region --- Propriétés ---
 
@@ -62,6 +62,14 @@
             set { email = value; }
         }
 
+        /// <summary>
+        /// Retourne ou modifie la liste des allergènes du plat
+        /// </summary>
+        public List<Enum.NomAllergene>? Allergenes
+        {
+            get { return allergenes; }
+            set { allergenes = value; }
+        }
         #endregion
 
         /// <summary>
