@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using METIER_Footies.Data;
 using METIER_Footies.Metier;
 using VM_Footies.VM_Element_Selectionne;
 
@@ -333,6 +334,64 @@ namespace VM_Footies.VM
             GroupeInvites = invitation.GroupeInvites;
             Invites = invitation.Invites;
             Plats = invitation.Plats;
+
+        }
+
+
+
+        /// <summary>
+        /// Charge les invités depuis l'API et remplit la liste sélectionnable
+        /// </summary>
+        public async Task ChargerInvites()
+        {
+            InviteDAO inviteDAO = new InviteDAO();
+            List<Invite> tousLesInvites = await inviteDAO.ObtenirTout();
+
+            InvitesListe.Clear();
+
+            foreach (Invite invite in tousLesInvites)
+            {
+                VMInviteSelectionne vmInvite = new VMInviteSelectionne(invite, false);
+
+                vmInvite.PropertyChanged += VmElement_PropertyChanged;
+
+                InvitesListe.Add(vmInvite);
+            }
+
+            foreach (Invite inviteExistant in this.Invites)
+            {
+                VMInviteSelectionne? vmInviteExistant = InvitesListe.FirstOrDefault(vm => vm.Invite.Id == inviteExistant.Id);
+                if (vmInviteExistant != null)
+                {
+                    vmInviteExistant.EstSelectionne = true;
+                }
+            }
+        }
+
+        public async Task ChargerGroupeInvite()
+        {
+            GroupeInviteDAO groupeInviteDAO = new GroupeInviteDAO();
+            List<GroupeInvites> tousLesGroupeInvites = await groupeInviteDAO.ListeGroupeInvites();
+
+            groupesInvitesListe.Clear();
+
+            foreach (GroupeInvites groupeInvite in tousLesGroupeInvites)
+            {
+                VMGroupeInviteSelectionne vmGroupeInvite = new VMGroupeInviteSelectionne(groupeInvite, false);
+
+                vmGroupeInvite.PropertyChanged += VmElement_PropertyChanged;
+
+                groupesInvitesListe.Add(vmGroupeInvite);
+            }
+
+            foreach (GroupeInvites groupeInviteExistant in this.GroupeInvites)
+            {
+                VMGroupeInviteSelectionne? vmGroupeInviteExistant = GroupesInvitesListe.FirstOrDefault(vm => vm.GroupeInvite.IdGroupeInvites == groupeInviteExistant.IdGroupeInvites);
+                if (vmGroupeInviteExistant != null)
+                {
+                    vmGroupeInviteExistant.EstSelectionne = true;
+                }
+            }
 
         }
 

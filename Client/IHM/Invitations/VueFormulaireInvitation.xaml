@@ -209,8 +209,6 @@
         <TextBlock Grid.Column="1" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" FontWeight="Bold" FontSize="20" Foreground="#B44B3E" Margin="95,38,0,0"><Run Language="fr-fr" Text="Nom :"/></TextBlock>
         <TextBox Grid.Column="1" Margin="163,43,151,17" Text="{Binding NomMenu, UpdateSourceTrigger=PropertyChanged}"/>
 
-        <!-- Menus -->
-
         <!-- Groupe invités -->
 
         <TextBlock Grid.Column="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Groupe invités" VerticalAlignment="Top" FontWeight="Bold" FontSize="15
@@ -231,10 +229,10 @@
         CornerRadius="10"
         Padding="5" Grid.Row="2">
             <ScrollViewer VerticalScrollBarVisibility="Auto">
-                <ItemsControl ItemsSource="{Binding GroupeInvite}">
+                <ItemsControl ItemsSource="{Binding GroupesInvitesListe}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <CheckBox Content="{Binding NomGroupeInvite}"
+                            <CheckBox Content="{Binding Nom}"
                       IsChecked="{Binding MenuSelectionne}"
                       Margin="5"
                       FontSize="12"
@@ -264,11 +262,11 @@
         CornerRadius="10"
         Padding="5" Grid.Row="2" Grid.RowSpan="6">
             <ScrollViewer VerticalScrollBarVisibility="Auto">
-                <ItemsControl ItemsSource="{Binding Invites}">
+                <ItemsControl ItemsSource="{Binding InvitesListe}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <CheckBox Content="{Binding NomInvite}"
-                              IsChecked="{Binding inviteSelectionne}"
+                            <CheckBox Content="{Binding Identite}"
+                              IsChecked="{Binding EstSelectionne}"
                               Margin="5"
                               FontSize="12"
                               Foreground="#333333"/>

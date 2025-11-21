@@ -36,8 +36,19 @@ namespace IHM_Footies.Invitations
         public VueFormulaireInvitation(VMInvitation invitation)
         {
             this.invitation = invitation;
+            this.DataContext = this.invitation;
             InitializeComponent();
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            ChargerDonnees();
+        }
+
+        /// <summary>
+        /// Charge les données depuis l'API
+        /// </summary>
+        private async Task ChargerDonnees()
+        {
+            await this.invitation.ChargerInvites();
+            await this.invitation.ChargerGroupeInvite();
         }
 
         public VueFormulaireInvitation() : this(new VMInvitation())
