@@ -288,4 +288,10 @@
   <data name="MenuDessert" xml:space="preserve">
     <value>Dessert(s)</value>
   </data>
+  <data name="Ingredient" xml:space="preserve">
+    <value>Ingrédient(s)</value>
+  </data>
+  <data name="Allergene" xml:space="preserve">
+    <value>Allergène(s)</value>
+  </data>
 </root>
