@@ -7,8 +7,10 @@ using System.Threading.Tasks;
 using METIER_Footies;
 using METIER_Footies.Data;
 using METIER_Footies.Data.Interfaces;
+using METIER_Footies.Enum;
 using METIER_Footies.Metier;
 using VM_Footies.VM;
+using VM_Footies.VM_Element_Selectionne;
 
 namespace VM_Footies
 {
@@ -17,8 +19,8 @@ namespace VM_Footies
         #region Attributs
         private List<VMPlat> listeVMPlat;
         private VMPlat platSelectionne;
-        private IPlatDAO PlatDAO;
         private string texteRecherche;
+        private IPlatDAO PlatDAO;
         #endregion
 
         #region Propriétés
@@ -33,6 +35,7 @@ namespace VM_Footies
 
         /// <summary>
         /// Texte de recherche pour filtrer les plats
+        // Liste des VMPlats 
         /// </summary>
         public string TexteRecherche
         {
@@ -43,14 +46,14 @@ namespace VM_Footies
                 Notify("TexteRecherche");
             }
         }
-        #endregion
-
-        public event PropertyChangedEventHandler? PropertyChanged;
 
         /// <summary>
         // Liste des VMPlats 
         /// </summary>
         public List<VMPlat> VMPlat => listeVMPlat;
+        #endregion
+
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         #region Constructeurs
         /// <summary>
@@ -180,6 +183,43 @@ namespace VM_Footies
         private void Notify(string message)
         {
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(message));
+        }
+
+        /// <summary>
+        /// Charge tous les allergènes disponibles pour un plat
+        /// </summary>
+        /// <param name="plat">Le VMPlat pour lequel charger les allergènes</param>
+        public void ChargerAllergenesDansPlat(VMPlat plat)
+        {
+            try
+            {
+                // Récupère tous les allergènes de l'énumération
+                var tousLesAllergenes = System.Enum.GetValues(typeof(NomAllergene)).Cast<NomAllergene>();
+
+                // Récupère les allergènes déjà sélectionnés pour ce plat
+                HashSet<NomAllergene> allergenesSelectionnes = new HashSet<NomAllergene>();
+                if (plat.Plat.Allergenes != null)
+                {
+                    foreach (NomAllergene allergene in plat.Plat.Allergenes)
+                    {
+                        allergenesSelectionnes.Add(allergene);
+                    }
+                }
+
+                // Crée la liste des VMAllergeneSelectionne
+                plat.AllergenesListe.Clear();
+                foreach (NomAllergene allergene in tousLesAllergenes)
+                {
+                    bool estSelectionne = allergenesSelectionnes.Contains(allergene);
+                    VMAllergeneSelectionne vmAllergeneSelectionne = new VMAllergeneSelectionne(allergene, estSelectionne);
+                    plat.GestionnaireEvenement(vmAllergeneSelectionne);
+                    plat.AllergenesListe.Add(vmAllergeneSelectionne);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erreur lors du chargement des allergènes pour le plat : " + ex.Message);
+            }
         }
         #endregion
     }

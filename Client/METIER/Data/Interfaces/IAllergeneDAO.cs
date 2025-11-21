@@ -12,6 +12,6 @@ namespace METIER_Footies.Data.Interfaces
     /// </summary>
     public interface IAllergeneDAO
     {
-        List<Allergene> ListeAllergene();
+        Task<List<Allergene>> ListeAllergene();
     }
 }
