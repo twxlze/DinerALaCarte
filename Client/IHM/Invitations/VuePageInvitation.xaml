@@ -140,7 +140,7 @@
 
         <!-- Boutons -->
         <Button Grid.RowSpan="2" Grid.Column="1" Content="Ajouter une invitation" HorizontalAlignment="Left" Margin="40,0,0,30" Grid.Row="6" VerticalAlignment="Bottom" Height="40" Width="240" Style="{StaticResource StyleBoutonInvitation}" Click="BoutonAllerFormulaireInvitation_Click" />
-        <Button Grid.Column="1" Content="Modifier une invitation" HorizontalAlignment="Right" Margin="0,0,40,30" Grid.Row="7" VerticalAlignment="Bottom" Height="40" Width="240" Style="{StaticResource StyleBoutonInvitation}" Cursor="Hand" />
+        <Button Grid.Column="1" Content="Modifier une invitation" HorizontalAlignment="Right" Margin="0,0,40,30" Grid.Row="7" VerticalAlignment="Bottom" Height="40" Width="240" Style="{StaticResource StyleBoutonInvitation}" Cursor="Hand" Click="BoutonModifierInvitation_Click" />
         <Button Grid.Column="1" Content="Supprimer une invitation" HorizontalAlignment="Center" Grid.Row="7" VerticalAlignment="Top" Height="40" Width="240" Style="{StaticResource StyleBoutonInvitation}" Margin="0,63,0,0" Grid.RowSpan="2" Click="BoutonSupprimerInvitation_Click" />
         <TextBlock Grid.Column="1" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Gestion des invitations" VerticalAlignment="Top" FontWeight="Bold" FontSize="20" Foreground="#B44B3E" Margin="0,20,0,0"/>
 

@@ -10,8 +10,10 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Media.TextFormatting;
 using System.Windows.Shapes;
 using VM_Footies.VM;
+using VM_Footies.VM_Page;
 
 namespace IHM_Footies.Invitations
 {
@@ -23,6 +25,7 @@ namespace IHM_Footies.Invitations
 
         #region Attributs
         private VMInvitation invitation;
+        private VMPageInvitation vmPageInvitation;
 
         #endregion
 
@@ -36,6 +39,7 @@ namespace IHM_Footies.Invitations
         public VueFormulaireInvitation(VMInvitation invitation)
         {
             this.invitation = invitation;
+            this.vmPageInvitation = new VMPageInvitation();
             this.DataContext = this.invitation;
             InitializeComponent();
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
@@ -55,8 +59,7 @@ namespace IHM_Footies.Invitations
         /// </summary>
         private async Task ChargerDonnees()
         {
-            await this.invitation.ChargerInvites();
-            await this.invitation.ChargerGroupeInvite();
+            await this.vmPageInvitation.ChargerElementsDansInvitation(invitation);
         }
 
         #endregion
@@ -143,6 +146,13 @@ namespace IHM_Footies.Invitations
             Navigation.AllerMenu(this);
         }
 
+
+
+
+        #endregion
+
+        #region boutons 
+
         /// <summary>
         /// Bouton pour aller à la page de formulaire d'invitation plat/menu
         /// </summary>
@@ -150,8 +160,6 @@ namespace IHM_Footies.Invitations
         /// <param name="e"></param>
         private void BoutonFormulaireInvitationMenuPlat_Click(object sender, RoutedEventArgs e)
         {
-            //Navigation.AllerFormulaireInvitationPlatMenu(this);
-            // Validation des données de la première fenêtre
             if (string.IsNullOrWhiteSpace(this.invitation.Nom))
             {
                 MessageBox.Show("Veuillez saisir un nom pour l'invitation.", "Validation", MessageBoxButton.OK, MessageBoxImage.Warning);
@@ -170,17 +178,13 @@ namespace IHM_Footies.Invitations
                 return;
             }
 
-            // Ouvrir la deuxième fenêtre en passant le même ViewModel
             VueFormulaireMenuEtPlat_Invitation fenetreMenuPlat = new VueFormulaireMenuEtPlat_Invitation(invitation);
             fenetreMenuPlat.ShowDialog();
 
-            // Fermer la première fenêtre si nécessaire
             this.Close();
         }
 
-
         #endregion
-
 
     }
 }

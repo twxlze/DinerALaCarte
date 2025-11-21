@@ -1,19 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+﻿using System.Windows;
 using METIER_Footies.Data;
-using METIER_Footies.Metier;
 using VM_Footies.VM;
+using VM_Footies.VM_Page;
 
 namespace IHM_Footies.Invitations
 {
@@ -29,11 +17,16 @@ namespace IHM_Footies.Invitations
 
         private InvitationDAO invitationDAO;
 
+        private VMPageInvitation pageInvitation;
+
 
         #endregion
 
         #region proprietes
 
+        /// <summary>
+        /// Récupérer les invitations
+        /// </summary>
         public VMInvitation Invitation => this.invitation;
 
         #endregion
@@ -43,6 +36,7 @@ namespace IHM_Footies.Invitations
 
         public VueFormulaireMenuEtPlat_Invitation(VMInvitation invitation)
         {
+            this.pageInvitation = new VMPageInvitation();
             this.invitationDAO = new InvitationDAO();
             this.invitation = invitation;
             this.DataContext = this.invitation;
@@ -51,7 +45,7 @@ namespace IHM_Footies.Invitations
             ChargerDonnees();
         }
 
-        public VueFormulaireMenuEtPlat_Invitation() : this (new VMInvitation())
+        public VueFormulaireMenuEtPlat_Invitation() : this(new VMInvitation())
         {
         }
 
@@ -59,15 +53,10 @@ namespace IHM_Footies.Invitations
 
         #region methodes
 
-        /// <summary>
-        /// Charge les données depuis l'API
-        /// </summary>
         private async Task ChargerDonnees()
         {
-            await this.invitation.ChargerMenu();
+            await this.pageInvitation.ChargerElementsDansInvitation(invitation);
         }
-
-        
 
 
         #endregion
@@ -160,21 +149,21 @@ namespace IHM_Footies.Invitations
 
         #region boutons 
 
-        /// <summary>
-        /// Enregistrer l'invitation
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private async void BoutonEnregistrerInvitation_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 this.invitation.SynchroniserTout();
-
-                await this.invitationDAO.AjouterInvitation(this.invitation.Invitation);
-
-                MessageBox.Show("L'invitation a été enregistrée avec succès.", "Succès", MessageBoxButton.OK, MessageBoxImage.Information);
-
+                if (this.invitation.Invitation.IdInvitation != 0)
+                {
+                    await this.invitationDAO.ModifierInvitation(this.invitation.Invitation);
+                    MessageBox.Show("L'invitation a été modifiée avec succès.", "Succès", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                else
+                {
+                    await this.invitationDAO.AjouterInvitation(this.invitation.Invitation);
+                    MessageBox.Show("L'invitation a été enregistrée avec succès.", "Succès", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
                 Navigation.AllerInvitations(this);
             }
             catch (Exception ex)

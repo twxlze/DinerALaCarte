@@ -241,7 +241,6 @@
         </Border>
 
 
-
         <!--Calendrier -->
 
         <TextBlock Grid.Column="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Date" VerticalAlignment="Top" FontWeight="Bold" FontSize="20" Foreground="#B44B3E" Margin="452,0,0,0" Grid.Row="1"/>
@@ -249,28 +248,14 @@
         <StackPanel Orientation="Horizontal" Margin="374,13,16,4" Grid.RowSpan="5" Grid.Column="1" Grid.Row="1">
 
             <Calendar 
-            SelectedDate="1/10/2025"
-            DisplayDate="1/10/2025"
-            DisplayDateStart="1/10/2025"
-            DisplayDateEnd="4/18/2100" Height="164" Width="192"/>
-
-            <Calendar
-            xmlns:sys="clr-namespace:System;assembly=mscorlib" Margin="20" SelectionMode="MultipleRange"  
-            IsTodayHighlighted="false" 
-            DisplayDate="1/1/2025"
-            DisplayDateEnd="1/31/2025"
-            >
-                <Calendar.SelectedDates>
-                    <sys:DateTime>1/5/2025</sys:DateTime>
-                    <sys:DateTime>1/12/2025</sys:DateTime>
-                    <sys:DateTime>1/14/2025</sys:DateTime>
-                    <sys:DateTime>1/13/2025</sys:DateTime>
-                    <sys:DateTime>1/15/2025</sys:DateTime>
-                    <sys:DateTime>1/27/2025</sys:DateTime>
-                    <sys:DateTime>4/2/2025</sys:DateTime>
-                </Calendar.SelectedDates>
-            </Calendar>
+                SelectedDate="{Binding Date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                DisplayDate="{Binding Date}"
+                DisplayDateStart="1/10/2025"
+                DisplayDateEnd="4/18/2100" 
+                Height="164" 
+                Width="192"/>
         </StackPanel>
+        
         <TextBlock Grid.Column="1" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Gestion des invitations" VerticalAlignment="Top" FontWeight="Bold" FontSize="20" Foreground="#B44B3E" Margin="0,3,0,0"/>
         <Image Source="{StaticResource ResourceKey=LogoHostably}" Margin="15,10,121,17" />
 
