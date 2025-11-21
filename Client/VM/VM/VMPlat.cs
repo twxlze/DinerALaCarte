@@ -204,7 +204,7 @@ namespace VM_Footies.VM
                 }
                 catch (Exception ex)
                 {
-                    throw new Exception("Erreur lors de la recherche des suggestions d'ingrédients : " + ex.Message);
+                    suggestions = new List<string>();
                 }
             }
             this.suggestionsIngredients = suggestions;

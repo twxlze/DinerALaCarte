@@ -23,40 +23,58 @@ namespace API_Footies.Data.DAO
         public async Task<List<string>> RechercherIngredients(string recherche)
         {
             List<string> resultat = new List<string>();
+
             try
             {
-                using (var connection = new SqliteConnection(this.connection))
+                if (!string.IsNullOrWhiteSpace(recherche))
                 {
-                    await connection.OpenAsync();
-
-                    using (var pragmaCmd = new SqliteCommand("PRAGMA case_sensitive_like = OFF;", connection))
+                    using (var connection = new SqliteConnection(this.connection))
                     {
-                        await pragmaCmd.ExecuteNonQueryAsync();
-                    }
+                        await connection.OpenAsync();
 
-                    string query = @"
-                    SELECT DISTINCT product_name, (LENGTH(product_name) - LENGTH(REPLACE(product_name, ' ', '')) + 1) as word_count
-                    FROM produits 
-                    WHERE product_name IS NOT NULL 
-                    AND product_name != ''
-                    AND product_name LIKE @recherche
-                    AND product_name NOT GLOB '*[0-9]*'
-                    AND word_count <= 3
-                    ORDER BY word_count, LENGTH(product_name)
-                    LIMIT 10";
-
-                    using (var command = new SqliteCommand(query, connection))
-                    {
-                        command.Parameters.AddWithValue("@recherche", $"%{recherche}%");
-
-                        using (var reader = await command.ExecuteReaderAsync())
+                        using (var pragmaCmd = new SqliteCommand("PRAGMA case_sensitive_like = OFF;", connection))
                         {
-                            while (await reader.ReadAsync())
+                            await pragmaCmd.ExecuteNonQueryAsync();
+                        }
+
+                        // Je sais c'est compliqué mais c'est pour être sûr que ça correspond au meilleur nom d'ingrédient que l'utilisateur recherche
+                        string query = @"
+                        SELECT product_name,
+                               CASE 
+                                   WHEN product_name LIKE @rechercheExacte THEN 1 
+                                   WHEN product_name LIKE @rechercheDebut THEN 2
+                                   WHEN product_name LIKE @rechercheMot THEN 3
+                                   ELSE 4
+                               END as pertinence,
+                               (LENGTH(product_name) - LENGTH(REPLACE(product_name, ' ', '')) + 1) as word_count
+                        FROM produits 
+                        WHERE product_name IS NOT NULL 
+                        AND product_name != ''
+                        AND product_name LIKE @recherche
+                        AND product_name NOT GLOB '*[0-9]*'
+                        AND (LENGTH(product_name) - LENGTH(REPLACE(product_name, ' ', '')) + 1) <= 3
+                        ORDER BY pertinence, word_count, LENGTH(product_name)
+                        LIMIT 20";
+
+                        using (var command = new SqliteCommand(query, connection))
+                        {
+                            string rechercheLower = recherche.ToLower();
+                            command.Parameters.AddWithValue("@recherche", $"%{rechercheLower}%");
+                            command.Parameters.AddWithValue("@rechercheExacte", rechercheLower);
+                            command.Parameters.AddWithValue("@rechercheDebut", $"{rechercheLower}%");
+                            command.Parameters.AddWithValue("@rechercheMot", $"% {rechercheLower}%");
+
+                            HashSet<string> produitsUniques = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+                            using (var reader = await command.ExecuteReaderAsync())
                             {
-                                string productName = reader["product_name"]?.ToString();
-                                if (!string.IsNullOrWhiteSpace(productName))
+                                while (await reader.ReadAsync() && resultat.Count < 10)
                                 {
-                                    resultat.Add(productName);
+                                    string productName = reader.GetString(0);
+
+                                    if (!string.IsNullOrWhiteSpace(productName) && produitsUniques.Add(productName))
+                                    {
+                                        resultat.Add(productName);
+                                    }
                                 }
                             }
                         }
@@ -67,7 +85,7 @@ namespace API_Footies.Data.DAO
             {
                 throw new Exception("Erreur lors de la recherche des ingrédients dans la base de données OpenFoodFacts.", ex);
             }
-            return resultat;
+            return resultat; 
         }
         #endregion
     }

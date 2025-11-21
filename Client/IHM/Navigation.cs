@@ -9,6 +9,7 @@ using IHM_Footies.GroupeInvite;
 using IHM_Footies.Invitations;
 using IHM_Footies.Invite;
 using IHM_Footies.Menu;
+using IHM_Footies.Plat;
 using IHM_Footies.Reglages;
 using VM_Footies.VM;
 
@@ -30,6 +31,7 @@ namespace IHM_Footies
             fenetreActuelle.Close();
         }
 
+        #region Invite
         /// <summary>
         /// Permet de naviguer vers la fenêtre des invités
         /// </summary>
@@ -58,6 +60,9 @@ namespace IHM_Footies
             fenetre.Show();
             fenetreActuelle.Close();
         }
+        #endregion
+
+        #region Plat
 
         /// <summary>
         /// 
@@ -69,6 +74,17 @@ namespace IHM_Footies
             vuePlats.Show();
             fenetreActuelle.Close();
         }
+
+        public static void AllerDetailPlat(Window fenetreActuelle, VMPlat plat)
+        {
+            VuePagePlatDetail fenetre = new VuePagePlatDetail(plat);
+            fenetre.Show();
+            fenetreActuelle.Close();
+        }
+
+        #endregion
+
+        #region Groupe invités
 
         /// <summary>
         /// Permet de naviguer vers la fenêtre des groupes d'invités
@@ -98,6 +114,9 @@ namespace IHM_Footies
             fenetre.Show();
             fenetreActuelle.Close();
         }
+        #endregion
+
+        #region Menu
 
         /// <summary>
         /// Permet de naviguer vers la fenêtre de la page des menus
@@ -120,6 +139,7 @@ namespace IHM_Footies
             vueFormulaireMenu.Show();
             fenetreActuelle.Close();
         }
+        #endregion
 
         /// <summary>
         /// Aller à la page des réglages
@@ -140,6 +160,8 @@ namespace IHM_Footies
         {
             fenetreActuelle.Close();
         }
+
+        #region Invitation
 
         /// <summary>
         /// Aller à la page invitations
@@ -162,6 +184,7 @@ namespace IHM_Footies
             vueFormulaireInvitation.Show();
             fenetreActuelle.Close();
         }
+        #endregion
 
     }
 }

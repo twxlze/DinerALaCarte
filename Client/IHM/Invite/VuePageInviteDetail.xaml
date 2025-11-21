@@ -48,7 +48,7 @@
             <TextBlock Text="{Binding InviteSelectionne.Identite, UpdateSourceTrigger=PropertyChanged}" 
                        FontSize="18" FontWeight="Bold" 
                        HorizontalAlignment="Center" VerticalAlignment="Center"
-                       Foreground="#B44B3E"/>
+                       Foreground="#B44B3E" TextWrapping="Wrap"/>
         </Border>
 
         <StackPanel Grid.Column="0" Margin="5" VerticalAlignment="Bottom">
@@ -85,11 +85,11 @@
 
                     <TextBlock Text="Nom :" FontWeight="Bold" FontSize="14"/>
                     <TextBlock Text="{Binding InviteSelectionne.Nom, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1"
-                               FontSize="14" Foreground="#333"/>
+                               FontSize="14" Foreground="#333" TextWrapping="Wrap"/>
 
                     <TextBlock Text="Prénom :" FontWeight="Bold" FontSize="14" Grid.Row="1"/>
                     <TextBlock Text="{Binding InviteSelectionne.Prenom, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Grid.Column="1"
-                               FontSize="14" Foreground="#333"/>
+                               FontSize="14" Foreground="#333" TextWrapping="Wrap"/>
 
                     <TextBlock Text="Téléphone :" FontWeight="Bold" FontSize="14" Grid.Row="2"/>
                     <TextBlock Text="{Binding InviteSelectionne.Telephone, UpdateSourceTrigger=PropertyChanged}" Grid.Row="2" Grid.Column="1" 
@@ -97,7 +97,7 @@
 
                     <TextBlock Text="Email :" FontWeight="Bold" FontSize="14" Grid.Row="3"/>
                     <TextBlock Text="{Binding InviteSelectionne.Email, UpdateSourceTrigger=PropertyChanged}" Grid.Row="3" Grid.Column="1"
-                               FontSize="14" Foreground="#333"/>
+                               FontSize="14" Foreground="#333" TextWrapping="Wrap"/>
 
                     <TextBlock Text="Allergies :" FontWeight="Bold" FontSize="14" Grid.Row="4"/>
                     <TextBlock Text="inconnu" Grid.Row="4" Grid.Column="1"

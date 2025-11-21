@@ -48,7 +48,7 @@
             <TextBlock Text="{Binding NomGroupeSelectionne}" 
                        FontSize="18" FontWeight="Bold" 
                        HorizontalAlignment="Center" VerticalAlignment="Center"
-                       Foreground="#B44B3E"/>
+                       Foreground="#B44B3E" TextWrapping="Wrap"/>
         </Border>
 
         <StackPanel Grid.Column="0" Margin="5" VerticalAlignment="Bottom">
