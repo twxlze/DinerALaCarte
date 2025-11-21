@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -7,6 +8,7 @@ using System.Threading.Tasks;
 using METIER_Footies.Data;
 using METIER_Footies.Enum;
 using METIER_Footies.Metier;
+using VM_Footies.VM_Element_Selectionne;
 using static METIER_Footies.Metier.Plat;
 
 namespace VM_Footies.VM
@@ -18,6 +20,7 @@ namespace VM_Footies.VM
     {
         #region Attributs
         private Plat plat;
+        private ObservableCollection<VMAllergeneSelectionne> allergenesListe;
         #endregion
 
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -114,6 +117,27 @@ namespace VM_Footies.VM
                 Notify("Categorie");
             }
         }
+
+        /// <summary>
+        /// Liste des allergènes du plat
+        /// </summary>
+        public List<NomAllergene>? Allergenes
+        {
+            get => plat.Allergenes;
+        }
+
+        /// <summary>
+        /// Liste observable des allergènes sélectionnables
+        /// </summary>
+        public ObservableCollection<VMAllergeneSelectionne> AllergenesListe
+        {
+            get => allergenesListe;
+            set
+            {
+                allergenesListe = value;
+                Notify("AllergenesListe");
+            }
+        }
         #endregion
 
         #region Constructeurs
@@ -124,6 +148,7 @@ namespace VM_Footies.VM
         public VMPlat(Plat plat)
         {
             this.plat = plat;
+            this.allergenesListe = new ObservableCollection<VMAllergeneSelectionne>();
         }
 
         /// <summary>
@@ -163,7 +188,47 @@ namespace VM_Footies.VM
             Description = plat.Description;
             Categorie = plat.Categorie;
             Ingredients = plat.Ingredients;
+            //AllergenesListe = plat.AllergenesListe;
         }
         #endregion
+
+        /// <summary>
+        /// Synchronise la liste des allergènes sélectionnés avec le modèle
+        /// </summary>
+        /// <param name="sender">L'expéditeur</param>
+        /// <param name="e">Les arguments de l'événement</param>
+        private void VmAllergene_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "AllergeneSelectionne")
+            {
+                SynchroniserAllergenesSelectionnes();
+            }
+        }
+
+        /// <summary>
+        /// Met à jour la liste des allergènes sélectionnés dans le modèle
+        /// </summary>
+        public void SynchroniserAllergenesSelectionnes()
+        {
+            List<NomAllergene> allergenesSelectionnes = new List<NomAllergene>();
+            foreach (VMAllergeneSelectionne vmAllergene in this.allergenesListe)
+            {
+                if (vmAllergene.EstSelectionne)
+                {
+                    allergenesSelectionnes.Add(vmAllergene.Allergene);
+                }
+            }
+            this.plat.Allergenes = allergenesSelectionnes;
+            Notify("Allergenes");
+        }
+
+        /// <summary>
+        /// Ajoute un gestionnaire d'événement pour un VMAllergeneSelectionne
+        /// </summary>
+        /// <param name="vmAllergene">L'allergène sélectionnable</param>
+        public void GestionnaireEvenement(VMAllergeneSelectionne vmAllergene)
+        {
+            vmAllergene.PropertyChanged += VmAllergene_PropertyChanged;
+        }
     }
 }

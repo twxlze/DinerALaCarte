@@ -88,12 +88,38 @@ namespace API_Footies.Data.DAO
                                 ingredients = rowPlat["Ingredients"]?.ToString();
                             }
 
+                            long idPlat = (long)rowPlat["IDPlat"];
+
+                            // Récupérer les allergènes du plat
+                            List<NomAllergene> allergenesPlat = new List<NomAllergene>();
+                            var parametersAllergene = new Dictionary<string, object>()
+                            {
+                                {"@IdPlat", idPlat }
+                            };
+
+                            var dataTableAllergenes = connection.ExecuteQuery(
+                                @"SELECT a.Nom 
+                                  FROM Allergene a
+                                  INNER JOIN Plat_Allergene pa ON a.IDAllergene = pa.IDAllergene 
+                                  WHERE pa.IDPlat = @IdPlat",
+                                parametersAllergene);
+
+                            foreach (DataRow? rowAllergene in dataTableAllergenes.Rows)
+                            {
+                                NomAllergene allergene;
+                                if (Enum.TryParse(rowAllergene["Nom"].ToString(), true, out allergene))
+                                {
+                                    allergenesPlat.Add(allergene);
+                                }
+                            }
+
                             Plat plat = new Plat(
-                                (long)rowPlat["IDPlat"],
+                                idPlat,
                                 rowPlat["Nom"].ToString(),
                                 rowPlat["Description"]?.ToString() ?? "",
                                 categorie,
-                                ingredients
+                                ingredients,
+                                allergenesPlat.Count > 0 ? allergenesPlat : null
                             );
                             platsMenu.Add(plat);
                         }
