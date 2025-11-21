@@ -368,6 +368,9 @@ namespace VM_Footies.VM
             }
         }
 
+        /// <summary>
+        /// Charger tous les groupes d'invités
+        /// </summary>
         public async Task ChargerGroupeInvite()
         {
             GroupeInviteDAO groupeInviteDAO = new GroupeInviteDAO();
@@ -392,8 +395,35 @@ namespace VM_Footies.VM
                     vmGroupeInviteExistant.EstSelectionne = true;
                 }
             }
-
         }
+
+        /// <summary>
+        /// Charger tous les menus
+        /// </summary>
+        public async Task ChargerMenu()
+        {
+            MenuDAO menuDAO = new MenuDAO();
+            List<Menu> tousLesMenus = await menuDAO.ObtenirTousLesMenus();
+
+            MenusListe.Clear();
+
+            foreach (Menu menu in tousLesMenus)
+            {
+                VMMenuSelectionne vmMenu = new VMMenuSelectionne(menu, false);
+                vmMenu.PropertyChanged += VmElement_PropertyChanged;
+                MenusListe.Add(vmMenu);
+            }
+
+            foreach (Menu menuExistant in this.Menu)
+            {
+                var vmMenuExistant = MenusListe.FirstOrDefault(vm => vm.Menu.IdMenu == menuExistant.IdMenu);
+                if (vmMenuExistant != null)
+                {
+                    vmMenuExistant.EstSelectionne = true;
+                }
+            }
+        }
+
 
         #endregion
 

@@ -42,6 +42,7 @@ namespace IHM_Footies.Invitations
             this.DataContext = this.invitation;
             InitializeComponent();
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            ChargerDonnees();
         }
 
         public VueFormulaireMenuEtPlat_Invitation() : this (new VMInvitation())
@@ -49,6 +50,19 @@ namespace IHM_Footies.Invitations
         }
 
         #endregion
+
+        #region methodes
+
+        /// <summary>
+        /// Charge les données depuis l'API
+        /// </summary>
+        private async Task ChargerDonnees()
+        {
+            await this.invitation.ChargerMenu();
+        }
+
+        #endregion
+
 
         #region boutons navigations 
 

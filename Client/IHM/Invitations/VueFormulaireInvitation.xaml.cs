@@ -42,6 +42,14 @@ namespace IHM_Footies.Invitations
             ChargerDonnees();
         }
 
+        public VueFormulaireInvitation() : this(new VMInvitation())
+        {
+        }
+
+        #endregion
+
+        #region methodes
+
         /// <summary>
         /// Charge les données depuis l'API
         /// </summary>
@@ -49,10 +57,6 @@ namespace IHM_Footies.Invitations
         {
             await this.invitation.ChargerInvites();
             await this.invitation.ChargerGroupeInvite();
-        }
-
-        public VueFormulaireInvitation() : this(new VMInvitation())
-        {
         }
 
         #endregion
