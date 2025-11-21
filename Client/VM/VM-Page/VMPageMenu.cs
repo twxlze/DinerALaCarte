@@ -30,7 +30,86 @@ namespace VM_Footies.VM_Page
         public VMMenu MenuSelectionne
         {
             get { return menuSelectionne; }
-            set { menuSelectionne = value; }
+            set 
+            { 
+                menuSelectionne = value;
+                Notify("MenuSelectionne");
+            }
+        }
+
+        /// <summary>
+        /// Liste des apéritifs sélectionnés dans le menu
+        /// </summary>
+        public List<VMPlat> ListeVMPlatAperitif
+        {
+            get
+            {
+                if (this.MenuSelectionne == null)
+                {
+                    return new List<VMPlat>();
+                }
+
+                return ObtenirPlatsSelectionnesParCategorie(this.MenuSelectionne.PlatsAperitif);
+            }
+        }
+
+        /// <summary>
+        /// Liste des entrées sélectionnées dans le menu
+        /// </summary>
+        public List<VMPlat> ListeVMPlatEntree
+        {
+            get
+            { 
+                if (this.MenuSelectionne == null)
+                {
+                    return new List<VMPlat>();
+                }
+
+                return ObtenirPlatsSelectionnesParCategorie(this.MenuSelectionne.PlatsEntree);
+            }
+        }
+
+        /// <summary>
+        /// Liste des plats sélectionnés dans le menu
+        /// </summary>
+        public List<VMPlat> ListeVMPlatPlat
+        {
+            get
+            {
+                if (this.MenuSelectionne == null)
+                {
+                    return new List<VMPlat>();
+                }
+
+                return ObtenirPlatsSelectionnesParCategorie(this.MenuSelectionne.PlatsPlat);
+            }
+        }
+
+        /// <summary>
+        /// Liste des desserts sélectionnés dans le menu
+        /// </summary>
+        public List<VMPlat> ListeVMPlatDessert
+        {
+            get
+            {
+                if (this.MenuSelectionne == null)
+                {
+                    return new List<VMPlat>();
+                }
+
+                return ObtenirPlatsSelectionnesParCategorie(this.MenuSelectionne.PlatsDessert);
+            }
+        }
+
+        /// <summary>
+        /// Nom du menu sélectionné pour l'affichage dans la vue détail
+        /// </summary>
+        public string NomMenuSelectionne
+        {
+            get
+            {
+                return this.MenuSelectionne?.Nom ?? string.Empty;
+            }
         }
 
         /// <summary>
@@ -64,6 +143,26 @@ namespace VM_Footies.VM_Page
         #endregion
 
         #region Méthodes
+        /// <summary>
+        /// Obtient les plats sélectionnés d'une catégorie spécifique
+        /// </summary>
+        /// <param name="platsCategorie">Collection de plats d'une catégorie</param>
+        /// <returns>Liste des VMPlat sélectionnés</returns>
+        private List<VMPlat> ObtenirPlatsSelectionnesParCategorie(IEnumerable<VMPlatSelectionne> platsCategorie)
+        {
+            List<VMPlat> plats = new List<VMPlat>();
+
+            foreach (VMPlatSelectionne vmPlatSelectionne in platsCategorie)
+            {
+                if (vmPlatSelectionne.EstSelectionne)
+                {
+                    plats.Add(new VMPlat(vmPlatSelectionne.Plat));
+                }
+            }
+
+            return plats;
+        }
+
         /// <summary>
         /// Charge la liste des menus depuis la base de données
         /// </summary>

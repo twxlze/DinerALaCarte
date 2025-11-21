@@ -139,6 +139,18 @@ namespace IHM_Footies
             vueFormulaireMenu.Show();
             fenetreActuelle.Close();
         }
+
+        /// <summary>
+        /// Permet de naviguer vers la fenêtre de détail d'un menu
+        /// </summary>
+        /// <param name="fenetreActuelle"> La fenêtre actuelle à fermer </param>
+        /// <param name="menu"> Le menu à afficher en détail </param>
+        public static void AllerDetailMenu(Window fenetreActuelle, VMMenu menu)
+        {
+            VuePageMenuDetail fenetre = new VuePageMenuDetail(menu);
+            fenetre.Show();
+            fenetreActuelle.Close();
+        }
         #endregion
 
         /// <summary>
