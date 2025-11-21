@@ -11,6 +11,7 @@
         private string? description;
         private Enum.CategoriePlat categorie;
         private string? ingredients;
+        private List<Enum.NomAllergene>? allergenes;
         #endregion
         #region --- Propriétés ---
 
@@ -59,6 +60,14 @@
             set { ingredients = value; }
         }
 
+        /// <summary>
+        /// Retourne ou modifie la liste des allergènes du plat
+        /// </summary>
+        public List<Enum.NomAllergene>? Allergenes
+        {
+            get { return allergenes; }
+            set { allergenes = value; }
+        }
         #endregion
 
         /// <summary>
@@ -67,13 +76,15 @@
         /// <param name="nom">nom du plat</param>
         /// <param name="description">description du plat</param>
         /// <param name="categorie">categorie du plat</param>
-        public Plat(long id, string nom, string? description, Enum.CategoriePlat categorie, string? ingredients)
+        /// <param name="allergenes">liste des allergènes du plat</param>
+        public Plat(long id, string nom, string? description, Enum.CategoriePlat categorie, string? ingredients, List<Enum.NomAllergene>? allergenes)
         {
             this.id = id;
             this.nom = nom;
             this.description = description;
             this.categorie = categorie;
             this.ingredients = ingredients;
+            this.allergenes = allergenes;
         }
 
         /// <summary>
