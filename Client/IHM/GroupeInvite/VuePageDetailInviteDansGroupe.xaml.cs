@@ -26,6 +26,8 @@ namespace IHM_Footies.GroupeInvite
         private List<VueInvite> vueInvite;
         private VMGroupeInvite groupeInviteSelectionne;
         #endregion
+
+        #region Constructeur
         /// <summary>
         /// Constructeur par défaut d'une page de détail des invités dans un groupe
         /// </summary>
@@ -45,6 +47,7 @@ namespace IHM_Footies.GroupeInvite
             this.RafraichirListe();
 
         }
+        #endregion
 
         #region Méthodes
         /// <summary>

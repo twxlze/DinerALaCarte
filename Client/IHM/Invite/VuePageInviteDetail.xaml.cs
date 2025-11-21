@@ -23,9 +23,7 @@ namespace IHM_Footies.Invite
     public partial class VuePageInviteDetail : Window
     {
         #region Attributs
-        private VuePageInvite VuePageInvite;
         private VMPageInvite vMPageInvite;
-        private VMInvite vmInviteSelectionne;
         #endregion
         public VuePageInviteDetail(VMInvite vMInvite)
         {
@@ -38,7 +36,6 @@ namespace IHM_Footies.Invite
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
 
         }
-
         #region Méthodes
 
         /// <summary>

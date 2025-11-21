@@ -28,7 +28,11 @@ namespace VM_Footies
         public VMInvite InviteSelectionne
         {
             get { return inviteSelectionne; }
-            set { this.inviteSelectionne = value; Notify("InviteSelectionne"); }
+            set
+            {
+                this.inviteSelectionne = value; 
+                Notify("InviteSelectionne"); 
+            }
         }
 
         /// <summary>

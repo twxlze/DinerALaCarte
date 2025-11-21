@@ -1,0 +1,118 @@
+﻿<Window x:Class="IHM_Footies.Menu.VuePageMenuDetail"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:IHM_Footies.GroupeInvite"
+        mc:Ignorable="d"
+        Title="VuePageDetailInviteDansGroupe" Height="450" Width="800"
+        Background="#F9F9F9"
+        WindowStyle="None"
+        AllowsTransparency="True">
+
+    <Window.Resources>
+        <Style x:Key="StyleBouton" TargetType="Button">
+            <Setter Property="Background" Value="#8C2F26"/>
+            <Setter Property="Foreground" Value="#F9F9F9"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="20,0"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="FontFamily" Value="Poppins"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="10" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#B44B3E"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+
+        <Border Grid.Column="0" Background="#F0F0F0" Margin="5,5,5,69" CornerRadius="10">
+            <TextBlock Text="{Binding NomMenuSelectionne}" 
+                       FontSize="18" FontWeight="Bold" 
+                       HorizontalAlignment="Center" VerticalAlignment="Center"
+                       Foreground="#B44B3E" TextWrapping="Wrap"/>
+        </Border>
+
+        <StackPanel Grid.Column="0" Margin="5" VerticalAlignment="Bottom">
+            <Button Content="Retour" Height="40"
+            Style="{StaticResource StyleBouton}"
+            Click="RetourAuMenu_Click"/>
+        </StackPanel>
+
+        <ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Auto" Margin="10,10,10,10">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- apéritifs -->
+                <StackPanel Grid.Row="0" Grid.Column="0" Margin="5">
+                    <TextBlock Text="Apéritif(s)" FontSize="14" FontWeight="SemiBold" 
+                               Foreground="#B44B3E" Margin="0,0,0,5" HorizontalAlignment="Center"/>
+                    <Border BorderBrush="Gray" BorderThickness="1" MaxHeight="150">
+                        <ScrollViewer VerticalScrollBarVisibility="Auto">
+                            <StackPanel Orientation="Vertical" x:Name="PanelAperitif"/>
+                        </ScrollViewer>
+                    </Border>
+                </StackPanel>
+
+                <!-- entrées -->
+                <StackPanel Grid.Row="0" Grid.Column="1" Margin="5">
+                    <TextBlock Text="Entrée(s)" FontSize="14" FontWeight="SemiBold" 
+                               Foreground="#B44B3E" Margin="0,0,0,5" HorizontalAlignment="Center"/>
+                    <Border BorderBrush="Gray" BorderThickness="1" MaxHeight="150">
+                        <ScrollViewer VerticalScrollBarVisibility="Auto">
+                            <StackPanel Orientation="Vertical" x:Name="PanelEntree"/>
+                        </ScrollViewer>
+                    </Border>
+                </StackPanel>
+
+                <!-- plats -->
+                <StackPanel Grid.Row="1" Grid.Column="0" Margin="5">
+                    <TextBlock Text="Plat(s)" FontSize="14" FontWeight="SemiBold" 
+                               Foreground="#B44B3E" Margin="0,0,0,5" HorizontalAlignment="Center"/>
+                    <Border BorderBrush="Gray" BorderThickness="1" MaxHeight="150">
+                        <ScrollViewer VerticalScrollBarVisibility="Auto">
+                            <StackPanel Orientation="Vertical" x:Name="PanelPlat"/>
+                        </ScrollViewer>
+                    </Border>
+                </StackPanel>
+
+                <!-- desserts -->
+                <StackPanel Grid.Row="1" Grid.Column="1" Margin="5">
+                    <TextBlock Text="Dessert(s)" FontSize="14" FontWeight="SemiBold" 
+                               Foreground="#B44B3E" Margin="0,0,0,5" HorizontalAlignment="Center"/>
+                    <Border BorderBrush="Gray" BorderThickness="1" MaxHeight="150">
+                        <ScrollViewer VerticalScrollBarVisibility="Auto">
+                            <StackPanel Orientation="Vertical" x:Name="PanelDessert"/>
+                        </ScrollViewer>
+                    </Border>
+                </StackPanel>
+            </Grid>
+        </ScrollViewer>
+
+    </Grid>
+</Window>

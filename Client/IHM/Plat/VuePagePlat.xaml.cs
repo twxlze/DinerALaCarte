@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using IHM;
+using IHM_Footies.Plat;
 using VM_Footies;
 using VM_Footies.VM;
 
@@ -68,24 +69,25 @@ namespace IHM_Footies
             {
                 VuePlat vue = new VuePlat(plat);
                 vue.MouseDown += (s, e) => this.SelectionnerPlat(vue);
-                vue.MouseDoubleClick += (s, e) => this.OuvrirModification(vue);
+                vue.MouseDoubleClick += (s, e) => this.OuvrirDetailPlat(vue);
                 this.vuePlat.Add(vue);
                 this.PanelListePlat.Children.Add(vue);
             }
         }
 
         /// <summary>
-        /// Ouvre la fenêtre de modification d'un plat
+        /// Ouvre la fenêtre des détails d'un plat
         /// </summary>
-        /// <param name="vue"> La vue du plat à modifier </param>
-        private void OuvrirModification(VuePlat vue)
+        /// <param name="vue"> La vue du plat montrant les détails du plat </param>
+        private void OuvrirDetailPlat(VuePlat vue)
         {
-            VMPlat memoire = new VMPlat(vue.Plat);
-            VueFormulairePlat fenetre = new VueFormulairePlat(vue.Plat);
-            bool? result = fenetre.ShowDialog();
-            if (result == false)
+            if (this.vmPagePlat.PlatSelectionne != null)
             {
-                vue.Plat.ModifierPlat(memoire);
+                Navigation.AllerDetailPlat(this, this.vmPagePlat.PlatSelectionne);
+            }
+            else
+            {
+                MessageBox.Show("Veuillez sélectionner un plat pour voir ses détails.", "Aucun plat sélectionné", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 
@@ -121,7 +123,7 @@ namespace IHM_Footies
                 {
                     VuePlat vue = new VuePlat(plat);
                     vue.MouseDown += (s, e) => this.SelectionnerPlat(vue);
-                    vue.MouseDoubleClick += (s, e) => this.OuvrirModification(vue);
+                    vue.MouseDoubleClick += (s, e) => this.OuvrirDetailPlat(vue);
                     this.vuePlat.Add(vue);
                     this.PanelListePlat.Children.Add(vue);
                 }

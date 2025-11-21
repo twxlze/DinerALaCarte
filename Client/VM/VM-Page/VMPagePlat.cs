@@ -28,7 +28,11 @@ namespace VM_Footies
         public VMPlat PlatSelectionne
         {
             get { return platSelectionne; }
-            set { platSelectionne = value; }
+            set
+            {
+                this.platSelectionne = value;
+                Notify("PlatSelectionne");
+            }
         }
 
         /// <summary>
