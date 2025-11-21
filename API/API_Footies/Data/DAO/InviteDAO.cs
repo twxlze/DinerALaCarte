@@ -1,6 +1,7 @@
 ﻿using System.Data;
 using API_Footies.Data.Interfaces;
 using API_Footies.Metier;
+using API_Footies.Metier.Enum;
 
 namespace API_Footies.Data.DAO
 {
@@ -23,16 +24,36 @@ namespace API_Footies.Data.DAO
                 {
                     Dictionary<string, object> parameters = new Dictionary<string, object>()
                     {
-                    {"@Nom",invite.Nom },
-                    {"@Prenom",invite.Prenom },
-                    {"@Telephone",invite.Telephone },
-                    {"@Email",invite.Email }
-
+                        {"@Nom",invite.Nom },
+                        {"@Prenom",invite.Prenom },
+                        {"@Telephone",invite.Telephone },
+                        {"@Email",invite.Email }
                     };
                     invite.Id = connection.ExecuteInsert("INSERT INTO Invite (Nom,Prenom,NumTel,Mail) VALUES (@Nom,@Prenom,@Telephone, @Email)", parameters);
+                    
+                    if (invite.Allergenes != null && invite.Allergenes.Count > 0)
+                    {
+                        foreach (NomAllergene allergene in invite.Allergenes)
+                        {
+                           var paramatersAllergene = new Dictionary<string, object>()
+                           {
+                               {"@Nom", allergene.ToString() }
+                           };
+                            var dataTableAllergene = connection.ExecuteQuery("SELECT IDAllergene FROM Allergene WHERE Nom = @Nom", paramatersAllergene);
+                            if (dataTableAllergene.Rows.Count > 0)
+                            {
+                                long idAllergene = (long)dataTableAllergene.Rows[0]["IDAllergene"];
+                                var paramatersInviteAllergene = new Dictionary<string, object>()
+                                {
+                                    {"@IdInvite", invite.Id },
+                                    {"@IdAllergene", idAllergene }
+                                };
+                                connection.ExecuteQuery("INSERT INTO Invite_Allergene (IdInvite, IdAllergene) VALUES (@IdInvite, @IdAllergene)", paramatersInviteAllergene);
+                            }
+                        }
+                    }
                     ajoute = true;
                 }
-
             }
             return ajoute;
         }
