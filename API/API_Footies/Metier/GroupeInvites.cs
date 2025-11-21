@@ -52,17 +52,6 @@
             this.invites = invites;
         }
 
-        /// <summary>
-        /// Constructeur de la classe GroupeInvites sans la liste des invités
-        /// </summary>
-        /// <param name="idGroupeInvites"> id du groupe d'invités </param>
-        /// <param name="nom"> nom du groupe d'invités </param>
-        public GroupeInvites(long idGroupeInvites, string nom)
-        {
-            this.idGroupeInvites = idGroupeInvites;
-            this.nom = nom;
-            this.invites = new List<Invite>();
-        }
 
         /// <summary>
         /// Constructeur par défaut de la classe GroupeInvites

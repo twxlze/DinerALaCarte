@@ -154,5 +154,54 @@ namespace API_Footies.Data.DAO
                 }
             }
         }
+
+        public List<GroupeInvites> ChercherGroupeInvites(string GroupeInvitesRechercher)
+        {
+            List<GroupeInvites> listeGroupeInvites = new List<GroupeInvites>();
+            using (SQLiteConnector connection = new SQLiteConnector())
+            {
+                if (connection == null)
+                {
+                    throw new Exception("Erreur de connexion à la base de données");
+                }
+                else
+                {
+                    var parameters = new Dictionary<string, object>()
+                    {
+                        {"@Texte", $"%{GroupeInvitesRechercher}%" }
+                    };
+                    var dataTable = connection.ExecuteQuery("SELECT * FROM GroupeInvite WHERE Nom LIKE @Texte", parameters);
+                    foreach (DataRow? row in dataTable.Rows)
+                    {
+                        long idGroupeInvite = (long)row["IdGroupeInvite"];
+                        string nom = row["Nom"].ToString();
+                        List<Invite> invitesGroupeInvite = new List<Invite>();
+                            var parametersGroupeInvite = new Dictionary<string, object>()
+                            {
+                                {"@IdGroupeInvite", idGroupeInvite }
+                            };
+                            var dataTableInvites = connection.ExecuteQuery(
+                                @"SELECT i.* FROM Invite i
+                                  INNER JOIN Invite_Groupe ig ON i.IdInvite = ig.IdInvite 
+                                  WHERE ig.IdGroupeInvite = @IdGroupeInvite",
+                                parametersGroupeInvite);
+                            foreach (DataRow? rowInvite in dataTableInvites.Rows)
+                            {
+                                Invite invite = new Invite(
+                                    (long)rowInvite["IdInvite"],
+                                    rowInvite["Nom"].ToString(),
+                                    rowInvite["Prenom"].ToString(),
+                                    rowInvite["NumTel"].ToString(),
+                                    rowInvite["Mail"].ToString()
+                                );
+                                invitesGroupeInvite.Add(invite);
+                            }
+                        GroupeInvites groupe = new GroupeInvites(idGroupeInvite, nom, invitesGroupeInvite);
+                        listeGroupeInvites.Add(groupe);
+                    }
+                }
+            }
+            return listeGroupeInvites;
+        }
     }
 }

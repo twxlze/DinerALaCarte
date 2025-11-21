@@ -30,6 +30,11 @@ namespace API_Footies.Services.Realisations
             return this._groupeInviteDAO.AjouterGroupeInvites(groupeInvites);
         }
 
+        public List<GroupeInvites> ChercherGroupeInvites(string GroupeInvitesRechercher)
+        {
+            return this._groupeInviteDAO.ChercherGroupeInvites(GroupeInvitesRechercher);
+        }
+
         public List<GroupeInvites> ListeGroupesInvites()
         {
             return this._groupeInviteDAO.ListeGroupesInvites();
