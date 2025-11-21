@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using METIER_Footies.Data;
 using METIER_Footies.Metier;
 using VM_Footies.VM;
 
@@ -26,6 +27,9 @@ namespace IHM_Footies.Invitations
 
         private VMInvitation invitation;
 
+        private InvitationDAO invitationDAO;
+
+
         #endregion
 
         #region proprietes
@@ -39,6 +43,7 @@ namespace IHM_Footies.Invitations
 
         public VueFormulaireMenuEtPlat_Invitation(VMInvitation invitation)
         {
+            this.invitationDAO = new InvitationDAO();
             this.invitation = invitation;
             this.DataContext = this.invitation;
             InitializeComponent();
@@ -62,8 +67,8 @@ namespace IHM_Footies.Invitations
             await this.invitation.ChargerMenu();
         }
 
-
         
+
 
         #endregion
 
@@ -148,6 +153,34 @@ namespace IHM_Footies.Invitations
         private void BoutonAllerMenu_Click(object sender, RoutedEventArgs e)
         {
             Navigation.AllerMenu(this);
+        }
+
+        #endregion
+
+
+        #region boutons 
+
+        /// <summary>
+        /// Enregistrer l'invitation
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void BoutonEnregistrerInvitation_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                this.invitation.SynchroniserTout();
+
+                await this.invitationDAO.AjouterInvitation(this.invitation.Invitation);
+
+                MessageBox.Show("L'invitation a été enregistrée avec succès.", "Succès", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                Navigation.AllerInvitations(this);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erreur lors de l'enregistrement de l'invitation : {ex.Message}", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         #endregion

@@ -307,7 +307,7 @@
         </Border>
 
 
-        <Button Grid.Column="1" Content="Enregistrer" HorizontalAlignment="Left" Margin="380,19,0,68" Grid.Row="6" Width="181" Style="{StaticResource StyleBoutonMenu}" Grid.RowSpan="2" />
+        <Button Grid.Column="1" Content="Enregistrer" HorizontalAlignment="Left" Margin="380,19,0,68" Grid.Row="6" Width="181" Style="{StaticResource StyleBoutonMenu}" Grid.RowSpan="2" Click="BoutonEnregistrerInvitation_Click" />
 
 
         <!-- Barre de recherche pour les Menus -->
