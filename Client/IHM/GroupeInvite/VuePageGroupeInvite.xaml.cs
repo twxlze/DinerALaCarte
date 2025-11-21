@@ -222,6 +222,7 @@ namespace IHM_Footies
         private void BoutonRetour_Click(object sender, RoutedEventArgs e)
         {
             this.RafraichirListe();
+            this.vmPageGroupeInvite.TexteRechercheGroupe = string.Empty;
         }
 
 

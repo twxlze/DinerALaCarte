@@ -10,6 +10,8 @@
 
   <ItemGroup>
     <None Remove="Ressources\LogoHostably.png" />
+    <None Remove="Ressources\Strings.en.resx~RF9361407.TMP" />
+    <None Remove="Ressources\Strings.en.resx~RF944221d.TMP" />
   </ItemGroup>
 
   <ItemGroup>

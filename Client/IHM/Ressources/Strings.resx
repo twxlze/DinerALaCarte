@@ -228,4 +228,52 @@
   <data name="Anglais" xml:space="preserve">
     <value>Anglais</value>
   </data>
+  <data name="AjouterGroupeInvite" xml:space="preserve">
+    <value>Ajouter un groupe d'invité</value>
+  </data>
+  <data name="ModifierGroupeInvite" xml:space="preserve">
+    <value>Modifer un groupe d'invité</value>
+  </data>
+  <data name="SupprimerGroupeInvite" xml:space="preserve">
+    <value>Supprimer un groupe d'invité</value>
+  </data>
+  <data name="GestionGroupeInvite" xml:space="preserve">
+    <value>Gestion des groupes d’invités </value>
+  </data>
+  <data name="BoutonRetour" xml:space="preserve">
+    <value>Retour</value>
+  </data>
+  <data name="InviteGroupe" xml:space="preserve">
+    <value>Invités du Groupe</value>
+  </data>
+  <data name="InformationInvite" xml:space="preserve">
+    <value>Les informations de l'invité</value>
+  </data>
+  <data name="RetoursCommentaires" xml:space="preserve">
+    <value>Retours et Commentaires</value>
+  </data>
+  <data name="CommentairesImpression" xml:space="preserve">
+    <value>Commentaires et impressions</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Nom :</value>
+  </data>
+  <data name="FirstName" xml:space="preserve">
+    <value>Prénom :</value>
+  </data>
+  <data name="Allergie" xml:space="preserve">
+    <value>Allergies</value>
+  </data>
+  <data name="Gout" xml:space="preserve">
+    <value>Goûts</value>
+  </data>
+  <data name="PlatFavori" xml:space="preserve">
+    <value>Plat favori</value>
+  </data>
+  <data name="Tel" xml:space="preserve">
+    <value> Téléphone :</value>
+  </data>
+  <data name="mail" xml:space="preserve">
+    <value>Email :</value>
+  </data>
 </root>
