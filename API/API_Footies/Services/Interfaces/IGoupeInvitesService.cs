@@ -34,7 +34,7 @@ namespace API_Footies.Services.Interfaces
         /// <summary>
         /// Recherche des groupes d'invités via un texte de recherche
         /// </summary>
-        /// <param name="GroupeInvitesRechercher"></param>
+        /// <param name="GroupeInvitesRechercher">le texte en question </param>
         /// <returns>une liste de groupe invite dont le nom resemble au texte de la barre de recherche</returns>
         List<GroupeInvites> ChercherGroupeInvites(string GroupeInvitesRechercher);
     }

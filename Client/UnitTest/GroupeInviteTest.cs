@@ -1,10 +1,13 @@
-﻿using METIER_Footies.Metier;
+﻿using METIER_Footies.Data;
+using METIER_Footies.Metier;
 using VM_Footies.VM;
 
 namespace Test_Footies_METIER
 {
     public class GroupeInviteTest
     {
+        private GroupeInviteDAO groupeInviteDAO = new GroupeInviteDAO();
+
         #region Test avec constructeurs
 
         [Fact]
@@ -165,6 +168,50 @@ namespace Test_Footies_METIER
             Assert.Contains(invite1, groupe.Invites);
             Assert.Contains(invite2, groupe.Invites);
         }
+
+        #endregion
+
+        #region Tests avec l'endpoint recherche de groupe d'invités
+// Note: j'ai fait les test et sa marche et comme que cela necessite la connection a l'api.
+// Ils serront donc laissés en commentaire.
+/*
+        [Fact]
+        public async Task RechercheGroupeInvite_AvecTexteInvalide()
+        {
+            List<GroupeInvites> GroupeInviteRechercher = new List<GroupeInvites>();
+            GroupeInviteRechercher = await groupeInviteDAO.ChercherGroupeInvites("TexteInexistant123");
+            Assert.Empty(GroupeInviteRechercher);
+        }
+        [Fact]
+        public async Task RechercheGroupeInvite_AvecTexteVide()
+        {
+            List<GroupeInvites> GroupeInviteRechercher = new List<GroupeInvites>();
+            GroupeInviteRechercher = await groupeInviteDAO.ChercherGroupeInvites("");
+            Assert.Empty(GroupeInviteRechercher);
+        }
+        [Fact]
+        public async Task RechercheGroupeInvite_AvecTexteNull()
+        {
+            List<GroupeInvites> GroupeInviteRechercher = new List<GroupeInvites>();
+            GroupeInviteRechercher = await groupeInviteDAO.ChercherGroupeInvites(null);
+            Assert.Empty(GroupeInviteRechercher);
+        }
+        [Fact]
+        public async Task RechercheGroupeInvite_AvecGrandTexte()
+        {
+            List<GroupeInvites> GroupeInviteRechercher = new List<GroupeInvites>();
+            string grandTexte = new string('A', 1000);
+            GroupeInviteRechercher = await groupeInviteDAO.ChercherGroupeInvites(grandTexte);
+            Assert.Empty(GroupeInviteRechercher);
+        }
+        [Fact]
+         public async Task RechercheGroupeInvite_AvecTexteValide()
+         {
+            List<GroupeInvites> GroupeInviteRechercher = new List<GroupeInvites>();
+            GroupeInviteRechercher = await groupeInviteDAO.ChercherGroupeInvites("Amis");
+            Assert.NotEmpty(GroupeInviteRechercher);
+        }
+ */
 
         #endregion
     }

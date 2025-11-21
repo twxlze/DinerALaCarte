@@ -32,6 +32,19 @@ namespace METIER_Footies.Data
             }
         }
 
+        public async Task<List<GroupeInvites>> ChercherGroupeInvites(string GroupeInvitesRechercher)
+        {
+            List<GroupeInvites> listeDesGroupeInvites = new List<GroupeInvites>();
+            HttpResponseMessage reponseHttp = await GetAsync($"GroupeInvites/ChercherGroupeInvites?GroupeInvitesRechercher={GroupeInvitesRechercher}");
+            if (reponseHttp.IsSuccessStatusCode)
+            {
+                string reponse = await reponseHttp.Content.ReadAsStringAsync();
+                listeDesGroupeInvites = JsonSerializer.Deserialize<List<GroupeInvites>>(reponse, options);
+            }
+            return listeDesGroupeInvites;
+        }
+
+
         /// <summary>
         /// Récupère tous les groupes d'invités c'est a dire leur nom et id et les invités dans chaque groupe
         /// </summary>
