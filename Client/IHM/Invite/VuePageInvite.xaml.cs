@@ -86,7 +86,8 @@ namespace IHM_Footies
         {
             if (this.vmPageInvite.InviteSelectionne != null)
             {
-                Navigation.AllerDetailInvite(this, this.vmPageInvite.InviteSelectionne);
+                VuePageInviteDetail fenetre = new VuePageInviteDetail(vue.Invite);
+                fenetre.Show();
             }
             else
             {

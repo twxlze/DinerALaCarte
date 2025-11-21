@@ -85,6 +85,22 @@ namespace API_Footies.Controllers
         {
             return this._groupeInvitesService.ListeGroupesInvites();
         }
+
+        /// <summary>
+        /// Chercher des groupes d'invite par leur nom
+        /// </summary>
+        /// <param name="GroupeInvitesRechercher"> le nom ou une partie du nom du groupes d'invite à rechercher </param>
+        /// <returns> la liste des groupes d'invite correspondants </returns>
+        [HttpGet("ChercherGroupeInvites")]
+        public List<GroupeInvites> ChercherGroupeInvites(string GroupeInvitesRechercher)
+        {
+            List<GroupeInvites> listeGroupeInvites = new List<GroupeInvites>();
+            if (!string.IsNullOrEmpty(GroupeInvitesRechercher))
+            {
+                listeGroupeInvites = this._groupeInvitesService.ChercherGroupeInvites(GroupeInvitesRechercher);
+            }
+            return listeGroupeInvites;
+        }
         #endregion
 
     }

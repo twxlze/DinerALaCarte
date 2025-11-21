@@ -199,13 +199,13 @@
                 </Grid.ColumnDefinitions>
 
                 <TextBox x:Name="zonerechercheInvite" 
-    Grid.Column="0" 
-    Style="{StaticResource StyleChampRecherche}"
-    Text="{Binding TexteRecherche, UpdateSourceTrigger=PropertyChanged}" Margin="10,0,0,0"/>
+                Grid.Column="0" 
+                Style="{StaticResource StyleChampRecherche}"
+                Text="{Binding TexteRecherche, UpdateSourceTrigger=PropertyChanged}" Margin="10,0,0,0"/>    
 
                 <Button x:Name="rechercheInvite" Click="RechercheInvite_Click" 
-    Grid.Column="1" 
-    Style="{StaticResource StyleLoupeRecherche}"/>
+                Grid.Column="1" 
+                Style="{StaticResource StyleLoupeRecherche}"/>
             </Grid>
         </Border>
 

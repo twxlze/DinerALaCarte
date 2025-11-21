@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -15,6 +16,7 @@ namespace VM_Footies
     public class VMPageGroupeInvite : INotifyPropertyChanged
     {
         #region Attributs
+        private string texteRecherche;
         private List<VMGroupeInvite> listeVMGroupeInvite;
         private VMGroupeInvite groupeSelectionne;
         private IGroupeInviteDAO groupeDAO;
@@ -75,6 +77,19 @@ namespace VM_Footies
                 {
                     return string.Empty;
                 }
+            }
+        }
+
+        /// <summary>
+        /// Texte de recherche pour filtrer les invités
+        /// </summary>
+        public string TexteRechercheGroupe
+        {
+            get { return texteRecherche; }
+            set
+            {
+                texteRecherche = value;
+                Notify("TexteRechercheGroupe");
             }
         }
 
@@ -213,6 +228,22 @@ namespace VM_Footies
                 }
             }
             return suppressionReussie;
+        }
+
+        /// <summary>
+        // Charge la liste des groupe d'invités correspondant au paramètre de recherche depuis la base de données
+        /// </summary>
+        public async Task ChercherGroupeInvite(string recherchertexte)
+        {
+            this.listeVMGroupeInvite.Clear();
+
+            List<GroupeInvites> groupeInvites = await this.groupeDAO.ChercherGroupeInvites(recherchertexte);
+            foreach (GroupeInvites g in groupeInvites)
+            {
+                VMGroupeInvite vmGroupeInvite = new VMGroupeInvite(g);
+                this.listeVMGroupeInvite.Add(vmGroupeInvite);
+            }
+            this.listeVMGroupeInvite = this.listeVMGroupeInvite.OrderBy(vm => vm.Groupe.Nom).ToList();
         }
 
         /// <summary>
