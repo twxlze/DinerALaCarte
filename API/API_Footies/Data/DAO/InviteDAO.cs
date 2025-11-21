@@ -30,7 +30,7 @@ namespace API_Footies.Data.DAO
                         {"@Email",invite.Email }
                     };
                     invite.Id = connection.ExecuteInsert("INSERT INTO Invite (Nom,Prenom,NumTel,Mail) VALUES (@Nom,@Prenom,@Telephone, @Email)", parameters);
-                    
+                    /*
                     if (invite.Allergenes != null && invite.Allergenes.Count > 0)
                     {
                         foreach (NomAllergene allergene in invite.Allergenes)
@@ -52,6 +52,7 @@ namespace API_Footies.Data.DAO
                             }
                         }
                     }
+                    */
                     ajoute = true;
                 }
             }
