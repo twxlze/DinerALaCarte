@@ -56,8 +56,6 @@ namespace IHM_Footies.Invite
                 Navigation.AllerInvites(this);
             }
         }
-
-
         #endregion
     }
 }
