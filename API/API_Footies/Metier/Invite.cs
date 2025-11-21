@@ -86,6 +86,7 @@
             this.prenom = prenom;
             this.telephone = telephone;
             this.email = email;
+            this.allergenes = allergenes;
         }
 
         /// <summary>
