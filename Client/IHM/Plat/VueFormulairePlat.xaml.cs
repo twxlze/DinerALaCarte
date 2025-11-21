@@ -13,7 +13,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using VM_Footies;
 using VM_Footies.VM;
+
 
 namespace IHM_Footies
 {
@@ -24,6 +26,7 @@ namespace IHM_Footies
     {
         #region Attributs
         private VMPlat plat;
+        private VMPagePlat vmPagePlat;
         public VMPlat Plat => this.plat;
         #endregion
 
@@ -36,7 +39,11 @@ namespace IHM_Footies
         public VueFormulairePlat(VMPlat plat)
         {
             this.plat = plat;
+            this.vmPagePlat = new VMPagePlat();
             this.DataContext = this.plat;
+
+            // Charge les allergènes disponibles
+            this.vmPagePlat.ChargerAllergenesDansPlat(this.plat);
 
             InitializeComponent();
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
@@ -76,6 +83,8 @@ namespace IHM_Footies
                 }
                 else
                 {
+                    // Synchronise les allergènes avant de fermer
+                    this.plat.SynchroniserAllergenesSelectionnes();
                     this.DialogResult = true;
                 }
             }

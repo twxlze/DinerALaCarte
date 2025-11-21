@@ -228,7 +228,7 @@
                    Foreground="#B44B3E" 
                    Margin="0,5,0,0"/>
 
-        <!-- Container formulaire -->
+        <!-- Container formulaire principal -->
         <Border Grid.Column="1" Grid.RowSpan="8"
                 BorderBrush="#8C2F26"
                 BorderThickness="3"
@@ -236,86 +236,68 @@
                 Background="White"
                 Padding="20"
                 Margin="10,52,10,41">
-            <ScrollViewer VerticalScrollBarVisibility="Auto">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="20"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="180"/>
+                </Grid.ColumnDefinitions>
 
-                    <!-- Ligne 1: Nom et Catégorie -->
-                    <Label Grid.Row="0" Grid.Column="0"
-                           Content="{x:Static res:Strings.Nom}" 
-                           FontSize="14" 
-                           Foreground="#B44B3E" 
-                           VerticalAlignment="Center"/>
-                    <TextBox Grid.Row="0" Grid.Column="1"
-                             Height="32"
-                             Text="{Binding Nom, UpdateSourceTrigger=PropertyChanged}"
-                             Style="{StaticResource StyleTextBox}"/>
-
-                    <Label Grid.Row="0" Grid.Column="3"
-                           Content="{x:Static res:Strings.Categorie}" 
-                           FontSize="14" 
-                           Foreground="#B44B3E" 
-                           VerticalAlignment="Center"/>
-                    <ComboBox Grid.Row="0" Grid.Column="4"
-                              Height="32"
-                              SelectedIndex="{Binding CategorieIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                              BorderBrush="#8C2F26"
-                              BorderThickness="1.5">
-                        <ComboBoxItem Content="{x:Static res:Strings.Aperitif}"/>
-                        <ComboBoxItem Content="{x:Static res:Strings.Entree}"/>
-                        <ComboBoxItem Content="{x:Static res:Strings.Plat}"/>
-                        <ComboBoxItem Content="{x:Static res:Strings.Dessert}"/>
-                    </ComboBox>
-
-                    <!-- Ligne 2: Description -->
-                    <Label Grid.Row="1" Grid.Column="0"
-                           Content="{x:Static res:Strings.Description}" 
-                           FontSize="14" 
-                           Foreground="#B44B3E" 
-                           VerticalAlignment="Top"
-                           Margin="0,10,0,0"/>
-                    <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="4"
-                             Height="70"
-                             Margin="0,10,0,0"
-                             Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}"
-                             TextWrapping="Wrap"
-                             AcceptsReturn="True"
-                             VerticalScrollBarVisibility="Auto"
-                             Style="{StaticResource StyleTextBox}"
-                             VerticalContentAlignment="Top"
-                             Padding="6"/>
-
-                    <!-- Ligne 3: Ingrédients -->
-                    <Label Grid.Row="2" Grid.Column="0"
-                           Content="Ingrédients" 
-                           FontSize="14" 
-                           Foreground="#B44B3E" 
-                           VerticalAlignment="Top"
-                           Margin="0,10,0,0"/>
-
-                    <Grid Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="4" Margin="0,10,0,0">
+                <!-- Partie gauche : Formulaire principal -->
+                <ScrollViewer Grid.Column="0" VerticalScrollBarVisibility="Auto" Margin="0,0,10,0">
+                    <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
 
-                        <TextBox x:Name="TextBoxIngredients"
-                                 Grid.Row="0"
+                        <!-- Ligne 1: Nom -->
+                        <Label Grid.Row="0" Grid.Column="0"
+                               Content="{x:Static res:Strings.Nom}" 
+                               FontSize="14" 
+                               Foreground="#B44B3E" 
+                               VerticalAlignment="Center"/>
+                        <TextBox Grid.Row="0" Grid.Column="1"
+                                 Height="32"
+                                 Text="{Binding Nom, UpdateSourceTrigger=PropertyChanged}"
+                                 Style="{StaticResource StyleTextBox}"/>
+
+                        <!-- Ligne 2: Catégorie -->
+                        <Label Grid.Row="1" Grid.Column="0"
+                               Content="{x:Static res:Strings.Categorie}" 
+                               FontSize="14" 
+                               Foreground="#B44B3E" 
+                               VerticalAlignment="Center"
+                               Margin="0,10,0,0"/>
+                        <ComboBox Grid.Row="1" Grid.Column="1"
+                                  Height="32"
+                                  Margin="0,10,0,0"
+                                  SelectedIndex="{Binding CategorieIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                  BorderBrush="#8C2F26"
+                                  BorderThickness="1.5">
+                            <ComboBoxItem Content="{x:Static res:Strings.Aperitif}"/>
+                            <ComboBoxItem Content="{x:Static res:Strings.Entree}"/>
+                            <ComboBoxItem Content="{x:Static res:Strings.Plat}"/>
+                            <ComboBoxItem Content="{x:Static res:Strings.Dessert}"/>
+                        </ComboBox>
+
+                        <!-- Ligne 3: Description -->
+                        <Label Grid.Row="2" Grid.Column="0"
+                               Content="{x:Static res:Strings.Description}" 
+                               FontSize="14" 
+                               Foreground="#B44B3E" 
+                               VerticalAlignment="Top"
+                               Margin="0,10,0,0"/>
+                        <TextBox Grid.Row="2" Grid.Column="1"
                                  Height="70"
-                                 Text="{Binding Ingredients, UpdateSourceTrigger=PropertyChanged}"
+                                 Margin="0,10,0,0"
+                                 Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}"
                                  TextWrapping="Wrap"
                                  AcceptsReturn="True"
                                  VerticalScrollBarVisibility="Auto"
@@ -323,41 +305,65 @@
                                  VerticalContentAlignment="Top"
                                  Padding="6"/>
 
-                        <!-- Suggestions -->
-                        <ListBox x:Name="ListBoxSuggestions"
-                                 Grid.Row="1"
-                                 ItemsSource="{Binding SuggestionsIngredients}"
-                                 Visibility="Collapsed"
-                                 MaxHeight="100"
-                                 Margin="0,3,0,0"
-                                 Style="{StaticResource StyleListBoxSuggestions}"/>
+                        <!-- Ligne 4: Ingrédients -->
+                        <Label Grid.Row="3" Grid.Column="0"
+                               Content="Ingrédients" 
+                               FontSize="14" 
+                               Foreground="#B44B3E" 
+                               VerticalAlignment="Top"
+                               Margin="0,10,0,0"/>
+                        <TextBox Grid.Row="3" Grid.Column="1"
+                                 Height="70"
+                                 Margin="0,10,0,0"
+                                 Text="{Binding Ingredients, UpdateSourceTrigger=PropertyChanged}"
+                                 TextWrapping="Wrap"
+                                 AcceptsReturn="True"
+                                 VerticalScrollBarVisibility="Auto"
+                                 Style="{StaticResource StyleTextBox}"
+                                 VerticalContentAlignment="Top"
+                                 Padding="6"/>
                     </Grid>
+                </ScrollViewer>
 
-                    <!-- Ligne 4: Allergènes -->
-                    <Label Grid.Row="3" Grid.Column="0"
-                           Content="Allergènes" 
-                           FontSize="14" 
-                           Foreground="#B44B3E" 
-                           VerticalAlignment="Center"
-                           Margin="0,10,0,0"/>
-                    <TextBlock Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="4"
-                               Text="(À venir...)" 
-                               FontSize="12" 
-                               Foreground="Gray"
-                               FontStyle="Italic"
-                               VerticalAlignment="Center"
-                               Margin="0,10,0,0"/>
+                <!-- Partie droite : Sélection des allergènes -->
+                <Border Grid.Column="1"
+                        BorderBrush="#8C2F26" 
+                        BorderThickness="3"
+                        CornerRadius="10"
+                        Padding="10"
+                        Background="White">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
 
-                    <!-- Ligne 5: Info suggestions -->
-                    <TextBlock Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="4"
-                               Text="💡 Tapez au moins 2 caractères dans 'Ingrédients' pour voir les suggestions"
-                               FontSize="11"
-                               Foreground="Gray"
-                               VerticalAlignment="Bottom"
-                               FontStyle="Italic"
-                               Margin="0,10,0,0"/>
-                </Grid>
-            </ScrollViewer>
+                        <!-- Titre de la section allergènes -->
+                        <TextBlock Grid.Row="0"
+                                   Text="Allergènes" 
+                                   FontSize="14" 
+                                   FontWeight="SemiBold"
+                                   Foreground="#B44B3E"
+                                   HorizontalAlignment="Center"
+                                   Margin="0,0,0,10"/>
+
+                        <!-- Liste des allergènes sélectionnables -->
+                        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                            <ItemsControl ItemsSource="{Binding AllergenesListe}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <CheckBox Content="{Binding Nom}"
+                                                  IsChecked="{Binding EstSelectionne}"
+                                                  Margin="5,3"
+                                                  FontSize="12"
+                                                  Foreground="#333333"/>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </ScrollViewer>
+                    </Grid>
+                </Border>
+            </Grid>
         </Border>
 
         <!-- Bouton enregistrer -->
