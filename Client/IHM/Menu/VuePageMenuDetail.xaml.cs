@@ -24,6 +24,7 @@ namespace IHM_Footies.Menu
         #region Attributs 
         private VMPageMenu vmPageMenu;
         private VMMenu menuSelectionne;
+        private string provenance;
         #endregion
 
         #region Constructeur
@@ -31,8 +32,9 @@ namespace IHM_Footies.Menu
         /// Constructeur de la vue de détail d'un menu
         /// </summary>
         /// <param name="menu">Le menu à afficher</param>
-        public VuePageMenuDetail(VMMenu menu)
+        public VuePageMenuDetail(VMMenu menu, string provenance)
         {
+            this.provenance = provenance;
             InitializeComponent();
             this.Initialiser(menu);
             this.ChargerPlats();
@@ -228,7 +230,14 @@ namespace IHM_Footies.Menu
         /// </summary>
         public void RetourAuMenu_Click(object sender, RoutedEventArgs e)
         {
-            Navigation.AllerMenu(this);
+            if (this.provenance == "Accueil")
+            {
+                Navigation.AllerAccueil(this);
+            }
+            else
+            {
+                Navigation.AllerMenu(this);
+            }
         }
         #endregion
     }

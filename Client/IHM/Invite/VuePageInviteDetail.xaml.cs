@@ -24,13 +24,15 @@ namespace IHM_Footies.Invite
     {
         #region Attributs
         private VMPageInvite vMPageInvite;
+        private string provenance;
         #endregion
-        public VuePageInviteDetail(VMInvite vMInvite)
+        public VuePageInviteDetail(VMInvite vMInvite, string provenance = "Invite")
         {
             InitializeComponent();
 
             this.vMPageInvite = new VMPageInvite();
             this.vMPageInvite.InviteSelectionne = vMInvite;
+            this.provenance = provenance;
             this.DataContext = this.vMPageInvite;
 
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
@@ -43,9 +45,16 @@ namespace IHM_Footies.Invite
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void RetourAuPageInvite_Click(object sender, RoutedEventArgs e)
+        private void RetourAPage_Click(object sender, RoutedEventArgs e)
         {
-            Navigation.AllerInvites(this);
+            if (this.provenance == "Accueil")
+            {
+                Navigation.AllerAccueil(this);
+            }
+            else
+            {
+                Navigation.AllerInvites(this);
+            }
         }
 
 

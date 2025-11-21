@@ -3,7 +3,7 @@ using API_Footies.Data.Interfaces;
 using API_Footies.Services.Interfaces;
 using API_Footies.Services.Realisations;
 
-var builder = WebApplication.CreateBuilder(args);
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
@@ -33,7 +33,7 @@ builder.Services.AddScoped<IInvitationService, InvitationService>();
 
 SQLitePCL.Batteries.Init();
 
-var app = builder.Build();
+WebApplication app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

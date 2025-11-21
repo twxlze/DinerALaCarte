@@ -21,7 +21,7 @@ namespace API_Footies.Data.DAO
                 }
                 else
                 {
-                    var parameters = new Dictionary<string, object>()
+                    Dictionary<string, object> parameters = new Dictionary<string, object>()
                     {
                         {"@Nom", menu.Nom }
                     };
@@ -29,7 +29,7 @@ namespace API_Footies.Data.DAO
 
                     foreach (Plat plat in menu.Plat)
                     {
-                        var parametersPlat = new Dictionary<string, object>()
+                        Dictionary<string, object> parametersPlat = new Dictionary<string, object>()
                         {
                             {"@IdMenu", menu.IdMenu },
                             {"@IdPlat", plat.Id }
@@ -55,19 +55,19 @@ namespace API_Footies.Data.DAO
                 }
                 else
                 {
-                    var dataTable = connection.ExecuteQuery("SELECT * FROM Menu");
+                    DataTable dataTable = connection.ExecuteQuery("SELECT * FROM Menu");
                     foreach (DataRow? row in dataTable.Rows)
                     {
                         long idMenu = (long)row["IDMenu"];
                         string nom = row["Nom"].ToString();
 
                         List<Plat> platsMenu = new List<Plat>();
-                        var parametersPlat = new Dictionary<string, object>()
+                        Dictionary<string, object> parametersPlat = new Dictionary<string, object>()
                         {
                             {"@IdMenu", idMenu }
                         };
 
-                        var dataTablePlats = connection.ExecuteQuery(
+                        DataTable dataTablePlats = connection.ExecuteQuery(
                             @"SELECT p.IDPlat, p.Nom, p.Description, p.Categorie, p.Ingredients 
                               FROM Plat p
                               INNER JOIN Menu_Plat mp ON p.IDPlat = mp.IDPlat 
@@ -118,14 +118,14 @@ namespace API_Footies.Data.DAO
                 }
                 else
                 {
-                    var parameters = new Dictionary<string, object>()
+                    Dictionary<string, object> parameters = new Dictionary<string, object>()
                     {
                         {"@IdMenu", menu.IdMenu },
                         {"@Nom", menu.Nom }
                     };
                     connection.ExecuteQuery("UPDATE Menu SET Nom = @Nom WHERE IDMenu = @IdMenu", parameters);
 
-                    var parametersDelete = new Dictionary<string, object>()
+                    Dictionary<string, object> parametersDelete = new Dictionary<string, object>()
                     {
                         {"@IdMenu", menu.IdMenu }
                     };
@@ -133,7 +133,7 @@ namespace API_Footies.Data.DAO
 
                     foreach (Plat plat in menu.Plat)
                     {
-                        var parametersPlat = new Dictionary<string, object>()
+                        Dictionary<string, object> parametersPlat = new Dictionary<string, object>()
                         {
                             {"@IdMenu", menu.IdMenu },
                             {"@IdPlat", plat.Id }
@@ -156,13 +156,13 @@ namespace API_Footies.Data.DAO
                 }
                 else
                 {
-                    var parametersLiaison = new Dictionary<string, object>()
+                    Dictionary<string, object> parametersLiaison = new Dictionary<string, object>()
                     {
                         {"@IdMenu", idMenu }
                     };
                     connection.ExecuteQuery("DELETE FROM Menu_Plat WHERE IDMenu = @IdMenu", parametersLiaison);
 
-                    var parameters = new Dictionary<string, object>()
+                    Dictionary<string, object> parameters = new Dictionary<string, object>()
                     {
                         {"@IdMenu", idMenu }
                     };
@@ -182,11 +182,11 @@ namespace API_Footies.Data.DAO
                 }
                 else
                 {
-                    var parameters = new Dictionary<string, object>()
+                    Dictionary<string, object> parameters = new Dictionary<string, object>()
                     {
                         {"@Texte", $"%{menuRechercher}%" }
                     };
-                    var dataTable = connection.ExecuteQuery("SELECT * FROM Menu WHERE Nom LIKE @Texte", parameters);
+                    DataTable dataTable = connection.ExecuteQuery("SELECT * FROM Menu WHERE Nom LIKE @Texte", parameters);
                     foreach (DataRow? row in dataTable.Rows)
                     {
                         long idMenu = (long)row["IDMenu"];

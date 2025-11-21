@@ -25,13 +25,14 @@ namespace IHM_Footies.GroupeInvite
         private VMPageGroupeInvite vmPageGroupeInvite;
         private List<VueInvite> vueInvite;
         private VMGroupeInvite groupeInviteSelectionne;
+        private string provenance;
         #endregion
 
         #region Constructeur
         /// <summary>
         /// Constructeur par défaut d'une page de détail des invités dans un groupe
         /// </summary>
-        public VuePageDetailInviteDansGroupe(VMGroupeInvite groupeInvite)
+        public VuePageDetailInviteDansGroupe(VMGroupeInvite groupeInvite, string provenance = "GroupeInvite")
         {
             InitializeComponent();
             this.groupeInviteSelectionne = groupeInvite;
@@ -45,7 +46,7 @@ namespace IHM_Footies.GroupeInvite
             this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
 
             this.RafraichirListe();
-
+            this.provenance = provenance;
         }
         #endregion
 
@@ -85,7 +86,14 @@ namespace IHM_Footies.GroupeInvite
         /// <param name="e"></param>
         private void RetourAuGroupeInvite_Click(object sender, RoutedEventArgs e)
         {
-            Navigation.AllerGroupesInvites(this);
+            if (this.provenance == "Accueil")
+            {
+                Navigation.AllerAccueil(this);
+            }
+            else
+            {
+                Navigation.AllerGroupesInvites(this);
+            }
         }
         #endregion
     }

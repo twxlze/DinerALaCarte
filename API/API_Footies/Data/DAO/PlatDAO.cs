@@ -24,7 +24,7 @@ namespace API_Footies.Data.DAO
                 }
                 else
                 {
-                    var parameters = new Dictionary<string, object>()
+                    Dictionary<string, object> parameters = new Dictionary<string, object>()
                     {
                         {"@Nom", plat.Nom },
                         {"@Categorie", plat.Categorie.ToString() },
@@ -78,7 +78,7 @@ namespace API_Footies.Data.DAO
                 }
                 else
                 {
-                    var dataTable = connection.ExecuteQuery("SELECT * FROM Plat");
+                    DataTable dataTable = connection.ExecuteQuery("SELECT * FROM Plat");
                     foreach (DataRow? row in dataTable.Rows)
                     {
                         CategoriePlat categorie;
@@ -106,7 +106,7 @@ namespace API_Footies.Data.DAO
                 }
                 else
                 {
-                    var parameters = new Dictionary<string, object>()
+                    Dictionary<string, object> parameters = new Dictionary<string, object>()
                     {
                         {"@Id", plat.Id },
                         {"@Nom", plat.Nom },
@@ -131,7 +131,7 @@ namespace API_Footies.Data.DAO
                 }
                 else
                 {
-                    var parameters = new Dictionary<string, object>()
+                    Dictionary<string, object> parameters = new Dictionary<string, object>()
                     {
                         {"@Id", id }
                     };
@@ -151,7 +151,7 @@ namespace API_Footies.Data.DAO
                 }
                 else
                 {
-                    var parameters = new Dictionary<string, object>()
+                    Dictionary<string, object> parameters = new Dictionary<string, object>()
                     {
                         {"@Texte", $"%{texterecherche}%"} 
                     };

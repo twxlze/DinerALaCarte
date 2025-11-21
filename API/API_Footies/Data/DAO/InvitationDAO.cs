@@ -43,7 +43,7 @@ namespace API_Footies.Data.DAO
                     throw new Exception("Erreur de connexion à la base de données");
                 }
 
-                var dataTable = connection.ExecuteQuery("SELECT * FROM Invitation");
+                DataTable dataTable = connection.ExecuteQuery("SELECT * FROM Invitation");
 
                 foreach (DataRow row in dataTable.Rows)
                 {
@@ -100,7 +100,7 @@ namespace API_Footies.Data.DAO
                 {
                     throw new Exception("Erreur de connexion à la base de données");
                 }
-                var parameters = new Dictionary<string, object>()
+                Dictionary<string, object> parameters = new Dictionary<string, object>()
                 {
                     {"@IdInvitation", idInvitation }
                 };
@@ -120,7 +120,7 @@ namespace API_Footies.Data.DAO
         /// </summary>
         private long InsererInvitation(SQLiteConnector connection, Invitation invitation)
         {
-            var parameters = new Dictionary<string, object>()
+            Dictionary<string, object> parameters = new Dictionary<string, object>()
             {
                 {"@IdInvitation", invitation.IdInvitation },
                 {"@Nom", invitation.Nom },
@@ -136,7 +136,7 @@ namespace API_Footies.Data.DAO
         {
             foreach (GroupeInvites groupeInvites in invitation.GroupesInvites)
             {
-                var parameters = new Dictionary<string, object>()
+                Dictionary<string, object> parameters = new Dictionary<string, object>()
                 {
                     {"@IdInvitation", invitation.IdInvitation },
                     {"@IDGroupeInvite", groupeInvites.IdGroupeInvites }
@@ -152,7 +152,7 @@ namespace API_Footies.Data.DAO
         {
             foreach (Menu menu in invitation.Menus)
             {
-                var parameters = new Dictionary<string, object>()
+                Dictionary<string, object> parameters = new Dictionary<string, object>()
                 {
                     {"@IdInvitation", invitation.IdInvitation },
                     {"@IdMenu", menu.IdMenu }
@@ -168,7 +168,7 @@ namespace API_Footies.Data.DAO
         {
             foreach (Invite invite in invitation.Invites)
             {
-                var parameters = new Dictionary<string, object>()
+                Dictionary<string, object> parameters = new Dictionary<string, object>()
                 {
                     {"@IdInvitation", invitation.IdInvitation },
                     {"@IdInvite", invite.Id }
@@ -184,7 +184,7 @@ namespace API_Footies.Data.DAO
         {
             foreach (Plat plat in invitation.Plats)
             {
-                var parameters = new Dictionary<string, object>()
+                Dictionary<string, object> parameters = new Dictionary<string, object>()
                 {
                     {"@IdInvitation", invitation.IdInvitation },
                     {"@IdPlat", plat.Id }
@@ -203,12 +203,12 @@ namespace API_Footies.Data.DAO
         private List<Invite> ObtenirInvitesDansInvitation(SQLiteConnector connection, long idInvitation)
         {
             List<Invite> invites = new List<Invite>();
-            var parameters = new Dictionary<string, object>()
+            Dictionary<string, object> parameters = new Dictionary<string, object>()
             {
                 {"@IdInvitation", idInvitation }
             };
 
-            var dataTable = connection.ExecuteQuery(
+            DataTable dataTable = connection.ExecuteQuery(
                 @"SELECT I.IdInvite, I.Nom, I.Prenom, I.NumTel, I.Mail 
                   FROM Invite I 
                   INNER JOIN Invitation_Invite II ON I.IdInvite = II.IdInvite 
@@ -235,12 +235,12 @@ namespace API_Footies.Data.DAO
         private List<Plat> ObtenirPlatsDansInvitation(SQLiteConnector connection, long idInvitation)
         {
             List<Plat> plats = new List<Plat>();
-            var parameters = new Dictionary<string, object>()
+            Dictionary<string, object> parameters = new Dictionary<string, object>()
             {
                 {"@IdInvitation", idInvitation }
             };
 
-            var dataTable = connection.ExecuteQuery(
+            DataTable dataTable = connection.ExecuteQuery(
                 @"SELECT P.IdPlat, P.Nom, P.Description, P.Categorie 
                   FROM Plat P 
                   INNER JOIN Invitation_Plat IP ON P.IdPlat = IP.IdPlat 
@@ -262,12 +262,12 @@ namespace API_Footies.Data.DAO
         private List<Menu> ObtenirMenusDansInvitation(SQLiteConnector connection, long idInvitation, List<Plat> platsDisponibles)
         {
             List<Menu> menus = new List<Menu>();
-            var parameters = new Dictionary<string, object>()
+            Dictionary<string, object> parameters = new Dictionary<string, object>()
             {
                 {"@IdInvitation", idInvitation }
             };
 
-            var dataTable = connection.ExecuteQuery(
+            DataTable dataTable = connection.ExecuteQuery(
                 @"SELECT M.IdMenu, M.Nom 
                   FROM Menu M 
                   INNER JOIN Invitation_Menu IM ON M.IdMenu = IM.IdMenu 
@@ -293,12 +293,12 @@ namespace API_Footies.Data.DAO
         private List<Plat> ObtenirPlatsDansMenu(SQLiteConnector connection, long idMenu)
         {
             List<Plat> plats = new List<Plat>();
-            var parameters = new Dictionary<string, object>()
+            Dictionary<string, object> parameters = new Dictionary<string, object>()
             {
                 {"@IdMenu", idMenu }
             };
 
-            var dataTable = connection.ExecuteQuery(
+            DataTable dataTable = connection.ExecuteQuery(
                 @"SELECT P.IdPlat, P.Nom, P.Description, P.Categorie 
                   FROM Plat P 
                   INNER JOIN Menu_Plat MP ON P.IdPlat = MP.IdPlat 
@@ -320,12 +320,12 @@ namespace API_Footies.Data.DAO
         private List<GroupeInvites> ObtenirGroupesInvitesDansInvitation(SQLiteConnector connection, long idInvitation)
         {
             List<GroupeInvites> groupesInvites = new List<GroupeInvites>();
-            var parameters = new Dictionary<string, object>()
+            Dictionary<string, object> parameters = new Dictionary<string, object>()
             {
                 {"@IdInvitation", idInvitation }
             };
 
-            var dataTable = connection.ExecuteQuery(
+            DataTable dataTable = connection.ExecuteQuery(
                 @"SELECT GI.IDGroupeInvite, GI.Nom 
                   FROM GroupeInvite GI 
                   INNER JOIN Invitation_GroupeInvite IGI ON GI.IDGroupeInvite = IGI.IDGroupeInvite 
@@ -355,12 +355,12 @@ namespace API_Footies.Data.DAO
         private List<Invite> ObtenirInvitesDansGroupeInvites(SQLiteConnector connection, long idGroupeInvite)
         {
             List<Invite> invites = new List<Invite>();
-            var parameters = new Dictionary<string, object>()
+            Dictionary<string, object> parameters = new Dictionary<string, object>()
             {
                 {"@IDGroupeInvite", idGroupeInvite }
             };
 
-            var dataTable = connection.ExecuteQuery(
+            DataTable dataTable = connection.ExecuteQuery(
                 @"SELECT I.IdInvite, I.Nom, I.Prenom, I.NumTel, I.Mail 
                   FROM Invite I 
                   INNER JOIN Invite_Groupe IG ON I.IdInvite = IG.IdInvite 
@@ -390,7 +390,7 @@ namespace API_Footies.Data.DAO
         /// </summary>
         private long ModifierInvitation(SQLiteConnector connection, Invitation invitation)
         {
-            var parameters = new Dictionary<string, object>()
+            Dictionary<string, object> parameters = new Dictionary<string, object>()
             {
                 {"@IdInvitation", invitation.IdInvitation },
                 {"@Nom", invitation.Nom },
@@ -407,7 +407,7 @@ namespace API_Footies.Data.DAO
         /// <param name="invitation"> l'invitation à modifier </param>
         private void ModifierGroupesInvitesDansInvitation(SQLiteConnector connection, Invitation invitation)
         {
-            var deleteParameters = new Dictionary<string, object>()
+            Dictionary<string, object> deleteParameters = new Dictionary<string, object>()
             {
                 {"@IdInvitation", invitation.IdInvitation }
             };
@@ -415,7 +415,7 @@ namespace API_Footies.Data.DAO
 
             foreach (GroupeInvites groupeInvites in invitation.GroupesInvites)
             {
-                var insertParameters = new Dictionary<string, object>()
+                Dictionary<string, object> insertParameters = new Dictionary<string, object>()
                 {
                     {"@IdInvitation", invitation.IdInvitation },
                     {"@IDGroupeInvite", groupeInvites.IdGroupeInvites }
@@ -431,14 +431,14 @@ namespace API_Footies.Data.DAO
         /// <param name="invitation"> l'invitation à modifier </param>
         private void ModifierMenusDansInvitation(SQLiteConnector connection, Invitation invitation)
         {
-            var deleteParameters = new Dictionary<string, object>()
+            Dictionary<string, object> deleteParameters = new Dictionary<string, object>()
             {
                 {"@IdInvitation", invitation.IdInvitation }
             };
             connection.ExecuteQuery("DELETE FROM Invitation_Menu WHERE IdInvitation = @IdInvitation", deleteParameters);
             foreach (Menu menu in invitation.Menus)
             {
-                var insertParameters = new Dictionary<string, object>()
+                Dictionary<string, object> insertParameters = new Dictionary<string, object>()
                 {
                     {"@IdInvitation", invitation.IdInvitation },
                     {"@IdMenu", menu.IdMenu }
@@ -454,14 +454,14 @@ namespace API_Footies.Data.DAO
         /// <param name="invitation"> l'invitation à modifier </param>
         private void ModifierInvitesDansInvitation(SQLiteConnector connection, Invitation invitation)
         {
-            var deleteParameters = new Dictionary<string, object>()
+            Dictionary<string, object> deleteParameters = new Dictionary<string, object>()
             {
                 {"@IdInvitation", invitation.IdInvitation }
             };
             connection.ExecuteQuery("DELETE FROM Invitation_Invite WHERE IdInvitation = @IdInvitation", deleteParameters);
             foreach (Invite invite in invitation.Invites)
             {
-                var insertParameters = new Dictionary<string, object>()
+                Dictionary<string, object> insertParameters = new Dictionary<string, object>()
                 {
                     {"@IdInvitation", invitation.IdInvitation },
                     {"@IdInvite", invite.Id }
@@ -477,14 +477,14 @@ namespace API_Footies.Data.DAO
         /// <param name="invitation"> l'invitation à modifier </param>
         private void ModifierPlatsDansInvitation(SQLiteConnector connection, Invitation invitation)
         {
-            var deleteParameters = new Dictionary<string, object>()
+            Dictionary<string, object> deleteParameters = new Dictionary<string, object>()
             {
                 {"@IdInvitation", invitation.IdInvitation }
             };
             connection.ExecuteQuery("DELETE FROM Invitation_Plat WHERE IdInvitation = @IdInvitation", deleteParameters);
             foreach (Plat plat in invitation.Plats)
             {
-                var insertParameters = new Dictionary<string, object>()
+                Dictionary<string, object> insertParameters = new Dictionary<string, object>()
                 {
                     {"@IdInvitation", invitation.IdInvitation },
                     {"@IdPlat", plat.Id }

@@ -21,7 +21,7 @@ namespace API_Footies.Data.DAO
                 }
                 else
                 {
-                    var parameters = new Dictionary<string, object>()
+                    Dictionary<string, object> parameters = new Dictionary<string, object>()
                     {
                     {"@Nom",invite.Nom },
                     {"@Prenom",invite.Prenom },
@@ -48,7 +48,7 @@ namespace API_Footies.Data.DAO
                 }
                 else
                 {
-                    var parameters = new Dictionary<string, object>()
+                    Dictionary<string, object> parameters = new Dictionary<string, object>()
                     {
                         {"@Id", invite.Id },
                         {"@Nom", invite.Nom },
@@ -78,7 +78,7 @@ namespace API_Footies.Data.DAO
                 }
                 else
                 {
-                    var dataTable = connection.ExecuteQuery("SELECT * FROM Invite");
+                    DataTable dataTable = connection.ExecuteQuery("SELECT * FROM Invite");
                     foreach (DataRow? row in dataTable.Rows)
                     {
 
@@ -104,7 +104,7 @@ namespace API_Footies.Data.DAO
                 }
                 else
                 {
-                    var parameters = new Dictionary<string, object>()
+                    Dictionary<string, object> parameters = new Dictionary<string, object>()
             {
                 {"@Id", id }
             };
@@ -153,11 +153,11 @@ namespace API_Footies.Data.DAO
                 }
                 else
                 {
-                    var parameters = new Dictionary<string, object>()
+                    Dictionary<string, object> parameters = new Dictionary<string, object>()
                     {
                         {"@TexteRecherche", $"%{texterecherche}%" }
                     };
-                    var dataTable = connection.ExecuteQuery("SELECT * FROM Invite WHERE Nom LIKE @TexteRecherche OR Prenom LIKE @TexteRecherche", parameters);
+                    DataTable dataTable = connection.ExecuteQuery("SELECT * FROM Invite WHERE Nom LIKE @TexteRecherche OR Prenom LIKE @TexteRecherche", parameters);
                     foreach (DataRow? row in dataTable.Rows)
                     {
                         Invite invite = new Invite((long)row["idInvite"], row["nom"].ToString(), row["prenom"].ToString(), row["NumTel"].ToString(), row["mail"].ToString());

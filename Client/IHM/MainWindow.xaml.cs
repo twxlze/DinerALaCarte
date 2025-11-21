@@ -35,6 +35,8 @@ public partial class MainWindow : Window
     private VMPageMenu vmPageMenu;
     #endregion
 
+    #region Constructeur
+
     /// <summary>
     /// Constructeur par défaut de la fenêtre principale
     /// </summary>
@@ -79,19 +81,9 @@ public partial class MainWindow : Window
         this.vmPageMenu.PropertyChanged += VMPage_PropertyChanged;
     }
 
-    /// <summary>
-    /// Charge toutes les données nécessaires pour la fenêtre principale
-    /// </summary>
-    private async void ChargerToutesLesDonnees()
-    {
-        await Task.WhenAll(
-            ChargerInvites(),
-            ChargerPlats(),
-            ChargerGroupes(),
-            ChargerMenus()
-        );
-    }
+    #endregion
 
+    #region Méthodes événements et gestionnaires
     /// <summary>
     /// Gestion du changement de propriété dans le VMPageInvite
     /// </summary>
@@ -113,8 +105,9 @@ public partial class MainWindow : Window
                 break;
         }
     }
+    #endregion
 
-
+    #region Méthodes / Sélectionner
     /// <summary>
     /// Sélectionne une personne dans la liste des invités
     /// </summary>
@@ -140,22 +133,6 @@ public partial class MainWindow : Window
             vueP.Deselectionner();
         }
         vue.Selectionner();
-    }
-
-    /// <summary>
-    /// Ouvre la fenêtre des détails d'un plat
-    /// </summary>
-    /// <param name="vue">La vue du plat montrant les détails du plat</param>
-    private void OuvrirDetailPlat(VuePlat vue)
-    {
-        if (this.vmPagePlat.PlatSelectionne != null)
-        {
-            Navigation.AllerDetailPlat(this, this.vmPagePlat.PlatSelectionne, "Accueil");
-        }
-        else
-        {
-            MessageBox.Show("Veuillez sélectionner un plat pour voir ses détails.", "Aucun plat sélectionné", MessageBoxButton.OK, MessageBoxImage.Warning);
-        }
     }
 
     /// <summary>
@@ -185,7 +162,21 @@ public partial class MainWindow : Window
         }
         vue.Selectionner();
     }
+    #endregion
 
+    #region Méthodes / Charger
+    /// <summary>
+    /// Charge toutes les données nécessaires pour la fenêtre principale
+    /// </summary>
+    private async void ChargerToutesLesDonnees()
+    {
+        await Task.WhenAll(
+            ChargerInvites(),
+            ChargerPlats(),
+            ChargerGroupes(),
+            ChargerMenus()
+        );
+    }
     /// <summary>
     /// Rafraîchit la liste des invités affichés
     /// </summary>
@@ -201,6 +192,7 @@ public partial class MainWindow : Window
             VueInvite vue = new VueInvite(invite);
 
             vue.MouseDown += (s, e) => this.SelectionnerInvite(vue);
+            vue.MouseDoubleClick += (s, e) => this.OuvrirDetailInvite(vue);
 
             vue.Height = 20;
             vue.HorizontalAlignment = HorizontalAlignment.Center;
@@ -250,6 +242,7 @@ public partial class MainWindow : Window
         {
             VueGroupeInvite vue = new VueGroupeInvite(groupe);
             vue.MouseDown += (s, e) => this.SelectionnerGroupeInvite(vue);
+            vue.MouseDoubleClick += (s, e) => this.OuvrirDetailGroupeInvite(vue);
             vue.Height = 20;
             vue.Width = 600;
             vue.HorizontalAlignment = HorizontalAlignment.Center;
@@ -271,6 +264,7 @@ public partial class MainWindow : Window
         {
             VueMenu vue = new VueMenu(menu);
             vue.MouseDown += (s, e) => this.SelectionnerMenu(vue);
+            vue.MouseDoubleClick += (s, e) => this.OuvrirDetailMenu(vue);
             vue.Height = 20;
             vue.Width = 600;
             vue.HorizontalAlignment = HorizontalAlignment.Center;
@@ -279,6 +273,62 @@ public partial class MainWindow : Window
             this.PanelListeMenu.Children.Add(vue);
         }
     }
+    #endregion
+
+    #region Méthodes / Ouvrir Détails
+
+    /// <summary>
+    /// Ouvre la fenêtre des détails d'un plat
+    /// </summary>
+    /// <param name="vue">La vue du plat montrant les détails du plat</param>
+    private void OuvrirDetailPlat(VuePlat vue)
+    {
+        if (this.vmPagePlat.PlatSelectionne != null)
+        {
+            Navigation.AllerDetailPlat(this, this.vmPagePlat.PlatSelectionne, "Accueil");
+        }
+        else
+        {
+            MessageBox.Show("Veuillez sélectionner un plat pour voir ses détails.", "Aucun plat sélectionné", MessageBoxButton.OK, MessageBoxImage.Warning);
+        }
+    }
+
+    private void OuvrirDetailInvite(VueInvite vue)
+    {
+        if (this.vmPageInvite.InviteSelectionne != null)
+        {
+            Navigation.AllerDetailInvite(this, this.vmPageInvite.InviteSelectionne, "Accueil");
+        }
+        else
+        {
+            MessageBox.Show("Veuillez sélectionner un invité pour voir ses détails.", "Aucun invité sélectionné", MessageBoxButton.OK, MessageBoxImage.Warning);
+        }
+    }
+
+    private void OuvrirDetailGroupeInvite(VueGroupeInvite vue)
+    {
+        if (this.vmPageGroupeInvite.GroupeSelectionne != null)
+        {
+            Navigation.AllerDetailGroupeInvite(this, this.vmPageGroupeInvite.GroupeSelectionne, "Accueil");
+        }
+        else
+        {
+            MessageBox.Show("Veuillez sélectionner un groupe d'invités pour voir ses détails.", "Aucun groupe sélectionné", MessageBoxButton.OK, MessageBoxImage.Warning);
+        }
+    }
+
+    private void OuvrirDetailMenu(VueMenu vue)
+    {
+        if (this.vmPageMenu.MenuSelectionne != null)
+        {
+            Navigation.AllerDetailMenu(this, this.vmPageMenu.MenuSelectionne, "Accueil");
+        }
+        else
+        {
+            MessageBox.Show("Veuillez sélectionner un menu pour voir ses détails.", "Aucun menu sélectionné", MessageBoxButton.OK, MessageBoxImage.Warning);
+        }
+    }
+    #endregion
 
     /// <summary>
     /// Bouton pour fermer la fenêtre

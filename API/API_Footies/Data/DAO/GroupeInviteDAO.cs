@@ -20,14 +20,14 @@ namespace API_Footies.Data.DAO
                 }
                 else
                 {
-                    var parameters = new Dictionary<string, object>()
+                    Dictionary<string, object> parameters = new Dictionary<string, object>()
                     {
                         {"@Nom", groupeInvites.Nom }
                     };
                     groupeInvites.IdGroupeInvites = connection.ExecuteInsert("INSERT INTO GroupeInvite (Nom) VALUES (@Nom)", parameters);
                     foreach (Invite invite in groupeInvites.Invites)
                     {
-                        var parametersInvite = new Dictionary<string, object>()
+                        Dictionary<string, object> parametersInvite = new Dictionary<string, object>()
                         {
                             {"@IdGroupeInvite", groupeInvites.IdGroupeInvites },
                             {"@IdInvite", invite.Id }
@@ -53,19 +53,19 @@ namespace API_Footies.Data.DAO
                 }
                 else
                 {
-                    var dataTable = connection.ExecuteQuery("SELECT * FROM GroupeInvite");
+                    DataTable dataTable = connection.ExecuteQuery("SELECT * FROM GroupeInvite");
 
                     foreach (DataRow? row in dataTable.Rows)
                     {
                         long idGroupeInvite = (long)row["IdGroupeInvite"];
                         string nom = row["Nom"].ToString();
                         List<Invite> invitesGroupeInvite = new List<Invite>();
-                        var parametersGroupeInvite = new Dictionary<string, object>()
+                        Dictionary<string, object> parametersGroupeInvite = new Dictionary<string, object>()
                         {
                             {"@IdGroupeInvite", idGroupeInvite }
                         };
 
-                        var dataTableInvites = connection.ExecuteQuery(
+                        DataTable dataTableInvites = connection.ExecuteQuery(
                             @"SELECT i.* FROM Invite i
                               INNER JOIN Invite_Groupe ig ON i.IdInvite = ig.IdInvite 
                               WHERE ig.IdGroupeInvite = @IdGroupeInvite",
@@ -103,13 +103,13 @@ namespace API_Footies.Data.DAO
                 }
                 else
                 {
-                    var parameters = new Dictionary<string, object>()
+                    Dictionary<string, object> parameters = new Dictionary<string, object>()
                     {
                         {"@IdGroupeInvite", groupeInvite.IdGroupeInvites },
                         {"@Nom", groupeInvite.Nom }
                     };
                     connection.ExecuteQuery("UPDATE GroupeInvite SET Nom = @Nom WHERE IdGroupeInvite = @IdGroupeInvite", parameters);
-                    var parametersDelete = new Dictionary<string, object>()
+                    Dictionary<string, object> parametersDelete = new Dictionary<string, object>()
                     {
                         {"@IdGroupeInvite", groupeInvite.IdGroupeInvites }
                     };
@@ -117,7 +117,7 @@ namespace API_Footies.Data.DAO
 
                     foreach (Invite invite in groupeInvite.Invites)
                     {
-                        var parametersInvite = new Dictionary<string, object>()
+                        Dictionary<string, object> parametersInvite = new Dictionary<string, object>()
                         {
                             {"@IdGroupeInvite", groupeInvite.IdGroupeInvites },
                             {"@IdInvite", invite.Id }
@@ -141,12 +141,12 @@ namespace API_Footies.Data.DAO
                 }
                 else
                 {
-                    var parametersLiaison = new Dictionary<string, object>()
+                    Dictionary<string, object> parametersLiaison = new Dictionary<string, object>()
                     {
                         {"@IdGroupeInvite", idGroupeInvite }
                     };
                     connection.ExecuteQuery("DELETE FROM Invite_Groupe WHERE IdGroupeInvite = @IdGroupeInvite", parametersLiaison);
-                    var parameters = new Dictionary<string, object>()
+                    Dictionary<string, object> parameters = new Dictionary<string, object>()
                     {
                         {"@IdGroupeInvite", idGroupeInvite }
                     };
@@ -166,21 +166,21 @@ namespace API_Footies.Data.DAO
                 }
                 else
                 {
-                    var parameters = new Dictionary<string, object>()
+                    Dictionary<string, object> parameters = new Dictionary<string, object>()
                     {
                         {"@Texte", $"%{GroupeInvitesRechercher}%" }
                     };
-                    var dataTable = connection.ExecuteQuery("SELECT * FROM GroupeInvite WHERE Nom LIKE @Texte", parameters);
+                    DataTable dataTable = connection.ExecuteQuery("SELECT * FROM GroupeInvite WHERE Nom LIKE @Texte", parameters);
                     foreach (DataRow? row in dataTable.Rows)
                     {
                         long idGroupeInvite = (long)row["IdGroupeInvite"];
                         string nom = row["Nom"].ToString();
                         List<Invite> invitesGroupeInvite = new List<Invite>();
-                            var parametersGroupeInvite = new Dictionary<string, object>()
+                        Dictionary<string, object> parametersGroupeInvite = new Dictionary<string, object>()
                             {
                                 {"@IdGroupeInvite", idGroupeInvite }
                             };
-                            var dataTableInvites = connection.ExecuteQuery(
+                        DataTable dataTableInvites = connection.ExecuteQuery(
                                 @"SELECT i.* FROM Invite i
                                   INNER JOIN Invite_Groupe ig ON i.IdInvite = ig.IdInvite 
                                   WHERE ig.IdGroupeInvite = @IdGroupeInvite",

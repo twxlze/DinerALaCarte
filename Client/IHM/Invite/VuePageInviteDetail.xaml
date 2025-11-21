@@ -54,7 +54,7 @@
         <StackPanel Grid.Column="0" Margin="5" VerticalAlignment="Bottom">
             <Button Content="Retour" Height="40"
             Style="{StaticResource StyleBoutonInvite}"
-            Click="RetourAuPageInvite_Click"/>
+            Click="RetourAPage_Click"/>
         </StackPanel>
 
         <StackPanel Grid.Column="1" Margin="0,23,0,0">
