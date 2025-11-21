@@ -85,50 +85,7 @@ namespace IHM_Footies
             }
         }
 
-        /// <summary>
-        /// Gère le changement de texte dans le champ ingrédients
-        /// </summary>
-        private async void TextBoxIngredients_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (sender is TextBox textBox)
-            {
-                string texte = textBox.Text;
 
-                if (!string.IsNullOrWhiteSpace(texte) && texte.Length >= 2)
-                {
-                    await this.plat.RechercherSuggestionsIngredients(texte);
-
-                    if (this.plat.SuggestionsIngredients.Count > 0)
-                    {
-                        ListBoxSuggestions.Visibility = Visibility.Visible;
-                    }
-                    else
-                    {
-                        ListBoxSuggestions.Visibility = Visibility.Collapsed;
-                    }
-                }
-                else
-                {
-                    ListBoxSuggestions.Visibility = Visibility.Collapsed;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Gère la sélection d'une suggestion
-        /// </summary>
-        private void ListBoxSuggestions_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (ListBoxSuggestions.SelectedItem is string suggestion)
-            {
-                this.plat.Ingredients = suggestion;
-                
-                ListBoxSuggestions.Visibility = Visibility.Collapsed;
-                
-                TextBoxIngredients.Focus();
-                TextBoxIngredients.CaretIndex = TextBoxIngredients.Text.Length;
-            }
-        }
         #endregion
 
         #region Boutons de navigation

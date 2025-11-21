@@ -168,7 +168,7 @@ namespace API_Footies.Data.DAO
                             categorie = CategoriePlat.plat;
                         }
 
-                        Plat plat = new Plat((long)row["idPlat"], row["nom"].ToString(), row["description"]?.ToString(), categorie);
+                        Plat plat = new Plat((long)row["idPlat"], row["nom"].ToString(), row["description"]?.ToString(), categorie, row["Ingredients"]?.ToString());
                         listePlat.Add(plat);
                     }
                 }

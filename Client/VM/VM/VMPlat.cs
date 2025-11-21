@@ -18,8 +18,6 @@ namespace VM_Footies.VM
     {
         #region Attributs
         private Plat plat;
-        private IngredientsDAO openFoodFactsDAO;
-        private List<string> suggestionsIngredients;
         #endregion
 
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -101,19 +99,6 @@ namespace VM_Footies.VM
         }
 
         /// <summary>
-        /// Liste des suggestions d'ingrédients
-        /// </summary>
-        public List<string> SuggestionsIngredients
-        {
-            get { return suggestionsIngredients; }
-            set
-            {
-                suggestionsIngredients = value;
-                Notify("SuggestionsIngredients");
-            }
-        }
-
-        /// <summary>
         /// Index de la catégorie pour le ComboBox
         /// </summary>
         public int CategorieIndex
@@ -139,7 +124,6 @@ namespace VM_Footies.VM
         public VMPlat(Plat plat)
         {
             this.plat = plat;
-            InitialiserDAO();
         }
 
         /// <summary>
@@ -157,14 +141,6 @@ namespace VM_Footies.VM
         {
         }
 
-        /// <summary>
-        /// Initialise le DAO et les collections
-        /// </summary>
-        private void InitialiserDAO()
-        {
-            this.openFoodFactsDAO = new IngredientsDAO();
-            this.suggestionsIngredients = new List<string>();
-        }
         #endregion
 
         #region Méthodes
@@ -187,28 +163,6 @@ namespace VM_Footies.VM
             Description = plat.Description;
             Categorie = plat.Categorie;
             Ingredients = plat.Ingredients;
-        }
-
-        /// <summary>
-        /// Recherche des suggestions d'ingrédients
-        /// </summary>
-        /// <param name="recherche">Texte de recherche</param>
-        public async Task RechercherSuggestionsIngredients(string recherche)
-        {
-            List<string> suggestions = new List<string>();
-            if (!string.IsNullOrWhiteSpace(recherche) && recherche.Length >= 2)
-            {
-                try
-                {
-                    suggestions = await openFoodFactsDAO.RechercherIngredients(recherche);
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception("Erreur lors de la recherche des suggestions d'ingrédients : " + ex.Message);
-                }
-            }
-            this.suggestionsIngredients = suggestions;
-            Notify("SuggestionsIngredients");
         }
         #endregion
     }

@@ -316,7 +316,6 @@
                                  Grid.Row="0"
                                  Height="70"
                                  Text="{Binding Ingredients, UpdateSourceTrigger=PropertyChanged}"
-                                 TextChanged="TextBoxIngredients_TextChanged"
                                  TextWrapping="Wrap"
                                  AcceptsReturn="True"
                                  VerticalScrollBarVisibility="Auto"
@@ -331,7 +330,6 @@
                                  Visibility="Collapsed"
                                  MaxHeight="100"
                                  Margin="0,3,0,0"
-                                 SelectionChanged="ListBoxSuggestions_SelectionChanged"
                                  Style="{StaticResource StyleListBoxSuggestions}"/>
                     </Grid>
 
