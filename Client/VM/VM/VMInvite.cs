@@ -194,6 +194,15 @@ namespace VM_Footies.VM
             this.invite.Allergenes = allergenesSelectionnes;
             Notify("Allergenes");
         }
+
+        /// <summary>
+        /// Ajoute un gestionnaire d'événement pour un VMAllergeneSelectionne
+        /// </summary>
+        /// <param name="vmAllergene">L'allergène sélectionnable</param>
+        public void GestionnaireEvenement(VMAllergeneSelectionne vmAllergene)
+        {
+            vmAllergene.PropertyChanged += VmAllergene_PropertyChanged;
+        }
         #endregion
     }
 }

@@ -27,9 +27,15 @@ namespace IHM_Footies
         #region Attributs
         private VMPlat plat;
         private VMPagePlat vmPagePlat;
-        public VMPlat Plat => this.plat;
         #endregion
 
+        #region Propriétés
+        /// <summary>
+        /// Plat associée au VMPlat
+        /// </summary>
+        public VMPlat Plat => this.plat;
+
+        #endregion
 
         #region Constructeurs
         /// <summary>
@@ -41,10 +47,7 @@ namespace IHM_Footies
             this.plat = plat;
             this.vmPagePlat = new VMPagePlat();
             this.DataContext = this.plat;
-
-            // Charge les allergènes disponibles
             this.vmPagePlat.ChargerAllergenesDansPlat(this.plat);
-
             InitializeComponent();
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
         }
