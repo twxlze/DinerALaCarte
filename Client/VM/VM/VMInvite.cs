@@ -22,13 +22,12 @@ namespace VM_Footies.VM
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
+        #region Propriétés
         /// <summary>
         /// Invite associée au VMInvite
         /// </summary>
         public Invite Invite => invite;
 
-
-        #region Propriétés
         /// <summary>
         /// Id de l'invité
         /// </summary>

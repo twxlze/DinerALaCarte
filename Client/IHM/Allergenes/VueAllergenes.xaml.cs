@@ -10,38 +10,33 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
-using METIER_Footies.Metier;
 using VM_Footies.VM;
+using VM_Footies.VM_Element_Selectionne;
 
-namespace IHM_Footies
+namespace IHM_Footies.Allergenes
 {
     /// <summary>
-    /// Logique d'interaction pour VueInvite.xaml
+    /// Logique d'interaction pour VueAllergenes.xaml
     /// </summary>
-    public partial class VuePlat : UserControl
+    public partial class VueAllergenes : UserControl
     {
         #region Attributs
-        private VMPlat plat;
+        private VMAllergene allergene;
         #endregion
 
         #region Propriétés
         /// <summary>
-        /// Le VMPlat associé à la vue
+        /// Allergène associé à cette vue
         /// </summary>
-        public VMPlat Plat => this.plat;
+        public VMAllergene Allergene => this.allergene;
         #endregion
 
         #region Constructeur
-        /// <summary>
-        /// Constructeur d'une vue d'invité
-        /// </summary>
-        /// <param name="invite"> Le VMInvite à afficher </param>
-        public VuePlat(VMPlat plat)
+        public VueAllergenes(VMAllergene allergene)
         {
-            this.plat = plat;
-            this.DataContext = this.plat;
+            this.allergene = allergene;
+            this.DataContext = this.allergene;
             this.ConfigurerStyle();
             InitializeComponent();
         }
