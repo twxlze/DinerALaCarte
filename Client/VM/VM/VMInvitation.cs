@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using METIER_Footies.Data;
 using METIER_Footies.Metier;
 using VM_Footies.VM_Element_Selectionne;
 
@@ -24,6 +26,13 @@ namespace VM_Footies.VM
         #endregion
 
         public event PropertyChangedEventHandler? PropertyChanged;
+
+        // Méthode pour récupérer les éléments sélectionnés
+        public List<Invite> ObtenirInvitesSelectionnes()
+        {
+            return InvitesListe.Where(i => i.EstSelectionne).Select(i => i.Invite).ToList();
+        }
+
 
         #region PROPRIETES
         /// <summary>

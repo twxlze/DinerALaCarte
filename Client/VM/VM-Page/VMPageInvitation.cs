@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 using METIER_Footies.Data;
 using METIER_Footies.Data.Interface;
+using METIER_Footies.Data.Interfaces;
 using METIER_Footies.Metier;
 using VM_Footies.VM;
 using VM_Footies.VM_Element_Selectionne;
@@ -25,6 +21,9 @@ namespace VM_Footies.VM_Page
         private VMPageGroupeInvite vmPageGroupeInvite;
         private VMPageInvite vmPageInvite;
         private VMPagePlat vmPagePlat;
+
+        private IGroupeInviteDAO groupeDAO;
+
         #endregion
 
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -61,10 +60,12 @@ namespace VM_Footies.VM_Page
             this.vmPageGroupeInvite = new VMPageGroupeInvite();
             this.vmPageInvite = new VMPageInvite();
             this.vmPagePlat = new VMPagePlat();
+            this.groupeDAO = new GroupeInviteDAO();
         }
         #endregion
 
         #region Méthodes publiques - CRUD
+
         /// <summary>
         /// Charge toutes les invitations depuis la base de données
         /// </summary>
