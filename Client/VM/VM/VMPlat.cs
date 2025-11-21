@@ -177,19 +177,6 @@ namespace VM_Footies.VM
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(message));
         }
-
-        /// <summary>
-        /// Modifie les informations du plat
-        /// </summary>
-        /// <param name="plat"> le plat avec les nouvelles informations </param>
-        public void ModifierPlat(VMPlat plat)
-        {
-            Nom = plat.Nom;
-            Description = plat.Description;
-            Categorie = plat.Categorie;
-            Ingredients = plat.Ingredients;
-            //AllergenesListe = plat.AllergenesListe;
-        }
         #endregion
 
         /// <summary>
