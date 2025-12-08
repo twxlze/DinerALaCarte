@@ -57,26 +57,9 @@ namespace VM_Footies
         public List<VMPlat> VMPlat => listeVMPlat;
         #endregion
 
+        #region Evenement
         public event PropertyChangedEventHandler? PropertyChanged;
-
-        public List<VMAllergeneSelectionne> ListeVMAllergenes
-        {
-            get
-            {
-                List<VMAllergeneSelectionne> allergenes = new List<VMAllergeneSelectionne>();
-                if (this.PlatSelectionne != null)
-                {
-                    foreach (VMAllergeneSelectionne vMAllergene in this.PlatSelectionne.AllergenesListe)
-                    {
-                        if (vMAllergene.EstSelectionne)
-                        {
-                            allergenes.Add(vMAllergene);
-                        }
-                    }
-                }
-                return allergenes;
-            }
-        }
+        #endregion
 
         #region Constructeurs
         /// <summary>
@@ -206,40 +189,6 @@ namespace VM_Footies
         private void Notify(string message)
         {
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(message));
-        }
-
-        /// <summary>
-        /// Charge tous les allergènes disponibles pour un plat
-        /// </summary>
-        /// <param name="plat">Le VMPlat pour lequel charger les allergènes</param>
-        public async Task ChargerAllergenesDansPlat(VMPlat plat)
-        {
-            try
-            {
-                var tousLesAllergenes = System.Enum.GetValues(typeof(NomAllergene)).Cast<NomAllergene>();
-
-                HashSet<NomAllergene> allergenesSelectionnes = new HashSet<NomAllergene>();
-                if (plat.Plat.Allergenes != null)
-                {
-                    foreach (NomAllergene allergene in plat.Plat.Allergenes)
-                    {
-                        allergenesSelectionnes.Add(allergene);
-                    }
-                }
-
-                plat.AllergenesListe.Clear();
-                foreach (NomAllergene allergene in tousLesAllergenes)
-                {
-                    bool estSelectionne = allergenesSelectionnes.Contains(allergene);
-                    VMAllergeneSelectionne vmAllergeneSelectionne = new VMAllergeneSelectionne(allergene, estSelectionne);
-                    plat.GestionnaireEvenement(vmAllergeneSelectionne);
-                    plat.AllergenesListe.Add(vmAllergeneSelectionne);
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Erreur lors du chargement des allergènes pour le plat : " + ex.Message);
-            }
         }
         #endregion
     }

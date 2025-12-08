@@ -92,6 +92,7 @@ namespace METIER_Footies.Metier
         }
         #endregion
 
+        #region Constructeurs
         /// <summary>
         /// Constructeur du plat
         /// </summary>
@@ -122,6 +123,9 @@ namespace METIER_Footies.Metier
             this.allergenes = plat.allergenes;
         }
 
+        /// <summary>
+        /// Constructeur par défaut 
+        /// </summary>
         public Plat()
         {
             this.nom = "";
@@ -130,5 +134,6 @@ namespace METIER_Footies.Metier
             this.ingredients = "";
             this.allergenes = new List<Enum.NomAllergene>();
         }
+        #endregion
     }
 }
