@@ -21,6 +21,7 @@ namespace METIER_Footies.Metier
         private string? telephone; // string pour simplifier avec l'API
         private string? email;
         private List<Enum.NomAllergene>? allergenes;
+        private List<Plat> platsDetestes;
         #endregion
 
         #region Propriétés
@@ -101,6 +102,15 @@ namespace METIER_Footies.Metier
             get { return allergenes; }
             set { allergenes = value; }
         }
+
+        /// <summary>
+        /// Retourne ou modifie la liste des plats détestés par l'invité
+        /// </summary>
+        public List<Plat> PlatsDetestes
+        {
+            get { return platsDetestes; }
+            set { platsDetestes = value; }
+        }
         #endregion
 
         #region Constructeurs
@@ -111,7 +121,7 @@ namespace METIER_Footies.Metier
         /// <param name="prenom"> Prénom de l'invité </param>
         /// <param name="telephone"> Téléphone de l'invité </param>
         /// <param name="email"> Email de l'invité </param>
-        public Invite(long id, string nom, string prenom, string? telephone, string? email, List<NomAllergene> allergies = null)
+        public Invite(long id, string nom, string prenom, string? telephone, string? email, List<NomAllergene> allergies = null, List<Plat> platsDetestes = null)
         {
             this.id = id;
             this.nom = nom;
@@ -119,6 +129,7 @@ namespace METIER_Footies.Metier
             this.telephone = telephone;
             this.email = email;
             this.allergenes = allergies;
+            this.platsDetestes = platsDetestes;
         }
 
         /// <summary>
@@ -132,6 +143,7 @@ namespace METIER_Footies.Metier
             this.telephone = invite.telephone;
             this.email = invite.email;
             this.allergenes = invite.allergenes;
+            this.platsDetestes = invite.platsDetestes;
         }
 
         /// <summary>
@@ -144,6 +156,7 @@ namespace METIER_Footies.Metier
             this.telephone = null;
             this.email = null;
             this.allergenes = new List<NomAllergene>();
+            this.platsDetestes = new List<Plat>();
         }
         #endregion
     }

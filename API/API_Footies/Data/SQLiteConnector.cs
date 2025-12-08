@@ -8,7 +8,6 @@ namespace API_Footies.Data
     /// </summary>
     public class SQLiteConnector : IDisposable
     {
-        //Connection
         private SqliteConnection connection;
 
         /// <summary>
