@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using METIER_Footies.Enum;
 using METIER_Footies.Metier;
 
 namespace VM_Footies.VM
@@ -11,55 +12,72 @@ namespace VM_Footies.VM
     public class VMAllergene : INotifyPropertyChanged
     {
         #region Attributs
-        private Allergene allergene;
+        private NomAllergene allergene;
+        private bool estSelectionne;
         #endregion
 
-        #region Evenement
         public event PropertyChangedEventHandler? PropertyChanged;
-        #endregion
 
         #region Propriétés
         /// <summary>
-        /// Allergène encapsulé
+        /// Le nom affiché dans la liste (ex: Gluten)
         /// </summary>
-        public Allergene Allergene => allergene;
-
-        public long Id
-        {
-            get { return allergene.ID; }
-        }
-
         public string Nom
         {
-            get { return allergene.Nom; }
+            get
+            {
+                return allergene.ToString();
+            }
+        }
+
+        /// <summary>
+        /// La valeur réelle de l'enum
+        /// </summary>
+        public NomAllergene Allergene
+        {
+            get
+            {
+                return allergene;
+            }
+        }
+
+        /// <summary>
+        /// État de la case à cocher (Binding IsChecked)
+        /// </summary>
+        public bool EstSelectionne
+        {
+            get
+            {
+                return estSelectionne;
+            }
             set
             {
-               allergene.Nom = value;
-               Notify("Nom");
+                if (estSelectionne != value)
+                {
+                    estSelectionne = value;
+                    Notify("EstSelectionne");
+                }
             }
         }
         #endregion
 
         #region Constructeur
         /// <summary>
-        /// Notifie le changement de propriété
+        /// Constructeur de VMAllergene pour un allergène donné
         /// </summary>
-        /// <param name="allergene"> Nom de la propriété modifiée </param>
-        public VMAllergene(Allergene allergene)
+        /// <param name="allergene"> Le nom de l'allergène</param>
+        /// <param name="estSelectionne"> L'état initial de sélection</param>
+        public VMAllergene(NomAllergene allergene, bool estSelectionne)
         {
             this.allergene = allergene;
-        }
-
-        public VMAllergene()
-        {
-            allergene = new Allergene();
+            this.estSelectionne = estSelectionne;
         }
         #endregion
 
         #region Méthodes
-        private void Notify(string message) 
+        private void Notify(string propertyName)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(message));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         #endregion
     }

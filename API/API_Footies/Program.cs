@@ -15,11 +15,9 @@ builder.Services.AddSwaggerGen();
 /// ---- Injections des dépendances ----
 builder.Services.AddScoped<IInviteDAO, InviteDAO>();
 builder.Services.AddScoped<IInviteService, InviteService>();
+
 builder.Services.AddScoped<IPlatDAO, PlatDAO>();
 builder.Services.AddScoped<IPlatService, PlatService>();
-
-builder.Services.AddScoped<IInviteDAO, InviteDAO>();
-builder.Services.AddScoped<IPlatDAO, PlatDAO>();
 
 builder.Services.AddScoped<IGroupeInviteDAO, GroupeInviteDAO>();
 builder.Services.AddScoped<IGroupeInvitesService, GroupeInvitesService>();
@@ -29,10 +27,6 @@ builder.Services.AddScoped<IMenuService, MenuService>();
 
 builder.Services.AddScoped<IInvitationDAO, InvitationDAO>();
 builder.Services.AddScoped<IInvitationService, InvitationService>();
-
-builder.Services.AddScoped<IAllergeneDAO, AllergeneDAO>();
-builder.Services.AddScoped<IAllergeneService, AllergeneService>();
-
 
 SQLitePCL.Batteries.Init();
 

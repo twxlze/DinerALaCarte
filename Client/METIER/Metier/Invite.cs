@@ -5,6 +5,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using METIER_Footies.Enum;
 
 namespace METIER_Footies.Metier
 {
@@ -110,13 +111,14 @@ namespace METIER_Footies.Metier
         /// <param name="prenom"> Prénom de l'invité </param>
         /// <param name="telephone"> Téléphone de l'invité </param>
         /// <param name="email"> Email de l'invité </param>
-        public Invite(long id, string nom, string prenom, string? telephone, string? email)
+        public Invite(long id, string nom, string prenom, string? telephone, string? email, List<NomAllergene> allergies = null)
         {
             this.id = id;
             this.nom = nom;
             this.prenom = prenom;
             this.telephone = telephone;
             this.email = email;
+            this.allergenes = allergies;
         }
 
         /// <summary>
@@ -129,14 +131,19 @@ namespace METIER_Footies.Metier
             this.prenom = invite.prenom;
             this.telephone = invite.telephone;
             this.email = invite.email;
+            this.allergenes = invite.allergenes;
         }
 
+        /// <summary>
+        /// Constructeur par défaut 
+        /// </summary>
         public Invite()
         {
             this.nom = "";
             this.prenom = "";
             this.telephone = null;
             this.email = null;
+            this.allergenes = new List<NomAllergene>();
         }
         #endregion
     }

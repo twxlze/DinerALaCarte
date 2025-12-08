@@ -21,10 +21,13 @@ namespace VM_Footies.VM
     {
         #region Attributs
         private Invite invite;
-        private ObservableCollection<VMAllergeneSelectionne> allergenesListe;
+        private List<VMAllergene> allergiesListe;
+        private bool estSelectionne;
         #endregion
 
+        #region
         public event PropertyChangedEventHandler? PropertyChanged;
+        #endregion
 
         #region Propriétés
         /// <summary>
@@ -109,21 +112,26 @@ namespace VM_Footies.VM
         /// <summary>
         /// Liste des allergènes du plat
         /// </summary>
-        public List<NomAllergene>? Allergenes
+        public List<VMAllergene> Allergies
         {
-            get => invite.Allergenes;
-        }
-
-        /// <summary>
-        /// Liste observable des allergènes sélectionnables
-        /// </summary>
-        public ObservableCollection<VMAllergeneSelectionne> AllergenesListe
-        {
-            get => allergenesListe;
+            get { return allergiesListe; }
             set
             {
-                allergenesListe = value;
-                Notify("AllergenesListe");
+                allergiesListe = value;
+                Notify("AllergiesListe");
+            }
+        }
+
+        public bool EstSelectionne
+        {
+            get { return estSelectionne; }
+            set
+            {
+                if (estSelectionne != value)
+                {
+                    estSelectionne = value;
+                    Notify("InviteSelectionne");
+                }
             }
         }
         #endregion
@@ -133,10 +141,11 @@ namespace VM_Footies.VM
         // Constructeur d'un VMInvite à partir d'un Invite
         /// </summary>
         /// <param name="invite"> L'invité modèle </param>
-        public VMInvite(Invite invite)
+        public VMInvite(Invite invite, bool estSelectionne = false)
         {
             this.invite = invite;
-            this.allergenesListe = new ObservableCollection<VMAllergeneSelectionne>();
+            this.estSelectionne = estSelectionne;
+            InitialiserListeAllergies();
         }
 
         /// <summary>
@@ -145,6 +154,7 @@ namespace VM_Footies.VM
         /// <param name="modele"> Le VMInvite à copier </param>
         public VMInvite(VMInvite modele) : this(new Invite(modele.Invite))
         {
+            this.estSelectionne = modele.EstSelectionne;
         }
 
         /// <summary>
@@ -157,51 +167,54 @@ namespace VM_Footies.VM
 
         #region Méthodes
         /// <summary>
+        /// Prépare la liste de toutes les allergies possibles pour l'interface
+        /// </summary>
+        private void InitialiserListeAllergies()
+        {
+            List<VMAllergene> listeTemp = new List<VMAllergene>();
+            Array valeursEnum = Enum.GetValues(typeof(NomAllergene));
+
+            foreach (NomAllergene allergie in valeursEnum)
+            {
+                bool estPresent = false;
+                if (this.invite.Allergenes != null)
+                {
+                    estPresent = this.invite.Allergenes.Contains(allergie);
+                }
+
+                VMAllergene vmAllergene = new VMAllergene(allergie, estPresent);
+                listeTemp.Add(vmAllergene);
+            }
+
+            this.allergiesListe = listeTemp;
+        }
+
+        /// <summary>
+        /// Transfère les cases cochées de l'interface vers le modèle Plat
+        /// À appeler avant d'envoyer le plat à la base de données.
+        /// </summary>
+        public void SauvegarderAllergies()
+        {
+            List<NomAllergene> allergenesSelectionnes = new List<NomAllergene>();
+
+            foreach (VMAllergene vm in this.allergiesListe)
+            {
+                if (vm.EstSelectionne)
+                {
+                    allergenesSelectionnes.Add(vm.Allergene);
+                }
+            }
+
+            this.invite.Allergenes = allergenesSelectionnes;
+        }
+
+        /// <summary>
         // Notifie le changement d'une propriété
         /// </summary>
         /// <param name="message"> Nom de la propriété changée </param>
         private void Notify(string message)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(message));
-        }
-
-        /// <summary>
-        /// Synchronise la liste des allergènes sélectionnés avec le modèle
-        /// </summary>
-        /// <param name="sender">L'expéditeur</param>
-        /// <param name="e">Les arguments de l'événement</param>
-        private void VmAllergene_PropertyChanged(object? sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == "AllergeneSelectionne")
-            {
-                SynchroniserAllergenesSelectionnes();
-            }
-        }
-
-        /// <summary>
-        /// Met à jour la liste des allergènes sélectionnés dans le modèle
-        /// </summary>
-        public void SynchroniserAllergenesSelectionnes()
-        {
-            List<NomAllergene> allergenesSelectionnes = new List<NomAllergene>();
-            foreach (VMAllergeneSelectionne vmAllergene in this.allergenesListe)
-            {
-                if (vmAllergene.EstSelectionne)
-                {
-                    allergenesSelectionnes.Add(vmAllergene.Allergene);
-                }
-            }
-            this.invite.Allergenes = allergenesSelectionnes;
-            Notify("Allergenes");
-        }
-
-        /// <summary>
-        /// Ajoute un gestionnaire d'événement pour un VMAllergeneSelectionne
-        /// </summary>
-        /// <param name="vmAllergene">L'allergène sélectionnable</param>
-        public void GestionnaireEvenement(VMAllergeneSelectionne vmAllergene)
-        {
-            vmAllergene.PropertyChanged += VmAllergene_PropertyChanged;
         }
         #endregion
     }

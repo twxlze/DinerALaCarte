@@ -30,7 +30,7 @@ namespace API_Footies.Controllers
         /// <param name="plat">plat à ajouter</param>
         /// <returns>Le plat avec Id modifié</returns>
         [HttpPost("Ajoutplat")]
-        public Metier.Plat AjouterInvite(Metier.Plat plat)
+        public Metier.Plat AjouterPlat(Metier.Plat plat)
         {
             this.service.AjouterPlat(plat);
             return plat;

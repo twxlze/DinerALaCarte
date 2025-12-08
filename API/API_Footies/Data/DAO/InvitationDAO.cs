@@ -141,7 +141,7 @@ namespace API_Footies.Data.DAO
                     {"@IdInvitation", invitation.IdInvitation },
                     {"@IDGroupeInvite", groupeInvites.IdGroupeInvites }
                 };
-                connection.ExecuteQuery("INSERT INTO Invitation_GroupeInvite (IdInvitation, IDGroupeInvite) VALUES (@IdInvitation, @IDGroupeInvite)",parameters);
+                connection.ExecuteQuery("INSERT INTO Invitation_GroupeInvite (IdInvitation, IDGroupeInvite) VALUES (@IdInvitation, @IDGroupeInvite)", parameters);
             }
         }
 
@@ -157,7 +157,7 @@ namespace API_Footies.Data.DAO
                     {"@IdInvitation", invitation.IdInvitation },
                     {"@IdMenu", menu.IdMenu }
                 };
-                connection.ExecuteQuery("INSERT INTO Invitation_Menu (IdInvitation, IdMenu) VALUES (@IdInvitation, @IdMenu)",parameters);
+                connection.ExecuteQuery("INSERT INTO Invitation_Menu (IdInvitation, IdMenu) VALUES (@IdInvitation, @IdMenu)", parameters);
             }
         }
 
@@ -173,7 +173,7 @@ namespace API_Footies.Data.DAO
                     {"@IdInvitation", invitation.IdInvitation },
                     {"@IdInvite", invite.Id }
                 };
-                connection.ExecuteQuery("INSERT INTO Invitation_Invite (IdInvitation, IdInvite) VALUES (@IdInvitation, @IdInvite)",parameters);
+                connection.ExecuteQuery("INSERT INTO Invitation_Invite (IdInvitation, IdInvite) VALUES (@IdInvitation, @IdInvite)", parameters);
             }
         }
 
@@ -189,7 +189,7 @@ namespace API_Footies.Data.DAO
                     {"@IdInvitation", invitation.IdInvitation },
                     {"@IdPlat", plat.Id }
                 };
-                connection.ExecuteQuery("INSERT INTO Invitation_Plat (IdInvitation, IdPlat) VALUES (@IdInvitation, @IdPlat)",parameters);
+                connection.ExecuteQuery("INSERT INTO Invitation_Plat (IdInvitation, IdPlat) VALUES (@IdInvitation, @IdPlat)", parameters);
             }
         }
 
@@ -217,13 +217,11 @@ namespace API_Footies.Data.DAO
 
             foreach (DataRow row in dataTable.Rows)
             {
-                Invite invite = new Invite(
-                    (long)row["IdInvite"],
-                    row["Nom"].ToString(),
-                    row["Prenom"].ToString(),
-                    row["NumTel"].ToString(),
-                    row["Mail"].ToString()
-                );
+                long idInvite = (long)row["IdInvite"];
+                List<NomAllergene> allergenes = ObtenirAllergenesDeInvite(connection, idInvite);
+                List<Plat> platsAimes = ObtenirPlatsDetestesDeInvite(connection, idInvite);
+
+                Invite invite = new Invite(idInvite, row["Nom"].ToString(), row["Prenom"].ToString(), row["NumTel"].ToString(), row["Mail"].ToString(), allergenes.Count > 0 ? allergenes : null, platsAimes.Count > 0 ? platsAimes : null);
                 invites.Add(invite);
             }
             return invites;
@@ -240,12 +238,7 @@ namespace API_Footies.Data.DAO
                 {"@IdInvitation", idInvitation }
             };
 
-            var dataTable = connection.ExecuteQuery(
-                @"SELECT P.IdPlat, P.Nom, P.Description, P.Categorie, P.Ingredients 
-                  FROM Plat P 
-                  INNER JOIN Invitation_Plat IP ON P.IdPlat = IP.IdPlat 
-                  WHERE IP.IdInvitation = @IdInvitation",
-                parameters);
+            var dataTable = connection.ExecuteQuery(@"SELECT P.IdPlat, P.Nom, P.Description, P.Categorie, P.Ingredients  FROM Plat P INNER JOIN Invitation_Plat IP ON P.IdPlat = IP.IdPlat WHERE IP.IdInvitation = @IdInvitation", parameters);
 
             foreach (DataRow row in dataTable.Rows)
             {
@@ -373,12 +366,18 @@ namespace API_Footies.Data.DAO
 
             foreach (DataRow row in dataTable.Rows)
             {
+                long idInvite = (long)row["IdInvite"];
+                List<NomAllergene> allergenes = ObtenirAllergenesDeInvite(connection, idInvite);
+                List<Plat> platsAimes = ObtenirPlatsDetestesDeInvite(connection, idInvite);
+
                 Invite invite = new Invite(
-                    (long)row["IdInvite"],
+                    idInvite,
                     row["Nom"].ToString(),
                     row["Prenom"].ToString(),
                     row["NumTel"].ToString(),
-                    row["Mail"].ToString()
+                    row["Mail"].ToString(),
+                    allergenes.Count > 0 ? allergenes : null,
+                    platsAimes.Count > 0 ? platsAimes : null
                 );
                 invites.Add(invite);
             }
@@ -400,14 +399,13 @@ namespace API_Footies.Data.DAO
             var dataTable = connection.ExecuteQuery(
                 @"SELECT a.Nom 
                   FROM Allergene a
-                  INNER JOIN Plat_Allergene pa ON a.IDAllergene = pa.IDAllergene 
-                  WHERE pa.IDPlat = @IdPlat",
+                  INNER JOIN Plat_Allergene pa ON a.IdAllergene = pa.IdAllergene 
+                  WHERE pa.IdPlat = @IdPlat",
                 parameters);
 
             foreach (DataRow row in dataTable.Rows)
             {
-                NomAllergene allergene;
-                if (Enum.TryParse(row["Nom"].ToString(), true, out allergene))
+                if (Enum.TryParse(row["Nom"].ToString(), true, out NomAllergene allergene))
                 {
                     allergenes.Add(allergene);
                 }
@@ -416,11 +414,69 @@ namespace API_Footies.Data.DAO
             return allergenes;
         }
 
+        /// <summary>
+        /// Obtient tous les allergènes d'un invité
+        /// </summary>
+        private List<NomAllergene> ObtenirAllergenesDeInvite(SQLiteConnector connection, long idInvite)
+        {
+            List<NomAllergene> allergenes = new List<NomAllergene>();
+            var parameters = new Dictionary<string, object>()
+            {
+                {"@IdInvite", idInvite }
+            };
+
+            var dataTable = connection.ExecuteQuery(
+                @"SELECT A.Nom 
+                  FROM Allergene A
+                  INNER JOIN Invite_Allergene IA ON A.IdAllergene = IA.IdAllergene 
+                  WHERE IA.IdInvite = @IdInvite",
+                parameters);
+
+            foreach (DataRow row in dataTable.Rows)
+            {
+                if (Enum.TryParse(row["Nom"].ToString(), true, out NomAllergene allergene))
+                {
+                    allergenes.Add(allergene);
+                }
+            }
+
+            return allergenes;
+        }
+
+        /// <summary>
+        /// Obtient tous les plats aimés d'un invité
+        /// </summary>
+        private List<Plat> ObtenirPlatsDetestesDeInvite(SQLiteConnector connection, long idInvite)
+        {
+            List<Plat> platsAimes = new List<Plat>();
+            var parameters = new Dictionary<string, object>()
+            {
+                {"@IdInvite", idInvite }
+            };
+
+            var dataTable = connection.ExecuteQuery(
+                @"SELECT P.IDPlat, P.Nom, P.Description, P.Categorie, P.Ingredients 
+                  FROM Plat P
+                  INNER JOIN Invite_PlatDeteste IPA ON P.IDPlat = IPA.IDPlat 
+                  WHERE IPA.IdInvite = @IdInvite",
+                parameters);
+
+            foreach (DataRow row in dataTable.Rows)
+            {
+                long idPlat = (long)row["IDPlat"];
+                List<NomAllergene> allergenes = ObtenirAllergenesDuPlat(connection, idPlat);
+                Plat plat = CreerPlat(row, allergenes);
+                platsAimes.Add(plat);
+            }
+
+            return platsAimes;
+        }
+
         #endregion
 
         #region Méthodes Modifier
         /// <summary>
-        /// Insère l'invitation principale et retourne son ID
+        /// Modifie l'invitation principale et retourne son ID
         /// </summary>
         private long ModifierInvitation(SQLiteConnector connection, Invitation invitation)
         {
@@ -535,11 +591,8 @@ namespace API_Footies.Data.DAO
         /// </summary>
         private Plat CreerPlat(DataRow row, List<NomAllergene> allergenes)
         {
-            CategoriePlat categorie;
-            if (!Enum.TryParse(row["Categorie"].ToString(), true, out categorie))
-            {
-                categorie = CategoriePlat.plat;
-            }
+            CategoriePlat categorie = CategoriePlat.plat;
+            Enum.TryParse(row["Categorie"].ToString(), true, out categorie);
 
             return new Plat(
                 (long)row["IdPlat"],
