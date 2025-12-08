@@ -67,7 +67,6 @@ namespace IHM_Footies
             try
             {
                 List<string> erreurs = new List<string>();
-                // nom
                 if (string.IsNullOrWhiteSpace(this.groupeInvite.Nom))
                 {
                     erreurs.Add("Entrez le nom du groupe d'invités");
@@ -80,12 +79,10 @@ namespace IHM_Footies
                 {
                     string message = string.Join("\n", erreurs);
                     MessageBox.Show(message, "Erreur de validation", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
                 }
                 else
                 {
                     this.DialogResult = true;
-
                 }
             }
             catch (Exception ex)

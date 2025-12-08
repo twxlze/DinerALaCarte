@@ -153,13 +153,18 @@ namespace IHM_Footies.Invitations
         {
             try
             {
+                List<string> erreurs = new List<string>();
                 this.invitation.SynchroniserTout();
-                if (this.invitation.Invitation.IdInvitation != 0)
+                if(this.invitation.Date < DateTime.Today)
+                {
+                    erreurs.Add("La date de l'invitation ne peut pas être avant la date d'aujourd'hui.");
+                }
+                else if (this.invitation.Invitation.IdInvitation != 0)
                 {
                     await this.invitationDAO.ModifierInvitation(this.invitation.Invitation);
                     MessageBox.Show("L'invitation a été modifiée avec succès.", "Succès", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
-                else
+                else if (this.invitation.Invitation.IdInvitation == 0)
                 {
                     await this.invitationDAO.AjouterInvitation(this.invitation.Invitation);
                     MessageBox.Show("L'invitation a été enregistrée avec succès.", "Succès", MessageBoxButton.OK, MessageBoxImage.Information);

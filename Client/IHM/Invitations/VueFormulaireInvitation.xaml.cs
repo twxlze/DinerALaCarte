@@ -160,28 +160,39 @@ namespace IHM_Footies.Invitations
         /// <param name="e"></param>
         private void BoutonFormulaireInvitationMenuPlat_Click(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(this.invitation.Nom))
+            try
             {
-                MessageBox.Show("Veuillez saisir un nom pour l'invitation.", "Validation", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
+                List<string> erreurs = new List<string>();
+                if (string.IsNullOrWhiteSpace(this.invitation.Nom))
+                {
+                    erreurs.Add("Veuillez saisir un nom pour l'invitation.");
+                }
+
+                if (!this.invitation.InvitesListe.Any(i => i.EstSelectionne))
+                {
+                    erreurs.Add("Veuillez sélectionner au moins un invité.");
+                }
+                if (!this.invitation.GroupesInvitesListe.Any(g => g.EstSelectionne))
+                {
+                    erreurs.Add("Veuillez sélectionner un groupe d'invités");
+                }
+                if (erreurs.Count > 0)
+                {
+                    string message = string.Join("\n", erreurs);
+                    MessageBox.Show(message, "Erreur de validation", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                else
+                {
+                    VueFormulaireMenuEtPlat_Invitation fenetreMenuPlat = new VueFormulaireMenuEtPlat_Invitation(invitation);
+                    fenetreMenuPlat.ShowDialog();
+                    this.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
-            if (!this.invitation.InvitesListe.Any(i => i.EstSelectionne))
-            {
-                MessageBox.Show("Veuillez sélectionner au moins un invité.", "Validation", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
-            }
-
-            if (!this.invitation.GroupesInvitesListe.Any(g => g.EstSelectionne))
-            {
-                MessageBox.Show("Veuillez sélectionner un groupe d'invités.", "Validation", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
-            }
-
-            VueFormulaireMenuEtPlat_Invitation fenetreMenuPlat = new VueFormulaireMenuEtPlat_Invitation(invitation);
-            fenetreMenuPlat.ShowDialog();
-
-            this.Close();
         }
 
         #endregion
