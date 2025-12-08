@@ -30,10 +30,6 @@ builder.Services.AddScoped<IMenuService, MenuService>();
 builder.Services.AddScoped<IInvitationDAO, InvitationDAO>();
 builder.Services.AddScoped<IInvitationService, InvitationService>();
 
-builder.Services.AddScoped<IAllergeneDAO, AllergeneDAO>();
-builder.Services.AddScoped<IAllergeneService, AllergeneService>();
-
-
 SQLitePCL.Batteries.Init();
 
 WebApplication app = builder.Build();
