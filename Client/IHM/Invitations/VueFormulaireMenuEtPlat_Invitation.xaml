@@ -255,7 +255,7 @@
                 Height="164" 
                 Width="192"/>
         </StackPanel>
-        
+
         <TextBlock Grid.Column="1" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Gestion des invitations" VerticalAlignment="Top" FontWeight="Bold" FontSize="20" Foreground="#B44B3E" Margin="0,3,0,0"/>
         <Image Source="{StaticResource ResourceKey=LogoHostably}" Margin="15,10,121,17" />
 
@@ -277,10 +277,10 @@
         CornerRadius="10"
         Padding="5" Grid.Row="2" Grid.RowSpan="6">
             <ScrollViewer VerticalScrollBarVisibility="Auto">
-                <ItemsControl ItemsSource="{Binding Plats}">
+                <ItemsControl ItemsSource="{Binding PlatsListe}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <CheckBox Content="{Binding NomPlats}"
+                            <CheckBox Content="{Binding Nom}"
                                 IsChecked="{Binding EstSelectionne}"
                                 Margin="5"
                                 FontSize="12"
