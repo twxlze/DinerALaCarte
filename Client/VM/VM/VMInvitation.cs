@@ -21,13 +21,12 @@ namespace VM_Footies.VM
         private Invitation invitation;
         private ObservableCollection<VMMenuSelectionne> menusListe;
         private ObservableCollection<VMGroupeInviteSelectionne> groupesInvitesListe;
-        private ObservableCollection<VMInviteSelectionne> invitesListe;
-        private ObservableCollection<VMPlatSelectionne> platsListe;
+        private ObservableCollection<VMInvite> invitesListe;
+        private ObservableCollection<VMPlat> platsListe;
         #endregion
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
-        // Méthode pour récupérer les éléments sélectionnés
         public List<Invite> ObtenirInvitesSelectionnes()
         {
             return InvitesListe.Where(i => i.EstSelectionne).Select(i => i.Invite).ToList();
@@ -160,7 +159,7 @@ namespace VM_Footies.VM
         /// <summary>
         /// Liste des invités sélectionnables
         /// </summary>
-        public ObservableCollection<VMInviteSelectionne> InvitesListe
+        public ObservableCollection<VMInvite> InvitesListe
         {
             get => invitesListe;
             set
@@ -173,7 +172,7 @@ namespace VM_Footies.VM
         /// <summary>
         /// Liste des plats sélectionnables
         /// </summary>
-        public ObservableCollection<VMPlatSelectionne> PlatsListe
+        public ObservableCollection<VMPlat> PlatsListe
         {
             get => platsListe;
             set
@@ -221,8 +220,8 @@ namespace VM_Footies.VM
         {
             this.menusListe = new ObservableCollection<VMMenuSelectionne>();
             this.groupesInvitesListe = new ObservableCollection<VMGroupeInviteSelectionne>();
-            this.invitesListe = new ObservableCollection<VMInviteSelectionne>();
-            this.platsListe = new ObservableCollection<VMPlatSelectionne>();
+            this.invitesListe = new ObservableCollection<VMInvite>();
+            this.platsListe = new ObservableCollection<VMPlat>();
         }
         #endregion
 
@@ -302,7 +301,7 @@ namespace VM_Footies.VM
         private void SynchroniserInvitesSelectionnes()
         {
             List<Invite> invitesSelectionnes = new List<Invite>();
-            foreach (VMInviteSelectionne vmInvite in this.invitesListe)
+            foreach (VMInvite vmInvite in this.invitesListe)
             {
                 if (vmInvite.EstSelectionne)
                 {
@@ -319,7 +318,7 @@ namespace VM_Footies.VM
         private void SynchroniserPlatsSelectionnes()
         {
             List<Plat> platsSelectionnes = new List<Plat>();
-            foreach (VMPlatSelectionne vmPlat in this.platsListe)
+            foreach (VMPlat vmPlat in this.platsListe)
             {
                 if (vmPlat.EstSelectionne)
                 {

@@ -148,11 +148,11 @@ namespace VM_Footies.VM_Page
         /// </summary>
         /// <param name="platsCategorie">Collection de plats d'une catégorie</param>
         /// <returns>Liste des VMPlat sélectionnés</returns>
-        private List<VMPlat> ObtenirPlatsSelectionnesParCategorie(IEnumerable<VMPlatSelectionne> platsCategorie)
+        private List<VMPlat> ObtenirPlatsSelectionnesParCategorie(IEnumerable<VMPlat> platsCategorie)
         {
             List<VMPlat> plats = new List<VMPlat>();
 
-            foreach (VMPlatSelectionne vmPlatSelectionne in platsCategorie)
+            foreach (VMPlat vmPlatSelectionne in platsCategorie)
             {
                 if (vmPlatSelectionne.EstSelectionne)
                 {
@@ -200,7 +200,7 @@ namespace VM_Footies.VM_Page
                 foreach (VMPlat vMPlat in this.vmPagePlat.VMPlat)
                 {
                     bool estSelectionne = idDesPlats.Contains(vMPlat.Id);
-                    VMPlatSelectionne vmPlatSelectionne = new VMPlatSelectionne(vMPlat.Plat, estSelectionne);
+                    VMPlat vmPlatSelectionne = new VMPlat(vMPlat.Plat, estSelectionne);
                     menu.GestionnaireEvenement(vmPlatSelectionne);
                     switch (vMPlat.Plat.Categorie)
                     {

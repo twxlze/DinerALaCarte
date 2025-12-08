@@ -252,7 +252,7 @@ namespace VM_Footies.VM_Page
             foreach (VMInvite vmInvite in this.vmPageInvite.VMInvites)
             {
                 bool estSelectionne = idDesInvites.Contains(vmInvite.Id);
-                VMInviteSelectionne vmInviteSelectionne = new VMInviteSelectionne(vmInvite.Invite, estSelectionne);
+                VMInvite vmInviteSelectionne = new VMInvite(vmInvite.Invite, estSelectionne);
                 vmInviteSelectionne.PropertyChanged += invitation.VmElement_PropertyChanged;
                 invitation.InvitesListe.Add(vmInviteSelectionne);
             }
@@ -279,7 +279,7 @@ namespace VM_Footies.VM_Page
             foreach (VMPlat vmPlat in this.vmPagePlat.VMPlat)
             {
                 bool estSelectionne = idDesPlats.Contains(vmPlat.Plat.Id);
-                VMPlatSelectionne vmPlatSelectionne = new VMPlatSelectionne(vmPlat.Plat, estSelectionne);
+                VMPlat vmPlatSelectionne = new VMPlat(vmPlat.Plat, estSelectionne);
                 vmPlatSelectionne.PropertyChanged += invitation.VmElement_PropertyChanged;
                 invitation.PlatsListe.Add(vmPlatSelectionne);
             }
