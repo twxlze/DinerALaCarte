@@ -228,8 +228,44 @@
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
                 </ScrollViewer>
-                
-                
+            </Grid>
+        </Border>
+
+        <!-- Titre de la section plats détestés -->
+        <TextBlock Grid.Row="4"
+        Text="Plats detestés" 
+        FontSize="14" 
+        FontWeight="SemiBold"
+        Foreground="#B44B3E"
+        HorizontalAlignment="Right"
+        Margin="0,11,108,37" Grid.Column="1" Grid.RowSpan="3"/>
+
+        <!-- Section Plats Détestés -->
+        <Border Grid.Column="1"
+         BorderBrush="#8C2F26" 
+         BorderThickness="3"
+         CornerRadius="10"
+         Padding="10"
+         Background="White" Margin="305,32,72,50" Grid.RowSpan="4" Grid.Row="4">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                    <ItemsControl ItemsSource="{Binding PlatsDetestesListe}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <CheckBox Content="{Binding Plat.Nom}"
+                           IsChecked="{Binding EstSelectionne}"
+                           Margin="5,3"
+                           FontSize="12"
+                           Foreground="#333333"/>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
             </Grid>
         </Border>
 
