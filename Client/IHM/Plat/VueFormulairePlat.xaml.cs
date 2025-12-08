@@ -47,7 +47,6 @@ namespace IHM_Footies
             this.plat = plat;
             this.vmPagePlat = new VMPagePlat();
             this.DataContext = this.plat;
-            this.vmPagePlat.ChargerAllergenesDansPlat(this.plat);
             InitializeComponent();
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
         }
@@ -86,8 +85,7 @@ namespace IHM_Footies
                 }
                 else
                 {
-                    // Synchronise les allergènes avant de fermer
-                    this.plat.SynchroniserAllergenesSelectionnes();
+                    this.plat.SauvegarderAllergenes();
                     this.DialogResult = true;
                 }
             }
@@ -169,7 +167,7 @@ namespace IHM_Footies
         {
             Navigation.AllerInvitations(this);
         }
-          
+
 
         /// <summary>
         /// Bouton pour fermer la fenêtre

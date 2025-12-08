@@ -20,17 +20,20 @@ namespace VM_Footies.VM
     {
         #region Attributs
         private Plat plat;
-        private ObservableCollection<VMAllergeneSelectionne> allergenesListe;
+        private List<VMAllergene> allergenesListe;
+        private bool estSelectionne;
         #endregion
 
+        #region Evenement
         public event PropertyChangedEventHandler? PropertyChanged;
+        #endregion
 
+        #region Propriétés
         /// <summary>
         /// Plat associé au VMPlat
         /// </summary>
         public Plat Plat => plat;
 
-        #region Propriétés
         /// <summary>
         /// Id du plat
         /// </summary>
@@ -119,23 +122,34 @@ namespace VM_Footies.VM
         }
 
         /// <summary>
-        /// Liste des allergènes du plat
+        /// Liste de TOUS les allergènes (cochés ou non) pour l'affichage XAML
         /// </summary>
-        public List<NomAllergene>? Allergenes
+        public List<VMAllergene> AllergenesListe
         {
-            get => plat.Allergenes;
-        }
-
-        /// <summary>
-        /// Liste observable des allergènes sélectionnables
-        /// </summary>
-        public ObservableCollection<VMAllergeneSelectionne> AllergenesListe
-        {
-            get => allergenesListe;
+            get
+            {
+                return allergenesListe;
+            }
             set
             {
                 allergenesListe = value;
                 Notify("AllergenesListe");
+            }
+        }
+
+        /// <summary>
+        /// Indique si le plat est sélectionné (pour les menus)
+        /// </summary>
+        public bool EstSelectionne
+        {
+            get { return estSelectionne; }
+            set
+            {
+                if (estSelectionne != value)
+                {
+                    estSelectionne = value;
+                    Notify("EstSelectionne");
+                }
             }
         }
         #endregion
@@ -145,10 +159,11 @@ namespace VM_Footies.VM
         /// Constructeur d'un VMPlat à partir d'un Plat
         /// </summary>
         /// <param name="plat"> Le plat à utiliser </param>
-        public VMPlat(Plat plat)
+        public VMPlat(Plat plat, bool estSelectionne = false)
         {
             this.plat = plat;
-            this.allergenesListe = new ObservableCollection<VMAllergeneSelectionne>();
+            this.estSelectionne = estSelectionne;
+            InitialiserListeAllergenes();
         }
 
         /// <summary>
@@ -157,6 +172,7 @@ namespace VM_Footies.VM
         /// <param name="modele"> Le VMPlat à copier </param>
         public VMPlat(VMPlat modele) : this(new Plat(modele.Plat))
         {
+            this.estSelectionne = modele.EstSelectionne;
         }
 
         /// <summary>
@@ -170,52 +186,51 @@ namespace VM_Footies.VM
 
         #region Méthodes
         /// <summary>
-        /// Notifie le changement d'une propriété
+        /// Prépare la liste de tous les allergènes possibles pour l'interface
         /// </summary>
-        /// <param name="message"> Nom de la propriété changée </param>
+        private void InitialiserListeAllergenes()
+        {
+            List<VMAllergene> listeTemp = new List<VMAllergene>();
+            Array valeursEnum = Enum.GetValues(typeof(NomAllergene));
+
+            foreach (NomAllergene allergene in valeursEnum)
+            {
+                bool estPresent = false;
+                if (this.plat.Allergenes != null)
+                {
+                    estPresent = this.plat.Allergenes.Contains(allergene);
+                }
+
+                VMAllergene vmAllergene = new VMAllergene(allergene, estPresent);
+                listeTemp.Add(vmAllergene);
+            }
+
+            this.allergenesListe = listeTemp;
+        }
+
+        /// <summary>
+        /// Transfère les cases cochées de l'interface vers le modèle Plat
+        /// À appeler avant d'envoyer le plat à la base de données.
+        /// </summary>
+        public void SauvegarderAllergenes()
+        {
+            List<NomAllergene> allergenesSelectionnes = new List<NomAllergene>();
+
+            foreach (VMAllergene vm in this.allergenesListe)
+            {
+                if (vm.EstSelectionne)
+                {
+                    allergenesSelectionnes.Add(vm.Allergene);
+                }
+            }
+
+            this.plat.Allergenes = allergenesSelectionnes;
+        }
+
         private void Notify(string message)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(message));
         }
         #endregion
-
-        /// <summary>
-        /// Synchronise la liste des allergènes sélectionnés avec le modèle
-        /// </summary>
-        /// <param name="sender">L'expéditeur</param>
-        /// <param name="e">Les arguments de l'événement</param>
-        private void VmAllergene_PropertyChanged(object? sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == "AllergeneSelectionne")
-            {
-                SynchroniserAllergenesSelectionnes();
-            }
-        }
-
-        /// <summary>
-        /// Met à jour la liste des allergènes sélectionnés dans le modèle
-        /// </summary>
-        public void SynchroniserAllergenesSelectionnes()
-        {
-            List<NomAllergene> allergenesSelectionnes = new List<NomAllergene>();
-            foreach (VMAllergeneSelectionne vmAllergene in this.allergenesListe)
-            {
-                if (vmAllergene.EstSelectionne)
-                {
-                    allergenesSelectionnes.Add(vmAllergene.Allergene);
-                }
-            }
-            this.plat.Allergenes = allergenesSelectionnes;
-            Notify("Allergenes");
-        }
-
-        /// <summary>
-        /// Ajoute un gestionnaire d'événement pour un VMAllergeneSelectionne
-        /// </summary>
-        /// <param name="vmAllergene">L'allergène sélectionnable</param>
-        public void GestionnaireEvenement(VMAllergeneSelectionne vmAllergene)
-        {
-            vmAllergene.PropertyChanged += VmAllergene_PropertyChanged;
-        }
     }
 }

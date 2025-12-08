@@ -46,7 +46,6 @@ namespace IHM_Footies
             this.invite = invite;
             this.vmPageInvite = new VMPageInvite();
             this.DataContext = this.invite;
-            this.vmPageInvite.ChargerAllergenesDansInvite(this.invite);
             InitializeComponent();
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
         }
