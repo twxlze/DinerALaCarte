@@ -23,6 +23,7 @@ namespace VM_Footies.VM
         private Invite invite;
         private List<VMAllergene> allergiesListe;
         private bool estSelectionne;
+        private List<VMPlat> platsDetestesListe;
         #endregion
 
         #region
@@ -122,6 +123,16 @@ namespace VM_Footies.VM
             }
         }
 
+        public List<VMPlat> PlatsDetestes
+        {
+            get { return platsDetestesListe; }
+            set
+            {
+                platsDetestesListe = value;
+                Notify("PlatsDetestes");
+            }
+        }
+
         public bool EstSelectionne
         {
             get { return estSelectionne; }
@@ -146,6 +157,7 @@ namespace VM_Footies.VM
             this.invite = invite;
             this.estSelectionne = estSelectionne;
             InitialiserListeAllergies();
+            InitialiserListePlatsDetestes();
         }
 
         /// <summary>
@@ -189,6 +201,8 @@ namespace VM_Footies.VM
             this.allergiesListe = listeTemp;
         }
 
+        
+
         /// <summary>
         /// Transfère les cases cochées de l'interface vers le modèle Plat
         /// À appeler avant d'envoyer le plat à la base de données.
@@ -207,6 +221,41 @@ namespace VM_Footies.VM
 
             this.invite.Allergenes = allergenesSelectionnes;
         }
+
+        /// <summary>
+        /// Prépare la liste de tous les plats détestés pour l'interface
+        /// </summary>
+        public void InitialiserListePlatsDetestes()
+        {
+            List<VMPlat> listeTemp = new List<VMPlat>();
+
+            if (this.invite.PlatsDetestes != null)
+            {
+                foreach (Plat plat in this.invite.PlatsDetestes)
+                {
+                    VMPlat vmPlat = new VMPlat(plat, true);
+                    listeTemp.Add(vmPlat);
+                }
+            }
+
+            this.platsDetestesListe = listeTemp;
+        }
+
+        /// <summary>
+        /// Transfère les cases cochées de l'interface vers le modèle Plat
+        /// </summary>
+        public void SauvegarderPlatsDetestes()
+        {
+            List<Plat> platsDetestesSelectionnes = new List<Plat>();
+            foreach (VMPlat vm in this.platsDetestesListe)
+            {
+                if (vm.EstSelectionne)
+                {
+                    platsDetestesSelectionnes.Add(vm.Plat);
+                }
+            }
+        }
+
 
         /// <summary>
         // Notifie le changement d'une propriété
