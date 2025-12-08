@@ -22,12 +22,11 @@ namespace VM_Footies.VM
         private ObservableCollection<VMMenuSelectionne> menusListe;
         private ObservableCollection<VMGroupeInviteSelectionne> groupesInvitesListe;
         private ObservableCollection<VMInviteSelectionne> invitesListe;
-        private ObservableCollection<VMPlatSelectionne> platsListe;
+        private ObservableCollection<VMPlat> platsListe;
         #endregion
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
-        // Méthode pour récupérer les éléments sélectionnés
         public List<Invite> ObtenirInvitesSelectionnes()
         {
             return InvitesListe.Where(i => i.EstSelectionne).Select(i => i.Invite).ToList();
@@ -173,7 +172,7 @@ namespace VM_Footies.VM
         /// <summary>
         /// Liste des plats sélectionnables
         /// </summary>
-        public ObservableCollection<VMPlatSelectionne> PlatsListe
+        public ObservableCollection<VMPlat> PlatsListe
         {
             get => platsListe;
             set
@@ -222,7 +221,7 @@ namespace VM_Footies.VM
             this.menusListe = new ObservableCollection<VMMenuSelectionne>();
             this.groupesInvitesListe = new ObservableCollection<VMGroupeInviteSelectionne>();
             this.invitesListe = new ObservableCollection<VMInviteSelectionne>();
-            this.platsListe = new ObservableCollection<VMPlatSelectionne>();
+            this.platsListe = new ObservableCollection<VMPlat>();
         }
         #endregion
 
@@ -319,7 +318,7 @@ namespace VM_Footies.VM
         private void SynchroniserPlatsSelectionnes()
         {
             List<Plat> platsSelectionnes = new List<Plat>();
-            foreach (VMPlatSelectionne vmPlat in this.platsListe)
+            foreach (VMPlat vmPlat in this.platsListe)
             {
                 if (vmPlat.EstSelectionne)
                 {

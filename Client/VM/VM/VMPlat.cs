@@ -210,7 +210,6 @@ namespace VM_Footies.VM
 
         /// <summary>
         /// Transfère les cases cochées de l'interface vers le modèle Plat
-        /// À appeler avant d'envoyer le plat à la base de données.
         /// </summary>
         public void SauvegarderAllergenes()
         {
