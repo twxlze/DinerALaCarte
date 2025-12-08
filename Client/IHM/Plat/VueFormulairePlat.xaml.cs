@@ -94,8 +94,6 @@ namespace IHM_Footies
                 MessageBox.Show($"Erreur lors de l'enregistrement : {ex.Message}", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-
-
         #endregion
 
         #region Boutons de navigation

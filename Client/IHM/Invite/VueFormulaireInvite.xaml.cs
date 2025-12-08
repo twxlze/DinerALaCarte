@@ -112,6 +112,7 @@ namespace IHM_Footies
                 }
                 else
                 {
+                    this.invite.SauvegarderAllergies();
                     this.DialogResult = true;
                 }
             }

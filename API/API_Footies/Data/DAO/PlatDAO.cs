@@ -12,7 +12,6 @@ namespace API_Footies.Data.DAO
     /// </summary>
     public class PlatDAO : IPlatDAO
     {
-
         public bool AjouterPlat(Plat plat)
         {
             bool ajoute = false;
@@ -55,7 +54,6 @@ namespace API_Footies.Data.DAO
                             }
                         }
                     }
-
                     ajoute = true;
                 }
 
@@ -113,7 +111,6 @@ namespace API_Footies.Data.DAO
 
                         long idPlat = (long)row["idPlat"];
 
-                        // Récupérer les allergènes du plat
                         List<NomAllergene> allergenesPlat = new List<NomAllergene>();
                         var parametersAllergene = new Dictionary<string, object>()
                         {
@@ -135,7 +132,6 @@ namespace API_Footies.Data.DAO
                                 allergenesPlat.Add(allergene);
                             }
                         }
-
                         Plat plat = new Plat(idPlat, row["nom"].ToString(), row["description"].ToString(), categorie, row["ingredients"].ToString(), allergenesPlat.Count > 0 ? allergenesPlat : null);
                         listePlat.Add(plat);
                     }
@@ -143,7 +139,6 @@ namespace API_Footies.Data.DAO
             }
             return listePlat;
         }
-
         public bool ModifierPlat(Plat plat)
         {
             bool modifie = false;
@@ -165,19 +160,16 @@ namespace API_Footies.Data.DAO
                     };
                     connection.ExecuteQuery("UPDATE Plat SET Nom = @Nom, Categorie = @Categorie, Description = @Description, Ingredients = @Ingredients WHERE IDPlat = @Id", parameters);
 
-                    // Supprimer les anciennes liaisons avec les allergènes
                     var parametersDelete = new Dictionary<string, object>()
                     {
                         {"@IdPlat", plat.Id }
                     };
                     connection.ExecuteQuery("DELETE FROM Plat_Allergene WHERE IDPlat = @IdPlat", parametersDelete);
 
-                    // Ajouter les nouvelles liaisons avec les allergènes
                     if (plat.Allergenes != null && plat.Allergenes.Count > 0)
                     {
                         foreach (NomAllergene allergene in plat.Allergenes)
                         {
-                            // Récupérer l'ID de l'allergène à partir de son nom
                             var parametersAllergene = new Dictionary<string, object>()
                             {
                                 {"@Nom", allergene.ToString() }
@@ -196,7 +188,6 @@ namespace API_Footies.Data.DAO
                             }
                         }
                     }
-
                     modifie = true;
                 }
             }
@@ -213,14 +204,12 @@ namespace API_Footies.Data.DAO
                 }
                 else
                 {
-                    // Supprimer les liaisons avec les allergènes
                     var parametersLiaison = new Dictionary<string, object>()
                     {
                         {"@IdPlat", id }
                     };
                     connection.ExecuteQuery("DELETE FROM Plat_Allergene WHERE IDPlat = @IdPlat", parametersLiaison);
 
-                    // Supprimer le plat
                     var parameters = new Dictionary<string, object>()
                     {
                         {"@Id", id }
@@ -260,7 +249,6 @@ namespace API_Footies.Data.DAO
 
                         long idPlat = (long)row["idPlat"];
 
-                        // Récupérer les allergènes du plat
                         List<NomAllergene> allergenesPlat = new List<NomAllergene>();
                         var parametersAllergene = new Dictionary<string, object>()
                         {

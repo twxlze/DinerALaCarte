@@ -216,7 +216,7 @@
                 </Grid.RowDefinitions>
 
                 <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
-                    <ItemsControl ItemsSource="{Binding AllergenesListe}">
+                    <ItemsControl ItemsSource="{Binding Allergies}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <CheckBox Content="{Binding Nom}"
@@ -228,6 +228,8 @@
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
                 </ScrollViewer>
+                
+                
             </Grid>
         </Border>
 

@@ -123,6 +123,9 @@ namespace METIER_Footies.Metier
             this.allergenes = plat.allergenes;
         }
 
+        /// <summary>
+        /// Constructeur par défaut 
+        /// </summary>
         public Plat()
         {
             this.nom = "";
