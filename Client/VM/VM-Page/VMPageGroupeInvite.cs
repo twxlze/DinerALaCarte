@@ -49,7 +49,7 @@ namespace VM_Footies
                 List<VMInvite> invites = new List<VMInvite>();
                 if (this.GroupeSelectionne != null)
                 {
-                    foreach (VMInviteSelectionne vmInviteSel in this.GroupeSelectionne.InvitesListe)
+                    foreach (VMInvite vmInviteSel in this.GroupeSelectionne.InvitesListe)
                     {
                         if (vmInviteSel.EstSelectionne)
                         {
@@ -159,7 +159,7 @@ namespace VM_Footies
                 foreach (VMInvite vmInvite in this.vmPageInvite.VMInvites)
                 {
                     bool estSelectionne = idDesInvitesGroupe.Contains(vmInvite.Id);
-                    VMInviteSelectionne vmInviteSelectionne = new VMInviteSelectionne(vmInvite.Invite, estSelectionne);
+                    VMInvite vmInviteSelectionne = new VMInvite(vmInvite.Invite, estSelectionne);
                     groupe.GestionnaireEvenement(vmInviteSelectionne);
                     groupe.InvitesListe.Add(vmInviteSelectionne);
                 }
