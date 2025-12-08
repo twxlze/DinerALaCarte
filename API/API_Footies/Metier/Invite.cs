@@ -1,5 +1,8 @@
 ﻿namespace API_Footies.Metier
 {
+    /// <summary>
+    /// Classe représentant un invité 
+    /// </summary>
     public class Invite
     {
         #region --- Attributs ---
@@ -8,8 +11,8 @@
         private string prenom;
         private string telephone;
         private string email;
+        private List<Enum.NomAllergene>? allergenes;
         #endregion
-
 
         #region --- Propriétés ---
 
@@ -59,6 +62,14 @@
             set { email = value; }
         }
 
+        /// <summary>
+        /// Retourne ou modifie la liste des allergènes du plat
+        /// </summary>
+        public List<Enum.NomAllergene>? Allergenes
+        {
+            get { return allergenes; }
+            set { allergenes = value; }
+        }
         #endregion
 
         /// <summary>
@@ -75,6 +86,7 @@
             this.prenom = prenom;
             this.telephone = telephone;
             this.email = email;
+            this.allergenes = allergenes;
         }
 
         /// <summary>

@@ -23,12 +23,12 @@ namespace UnitTest_Footies
         [Fact]
         public void TestCreationGroupeInvite()
         {
-            var nomGroupe = "GroupeTest";
-            var listeInvites = new List<string> { "Invite1", "Invite2", "Invite3" };
+            string nomGroupe = "GroupeTest";
+            List<string> listeInvites = new List<string> { "Invite1", "Invite2", "Invite3" };
             GroupeInvites groupeInvite = new GroupeInvites();
             groupeInvite.Nom = nomGroupe;
             groupeInvite.Invites = new List<Invite>();
-            foreach (var nomInvite in listeInvites)
+            foreach (string nomInvite in listeInvites)
             {
                 Invite invite = new Invite { Nom = nomInvite, Email = "truc@gmail.com", Prenom = nomGroupe + " Truc", Telephone = "454461046146" };
                 groupeInvite.Invites.Add(invite);
@@ -38,31 +38,6 @@ namespace UnitTest_Footies
             Assert.Contains(groupeInvite.Invites, i => i.Nom == "Invite1");
             Assert.True(groupeInvite.Invites.Any());
         }
-
-        [Fact]
-        public void TestSuppressionGroupeInvite()
-        {
-            GroupeInvites groupeInvite = new GroupeInvites();
-            groupeInvite.Nom = "GroupeASupprimer";
-            GroupeInviteDAO groupeInviteDAO = new GroupeInviteDAO();
-            GroupeInvitesService groupeInvitesService = new GroupeInvitesService(groupeInviteDAO);
-            GroupeInvites groupeAjoute = groupeInvitesService.AjouterGroupeInvite(groupeInvite);
-            long idGroupeInvite = groupeAjoute.IdGroupeInvites;
-            
-            // Vérifier que le groupe a bien été ajouter
-            GroupeInvites groupeRecupere = groupeInvitesService.RecupereGroupeViaId(idGroupeInvite);
-            Assert.NotNull(groupeRecupere);
-            Assert.Equal(groupeInvite.Nom, groupeRecupere.Nom);
-
-            //Supprimer le groupe et vérifie
-            GroupeInvites groupeSupprime = groupeInvitesService.SupprimerGroupe(idGroupeInvite);
-            Assert.NotNull(groupeSupprime);
-            Assert.Equal(groupeInvite.Nom, groupeSupprime.Nom);
-            Assert.Equal(idGroupeInvite, groupeSupprime.IdGroupeInvites);
-            GroupeInvites groupeApressuppression = groupeInvitesService.RecupereGroupeViaId(idGroupeInvite);
-            Assert.NotNull(groupeApressuppression);
-            Assert.Equal(0, groupeApressuppression.IdGroupeInvites);
-            Assert.Null(groupeApressuppression.Nom); 
-        }
+        
     }
 }

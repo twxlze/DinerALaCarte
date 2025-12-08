@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:IHM_Footies"
+        xmlns:res="clr-namespace:IHM_Footies.Ressources"
         mc:Ignorable="d"
         Title="VuePageGroupeInvite" Height="450" Width="800"
                 Background="#F9F9F9"
@@ -12,6 +13,68 @@
         >
 
     <Window.Resources>
+        <Style x:Key="StyleContainerRecherche" TargetType="Border">
+            <Setter Property="BorderBrush" Value="#8C2F26"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="CornerRadius" Value="5"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Width" Value="126"/>
+            <Setter Property="Height" Value="18"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+        </Style>
+
+        <Style x:Key="StyleChampRecherche" TargetType="TextBox">
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="8,0,0,0"/>
+            <Setter Property="FontFamily" Value="Poppins"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Foreground" Value="#333333"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Style.Triggers>
+                <Trigger Property="Text" Value="">
+                    <Setter Property="Background">
+                        <Setter.Value>
+                            <VisualBrush Stretch="None" AlignmentX="Left">
+                                <VisualBrush.Visual>
+                                    <TextBlock Text="Rechercher..." Foreground="#BFBFBF" FontSize="12" Margin="8,0,0,0"/>
+                                </VisualBrush.Visual>
+                            </VisualBrush>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- Style loupe de recherche -->
+        <Style x:Key="StyleLoupeRecherche" TargetType="Button">
+            <Setter Property="Content" Value="🔍"/>
+            <Setter Property="Width" Value="30"/>
+            <Setter Property="Height" Value="24"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Foreground" Value="#B44B3E"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="3">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#E0E0E0"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <BitmapImage x:Key="LogoHostably" UriSource="/Ressources/LogoHostably.png"/>
         <Style x:Key="BoutonMenu" TargetType="Button">
             <Setter Property="Background" Value="#F9F9F9"/>
             <Setter Property="Foreground" Value="#B44B3E"/>
@@ -65,6 +128,34 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
+
+        <Style x:Key="StyleBoutonRetour" TargetType="Button">
+            <Setter Property="Background" Value="#F9F9F9"/>
+            <Setter Property="Foreground" Value="#B44B3E"/>
+            <Setter Property="FontSize" Value="24"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Width" Value="60"/>
+            <Setter Property="Height" Value="50"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="5">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#E0E0E0"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
     </Window.Resources>
 
     <Grid>
@@ -115,18 +206,44 @@
                     <RowDefinition/>
                 </Grid.RowDefinitions>
 
-                <TextBlock Text="HOSTABLY" FontSize="19" FontWeight="Bold" Foreground="#B44B3E" VerticalAlignment="Center" Height="27" Margin="73,0,23,0" FontFamily="Montserrat"/>
-                <Button x:Name="BoutonAccueil"  Content="🏠 Accueil" Grid.Row="1" Style="{StaticResource BoutonMenu}" Click="BoutonAccueil_Click"/>
-                <Button x:Name="BoutonInvites" Content="👤 Invités" Grid.Row="2" Style="{StaticResource BoutonMenu}" Click="BoutonInvite_Click"/>
-                <Button x:Name="BoutonGroupes" Content="👥 Groupes d'invités" Grid.Row="3" Style="{StaticResource BoutonMenu}" Background="#BFBFBF" FontWeight="Bold" Click="BoutonGroupeInvite_Click"/>
-                <Button x:Name="BoutonInvitations" Content="🎟️ Invitations" Grid.Row="4" Style="{StaticResource BoutonMenu}"/>
-                <Button x:Name="BoutonMenus" Content="📋 Menus" Grid.Row="5" Style="{StaticResource BoutonMenu}"/>
-                <Button x:Name="BoutonPlats" Content="🍽️ Plats" Grid.Row="6" Style="{StaticResource BoutonMenu}" Click="BoutonAllerPlat_Click" />
-                <Button x:Name="BoutonUtilisateur" Content="👤" Grid.Row="8" Style="{StaticResource BoutonMenu}" Margin="0,0,100,0" HorizontalContentAlignment="Center" FontSize="25"/>
-                <Button x:Name="BoutonReglage" Content="⚙️" Grid.Row="8" Style="{StaticResource BoutonMenu}" HorizontalContentAlignment="Center" Margin="100,0,0,0" FontSize="25"/>
+                <TextBlock Text="À table !" FontSize="20" FontWeight="Bold" Foreground="#B44B3E" VerticalAlignment="Top" Height="27" Margin="82,34,33,0" FontFamily="Montserrat"/>
+                <Button x:Name="BoutonAccueil" Content="{x:Static res:Strings.Accueil}" Grid.Row="1" Grid.Column="0" Style="{StaticResource BoutonMenu}"  Click="BoutonAllerAccueil_Click"/>
+                <Button x:Name="BoutonInvites" Content="{x:Static res:Strings.Invites}" Grid.Row="2" Grid.Column="0" Style="{StaticResource BoutonMenu}" Click="BoutonAllerInvite_Click"/>
+                <Button x:Name="BoutonGroupes" Content="{x:Static res:Strings.GroupeInvite}" Grid.Row="3" Grid.Column="0" Style="{StaticResource BoutonMenu}" Click="BoutonAllerGroupeInvite_Click" Background="#BFBFBF" FontWeight="Bold"/>
+                <Button x:Name="BoutonInvitations" Content="{x:Static res:Strings.Invitations}" Grid.Row="4" Grid.Column="0" Style="{StaticResource BoutonMenu}" Click="BoutonAllerInvitation_Click"/>
+                <Button x:Name="BoutonMenus" Content="{x:Static res:Strings.Menus}" Grid.Row="5" Grid.Column="0" Style="{StaticResource BoutonMenu}" Cursor="Hand" Click="BoutonAllerMenu_Click"/>
+                <Button x:Name="BoutonPlats" Content="{x:Static res:Strings.Plats}" Grid.Row="6" Grid.Column="0" Style="{StaticResource BoutonMenu}" Click="BoutonAllerPlat_Click"/>
+                <Button x:Name="BoutonUtilisateur" Content="👤" Grid.Row="8" Grid.Column="0" Style="{StaticResource BoutonMenu}" Margin="0,0,100,0" HorizontalContentAlignment="Center" FontSize="25"/>
+                <Button x:Name="BoutonReglage" Content="⚙️" Grid.Row="8" Grid.Column="0" Style="{StaticResource BoutonMenu}" HorizontalContentAlignment="Center" Margin="100,0,0,0" FontSize="25" Click="BoutonAllerReglages_Click"/>
             </Grid>
         </Border>
+        <Image Source="{StaticResource ResourceKey=LogoHostably}" Margin="14,10,122,17"/>
 
+        <Button x:Name="BoutonRetourApresRecherche"
+        Style="{StaticResource StyleBoutonRetour}"
+        Content="←"
+        Margin="10,10,0,0"
+        Click="BoutonRetour_Click"
+        Grid.Column="1"
+        Grid.Row="0" RenderTransformOrigin="0.217,0.517" Width="59" Height="37"/>
+
+        <Border Style="{StaticResource StyleContainerRecherche}" Grid.Column="1" Margin="0,64,0,0" Width="440" Grid.RowSpan="2" HorizontalAlignment="Center" Height="27">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBox 
+                Grid.Column="0" 
+                Style="{StaticResource StyleChampRecherche}"
+                Text="{Binding TexteRechercheGroupe, UpdateSourceTrigger=PropertyChanged}" Margin="10,0,0,0"/>
+
+                <Button Click="RecherchegroupeInvite_Click" 
+                Grid.Column="1" 
+                Style="{StaticResource StyleLoupeRecherche}"/>
+            </Grid>
+        </Border>
 
         <Border BorderBrush="#8C2F26" 
                 Grid.Column="1" Grid.RowSpan="6" 
@@ -142,9 +259,10 @@
         </Border>
 
         <!-- Boutons -->
-        <Button Grid.RowSpan="2" Grid.Column="1" Content="Ajouter un Groupe d'invité" HorizontalAlignment="Left" Margin="40,0,0,30" Grid.Row="6" VerticalAlignment="Bottom" Height="40" Width="240" Style="{StaticResource StyleBoutonInvite}" Click="BoutonAjouterGroupeInvite_Click" />
-        <Button Grid.Column="1" Content="Modifier le nom du Groupe" HorizontalAlignment="Right" Margin="0,0,40,30" Grid.Row="7" VerticalAlignment="Bottom" Height="40" Width="240" Style="{StaticResource StyleBoutonInvite}" Cursor="Hand" Click="BoutonModifierGroupeInvite_Click"/>
-        <TextBlock Grid.Column="1" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Gestion des Groupe d'invités" VerticalAlignment="Top" FontWeight="Bold" FontSize="20" Foreground="#B44B3E" Margin="0,20,0,0"/>
+        <Button Grid.RowSpan="2" Grid.Column="1" Content="{x:Static res:Strings.AjouterGroupeInvite}" HorizontalAlignment="Left" Margin="40,0,0,30" Grid.Row="6" VerticalAlignment="Bottom" Height="40" Width="240" Style="{StaticResource StyleBoutonInvite}" Click="BoutonAjouterGroupeInvite_Click" />
+        <Button Grid.Column="1" Content="{x:Static res:Strings.ModifierGroupeInvite}" HorizontalAlignment="Right" Margin="0,0,40,30" Grid.Row="7" VerticalAlignment="Bottom" Height="40" Width="240" Style="{StaticResource StyleBoutonInvite}" Cursor="Hand" Click="BoutonModifierGroupeInvite_Click"/>
+        <Button Grid.Column="1" Content="{x:Static res:Strings.SupprimerGroupeInvite}" HorizontalAlignment="Center" Grid.Row="7" VerticalAlignment="Top" Height="40" Width="270" Style="{StaticResource StyleBoutonInvite}" Margin="0,64,0,0" Grid.RowSpan="2" Click="BoutonSupprimerGroupeInvite_Click"/>
+        <TextBlock Grid.Column="1" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{x:Static res:Strings.GestionGroupeInvite}" VerticalAlignment="Top" FontWeight="Bold" FontSize="20" Foreground="#B44B3E" Margin="0,20,0,0"/>
 
     </Grid>
 </Window>

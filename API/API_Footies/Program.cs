@@ -3,7 +3,7 @@ using API_Footies.Data.Interfaces;
 using API_Footies.Services.Interfaces;
 using API_Footies.Services.Realisations;
 
-var builder = WebApplication.CreateBuilder(args);
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
@@ -24,9 +24,19 @@ builder.Services.AddScoped<IPlatDAO, PlatDAO>();
 builder.Services.AddScoped<IGroupeInviteDAO, GroupeInviteDAO>();
 builder.Services.AddScoped<IGroupeInvitesService, GroupeInvitesService>();
 
+builder.Services.AddScoped<IMenuDAO, MenuDAO>();
+builder.Services.AddScoped<IMenuService, MenuService>();
+
+builder.Services.AddScoped<IInvitationDAO, InvitationDAO>();
+builder.Services.AddScoped<IInvitationService, InvitationService>();
+
+builder.Services.AddScoped<IAllergeneDAO, AllergeneDAO>();
+builder.Services.AddScoped<IAllergeneService, AllergeneService>();
+
+
 SQLitePCL.Batteries.Init();
 
-var app = builder.Build();
+WebApplication app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

@@ -1,0 +1,117 @@
+﻿<Window x:Class="IHM_Footies.Plat.VuePagePlatDetail"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:IHM_Footies.Invite"
+        xmlns:res="clr-namespace:IHM_Footies.Ressources"
+        mc:Ignorable="d"
+        Title="VuePageInviteDetail" Height="450" Width="800"
+        Background="#F9F9F9"
+        WindowStyle="None"
+        AllowsTransparency="True">
+
+    <Window.Resources>
+        <Style x:Key="StyleBoutonInvite" TargetType="Button">
+            <Setter Property="Background" Value="#8C2F26"/>
+            <Setter Property="Foreground" Value="#F9F9F9"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="20,0"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="FontFamily" Value="Poppins"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="10" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#B44B3E"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Border Grid.Column="0" Background="#F0F0F0" Margin="5,5,5,69" CornerRadius="10">
+            <TextBlock Text="{Binding PlatSelectionne.Nom, UpdateSourceTrigger=PropertyChanged}" 
+                       FontSize="18" FontWeight="Bold" 
+                       HorizontalAlignment="Center" VerticalAlignment="Center"
+                       Foreground="#B44B3E" TextWrapping="Wrap"/>
+        </Border>
+
+        <StackPanel Grid.Column="0" Margin="5" VerticalAlignment="Bottom">
+            <Button Content="Retour" Height="40"
+            Style="{StaticResource StyleBoutonInvite}"
+            Click="RetourAPlat_Click"/>
+        </StackPanel>
+
+        <ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Auto" Margin="0,23,0,0">
+            <StackPanel>
+
+                <TextBlock Text="Les informations du plat" 
+                   FontSize="16" FontWeight="SemiBold" 
+                   Foreground="#B44B3E" 
+                   Margin="0,0,0,15" 
+                   HorizontalAlignment="Center"/>
+
+
+                <Border Background="White" CornerRadius="12" Padding="20" Margin="40,0,40,20"
+                        BorderBrush="#E0E0E0" BorderThickness="1">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="170"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Text="{x:Static res:Strings.Nom}" FontWeight="Bold" FontSize="14"/>
+                        <TextBlock Text="{Binding PlatSelectionne.Nom, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1"
+                                   FontSize="14" Foreground="#333" TextWrapping="Wrap"/>
+
+                        <TextBlock Text="{x:Static res:Strings.Categorie}" FontWeight="Bold" FontSize="14" Grid.Row="1"/>
+                        <TextBlock Text="{Binding PlatSelectionne.Categorie, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Grid.Column="1"
+                                   FontSize="14" Foreground="#333"/>
+
+                        <TextBlock Text="{x:Static res:Strings.Description}" FontWeight="Bold" FontSize="14" Grid.Row="2" VerticalAlignment="Top"/>
+                        <TextBlock Text="{Binding PlatSelectionne.Description, UpdateSourceTrigger=PropertyChanged}" Grid.Row="2" Grid.Column="1" 
+                                   FontSize="14" Foreground="#333" TextWrapping="Wrap"/>
+
+                        <TextBlock Text="{x:Static res:Strings.Ingredient}" FontWeight="Bold" FontSize="14" Grid.Row="3" VerticalAlignment="Top"/>
+                        <TextBlock Text="{Binding PlatSelectionne.Ingredients, UpdateSourceTrigger=PropertyChanged}" Grid.Row="3" Grid.Column="1" FontSize="14" Foreground="#333" TextWrapping="Wrap"/>
+                    </Grid>
+                </Border>
+
+
+                <TextBlock Text="Allergènes du plats" FontSize="15" FontWeight="SemiBold" Foreground="#B44B3E" Margin="0,0,0,10" HorizontalAlignment="Center"/>
+                <Border BorderBrush="Gray" BorderThickness="1" MaxHeight="200" Margin="40,0,40,20">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <StackPanel Orientation="Vertical" x:Name="PanelAllergenes"/>
+                    </ScrollViewer>
+                </Border>
+
+            </StackPanel>
+        </ScrollViewer>
+
+    </Grid>
+</Window>

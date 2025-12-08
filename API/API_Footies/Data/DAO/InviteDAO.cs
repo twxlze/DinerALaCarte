@@ -1,6 +1,7 @@
 ﻿using System.Data;
 using API_Footies.Data.Interfaces;
 using API_Footies.Metier;
+using API_Footies.Metier.Enum;
 
 namespace API_Footies.Data.DAO
 {
@@ -21,18 +22,39 @@ namespace API_Footies.Data.DAO
                 }
                 else
                 {
-                    var parameters = new Dictionary<string, object>()
+                    Dictionary<string, object> parameters = new Dictionary<string, object>()
                     {
-                    {"@Nom",invite.Nom },
-                    {"@Prenom",invite.Prenom },
-                    {"@Telephone",invite.Telephone },
-                    {"@Email",invite.Email }
-
+                        {"@Nom",invite.Nom },
+                        {"@Prenom",invite.Prenom },
+                        {"@Telephone",invite.Telephone },
+                        {"@Email",invite.Email }
                     };
                     invite.Id = connection.ExecuteInsert("INSERT INTO Invite (Nom,Prenom,NumTel,Mail) VALUES (@Nom,@Prenom,@Telephone, @Email)", parameters);
+                    /*
+                    if (invite.Allergenes != null && invite.Allergenes.Count > 0)
+                    {
+                        foreach (NomAllergene allergene in invite.Allergenes)
+                        {
+                           var paramatersAllergene = new Dictionary<string, object>()
+                           {
+                               {"@Nom", allergene.ToString() }
+                           };
+                            var dataTableAllergene = connection.ExecuteQuery("SELECT IDAllergene FROM Allergene WHERE Nom = @Nom", paramatersAllergene);
+                            if (dataTableAllergene.Rows.Count > 0)
+                            {
+                                long idAllergene = (long)dataTableAllergene.Rows[0]["IDAllergene"];
+                                var paramatersInviteAllergene = new Dictionary<string, object>()
+                                {
+                                    {"@IdInvite", invite.Id },
+                                    {"@IdAllergene", idAllergene }
+                                };
+                                connection.ExecuteQuery("INSERT INTO Invite_Allergene (IdInvite, IdAllergene) VALUES (@IdInvite, @IdAllergene)", paramatersInviteAllergene);
+                            }
+                        }
+                    }
+                    */
                     ajoute = true;
                 }
-
             }
             return ajoute;
         }
@@ -48,7 +70,7 @@ namespace API_Footies.Data.DAO
                 }
                 else
                 {
-                    var parameters = new Dictionary<string, object>()
+                    Dictionary<string, object> parameters = new Dictionary<string, object>()
                     {
                         {"@Id", invite.Id },
                         {"@Nom", invite.Nom },
@@ -78,7 +100,7 @@ namespace API_Footies.Data.DAO
                 }
                 else
                 {
-                    var dataTable = connection.ExecuteQuery("SELECT * FROM Invite");
+                    DataTable dataTable = connection.ExecuteQuery("SELECT * FROM Invite");
                     foreach (DataRow? row in dataTable.Rows)
                     {
 
@@ -104,7 +126,7 @@ namespace API_Footies.Data.DAO
                 }
                 else
                 {
-                    var parameters = new Dictionary<string, object>()
+                    Dictionary<string, object> parameters = new Dictionary<string, object>()
             {
                 {"@Id", id }
             };
@@ -142,6 +164,30 @@ namespace API_Footies.Data.DAO
             return resultat;
         }
 
-
+        public List<Invite> ChercherInvite(string texterecherche)
+        {
+            List<Invite> listeInvite = new List<Invite>();
+            using (SQLiteConnector connection = new SQLiteConnector())
+            {
+                if (connection == null)
+                {
+                    throw new Exception("Erreur de connexion à la base de données");
+                }
+                else
+                {
+                    Dictionary<string, object> parameters = new Dictionary<string, object>()
+                    {
+                        {"@TexteRecherche", $"%{texterecherche}%" }
+                    };
+                    DataTable dataTable = connection.ExecuteQuery("SELECT * FROM Invite WHERE Nom LIKE @TexteRecherche OR Prenom LIKE @TexteRecherche", parameters);
+                    foreach (DataRow? row in dataTable.Rows)
+                    {
+                        Invite invite = new Invite((long)row["idInvite"], row["nom"].ToString(), row["prenom"].ToString(), row["NumTel"].ToString(), row["mail"].ToString());
+                        listeInvite.Add(invite);
+                    }
+                }
+            }
+            return listeInvite;
+        }
     }
 }

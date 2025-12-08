@@ -13,7 +13,11 @@ namespace API_Footies.Controllers
     [Route("GroupeInvites")]
     public class GroupeInvitesController : ControllerBase
     {
+        #region Attribut
         private IGroupeInvitesService _groupeInvitesService;
+        #endregion
+
+        #region Constructeur
 
         /// <summary>
         /// Constructeur du contrôleur de gestion des groupes d'invités
@@ -23,46 +27,24 @@ namespace API_Footies.Controllers
         {
             this._groupeInvitesService = groupeInvitesService;
         }
+        #endregion
 
-        /// <summary>
-        /// Récupère tous les groupes d'invités
-        /// </summary>
-        /// <returns>tous les groupes d'invite</returns>
-        [HttpGet("RecupererTousGroupesInvites")]
-        public List<GroupeInvites> RecupererTousGroupesInvites()
-        {
-            return _groupeInvitesService.RecupererTousGroupesInvites().ToList();
-        }
-
+        #region Méthodes
         /// <summary>
         /// Ajoute un nouveau groupe d'invités
         /// </summary>
         /// <param name="groupeInvites">le groupe d'invite</param>
         /// <returns>un code pour designer si reussi ou pas</returns>
-        [HttpPost("AjouterUnGroupeInvite")]
+        [HttpPost("AjoutGroupeInvite")]
         public IActionResult AjouterGroupeInvite(GroupeInvites groupeInvites)
         {
-            var groupeAjoute = _groupeInvitesService.AjouterGroupeInvite(groupeInvites);
-            return Ok(groupeAjoute);
-        }
-
-        /// <summary>
-        /// Ajouter un invité à un groupe d'invités
-        /// </summary>
-        /// <param name="idGroupeInvites"></param>
-        /// <param name="invite"></param>
-        /// <returns>un code pour designer si reussi ou pas</returns>
-        [HttpPost("AjouterInviteAuGroupe/{idGroupeInvites}")]
-        public IActionResult AjouterInviteAGroupe(long idGroupeInvites, Invite invite)
-        {
-            var groupeMisAJour = _groupeInvitesService.AjouterInviteAuGroupe(idGroupeInvites, invite);
+            bool ajouter = this._groupeInvitesService.AjouterGroupeInvites(groupeInvites);
 
             IActionResult resultat;
-
-            if (groupeMisAJour == null)
+            if (ajouter == false)
             { resultat = NotFound(); }
             else
-            { resultat = Ok(groupeMisAJour); }
+            { resultat = Ok(groupeInvites); }
 
             return resultat;
         }
@@ -72,45 +54,54 @@ namespace API_Footies.Controllers
         /// </summary>
         /// <param name="groupeInvite">le groupe</param>
         /// <returns>un code pour designer si reussi ou pas + le json de groupe</returns>
-        [HttpPut("ModifierUnGroupe")]
+        [HttpPut("ModifierGroupeInvite")]
         public IActionResult ModifierGroupe(GroupeInvites groupeInvite)
         {
-            var groupeMisAJour = _groupeInvitesService.ModifierGroupe(groupeInvite);
+            bool modifie = this._groupeInvitesService.ModifierGroupeInvite(groupeInvite);
 
             IActionResult resultat;
-
-            if (groupeMisAJour == null)
+            if (modifie == false)
             { resultat = NotFound(); }
             else
-            { resultat = Ok(groupeMisAJour); }
-            return resultat;
-        }
+            { resultat = Ok(groupeInvite); }
 
-        /// <summary>
-        /// Récupère les invités d'un groupe via son ID
-        /// </summary>
-        /// <param name="idGroupeInvites">l'id du groupe</param>
-        /// <returns>les invites du groupe</returns>
-        [HttpGet("RecupererGroupeParId/{idGroupeInvites}")]
-        public GroupeInvites RecupererGroupe(long idGroupeInvites)
-        {
-            return _groupeInvitesService.RecupereGroupeViaId(idGroupeInvites);
+            return resultat;
         }
 
         /// <summary>
         /// Supprime un groupe d'invités via son ID
         /// </summary>
-        [HttpDelete("SupprimerGroupe/{idGroupeInvite}")]
-        public IActionResult SupprimerGroupe(long idGroupeInvite)
+        [HttpDelete("SupprimerGroupeInvite")]
+        public void SupprimerGroupe(long idGroupeInvite)
         {
-            GroupeInvites groupeSupprime = _groupeInvitesService.SupprimerGroupe(idGroupeInvite);
-            IActionResult resultat;
-            if (groupeSupprime == null)
-            { resultat = NotFound(); }
-            else
-            { resultat = Ok(groupeSupprime); }
-            return resultat;
+            this._groupeInvitesService.SupprimerGroupe(idGroupeInvite);
         }
+
+        /// <summary>
+        /// Récupérer la liste des groupes d'invités
+        ///</summary>
+        [HttpGet("ListeGroupeInvites")]
+        public List<GroupeInvites> ListGroupeInvites()
+        {
+            return this._groupeInvitesService.ListeGroupesInvites();
+        }
+
+        /// <summary>
+        /// Chercher des groupes d'invite par leur nom
+        /// </summary>
+        /// <param name="GroupeInvitesRechercher"> le nom ou une partie du nom du groupes d'invite à rechercher </param>
+        /// <returns> la liste des groupes d'invite correspondants </returns>
+        [HttpGet("ChercherGroupeInvites")]
+        public List<GroupeInvites> ChercherGroupeInvites(string GroupeInvitesRechercher)
+        {
+            List<GroupeInvites> listeGroupeInvites = new List<GroupeInvites>();
+            if (!string.IsNullOrEmpty(GroupeInvitesRechercher))
+            {
+                listeGroupeInvites = this._groupeInvitesService.ChercherGroupeInvites(GroupeInvitesRechercher);
+            }
+            return listeGroupeInvites;
+        }
+        #endregion
 
     }
 }

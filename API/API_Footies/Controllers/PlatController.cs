@@ -13,7 +13,6 @@ namespace API_Footies.Controllers
     [Route("Plats")]
     public class PlatController : ControllerBase
     {
-        //Service en charge des plats
         private IPlatService service;
 
         /// <summary>
@@ -75,6 +74,17 @@ namespace API_Footies.Controllers
         public bool EstDansUnMenu(long id)
         {
             return this.service.EstDansUnMenu(id);
+        }
+
+        /// <summary>
+        /// Recherche des plats via un texte de recherche
+        /// </summary>
+        /// <param name="texterecherche">Le texte permettant de rechercher un plat</param>
+        /// <returns>Une liste de plats correspondant à la recherche</returns>
+        [HttpGet("ChercherPlat")]
+        public List<Metier.Plat> ChercherPlat(string texterecherche)
+        {
+            return this.service.ChercherPlat(texterecherche);
         }
     }
 }

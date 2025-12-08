@@ -19,16 +19,17 @@ namespace METIER_Footies.Metier
         private string prenom;
         private string? telephone; // string pour simplifier avec l'API
         private string? email;
+        private List<Enum.NomAllergene>? allergenes;
         #endregion
 
         #region Propriétés
         /// <summary>
         /// Id de l'invité
         /// </summary>
-        public long Id 
-        { 
-            get => id; 
-            set 
+        public long Id
+        {
+            get => id;
+            set
             {
                 if (value <= 0)
                 {
@@ -41,15 +42,11 @@ namespace METIER_Footies.Metier
         /// <summary>
         /// Nom de famille de l'invité
         /// </summary>
-        public string Nom 
-        { 
-            get => nom; 
-            set 
+        public string Nom
+        {
+            get => nom;
+            set
             {
-               /* if (string.IsNullOrWhiteSpace(value))
-                {
-                    throw new ArgumentException("Le nom ne peut pas être vide");
-                }*/
                 nom = value.ToUpper();
             }
         }
@@ -57,15 +54,11 @@ namespace METIER_Footies.Metier
         /// <summary>
         // Prénom de l'invité
         /// </summary>
-        public string Prenom 
-        { 
-            get => prenom; 
-            set 
-            {/*
-                if (string.IsNullOrWhiteSpace(value))
-                {
-                    throw new ArgumentException("Le prénom ne peut pas être vide");
-                }*/
+        public string Prenom
+        {
+            get => prenom;
+            set
+            {
                 prenom = value;
             }
         }
@@ -73,45 +66,39 @@ namespace METIER_Footies.Metier
         /// <summary>
         // Téléphone de l'invité
         /// </summary>
-        public string Telephone 
-        { 
+        public string Telephone
+        {
             get => telephone ?? "";
             set
-            {/*
-                if (value != null)
-                {
-                    
-                    if (!long.TryParse(value, out _)) // out _ = on jette la valeur convertie // on veut juste le true/false
-                    {
-                        if ((string.IsNullOrWhiteSpace(value)) || value == " "     )
-                        { } // désolée :(
-                        else
-                        {
-                            throw new ArgumentException("Le numéro de téléphone doit contenir uniquement des chiffres");
-                        }
-                    }
-                }*/
+            {
                 telephone = value;
             }
         }
+
+        /// <summary>
+        /// Identité complète de l'invité
+        /// </summary>
+        public string Identite => $"{prenom} {nom}";
 
         /// <summary>
         // Email de l'invité
         /// </summary>
         public string Email
         {
-            get => email ?? ""; 
+            get => email ?? "";
             set
-            {/*
-                if (value != null && !string.IsNullOrWhiteSpace(value))
-                {
-                    if (!Regex.IsMatch(value, @"^[^@\s]+@[^@\s]+\.[^@\s]+$")) // Ne cherchez pas à comprendre (vive le Regex ^^)
-                    {
-                        throw new ArgumentException("L'adresse email n'est pas valide");
-                    }
-                }*/
+            {
                 email = value?.Trim();
             }
+        }
+
+        /// <summary>
+        /// Retourne ou modifie la liste des allergènes du plat
+        /// </summary>
+        public List<Enum.NomAllergene>? Allergenes
+        {
+            get { return allergenes; }
+            set { allergenes = value; }
         }
         #endregion
 

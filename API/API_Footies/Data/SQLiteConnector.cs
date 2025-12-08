@@ -35,7 +35,7 @@ namespace API_Footies.Data
                 command.CommandText = query;
                 if (parameters != null)
                 {
-                    foreach (var parameter in parameters)
+                    foreach (KeyValuePair<string, object> parameter in parameters)
                     {
                         command.Parameters.AddWithValue(parameter.Key, parameter.Value);
                     }
@@ -67,7 +67,7 @@ namespace API_Footies.Data
                 command.CommandText = query + "; SELECT last_insert_rowid();";
                 if (parameters != null)
                 {
-                    foreach (var parameter in parameters)
+                    foreach (KeyValuePair<string, object> parameter in parameters)
                     {
                         command.Parameters.AddWithValue(parameter.Key, parameter.Value);
                     }

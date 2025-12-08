@@ -9,179 +9,199 @@ namespace API_Footies.Data.DAO
     /// </summary>
     public class GroupeInviteDAO : IGroupeInviteDAO
     {
-        public GroupeInvites AjouterGroupeInvite(GroupeInvites groupeInvites)
+        public bool AjouterGroupeInvites(GroupeInvites groupeInvites)
         {
-            //On commence par créer le groupe dans la table des GroupesInvite en récupérant son ID
+            bool ajoute = false;
             using (SQLiteConnector connection = new SQLiteConnector())
             {
-                var parameters = new Dictionary<string, object>()
+                if (connection == null)
                 {
-                    {"@Nom", groupeInvites.Nom }
-                };
-                groupeInvites.IdGroupeInvites = connection.ExecuteInsert("INSERT INTO GroupeInvite (Nom) VALUES (@Nom)", parameters);
-            }
-
-            //On place les Invite
-            /*
-            using (SQLiteConnector connection = new SQLiteConnector())
-            {
-                foreach (Invite invite in groupeInvites.Invites)
+                    throw new Exception("Erreur de connexion à la base de données");
+                }
+                else
                 {
-                    var parameters = new Dictionary<string, object>()
+                    Dictionary<string, object> parameters = new Dictionary<string, object>()
                     {
-                        {"@IdGroupeInvites",groupeInvites.IdGroupeInvites},
-                        {"@Id",invite.Id }
+                        {"@Nom", groupeInvites.Nom }
                     };
-                    connection.ExecuteQuery("INSERT INTO Invite_Groupe (IDGroupeInvite,IDInvite) VALUES (@IdGroupeInvites,@Id)", parameters);
-                }
-            }*/
-            return groupeInvites;
-        }
-
-        public GroupeInvites AjouterInviteAuGroupe(long idGroupeInvites, Invite invite)
-        {
-            // Ajouter l'invité au groupe dans la table de liaison
-            using (SQLiteConnector connection = new SQLiteConnector())
-            {
-                var parameters = new Dictionary<string, object>()
-                {
-                    {"@IdGroupeInvites", idGroupeInvites},
-                    {"@IdInvite", invite.Id }
-                };
-                connection.ExecuteQuery("INSERT INTO Invite_Groupe (IDGroupeInvite,IDInvite) VALUES (@IdGroupeInvites,@IdInvite)", parameters);
-            }
-
-            // Récupérer le groupe mis à jour
-            GroupeInvites groupe = RecupereGroupeViaId(idGroupeInvites);
-            if (groupe != null)
-            {
-                // Ajouter l'invité à la liste en mémoire si ce n'est pas déjà fait
-                if (!groupe.Invites.Any(i => i.Id == invite.Id))
-                {
-                    groupe.Invites.Add(invite);
-                }
-            }
-            return groupe;
-        }
-
-        public GroupeInvites RecupereGroupeViaId(long idGroupeInvite)
-        {
-            GroupeInvites groupeInvite = new GroupeInvites();
-            using (SQLiteConnector connection = new SQLiteConnector())
-            {
-                var parameters = new Dictionary<string, object>()
-                {
-                    {"@IdGroupeInvites",idGroupeInvite }
-                };
-                var data = connection.ExecuteQuery("SELECT GroupeInvite.IDGroupeInvite as Id, GroupeInvite.Nom as Nom FROM GroupeInvite WHERE GroupeInvite.IDGroupeInvite=@IdGroupeInvites", parameters);
-                if (data.Rows.Count > 0)
-                {
-                    groupeInvite.IdGroupeInvites = data.Rows[0].Field<Int64>("Id");
-                    groupeInvite.Nom = data.Rows[0].Field<string>("Nom");
-                }
-            }
-            //Récupérer les invités associés au groupe
-            if (groupeInvite != null)
-            {
-                using (SQLiteConnector connection = new SQLiteConnector())
-                {
-                    var parameters = new Dictionary<string, object>()
+                    groupeInvites.IdGroupeInvites = connection.ExecuteInsert("INSERT INTO GroupeInvite (Nom) VALUES (@Nom)", parameters);
+                    foreach (Invite invite in groupeInvites.Invites)
                     {
-                        {"@IdGroupeInvites",idGroupeInvite }
-                    };
-                    var data = connection.ExecuteQuery("SELECT Invite.IDInvite as Id, Invite.Prenom as Prenom, Invite.Nom as Nom, Invite.Mail as Email, Invite.NumTel as Telephone FROM Invite INNER JOIN Invite_Groupe ON Invite.IDInvite = Invite_Groupe.IDInvite WHERE Invite_Groupe.IDGroupeInvite=@IdGroupeInvites", parameters);
-                    foreach (DataRow row in data.Rows)
-                    {
-                        Invite invite = new Invite
+                        Dictionary<string, object> parametersInvite = new Dictionary<string, object>()
                         {
-                            Id = row.Field<Int64>("Id"),
-                            Prenom = row.Field<string>("Prenom"),
-                            Nom = row.Field<string>("Nom"),
-                            Telephone = row.Field<string>("Telephone"),
-                            Email = row.Field<string>("Email")
+                            {"@IdGroupeInvite", groupeInvites.IdGroupeInvites },
+                            {"@IdInvite", invite.Id }
                         };
-                        groupeInvite.Invites.Add(invite);
+                        connection.ExecuteQuery("INSERT INTO Invite_Groupe (IdInvite, IdGroupeInvite) VALUES (@IdInvite, @IdGroupeInvite)", parametersInvite);
+                    }
+
+                    ajoute = true;
+                }
+            }
+            return ajoute;
+        }
+
+        public List<GroupeInvites> ListeGroupesInvites()
+        {
+            List<GroupeInvites> listeGroupesInvites = new List<GroupeInvites>();
+
+            using (SQLiteConnector connection = new SQLiteConnector())
+            {
+                if (connection == null)
+                {
+                    throw new Exception("Erreur de connexion à la base de données");
+                }
+                else
+                {
+                    DataTable dataTable = connection.ExecuteQuery("SELECT * FROM GroupeInvite");
+
+                    foreach (DataRow? row in dataTable.Rows)
+                    {
+                        long idGroupeInvite = (long)row["IdGroupeInvite"];
+                        string nom = row["Nom"].ToString();
+                        List<Invite> invitesGroupeInvite = new List<Invite>();
+                        Dictionary<string, object> parametersGroupeInvite = new Dictionary<string, object>()
+                        {
+                            {"@IdGroupeInvite", idGroupeInvite }
+                        };
+
+                        DataTable dataTableInvites = connection.ExecuteQuery(
+                            @"SELECT i.* FROM Invite i
+                              INNER JOIN Invite_Groupe ig ON i.IdInvite = ig.IdInvite 
+                              WHERE ig.IdGroupeInvite = @IdGroupeInvite",
+                            parametersGroupeInvite);
+
+                        foreach (DataRow? rowInvite in dataTableInvites.Rows)
+                        {
+                            Invite invite = new Invite(
+                                (long)rowInvite["IdInvite"],
+                                rowInvite["Nom"].ToString(),
+                                rowInvite["Prenom"].ToString(),
+                                rowInvite["NumTel"].ToString(),
+                                rowInvite["Mail"].ToString()
+                            );
+                            invitesGroupeInvite.Add(invite);
+                        }
+
+                        GroupeInvites groupeInvite = new GroupeInvites(idGroupeInvite, nom, invitesGroupeInvite);
+                        listeGroupesInvites.Add(groupeInvite);
                     }
                 }
             }
 
-            return groupeInvite;
+            return listeGroupesInvites;
         }
 
-        public List<GroupeInvites> RecupererTousGroupesInvites()
+        public bool ModifierGroupe(GroupeInvites groupeInvite)
         {
-            var groupes = new List<GroupeInvites>();
+            bool modifie = false;
             using (SQLiteConnector connection = new SQLiteConnector())
             {
-                // Récupérer tous les groupes
-                var groupesData = connection.ExecuteQuery("SELECT IDGroupeInvite as Id, Nom FROM GroupeInvite");
-                foreach (DataRow groupeRow in groupesData.Rows)
+                if (connection == null)
                 {
-                    var groupe = new GroupeInvites
+                    throw new Exception("Erreur de connexion à la base de données");
+                }
+                else
+                {
+                    Dictionary<string, object> parameters = new Dictionary<string, object>()
                     {
-                        IdGroupeInvites = groupeRow.Field<long>("Id"),
-                        Nom = groupeRow.Field<string>("Nom"),
-                        Invites = new List<Invite>()
+                        {"@IdGroupeInvite", groupeInvite.IdGroupeInvites },
+                        {"@Nom", groupeInvite.Nom }
                     };
+                    connection.ExecuteQuery("UPDATE GroupeInvite SET Nom = @Nom WHERE IdGroupeInvite = @IdGroupeInvite", parameters);
+                    Dictionary<string, object> parametersDelete = new Dictionary<string, object>()
+                    {
+                        {"@IdGroupeInvite", groupeInvite.IdGroupeInvites }
+                    };
+                    connection.ExecuteQuery("DELETE FROM Invite_Groupe WHERE IdGroupeInvite = @IdGroupeInvite", parametersDelete);
 
-                    // Récupérer les invités pour ce groupe
-                    var parameters = new Dictionary<string, object>
+                    foreach (Invite invite in groupeInvite.Invites)
                     {
-                        { "@IdGroupeInvites", groupe.IdGroupeInvites }
-                    };
-                    var invitesData = connection.ExecuteQuery(
-                        "SELECT Invite.IDInvite as Id, Invite.Prenom as Prenom, Invite.Nom as Nom, Invite.Mail as Email, Invite.NumTel as Telephone FROM Invite INNER JOIN Invite_Groupe ON Invite.IDInvite = Invite_Groupe.IDInvite WHERE Invite_Groupe.IDGroupeInvite=@IdGroupeInvites",
-                        parameters
-                    );
-                    foreach (DataRow inviteRow in invitesData.Rows)
-                    {
-                        var invite = new Invite
+                        Dictionary<string, object> parametersInvite = new Dictionary<string, object>()
                         {
-                            Id = inviteRow.Field<long>("Id"),
-                            Prenom = inviteRow.Field<string>("Prenom"),
-                            Nom = inviteRow.Field<string>("Nom"),
-                            Telephone = inviteRow.Field<string>("Telephone"),
-                            Email = inviteRow.Field<string>("Email")
+                            {"@IdGroupeInvite", groupeInvite.IdGroupeInvites },
+                            {"@IdInvite", invite.Id }
                         };
-                        groupe.Invites.Add(invite);
+                        connection.ExecuteQuery("INSERT INTO Invite_Groupe (IdInvite, IdGroupeInvite) VALUES (@IdInvite, @IdGroupeInvite)", parametersInvite);
                     }
 
-                    groupes.Add(groupe);
+                    modifie = true;
                 }
             }
-            return groupes;
+            return modifie;
         }
 
-        public GroupeInvites ModifierGroupe(GroupeInvites groupeInvite)
+        public void SupprimerGroupeInvite(long idGroupeInvite)
         {
             using (SQLiteConnector connection = new SQLiteConnector())
             {
-                var parameters = new Dictionary<string, object>()
+                if (connection == null)
                 {
-                    {"@IdGroupeInvites", groupeInvite.IdGroupeInvites },
-                    {"@Nom", groupeInvite.Nom }
-                };
-
-                connection.ExecuteQuery("UPDATE GroupeInvite SET IDGroupeInvite = @IdGroupeInvites, Nom = @Nom WHERE IDGroupeInvite = @IdGroupeInvites", parameters);
+                    throw new Exception("Erreur de connexion à la base de données");
+                }
+                else
+                {
+                    Dictionary<string, object> parametersLiaison = new Dictionary<string, object>()
+                    {
+                        {"@IdGroupeInvite", idGroupeInvite }
+                    };
+                    connection.ExecuteQuery("DELETE FROM Invite_Groupe WHERE IdGroupeInvite = @IdGroupeInvite", parametersLiaison);
+                    Dictionary<string, object> parameters = new Dictionary<string, object>()
+                    {
+                        {"@IdGroupeInvite", idGroupeInvite }
+                    };
+                    connection.ExecuteQuery("DELETE FROM GroupeInvite WHERE IdGroupeInvite = @IdGroupeInvite", parameters);
+                }
             }
-            return groupeInvite;
         }
 
-        public GroupeInvites SupprimerGroupeInvite(long idGroupeInvite)
+        public List<GroupeInvites> ChercherGroupeInvites(string GroupeInvitesRechercher)
         {
-            GroupeInvites groupeSupprime = RecupereGroupeViaId(idGroupeInvite);
+            List<GroupeInvites> listeGroupeInvites = new List<GroupeInvites>();
             using (SQLiteConnector connection = new SQLiteConnector())
             {
-                var parameters = new Dictionary<string, object>()
+                if (connection == null)
                 {
-                    {"@IdGroupeInvites", idGroupeInvite }
-                };
-                // Supprimer les associations dans la table de liaison
-                connection.ExecuteQuery("DELETE FROM Invite_Groupe WHERE IDGroupeInvite = @IdGroupeInvites", parameters);
-                // Supprimer le groupe lui-même
-                connection.ExecuteQuery("DELETE FROM GroupeInvite WHERE IDGroupeInvite = @IdGroupeInvites", parameters);
+                    throw new Exception("Erreur de connexion à la base de données");
+                }
+                else
+                {
+                    Dictionary<string, object> parameters = new Dictionary<string, object>()
+                    {
+                        {"@Texte", $"%{GroupeInvitesRechercher}%" }
+                    };
+                    DataTable dataTable = connection.ExecuteQuery("SELECT * FROM GroupeInvite WHERE Nom LIKE @Texte", parameters);
+                    foreach (DataRow? row in dataTable.Rows)
+                    {
+                        long idGroupeInvite = (long)row["IdGroupeInvite"];
+                        string nom = row["Nom"].ToString();
+                        List<Invite> invitesGroupeInvite = new List<Invite>();
+                        Dictionary<string, object> parametersGroupeInvite = new Dictionary<string, object>()
+                            {
+                                {"@IdGroupeInvite", idGroupeInvite }
+                            };
+                        DataTable dataTableInvites = connection.ExecuteQuery(
+                                @"SELECT i.* FROM Invite i
+                                  INNER JOIN Invite_Groupe ig ON i.IdInvite = ig.IdInvite 
+                                  WHERE ig.IdGroupeInvite = @IdGroupeInvite",
+                                parametersGroupeInvite);
+                            foreach (DataRow? rowInvite in dataTableInvites.Rows)
+                            {
+                                Invite invite = new Invite(
+                                    (long)rowInvite["IdInvite"],
+                                    rowInvite["Nom"].ToString(),
+                                    rowInvite["Prenom"].ToString(),
+                                    rowInvite["NumTel"].ToString(),
+                                    rowInvite["Mail"].ToString()
+                                );
+                                invitesGroupeInvite.Add(invite);
+                            }
+                        GroupeInvites groupe = new GroupeInvites(idGroupeInvite, nom, invitesGroupeInvite);
+                        listeGroupeInvites.Add(groupe);
+                    }
+                }
             }
-            return groupeSupprime;
+            return listeGroupeInvites;
         }
     }
 }

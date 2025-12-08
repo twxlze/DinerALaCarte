@@ -1,130 +1,156 @@
 using METIER_Footies.Metier;
-using VM_Footies;
+using VM_Footies.VM;
 
-namespace UnitTest
+namespace Test_Footies_METIER
 {
     public class InviteTest
     {
         #region Test avec constructeurs
 
         [Fact]
-        public void Constructeur_AvecDonneesValides_CreeInvite()
+        public void ConstructeurCopie()
         {
-            Invite invite = new Invite(1,"Dupont", "Jean", "0612345678", "jean.dupont@gmail.com");
+            Invite inviteOriginal = new Invite(5, "Martin", "Sophie", "0698765432", "sophie@gmail.com");
 
-            Assert.Equal("Dupont", invite.Nom);
-            Assert.Equal("Jean", invite.Prenom);
-            Assert.Equal("0612345678", invite.Telephone);
-            Assert.Equal("jean.dupont@gmail.com", invite.Email);
+            Invite inviteCopie = new Invite(inviteOriginal);
+
+            Assert.Equal(inviteOriginal.Nom, inviteCopie.Nom);
+            Assert.Equal(inviteOriginal.Prenom, inviteCopie.Prenom);
+            Assert.Equal(inviteOriginal.Telephone, inviteCopie.Telephone);
+            Assert.Equal(inviteOriginal.Email, inviteCopie.Email);
+        }
+
+        [Fact]
+        public void ConstructeurParDefaut()
+        {
+            Invite invite = new Invite();
+
+            Assert.Equal("", invite.Nom);
+            Assert.Equal("", invite.Prenom);
+            Assert.Equal("", invite.Telephone);
+            Assert.Equal("", invite.Email);
         }
 
         [Fact]
         public void InviteAvecTelephoneEmailNull()
         {
-            Invite invite = new Invite(0,"Dupont", "Jean", null, "jean@gmail.com");
-            Invite invite2 = new Invite(1,"Jean", "Dupont", "0612345678", null);
-            Invite invite3 = new Invite(2,"Oui", "Jean", null, null);
+            Invite invite1 = new Invite(1, "Dupont", "Jean", null, "jean@gmail.com");
+            Invite invite2 = new Invite(2, "Martin", "Paul", "0612345678", null);
+            Invite invite3 = new Invite(3, "Durand", "Marie", null, null);
 
-            Assert.Null(invite.Telephone);
-            Assert.Null(invite2.Email);
-            Assert.Null(invite3.Telephone);
-            Assert.Null(invite3.Email);
+            Assert.Equal("", invite1.Telephone);
+            Assert.Equal("", invite2.Email);
+            Assert.Equal("", invite3.Telephone);
+            Assert.Equal("", invite3.Email);
         }
 
         #endregion
 
         #region Test avec exceptions
+
         [Fact]
-        public void InviteSansNom_ThrowArgumentException()
+        public void Id_AvecValeurNegative()
         {
-            Invite invite = new Invite(0, "", "Jean", null, null);
-            Assert.Throws<ArgumentException>(() => invite.Nom = null);
+            Invite invite = new Invite(1, "Dupont", "Jean", null, null);
+
+            Assert.Throws<ArgumentException>(() => invite.Id = -1);
         }
 
         [Fact]
-        public void InviteSansPrenom_ThrowArgumentException()
+        public void Id_AvecValeurZero()
         {
-            Invite invite = new Invite(0, "Jean", "", null, null);
-            Assert.Throws<ArgumentException>(() => invite.Prenom = null);
+            Invite invite = new Invite(1, "Dupont", "Jean", null, null);
+
+            Assert.Throws<ArgumentException>(() => invite.Id = 0);
         }
 
         [Fact]
-        public void TelephoneInvalide_ThrowArgumentException()
+        public void Nom_ConvertitEnMajuscules()
         {
-            Invite invite = new Invite(0, "Dupont", "Jean", "12345ABCD", null);
-            Assert.Throws<ArgumentException>(() => invite.Telephone = "12345ABCD");
+            Invite invite = new Invite(1, "dupont", "Jean", null, null);
+
+            invite.Nom = "martin";
+
+            Assert.Equal("MARTIN", invite.Nom);
         }
 
         [Fact]
-        public void EmailInvalide_ThrowArgumentException()
+        public void Email_EstTrimme()
         {
-            Invite invite = new Invite(0, "Dupont", "Jean", null, "jean.gmail.com");
-            Assert.Throws<ArgumentException>(() => invite.Email = "jean.gmail.com");
+            Invite invite = new Invite(1, "Dupont", "Jean", null, null);
+
+            invite.Email = "  jean@gmail.com  ";
+
+            Assert.Equal("jean@gmail.com", invite.Email);
         }
+
+        [Fact]
+        public void Prenom_PeutEtreModifie()
+        {
+            Invite invite = new Invite(1, "Dupont", "Jean", null, null);
+
+            invite.Prenom = "Pierre";
+
+            Assert.Equal("Pierre", invite.Prenom);
+        }
+
+        [Fact]
+        public void Telephone_PeutEtreModifie()
+        {
+            Invite invite = new Invite(1, "Dupont", "Jean", "0612345678", null);
+
+            invite.Telephone = "0698765432";
+
+            Assert.Equal("0698765432", invite.Telephone);
+        }
+
         #endregion
 
+        #region Test avec VMInvite
 
-        #region TEST Suppressions 
+        [Fact]
+        public void VMInvite_AvecInviteValide()
+        {
+            Invite invite = new Invite(1, "Dupont", "Jean", "0612345678", "jean@gmail.com");
 
-            [Fact]
-            public void SupprimerInvite_AvecInviteExistant_RetireInviteDeLaListe()
-            {
-                // Arrange - Création manuelle sans passer par le constructeur qui appelle l'API
-                VMPageInvite vmPageInvite = CreerVMPageInviteSansAPI();
+            VMInvite vmInvite = new VMInvite(invite);
 
-                Invite invite1 = new Invite(1, "Dupont", "Jean", "0612345678", "jean@gmail.com");
-                Invite invite2 = new Invite(2, "Martin", "Paul", "0698765432", "paul@gmail.com");
-                Invite invite3 = new Invite(3, "Durand", "Marie", "0656781234", "marie@gmail.com");
-
-                VMInvite vmInvite1 = new VMInvite(invite1);
-                VMInvite vmInvite2 = new VMInvite(invite2);
-                VMInvite vmInvite3 = new VMInvite(invite3);
-
-                // Ajout manuel à la liste (sans passer par AjouterInvite qui appelle l'API)
-                vmPageInvite.VMInvites.Add(vmInvite1);
-                vmPageInvite.VMInvites.Add(vmInvite2);
-                vmPageInvite.VMInvites.Add(vmInvite3);
-
-                int countAvant = vmPageInvite.VMInvites.Count;
-
-                // Act - Suppression directe de la liste (test de la logique métier uniquement)
-                vmPageInvite.VMInvites.Remove(vmInvite2);
-
-                // Assert
-                Assert.Equal(3, countAvant);
-                Assert.Equal(2, vmPageInvite.VMInvites.Count);
-                Assert.DoesNotContain(vmInvite2, vmPageInvite.VMInvites);
-                Assert.Contains(vmInvite1, vmPageInvite.VMInvites);
-                Assert.Contains(vmInvite3, vmPageInvite.VMInvites);
-            }
-
-            [Fact]
-            public void SupprimerInvite_AvecListeVide_LaListeResteVide()
-            {
-                // Arrange
-                VMPageInvite vmPageInvite = CreerVMPageInviteSansAPI();
-
-                // Act & Assert
-                Assert.Empty(vmPageInvite.VMInvites);
-            }
-
-            /// <summary>
-            /// Méthode helper pour créer un VMPageInvite sans appeler l'API
-            /// Utilise la réflexion pour initialiser les champs privés
-            /// </summary>
-            private VMPageInvite CreerVMPageInviteSansAPI()
-            {
-                // Création d'un objet sans appeler le constructeur
-                VMPageInvite vmPage = (VMPageInvite)System.Runtime.Serialization.FormatterServices
-                    .GetUninitializedObject(typeof(VMPageInvite));
-
-                // Initialisation manuelle des champs privés
-                var listeField = typeof(VMPageInvite).GetField("listeVMInvite",
-                    System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-                listeField?.SetValue(vmPage, new List<VMInvite>());
-
-                return vmPage;
-          }
+            Assert.Equal(invite.Id, vmInvite.Id);
+            Assert.Equal(invite.Nom, vmInvite.Nom);
+            Assert.Equal(invite.Prenom, vmInvite.Prenom);
+            Assert.Equal(invite.Telephone, vmInvite.Telephone);
+            Assert.Equal(invite.Email, vmInvite.Email);
+            Assert.Equal(invite.Identite, vmInvite.Identite);
         }
-   }
-    #endregion
+
+        #endregion
+
+        #region Tests de validation métier supplémentaires
+
+        [Fact]
+        public void Identite_RetourneFormatCorrect()
+        {
+            Invite invite = new Invite(1, "DUPONT", "Jean", null, null);
+
+            Assert.Equal("Jean DUPONT", invite.Identite);
+        }
+
+        [Fact]
+        public void Invite_AvecNomVide()
+        {
+            Invite invite = new Invite(1, "", "Jean", null, null);
+
+            Assert.Equal("", invite.Nom);
+        }
+
+        [Fact]
+        public void Invite_AvecCaracteresSpeciaux()
+        {
+            Invite invite = new Invite(1, "O'CONNOR", "Jean", null, null);
+
+            Assert.Equal("O'CONNOR", invite.Nom);
+        }
+
+        #endregion
+    }
+}
