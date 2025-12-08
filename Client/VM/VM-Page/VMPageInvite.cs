@@ -21,6 +21,7 @@ namespace VM_Footies
         private VMInvite inviteSelectionne;
         private IInviteDAO inviteDAO;
         private string texteRecherche;
+        private VMPagePlat vmPagePlat;
         #endregion
 
         #region Propriétés 
@@ -66,6 +67,7 @@ namespace VM_Footies
         {
             this.inviteDAO = new InviteDAO();
             this.listeVMInvite = new List<VMInvite>();
+            this.vmPagePlat = new VMPagePlat();
         }
         #endregion
 
@@ -192,6 +194,40 @@ namespace VM_Footies
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(message));
         }
 
+        /// <summary>
+        /// Charge tous les plats disponibles dans l'invité avec leur état de sélection
+        /// </summary>
+        /// <param name="invite">L'invité dans lequel charger les plats aimés</param>
+        public async Task ChargerPlatsDetestesDansInvite(VMInvite invite)
+        {
+            try
+            {
+                await this.vmPagePlat.ChargerPlats();
+
+                HashSet<long> idDesPlatsAimes = new HashSet<long>();
+                if (invite.Invite.PlatsDetestes != null)
+                {
+                    foreach (Plat plat in invite.Invite.PlatsDetestes)
+                    {
+                        idDesPlatsAimes.Add(plat.Id);
+                    }
+                }
+
+                invite.PlatsDetestesListe.Clear();
+
+                foreach (VMPlat vmPlat in this.vmPagePlat.VMPlat)
+                {
+                    bool estSelectionne = idDesPlatsAimes.Contains(vmPlat.Plat.Id);
+                    VMPlat vmPlatSelectionne = new VMPlat(vmPlat.Plat, estSelectionne);
+                    invite.GestionnaireEvenement(vmPlatSelectionne);
+                    invite.PlatsDetestesListe.Add(vmPlatSelectionne);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erreur lors du chargement des plats aimés pour l'invité : " + ex.Message);
+            }
+        }
         #endregion
     }
 }

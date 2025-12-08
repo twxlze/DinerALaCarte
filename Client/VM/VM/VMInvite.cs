@@ -23,6 +23,7 @@ namespace VM_Footies.VM
         private Invite invite;
         private List<VMAllergene> allergiesListe;
         private bool estSelectionne;
+        private ObservableCollection<VMPlat> platsDetestesListe;
         #endregion
 
         #region
@@ -122,6 +123,31 @@ namespace VM_Footies.VM
             }
         }
 
+        /// <summary>
+        /// Liste des plats aimés par l'invité
+        /// </summary>
+        public List<Plat>? PlatsDetestes
+        {
+            get => invite.PlatsDetestes;
+        }
+
+
+        /// <summary>
+        /// Liste observable des plats aimés
+        /// </summary>
+        public ObservableCollection<VMPlat> PlatsDetestesListe
+        {
+            get => platsDetestesListe;
+            set
+            {
+                platsDetestesListe = value;
+                Notify("PlatsDetestesListe");
+            }
+        }
+
+        /// <summary>
+        /// Indique si l'invité est sélectionné dans l'interface
+        /// </summary>
         public bool EstSelectionne
         {
             get { return estSelectionne; }
@@ -145,6 +171,7 @@ namespace VM_Footies.VM
         {
             this.invite = invite;
             this.estSelectionne = estSelectionne;
+            this.platsDetestesListe = new ObservableCollection<VMPlat>();
             InitialiserListeAllergies();
         }
 
@@ -215,6 +242,52 @@ namespace VM_Footies.VM
         private void Notify(string message)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(message));
+        }
+
+        /// <summary>
+        /// Synchronise la liste des allergènes sélectionnés avec le modèle
+        /// </summary>
+        /// <param name="sender">L'expéditeur</param>
+        /// <param name="e">Les arguments de l'événement</param>
+        private void Vm_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "EstSelectionne")
+            {
+                if (sender is VMPlat)
+                {
+                    SynchroniserPlatsDetestes();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Met à jour la liste des plats detestés dans le modèle
+        /// </summary>
+        public void SynchroniserPlatsDetestes()
+        {
+            List<Plat> platsAimes = new List<Plat>();
+            foreach (VMPlat vmPlatSelectionne in this.platsDetestesListe)
+            {
+                if (vmPlatSelectionne.EstSelectionne)
+                {
+                    platsAimes.Add(vmPlatSelectionne.Plat);
+                }
+            }
+            this.invite.PlatsDetestes = platsAimes;
+            Notify("PlatsDetestes");
+        }
+
+        /// <summary>
+        /// Ajoute un gestionnaire d'événement pour un VMAllergeneSelectionne ou VMPlatSelectionne
+        /// </summary>
+        /// <param name="vmAllergene">L'allergène sélectionnable</param>
+        /// <param name="vmPlatsDetestes">Le plat sélectionnable</param>
+        public void GestionnaireEvenement(VMPlat vmPlatsDetestes)
+        {
+            if (vmPlatsDetestes != null)
+            {
+                vmPlatsDetestes.PropertyChanged += Vm_PropertyChanged;
+            }
         }
         #endregion
     }
