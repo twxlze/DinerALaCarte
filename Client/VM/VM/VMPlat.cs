@@ -152,6 +152,17 @@ namespace VM_Footies.VM
                 }
             }
         }
+
+        /// <summary>
+        /// Liste des allergènes sélectionnés uniquement (pour l'affichage en lecture seule)
+        /// </summary>
+        public List<VMAllergene> AllergenesSelectionnes
+        {
+            get
+            {
+                return allergenesListe?.Where(a => a.EstSelectionne).ToList() ?? new List<VMAllergene>();
+            }
+        }
         #endregion
 
         #region Constructeurs
