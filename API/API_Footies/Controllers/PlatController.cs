@@ -30,9 +30,9 @@ namespace API_Footies.Controllers
         /// <param name="plat">plat à ajouter</param>
         /// <returns>Le plat avec Id modifié</returns>
         [HttpPost("Ajoutplat")]
-        public Metier.Plat AjouterInvite(Metier.Plat plat)
+        public Metier.Plat AjouterInvite(Metier.Plat plat, long idUtilisateur)
         {
-            this.service.AjouterPlat(plat);
+            this.service.AjouterPlat(plat, idUtilisateur);
             return plat;
         }
 
@@ -41,9 +41,9 @@ namespace API_Footies.Controllers
         /// </summary>
         /// <param name="plat">le plat</param>
         [HttpPut("ModifierPlat")]
-        public void ModifierPlat(Metier.Plat plat)
+        public void ModifierPlat(Metier.Plat plat, long idUtilisateur)
         {
-            this.service.ModifierPlat(plat);
+            this.service.ModifierPlat(plat, idUtilisateur);
         }
 
         /// <summary>
@@ -51,18 +51,18 @@ namespace API_Footies.Controllers
         /// </summary>
         /// <param name="id"> id du plat à supprimé </param>
         [HttpDelete("SupprimerPlat")]
-        public void SupprimerPlat(long id)
+        public void SupprimerPlat(long id, long idUtilisateur)
         {
-            this.service.SupprimerPlat(id);
+            this.service.SupprimerPlat(id, idUtilisateur);
         }
 
         /// <summary>
         /// Récupérer la liste des plats
         ///</summary>
         [HttpGet("ListePlat")]
-        public List<Metier.Plat> ListPlat()
+        public List<Metier.Plat> ListPlat(long idUtilisateur)
         {
-            return this.service.ListPlat();
+            return this.service.ListPlat(idUtilisateur);
         }
 
         /// <summary>
@@ -82,9 +82,9 @@ namespace API_Footies.Controllers
         /// <param name="texterecherche">Le texte permettant de rechercher un plat</param>
         /// <returns>Une liste de plats correspondant à la recherche</returns>
         [HttpGet("ChercherPlat")]
-        public List<Metier.Plat> ChercherPlat(string texterecherche)
+        public List<Metier.Plat> ChercherPlat(string texterecherche, long idUtilisateur)
         {
-            return this.service.ChercherPlat(texterecherche);
+            return this.service.ChercherPlat(texterecherche, idUtilisateur);
         }
     }
 }
