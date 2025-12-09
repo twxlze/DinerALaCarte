@@ -34,7 +34,7 @@ namespace API_Footies.Data.DAO
                 {
                     throw new Exception("Erreur de connexion à la base de données");
                 }
-                var dataTable = connection.ExecuteQuery("SELECT * FROM GroupeInvite");
+                DataTable dataTable = connection.ExecuteQuery("SELECT * FROM GroupeInvite");
                 foreach (DataRow? row in dataTable.Rows)
                 {
                     GroupeInvites groupeInvite = CreerGroupeInvitesDepuisDataRow(connection, row);
@@ -228,7 +228,7 @@ namespace API_Footies.Data.DAO
         private Invite CreerInviteDepuisDataRow(SQLiteConnector connection, DataRow row)
         {
             long idInvite = (long)row["IDInvite"];
-            return new Invite(idInvite, row["Nom"].ToString(), row["Prenom"].ToString(), row["NumTel"].ToString(), row["Mail"].ToString(), null, null);
+            return new Invite(idInvite, row["Nom"].ToString(), row["Prenom"].ToString(), row["NumTel"].ToString(), row["Mail"].ToString(), null, null, null);
         }
         #endregion
     }

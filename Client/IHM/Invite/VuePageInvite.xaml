@@ -255,6 +255,8 @@
                 </StackPanel>
             </ScrollViewer>
         </Border>
+        <TextBlock Text="{x:Static res:Strings.Double_Click}" TextWrapping="Wrap"  Margin="160,25,128,77" Opacity="0.9" FontSize="10" Grid.Column="1" Grid.RowSpan="2" Grid.Row="6"/>
+
 
         <!-- Boutons -->
         <Button Grid.RowSpan="2" Grid.Column="1" Content="{x:Static res:Strings.AjouterInvite}" HorizontalAlignment="Left" Margin="40,0,0,30" Grid.Row="6" VerticalAlignment="Bottom" Height="40" Width="240" Style="{StaticResource StyleBoutonInvite}" Click="BoutonAjouterInvite_Click" />

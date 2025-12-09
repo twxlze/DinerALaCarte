@@ -46,9 +46,9 @@ namespace IHM_Footies
             this.invite = invite;
             this.vmPageInvite = new VMPageInvite();
             this.DataContext = this.invite;
-            this.vmPageInvite.ChargerPlatsDetestesDansInvite(this.invite);
             InitializeComponent();
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            this.Loaded += async (s, e) => await ChargerDonnees();
         }
 
         /// <summary>
@@ -56,6 +56,22 @@ namespace IHM_Footies
         /// </summary>
         public VueFormulaireInvite() : this(new VMInvite())
         {
+        }
+
+        /// <summary>
+        /// Charge les données des plats de manière asynchrone
+        /// </summary>
+        private async Task ChargerDonnees()
+        {
+            try
+            {
+                await this.vmPageInvite.ChargerPlatsDetestesDansInvite(this.invite);
+                await this.vmPageInvite.ChargerPlatsPrefersDansInvite(this.invite);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erreur lors du chargement des plats : {ex.Message}", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
         #endregion
 
@@ -115,6 +131,7 @@ namespace IHM_Footies
                 {
                     this.invite.SauvegarderAllergies();
                     this.invite.SynchroniserPlatsDetestes();
+                    this.invite.SynchroniserPlatsPreferes();
                     this.DialogResult = true;
                 }
             }
@@ -206,7 +223,5 @@ namespace IHM_Footies
         }
 
         #endregion
-
-
     }
 }

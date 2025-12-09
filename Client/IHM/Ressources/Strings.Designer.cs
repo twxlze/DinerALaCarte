@@ -205,6 +205,15 @@ namespace IHM_Footies.Ressources {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à *Double-cliquez sur un élément pour afficher ses détails..
+        /// </summary>
+        public static string Double_Click {
+            get {
+                return ResourceManager.GetString("Double_Click", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Email.
         /// </summary>
         public static string Email {
@@ -502,6 +511,24 @@ namespace IHM_Footies.Ressources {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Plats détestés.
+        /// </summary>
+        public static string Plat_deteste {
+            get {
+                return ResourceManager.GetString("Plat_deteste", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Plat préféré de l&apos;invité.
+        /// </summary>
+        public static string Plat_prefere_invite {
+            get {
+                return ResourceManager.GetString("Plat_prefere_invite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Plat favori.
         /// </summary>
         public static string PlatFavori {
@@ -525,6 +552,15 @@ namespace IHM_Footies.Ressources {
         public static string Plats_detestes_invite {
             get {
                 return ResourceManager.GetString("Plats_detestes_invite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Plats préférés.
+        /// </summary>
+        public static string Plats_preferes {
+            get {
+                return ResourceManager.GetString("Plats_preferes", resourceCulture);
             }
         }
         

@@ -300,4 +300,16 @@
   <data name="Plats_detestes_invite" xml:space="preserve">
     <value>Dishes disliked by the guest</value>
   </data>
+  <data name="Plat_prefere_invite" xml:space="preserve">
+    <value>Guest's favorite dishes</value>
+  </data>
+  <data name="Plat_deteste" xml:space="preserve">
+    <value>Disliked dishes</value>
+  </data>
+  <data name="Plats_preferes" xml:space="preserve">
+    <value>Favorite dishes</value>
+  </data>
+  <data name="Double_Click" xml:space="preserve">
+    <value>*Double-click on an item to view its details.</value>
+  </data>
 </root>

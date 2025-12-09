@@ -167,7 +167,7 @@
         <!-- Container formulaire -->
         <Border BorderBrush="#8C2F26" 
                     Grid.Column="1" Grid.RowSpan="8" 
-                    Margin="10,47,10,35"
+                    Margin="10,47,10,29"
                     BorderThickness="3"
                     CornerRadius="10"
                     Padding="5">
@@ -196,19 +196,26 @@
 
         <!-- Titre de la section allergènes -->
         <TextBlock Grid.Row="4"
-       Text="{x:Static res:Strings.Allergene}" 
+       Text="{x:Static res:Strings.Allergie}" 
        FontSize="14" 
        FontWeight="SemiBold"
        Foreground="#B44B3E"
-       HorizontalAlignment="Left"
-       Margin="100,11,0,37" Grid.Column="1" Grid.RowSpan="3"/>
+       HorizontalAlignment="Center"
+       Margin="30,11,400,0" Grid.Column="1"/>
 
         <Border Grid.Column="1"
         BorderBrush="#8C2F26" 
-        BorderThickness="3"
+        BorderThickness="2"
         CornerRadius="10"
-        Padding="10"
-        Background="White" Margin="77,32,400,50" Grid.RowSpan="4" Grid.Row="4">
+        Padding="8"
+        Background="#FFDED7" 
+        Width="155"
+        Height="131"
+        HorizontalAlignment="Left"
+        VerticalAlignment="Top"
+        Margin="44,32,0,0" 
+        Grid.RowSpan="4" 
+        Grid.Row="4">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
@@ -221,8 +228,8 @@
                             <DataTemplate>
                                 <CheckBox Content="{Binding Nom}"
                                   IsChecked="{Binding EstSelectionne}"
-                                  Margin="5,3"
-                                  FontSize="12"
+                                  Margin="3,2"
+                                  FontSize="11"
                                   Foreground="#333333"/>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
@@ -233,20 +240,27 @@
 
         <!-- Titre de la section plats détestés -->
         <TextBlock Grid.Row="4"
-        Text="Plats detestés" 
+        Text="{x:Static res:Strings.Plat_deteste}" 
         FontSize="14" 
         FontWeight="SemiBold"
-        Foreground="#B44B3E"
-        HorizontalAlignment="Right"
-        Margin="0,11,108,37" Grid.Column="1" Grid.RowSpan="3"/>
+        Foreground="#D57210"
+        HorizontalAlignment="Center"
+        Margin="210,11,210,0" Grid.Column="1"/>
 
         <!-- Section Plats Détestés -->
         <Border Grid.Column="1"
-         BorderBrush="#8C2F26" 
-         BorderThickness="3"
+         BorderBrush="#D57210" 
+         BorderThickness="2"
          CornerRadius="10"
-         Padding="10"
-         Background="White" Margin="305,32,72,50" Grid.RowSpan="4" Grid.Row="4">
+         Padding="8"
+         Background="#FFEAD8" 
+         Width="156"
+         Height="131"
+         HorizontalAlignment="Center"
+         VerticalAlignment="Top"
+         Margin="0,32,0,0" 
+         Grid.RowSpan="4" 
+         Grid.Row="4">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
@@ -259,9 +273,55 @@
                             <DataTemplate>
                                 <CheckBox Content="{Binding Plat.Nom}"
                            IsChecked="{Binding EstSelectionne}"
-                           Margin="5,3"
-                           FontSize="12"
-                           Foreground="#333333"/>
+                           Margin="3,2"
+                           FontSize="11"
+                           Foreground="Black"/>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+            </Grid>
+        </Border>
+
+        <!-- Titre de la section plats préférés-->
+        <TextBlock Grid.Row="4"
+         Text="{x:Static res:Strings.Plats_preferes}" 
+         FontSize="14" 
+         FontWeight="SemiBold"
+         Foreground="#2E7D32"
+         HorizontalAlignment="Center"
+         Margin="390,11,30,0" Grid.Column="1"/>
+
+        <!-- Section Plats Préférés  -->
+        <Border Grid.Column="1"
+          BorderBrush="#2E7D32" 
+          BorderThickness="2"
+          CornerRadius="10"
+          Padding="8"
+          Background="#E8F5E9" 
+          Width="155"
+          Height="131"
+          HorizontalAlignment="Left"
+          VerticalAlignment="Top"
+          Margin="406,32,0,0" 
+          Grid.RowSpan="4" 
+          Grid.Row="4">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                    <ItemsControl ItemsSource="{Binding PlatsPreferesListe}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <CheckBox Content="{Binding Plat.Nom}"
+                                    IsChecked="{Binding EstSelectionne}"
+                                    Margin="3,2"
+                                    FontSize="11"
+                                    Foreground="#1B5E20"
+                                    FontWeight="SemiBold"/>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>

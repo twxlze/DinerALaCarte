@@ -277,10 +277,10 @@
         CornerRadius="10"
         Padding="5" Grid.Row="2" Grid.RowSpan="6">
             <ScrollViewer VerticalScrollBarVisibility="Auto">
-                <ItemsControl ItemsSource="{Binding Plats}">
+                <ItemsControl ItemsSource="{Binding PlatsListe}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <CheckBox Content="{Binding NomPlats}"
+                            <CheckBox Content="{Binding Nom}"
                                 IsChecked="{Binding EstSelectionne}"
                                 Margin="5"
                                 FontSize="12"
