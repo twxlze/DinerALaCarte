@@ -24,6 +24,7 @@ namespace VM_Footies.VM
         private List<VMAllergene> allergiesListe;
         private bool estSelectionne;
         private ObservableCollection<VMPlat> platsDetestesListe;
+        private ObservableCollection<VMPlat> platsPreferesListe;
         #endregion
 
         #region
@@ -142,6 +143,14 @@ namespace VM_Footies.VM
             get => invite.PlatsDetestes;
         }
 
+        /// <summary>
+        /// Liste des plats préférés par l'invité
+        /// </summary>
+        public List<Plat>? PlatsPreferes
+        {
+            get => invite.PlatsPreferes;
+        }
+
 
         /// <summary>
         /// Liste observable des plats aimés
@@ -153,6 +162,19 @@ namespace VM_Footies.VM
             {
                 platsDetestesListe = value;
                 Notify("PlatsDetestesListe");
+            }
+        }
+
+        /// <summary>
+        /// Liste observable des plats préférés
+        /// </summary>
+        public ObservableCollection<VMPlat> PlatsPreferesListe
+        {
+            get => platsPreferesListe;
+            set
+            {
+                platsPreferesListe = value;
+                Notify("PlatsPreferesListe");
             }
         }
 
@@ -183,6 +205,7 @@ namespace VM_Footies.VM
             this.invite = invite;
             this.estSelectionne = estSelectionne;
             this.platsDetestesListe = new ObservableCollection<VMPlat>();
+            this.platsPreferesListe = new ObservableCollection<VMPlat>();
             InitialiserListeAllergies();
         }
 
@@ -276,15 +299,15 @@ namespace VM_Footies.VM
         /// </summary>
         public void SynchroniserPlatsDetestes()
         {
-            List<Plat> platsAimes = new List<Plat>();
+            List<Plat> platsDetestes = new List<Plat>();
             foreach (VMPlat vmPlatSelectionne in this.platsDetestesListe)
             {
                 if (vmPlatSelectionne.EstSelectionne)
                 {
-                    platsAimes.Add(vmPlatSelectionne.Plat);
+                    platsDetestes.Add(vmPlatSelectionne.Plat);
                 }
             }
-            this.invite.PlatsDetestes = platsAimes;
+            this.invite.PlatsDetestes = platsDetestes;
             Notify("PlatsDetestes");
         }
 
