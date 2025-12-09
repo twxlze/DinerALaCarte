@@ -11,8 +11,8 @@ namespace API_Footies.Metier
         private long id;
         private string pseudo;
         private string mdp;     
-        private string mdpHash; 
-        private string mdpSal;  
+        private string? mdpHash; 
+        private string? mdpSal;  
         #endregion
         #region Propriété
         /// <summary>
@@ -42,7 +42,8 @@ namespace API_Footies.Metier
         /// <summary>
         /// Get ou set le Mot de passe hashée
         /// </summary>
-        public string MotDePasseHash
+        [JsonIgnore]
+        public string? MotDePasseHash
         {
             get { return mdpHash; }
             set { mdpHash = value; }
@@ -50,7 +51,8 @@ namespace API_Footies.Metier
         /// <summary>
         /// Get ou set le sel du mot de passe
         /// </summary>
-        public string MotDePasseSel
+        [JsonIgnore]
+        public string? MotDePasseSel
         {
             get { return mdpSal; }
             set { mdpSal = value; }
@@ -61,6 +63,19 @@ namespace API_Footies.Metier
         /// Constructeur vide de utilisateur
         /// </summary>
         public Utilisateur() { 
+        }
+
+        /// <summary>
+        /// Constructeur de utilisateur avec les mêmes paramètres que le clients
+        /// </summary>
+        /// <param name="id">l'id de l'utilisateur</param>
+        /// <param name="pseudo">le pseudo de l'utilisateur</param>
+        /// <param name="motDePasse">le mot de passe de l'utilisateur</param>
+        public Utilisateur(long id, string pseudo, string motDePasse)
+        {
+            this.id = id;
+            this.pseudo = pseudo;
+            this.mdp = motDePasse;
         }
         #endregion
     }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using METIER_Footies.Data;
 using METIER_Footies.Data.Interfaces;
@@ -87,10 +88,12 @@ namespace VM_Footies.VM_Page
             if (ValiderChamps())
             {
                 Utilisateur utilisateur = new Utilisateur(0, this.pseudo, this.motDePasse);
-                HttpResponseMessage reponseHttp = await this.connexionDAO.Connexion(utilisateur);
+                Utilisateur? utilisateurConnecte = await this.connexionDAO.Connexion(utilisateur);
 
-                if (reponseHttp.IsSuccessStatusCode)
+                if (utilisateurConnecte != null)
                 {
+                    SessionService.Instance.UtilisateurConnecte = utilisateurConnecte;
+
                     connexionReussie = true;
                     this.MessageErreur = string.Empty;
                 }

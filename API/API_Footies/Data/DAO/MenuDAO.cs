@@ -10,7 +10,7 @@ namespace API_Footies.Data.DAO
     /// </summary>
     public class MenuDAO : IMenuDAO
     {
-        public bool AjouterMenu(Menu menu)
+        public bool AjouterMenu(Menu menu, long idUtilisateur)
         {
             bool ajoute = false;
             using (SQLiteConnector connection = new SQLiteConnector())
@@ -23,9 +23,11 @@ namespace API_Footies.Data.DAO
                 {
                     Dictionary<string, object> parameters = new Dictionary<string, object>()
                     {
-                        {"@Nom", menu.Nom }
+                        {"@Nom", menu.Nom },
+                        {"@IdUtilisateur", idUtilisateur }
                     };
-                    menu.IdMenu = connection.ExecuteInsert("INSERT INTO Menu (Nom) VALUES (@Nom)", parameters);
+
+                    menu.IdMenu = connection.ExecuteInsert("INSERT INTO Menu (Nom, IdUtilisateur) VALUES (@Nom, @IdUtilisateur)", parameters);
 
                     foreach (Plat plat in menu.Plat)
                     {
@@ -43,7 +45,7 @@ namespace API_Footies.Data.DAO
             return ajoute;
         }
 
-        public List<Menu> ListMenu()
+        public List<Menu> ListMenu(long idUtilisateur)
         {
             List<Menu> listeMenu = new List<Menu>();
 
@@ -55,7 +57,13 @@ namespace API_Footies.Data.DAO
                 }
                 else
                 {
-                    DataTable dataTable = connection.ExecuteQuery("SELECT * FROM Menu");
+                    Dictionary<string, object> parameters = new Dictionary<string, object>()
+                    {
+                        {"@IdUtilisateur", idUtilisateur }
+                    };
+
+                    DataTable dataTable = connection.ExecuteQuery("SELECT * FROM Menu WHERE IdUtilisateur = @IdUtilisateur", parameters);
+
                     foreach (DataRow? row in dataTable.Rows)
                     {
                         long idMenu = (long)row["IDMenu"];
@@ -90,7 +98,6 @@ namespace API_Footies.Data.DAO
 
                             long idPlat = (long)rowPlat["IDPlat"];
 
-                            // Récupérer les allergènes du plat
                             List<NomAllergene> allergenesPlat = new List<NomAllergene>();
                             var parametersAllergene = new Dictionary<string, object>()
                             {
@@ -129,11 +136,10 @@ namespace API_Footies.Data.DAO
                     }
                 }
             }
-
             return listeMenu;
         }
 
-        public bool ModifierMenu(Menu menu)
+        public bool ModifierMenu(Menu menu, long idUtilisateur)
         {
             bool modifie = false;
             using (SQLiteConnector connection = new SQLiteConnector())
@@ -147,9 +153,11 @@ namespace API_Footies.Data.DAO
                     Dictionary<string, object> parameters = new Dictionary<string, object>()
                     {
                         {"@IdMenu", menu.IdMenu },
-                        {"@Nom", menu.Nom }
+                        {"@Nom", menu.Nom },
+                        {"@IdUtilisateur", idUtilisateur }
                     };
-                    connection.ExecuteQuery("UPDATE Menu SET Nom = @Nom WHERE IDMenu = @IdMenu", parameters);
+
+                    connection.ExecuteQuery("UPDATE Menu SET Nom = @Nom WHERE IDMenu = @IdMenu AND IdUtilisateur = @IdUtilisateur", parameters);
 
                     Dictionary<string, object> parametersDelete = new Dictionary<string, object>()
                     {
@@ -172,7 +180,7 @@ namespace API_Footies.Data.DAO
             return modifie;
         }
 
-        public void SupprimerMenu(long idMenu)
+        public void SupprimerMenu(long idMenu, long idUtilisateur)
         {
             using (SQLiteConnector connection = new SQLiteConnector())
             {
@@ -187,17 +195,17 @@ namespace API_Footies.Data.DAO
                         {"@IdMenu", idMenu }
                     };
                     connection.ExecuteQuery("DELETE FROM Menu_Plat WHERE IDMenu = @IdMenu", parametersLiaison);
-
                     Dictionary<string, object> parameters = new Dictionary<string, object>()
                     {
-                        {"@IdMenu", idMenu }
+                        {"@IdMenu", idMenu },
+                        {"@IdUtilisateur", idUtilisateur }
                     };
-                    connection.ExecuteQuery("DELETE FROM Menu WHERE IDMenu = @IdMenu", parameters);
+                    connection.ExecuteQuery("DELETE FROM Menu WHERE IDMenu = @IdMenu AND IdUtilisateur = @IdUtilisateur", parameters);
                 }
             }
         }
 
-        public List<Menu> ChercherMenus(string menuRechercher)
+        public List<Menu> ChercherMenus(string menuRechercher, long idUtilisateur)
         {
             List<Menu> listeMenu = new List<Menu>();
             using (SQLiteConnector connection = new SQLiteConnector())
@@ -210,9 +218,12 @@ namespace API_Footies.Data.DAO
                 {
                     Dictionary<string, object> parameters = new Dictionary<string, object>()
                     {
-                        {"@Texte", $"%{menuRechercher}%" }
+                        {"@Texte", $"%{menuRechercher}%" },
+                        {"@IdUtilisateur", idUtilisateur } 
                     };
-                    DataTable dataTable = connection.ExecuteQuery("SELECT * FROM Menu WHERE Nom LIKE @Texte", parameters);
+
+                    DataTable dataTable = connection.ExecuteQuery("SELECT * FROM Menu WHERE Nom LIKE @Texte AND IdUtilisateur = @IdUtilisateur", parameters);
+
                     foreach (DataRow? row in dataTable.Rows)
                     {
                         long idMenu = (long)row["IDMenu"];
@@ -224,6 +235,5 @@ namespace API_Footies.Data.DAO
             }
             return listeMenu;
         }
-
     }
 }
