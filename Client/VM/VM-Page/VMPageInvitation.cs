@@ -192,17 +192,19 @@ namespace VM_Footies.VM_Page
         /// <summary>
         // Charge la liste des groupe d'invités correspondant au paramètre de recherche depuis la base de données
         /// </summary>
-        public async Task ChercherInvitation(string recherchertexte)
+        public async Task ChercherInvitation(string InvitationsRechercher)
         {
             this.listeVMInvitation.Clear();
 
-            List<Invitation> invitations = await this.invitationDAO.ChercherInvitation(recherchertexte);
+            List<Invitation> invitations = await this.invitationDAO.ChercherInvitation(InvitationsRechercher);
             foreach (Invitation i in invitations)
             {
                 VMInvitation vmInvitation = new VMInvitation(i);
                 this.listeVMInvitation.Add(vmInvitation);
             }
             this.listeVMInvitation = this.listeVMInvitation.OrderBy(vm => vm.Invitation.Nom).ToList();
+
+            this.Notify("VMInvitation");
         }
         #endregion
 

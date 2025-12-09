@@ -20,6 +20,7 @@ namespace IHM_Footies.Invitations
         {
             InitializeComponent();
             this.vmPageInvitation.PropertyChanged += VmPageInvitation_PropertyChanged;
+            this.DataContext = this.vmPageInvitation;
             this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             this.RafraichirListe();
         }

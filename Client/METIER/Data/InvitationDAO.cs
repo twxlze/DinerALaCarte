@@ -69,7 +69,7 @@ namespace METIER_Footies.Data
         public async Task<List<Invitation>> ChercherInvitation(string InvitationsRechercher)
         {
             List<Invitation> listeDesInvitations = new List<Invitation>();
-            HttpResponseMessage reponseHttp = await GetAsync($"Invitations/ChercherInvitation?InvitationsRechercher={InvitationsRechercher}");
+            HttpResponseMessage reponseHttp = await GetAsync($"Invitations/ChercherInvitations?InvitationsRechercher={InvitationsRechercher}");
             if (reponseHttp.IsSuccessStatusCode)
             {
                 string reponse = await reponseHttp.Content.ReadAsStringAsync();
