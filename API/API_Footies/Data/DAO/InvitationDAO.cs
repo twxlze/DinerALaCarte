@@ -27,6 +27,7 @@ namespace API_Footies.Data.DAO
                 AjouterMenusDansInvitation(connection, invitation);
                 AjouterInvitesDansInvitation(connection, invitation);
                 AjouterPlatsDansInvitation(connection, invitation);
+                AjouterPlatsPreferesDansInvitation(connection, invitation);
 
                 ajoute = true;
             }
@@ -193,6 +194,21 @@ namespace API_Footies.Data.DAO
             }
         }
 
+        /// <summary>
+        /// Ajoute les plats préférés dans une invitation
+        /// </summary>
+        private void AjouterPlatsPreferesDansInvitation(SQLiteConnector connection, Invitation invitation)
+        {
+            foreach (Plat plat in invitation.Plats)
+            {
+                var parameters = new Dictionary<string, object>()
+                {
+                    {"@IdInvitation", invitation.IdInvitation },
+                    {"@IdPlat", plat.Id }
+                };
+                connection.ExecuteQuery("INSERT INTO Invitation_Plat (IdInvitation, IdPlat) VALUES (@IdInvitation, @IdPlat)", parameters);
+            }
+        }
         #endregion
 
         #region Méthodes Obtenir
@@ -219,9 +235,10 @@ namespace API_Footies.Data.DAO
             {
                 long idInvite = (long)row["IdInvite"];
                 List<NomAllergene> allergenes = ObtenirAllergenesDeInvite(connection, idInvite);
-                List<Plat> platsAimes = ObtenirPlatsDetestesDeInvite(connection, idInvite);
+                List<Plat> platsDetestes = ObtenirPlatsDetestesDeInvite(connection, idInvite);
+                List<Plat> platsPreferes = ObtenirPlatsPreferesDeInvite(connection, idInvite);
 
-                Invite invite = new Invite(idInvite, row["Nom"].ToString(), row["Prenom"].ToString(), row["NumTel"].ToString(), row["Mail"].ToString(), allergenes.Count > 0 ? allergenes : null, platsAimes.Count > 0 ? platsAimes : null);
+                Invite invite = new Invite(idInvite, row["Nom"].ToString(), row["Prenom"].ToString(), row["NumTel"].ToString(), row["Mail"].ToString(), allergenes.Count > 0 ? allergenes : null, platsDetestes.Count > 0 ? platsDetestes : null, platsPreferes.Count > 0 ? platsPreferes : null );
                 invites.Add(invite);
             }
             return invites;
@@ -368,7 +385,8 @@ namespace API_Footies.Data.DAO
             {
                 long idInvite = (long)row["IdInvite"];
                 List<NomAllergene> allergenes = ObtenirAllergenesDeInvite(connection, idInvite);
-                List<Plat> platsAimes = ObtenirPlatsDetestesDeInvite(connection, idInvite);
+                List<Plat> platsDetestes = ObtenirPlatsDetestesDeInvite(connection, idInvite);
+                List<Plat> platsPreferes = ObtenirPlatsPreferesDeInvite(connection,idInvite);
 
                 Invite invite = new Invite(
                     idInvite,
@@ -377,7 +395,8 @@ namespace API_Footies.Data.DAO
                     row["NumTel"].ToString(),
                     row["Mail"].ToString(),
                     allergenes.Count > 0 ? allergenes : null,
-                    platsAimes.Count > 0 ? platsAimes : null
+                    platsDetestes.Count > 0 ? platsDetestes : null,
+                    platsPreferes.Count > 0 ? platsPreferes : null
                 );
                 invites.Add(invite);
             }
@@ -448,7 +467,7 @@ namespace API_Footies.Data.DAO
         /// </summary>
         private List<Plat> ObtenirPlatsDetestesDeInvite(SQLiteConnector connection, long idInvite)
         {
-            List<Plat> platsAimes = new List<Plat>();
+            List<Plat> platsDetestes = new List<Plat>();
             var parameters = new Dictionary<string, object>()
             {
                 {"@IdInvite", idInvite }
@@ -466,12 +485,34 @@ namespace API_Footies.Data.DAO
                 long idPlat = (long)row["IDPlat"];
                 List<NomAllergene> allergenes = ObtenirAllergenesDuPlat(connection, idPlat);
                 Plat plat = CreerPlat(row, allergenes);
-                platsAimes.Add(plat);
+                platsDetestes.Add(plat);
             }
 
-            return platsAimes;
+            return platsDetestes;
         }
 
+        private List<Plat> ObtenirPlatsPreferesDeInvite(SQLiteConnector connection, long idInvite)
+        {
+            List<Plat> platsPreferes = new List<Plat>();
+            var parameters = new Dictionary<string, object>()
+            {
+                {"@IdInvite", idInvite }
+            };
+            var dataTable = connection.ExecuteQuery(
+                @"SELECT P.IDPlat, P.Nom, P.Description, P.Categorie, P.Ingredients 
+                  FROM Plat P
+                  INNER JOIN Invite_PlatPrefere IPP ON P.IDPlat = IPP.IDPlat 
+                  WHERE IPP.IdInvite = @IdInvite",
+                parameters);
+            foreach (DataRow row in dataTable.Rows)
+            {
+                long idPlat = (long)row["IDPlat"];
+                List<NomAllergene> allergenes = ObtenirAllergenesDuPlat(connection, idPlat);
+                Plat plat = CreerPlat(row, allergenes);
+                platsPreferes.Add(plat);
+            }
+            return platsPreferes;
+        }
         #endregion
 
         #region Méthodes Modifier
