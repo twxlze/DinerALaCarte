@@ -204,12 +204,12 @@ namespace VM_Footies
             {
                 await this.vmPagePlat.ChargerPlats();
 
-                HashSet<long> idDesPlatsAimes = new HashSet<long>();
+                HashSet<long> idDesPlatsDetestes = new HashSet<long>();
                 if (invite.Invite.PlatsDetestes != null)
                 {
                     foreach (Plat plat in invite.Invite.PlatsDetestes)
                     {
-                        idDesPlatsAimes.Add(plat.Id);
+                        idDesPlatsDetestes.Add(plat.Id);
                     }
                 }
 
@@ -217,7 +217,7 @@ namespace VM_Footies
 
                 foreach (VMPlat vmPlat in this.vmPagePlat.VMPlat)
                 {
-                    bool estSelectionne = idDesPlatsAimes.Contains(vmPlat.Plat.Id);
+                    bool estSelectionne = idDesPlatsDetestes.Contains(vmPlat.Plat.Id);
                     VMPlat vmPlatSelectionne = new VMPlat(vmPlat.Plat, estSelectionne);
                     invite.GestionnaireEvenement(vmPlatSelectionne);
                     invite.PlatsDetestesListe.Add(vmPlatSelectionne);
