@@ -12,29 +12,29 @@ namespace API_Footies.Services.Interfaces
         /// </summary>
         /// <param name="invite"> Invite à ajouter </param>
         /// <returns> Invité ajouter </returns>
-        void AjouterInvite(Invite invite);
+        void AjouterInvite(Invite invite, long IdUtilisateur);
         /// <summary>
         /// Modifier un invité
         /// </summary>
         /// <param name="invite">invite à modifier</param>
-        void ModifierInvite(Invite invite);
+        void ModifierInvite(Invite invite, long IdUtilisateur);
 
         /// <summary>
         /// Récupérer la liste des invités
         /// </summary>
         /// <returns> liste des invités</returns>
-        public List<Invite> ListInvite();
+        public List<Invite> ListInvite(long IdUtilisateur);
         /// Supprimer un invité de la base de données
         /// </summary>
         /// <param name="id"> id de l'invité à supprimer </param>
-        void SupprimerInvite(long id);
+        void SupprimerInvite(long id, long IdUtilisateur);
 
         /// <summary>
         /// Vérifie si un invité est associé à un ou plusieurs groupes
         /// </summary>
         /// <param name="idInvite">L'id de l'invité</param>
         /// <returns>True si l'invité fait partie d'au moins un groupe, False sinon</returns>
-        bool EstDansUnGroupe(long idInvite);
+        bool EstDansUnGroupe(long idInvite, long IdUtilisateur);
         /// <summary>
         /// Cherche un inviter via un texte de recherche
         /// </summary>

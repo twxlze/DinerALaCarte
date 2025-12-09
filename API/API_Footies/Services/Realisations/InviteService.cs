@@ -29,33 +29,33 @@ namespace API_Footies.Services.Realisations
         #endregion
 
         #region methodes
-        public void AjouterInvite(Invite invite)
+        public void AjouterInvite(Invite invite, long IdUtilisateur)
         {
-            this.dao.AjouterInvite(invite);
+            this.dao.AjouterInvite(invite, IdUtilisateur);
         }
 
-        public void ModifierInvite(Invite invite)
+        public void ModifierInvite(Invite invite, long IdUtilisateur)
         {
-            this.dao.ModifierInvite(invite);
+            this.dao.ModifierInvite(invite, IdUtilisateur);
         }
 
-        public List<Invite> ListInvite()
+        public List<Invite> ListInvite(long IdUtilisateur)
         {
-            return this.dao.ListInvite();
+            return this.dao.ListInvite(IdUtilisateur);
         }
 
-        public void SupprimerInvite(long id)
+        public void SupprimerInvite(long id, long IdUtilisateur)
         {
-            this.dao.SupprimerInvite(id);
+            this.dao.SupprimerInvite(id, IdUtilisateur);
         }
-        public bool EstDansUnGroupe(long idInvite)
+        public bool EstDansUnGroupe(long idInvite, long IdUtilisateur)
         {
-            return this.dao.EstDansUnGroupe(idInvite);
+            return this.dao.EstDansUnGroupe(idInvite, IdUtilisateur);
         }
 
-        public List<Invite> ChercherInvite(string texterecherche)
+        public List<Invite> ChercherInvite(string texterecherche, long IdUtilisateur)
         {
-            return this.dao.ChercherInvite(texterecherche);
+            return this.dao.ChercherInvite(texterecherche, IdUtilisateur);
         }
         #endregion
     }
