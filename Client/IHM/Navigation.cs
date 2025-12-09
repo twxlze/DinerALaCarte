@@ -203,9 +203,9 @@ namespace IHM_Footies
             fenetreActuelle.Close();
         }
 
-        public static void AllerDetailInvitation(Window fenetreActuelle, VMInvitation invitation, string provenance = "GroupeInvite")
+        public static void AllerDetailInvitation(Window fenetreActuelle, VMInvitation invitation, string provenance = "Invitation")
         {
-            VuePageDetailInviteDansGroupe fenetre = new VuePageDetailInviteDansGroupe(invitation, provenance);
+            VuePageInvitationDetail fenetre = new VuePageInvitationDetail(invitation, provenance);
             fenetre.Show();
             fenetreActuelle.Close();
         }
