@@ -228,7 +228,7 @@ namespace API_Footies.Data.DAO
         private Invite CreerInviteDepuisDataRow(SQLiteConnector connection, DataRow row)
         {
             long idInvite = (long)row["IDInvite"];
-            return new Invite(idInvite, row["Nom"].ToString(), row["Prenom"].ToString(), row["NumTel"].ToString(), row["Mail"].ToString(), null, null);
+            return new Invite(idInvite, row["Nom"].ToString(), row["Prenom"].ToString(), row["NumTel"].ToString(), row["Mail"].ToString(), null, null, null);
         }
         #endregion
     }
