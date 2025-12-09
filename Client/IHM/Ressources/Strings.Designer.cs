@@ -205,6 +205,15 @@ namespace IHM_Footies.Ressources {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à *Double-cliquez sur un élément pour afficher ses détails..
+        /// </summary>
+        public static string Double_Click {
+            get {
+                return ResourceManager.GetString("Double_Click", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Email.
         /// </summary>
         public static string Email {

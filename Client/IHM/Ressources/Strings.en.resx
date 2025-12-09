@@ -309,4 +309,7 @@
   <data name="Plats_preferes" xml:space="preserve">
     <value>Favorite dishes</value>
   </data>
+  <data name="Double_Click" xml:space="preserve">
+    <value>*Double-click on an item to view its details.</value>
+  </data>
 </root>
