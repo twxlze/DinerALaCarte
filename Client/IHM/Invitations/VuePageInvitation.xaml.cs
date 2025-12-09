@@ -107,6 +107,16 @@ namespace IHM_Footies.Invitations
         }
 
         /// <summary>
+        /// Bouton pour aller à la vue d'invitation
+        /// </summary>
+        /// <param name="sender"> L'expéditeur </param>
+        /// <param name="e"> Les arguments de l'événement </param>
+        private void BoutonVueInvitation(object sender, RoutedEventArgs e)
+        {
+            Navigation.AllerInvitations(this);
+        }
+
+        /// <summary>
         /// Bouton pour aller à la vue des invités
         /// </summary>
         /// <param name="sender"> L'expéditeur </param>
