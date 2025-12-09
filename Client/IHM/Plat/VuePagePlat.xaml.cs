@@ -105,6 +105,7 @@ namespace IHM_Footies
             vue.Selectionner();
         }
 
+
         /// <summary>
         /// Recherche les plats selon le texte saisi
         /// </summary>
@@ -130,7 +131,16 @@ namespace IHM_Footies
             }
             else
             {
-                this.RafraichirListe();
+                TextBlock aucunResultat = new TextBlock
+                {
+                    Text = "Aucun résultat trouvé",
+                    Foreground = Brushes.Gray,
+                    FontSize = 16,
+                    HorizontalAlignment = HorizontalAlignment.Center,
+                    Margin = new Thickness(0, 20, 0, 0)
+                };
+
+                this.PanelListePlat.Children.Add(aucunResultat);
             }
         }
         #endregion
@@ -218,6 +228,12 @@ namespace IHM_Footies
                     MessageBoxButton.OK,
                     MessageBoxImage.Warning);
             }
+        }
+
+        private void BoutonRetour_Click(object sender, RoutedEventArgs e)
+        {
+            this.RafraichirListe();
+            this.vmPagePlat.TexteRecherche = string.Empty;
         }
 
         #endregion

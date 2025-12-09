@@ -90,7 +90,7 @@ namespace IHM_Footies
             }
             else
             {
-                MessageBox.Show("Veuillez sélectionner un groupe pour voir ses détails.", "Aucun groupe sélectionné", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Veuillez sélectionner un invité pour voir ses détails.", "Aucun invité sélectionné", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 
@@ -194,6 +194,12 @@ namespace IHM_Footies
             }
         }
 
+        private void BoutonRetour_Click(object sender, RoutedEventArgs e)
+        {
+            this.RafraichirListe();
+            this.vmPageInvite.TexteRecherche = string.Empty;
+        }
+
         #endregion
 
         #region Boutons de navigation
@@ -282,6 +288,21 @@ namespace IHM_Footies
 
 
         #region Méthodes
+
+        /// <summary>
+        /// Sélectionne un groupe dans la liste des groupes invités
+        /// </summary>
+        /// <param name="vue"> La vue du groupe invité </param>
+        private void SelectionnerInvite(VueInvite vue)
+        {
+            this.vmPageInvite.InviteSelectionne = vue.Invite;
+            foreach (VueInvite v in this.vueInvite)
+            {
+                v.Deselectionner();
+            }
+            vue.Selectionner();
+        }
+
         /// <summary>
         /// Recherche les invités selon le texte saisi
         /// </summary>
@@ -289,17 +310,17 @@ namespace IHM_Footies
         /// <param name="e"> Les arguments de l'événement </param>
         private async void RechercheInvite_Click(object sender, RoutedEventArgs e)
         {
-            if (!string.IsNullOrWhiteSpace(this.vmPageInvite.TexteRecherche))
+            this.PanelListeInvites.Children.Clear();
+            this.vueInvite.Clear();
+
+            await this.vmPageInvite.ChercherInvite(this.vmPageInvite.TexteRecherche);
+
+            if (this.vmPageInvite.VMInvites.Count != 0)
             {
-                this.PanelListeInvites.Children.Clear();
-                this.vueInvite.Clear();
-
-                await this.vmPageInvite.ChercherInvite(this.vmPageInvite.TexteRecherche);
-
                 foreach (VMInvite invite in this.vmPageInvite.VMInvites)
                 {
                     VueInvite vue = new VueInvite(invite);
-                    vue.MouseDown += (s, e) => this.SelectionnerPersonne(vue);
+                    vue.MouseDown += (s, e) => this.SelectionnerInvite(vue);
                     vue.MouseDoubleClick += (s, e) => this.OuvrirDetailGroupe(vue);
                     this.vueInvite.Add(vue);
                     this.PanelListeInvites.Children.Add(vue);
@@ -307,7 +328,16 @@ namespace IHM_Footies
             }
             else
             {
-                this.RafraichirListe();
+                TextBlock aucunResultat = new TextBlock
+                {
+                    Text = "Aucun résultat trouvé",
+                    Foreground = Brushes.Gray,
+                    FontSize = 16,
+                    HorizontalAlignment = HorizontalAlignment.Center,
+                    Margin = new Thickness(0, 20, 0, 0)
+                };
+
+                this.PanelListeInvites.Children.Add(aucunResultat);
             }
         }
 
