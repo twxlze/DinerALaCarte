@@ -32,5 +32,12 @@ namespace API_Footies.Data.Interfaces
         /// </summary>
         /// <param name="idInvitation"> id de l'invitation à supprimer </param>
         void SupprimerInvitation(long idInvitation);
+
+        /// <summary>
+        /// Chercher des invitations par leur nom
+        /// </summary>
+        /// <param name="InvitationsRechercher"> le nom ou une partie du nom de l'invitation à rechercher </param>
+        /// <returns> la liste des invitations correspondants </returns>
+        List<Invitation> ChercherInvitations(string InvitationsRechercher);
     }
 }

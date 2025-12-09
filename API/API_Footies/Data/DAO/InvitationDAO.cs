@@ -189,6 +189,29 @@ namespace API_Footies.Data.DAO
             }
         }
 
+        public List<Invitation> ChercherInvitations(string InvitationsRechercher)
+        {
+            List<Invitation> listeInvitations = new List<Invitation>();
+
+            using (SQLiteConnector connection = new SQLiteConnector())
+            {
+                if (connection == null)
+                {
+                    throw new Exception("Erreur de connexion à la base de données");
+                }
+
+                DataTable dataTable = RechercherInvitationsParTexte(connection, InvitationsRechercher);
+                foreach (DataRow? row in dataTable.Rows)
+                {
+                    long idInvitation = (long)row["IDInvitation"];
+                    string nom = row["Nom"].ToString();
+                    Invitation invitation = new Invitation(new List<GroupeInvites>(), new List<Menu>(), new List<Invite>(), new List<Plat>(), idInvitation, nom, DateTime.Now); 
+                    listeInvitations.Add(invitation);
+                }
+            }
+            return listeInvitations;
+        }
+
         private void AjouterPlatsPreferesDansInvitation(SQLiteConnector connection, Invitation invitation)
         {
             if (invitation.Plats != null)
@@ -500,6 +523,18 @@ namespace API_Footies.Data.DAO
                     connection.ExecuteQuery("INSERT INTO Invitation_Plat (IdInvitation, IdPlat) VALUES (@IdInvitation, @IdPlat)", insertParameters);
                 }
             }
+        }
+
+        /// <summary>
+        /// Recherche des invitations par nom
+        /// </summary>
+        private DataTable RechercherInvitationsParTexte(SQLiteConnector connection, string texteRecherche)
+        {
+            Dictionary<string, object> parameters = new Dictionary<string, object>()
+            {
+                {"@Texte", $"%{texteRecherche}%" }
+            };
+            return connection.ExecuteQuery("SELECT * FROM Invitation WHERE Nom LIKE @Texte", parameters);
         }
         #endregion
 
