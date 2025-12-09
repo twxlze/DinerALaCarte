@@ -113,13 +113,13 @@ namespace IHM_Footies
         /// <param name="e"> Les arguments de l'événement </param>
         private async void RecherchePlat_Click(object sender, RoutedEventArgs e)
         {
-            if (!string.IsNullOrWhiteSpace(this.vmPagePlat.TexteRecherche))
+            this.PanelListePlat.Children.Clear();
+            this.vuePlat.Clear();
+
+            await this.vmPagePlat.ChercherPlat(this.vmPagePlat.TexteRecherche);
+
+            if (this.vmPagePlat.VMPlat.Count != 0)
             {
-                this.PanelListePlat.Children.Clear();
-                this.vuePlat.Clear();
-
-                await this.vmPagePlat.ChercherPlat(this.vmPagePlat.TexteRecherche);
-
                 foreach (VMPlat plat in this.vmPagePlat.VMPlat)
                 {
                     VuePlat vue = new VuePlat(plat);
