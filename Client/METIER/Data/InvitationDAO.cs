@@ -65,5 +65,17 @@ namespace METIER_Footies.Data
                 throw new Exception("Erreur lors de la modification de l'invitation : " + ex.Message);
             }
         }
+
+        public async Task<List<Invitation>> ChercherInvitation(string InvitationsRechercher)
+        {
+            List<Invitation> listeDesInvitations = new List<Invitation>();
+            HttpResponseMessage reponseHttp = await GetAsync($"Invitations/ChercherInvitation?InvitationsRechercher={InvitationsRechercher}");
+            if (reponseHttp.IsSuccessStatusCode)
+            {
+                string reponse = await reponseHttp.Content.ReadAsStringAsync();
+                listeDesInvitations = JsonSerializer.Deserialize<List<Invitation>>(reponse, options);
+            }
+            return listeDesInvitations;
+        }
     }
 }
