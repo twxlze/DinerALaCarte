@@ -300,4 +300,13 @@
   <data name="Plats_detestes_invite" xml:space="preserve">
     <value>Plats détestés par l'invité</value>
   </data>
+  <data name="Plat_prefere_invite" xml:space="preserve">
+    <value>Plat préféré de l'invité</value>
+  </data>
+  <data name="Plat_deteste" xml:space="preserve">
+    <value>Plats détestés</value>
+  </data>
+  <data name="Plats_preferes" xml:space="preserve">
+    <value>Plats préférés</value>
+  </data>
 </root>
