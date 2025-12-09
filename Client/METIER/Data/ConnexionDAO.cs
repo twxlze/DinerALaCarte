@@ -14,12 +14,12 @@ namespace METIER_Footies.Data
         {
             try
             {
-                return await Task.FromResult(new HttpResponseMessage(System.Net.HttpStatusCode.OK)
-                {
-                    Content = new StringContent("{\"success\": true}", Encoding.UTF8, "application/json")
-                });
-                //HttpResponseMessage reponseHttp = await DeleteAsync($"Authentification/VerifierConnexion?Utilisateur={utilisateur}");
-                //return reponseHttp;
+                //return await Task.FromResult(new HttpResponseMessage(System.Net.HttpStatusCode.OK)
+                //{
+                //    Content = new StringContent("{\"success\": true}", Encoding.UTF8, "application/json")
+                //});
+                HttpResponseMessage reponseHttp = await DeleteAsync($"Authentification/VerifierConnexion?Utilisateur={utilisateur}");
+                return reponseHttp;
             }
             catch (Exception ex)
             {
