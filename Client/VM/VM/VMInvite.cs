@@ -124,6 +124,17 @@ namespace VM_Footies.VM
         }
 
         /// <summary>
+        /// Liste des allergies que possède l'invité (pour l'affichage en lecture seule)
+        /// </summary>
+        public List<VMAllergene> AllergiesSelectionnes
+        {
+            get
+            {
+                return allergiesListe?.Where(a => a.EstSelectionne).ToList() ?? new List<VMAllergene>();
+            }
+        }
+
+        /// <summary>
         /// Liste des plats aimés par l'invité
         /// </summary>
         public List<Plat>? PlatsDetestes

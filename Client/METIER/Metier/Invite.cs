@@ -128,7 +128,7 @@ namespace METIER_Footies.Metier
             this.prenom = prenom;
             this.telephone = telephone;
             this.email = email;
-            this.allergenes = allergies;
+            this.allergenes = allergies ;
             this.platsDetestes = platsDetestes;
         }
 
