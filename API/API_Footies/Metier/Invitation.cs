@@ -19,7 +19,7 @@
         /// <summary>
         /// Retourne ou modifie la liste des groupes d'invités
         /// </summary>
-        public List<GroupeInvites> GroupesInvites
+        public List<GroupeInvites> GroupeInvites
         {
             get { return groupesInvites; }
             set { groupesInvites = value; }

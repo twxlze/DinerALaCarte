@@ -134,7 +134,7 @@ namespace API_Footies.Data.DAO
         /// </summary>
         private void AjouterGroupesInvitesDansInvitation(SQLiteConnector connection, Invitation invitation)
         {
-            foreach (GroupeInvites groupeInvites in invitation.GroupesInvites)
+            foreach (GroupeInvites groupeInvites in invitation.GroupeInvites)
             {
                 var parameters = new Dictionary<string, object>()
                 {
@@ -447,7 +447,7 @@ namespace API_Footies.Data.DAO
             };
             connection.ExecuteQuery("DELETE FROM Invitation_GroupeInvite WHERE IdInvitation = @IdInvitation", deleteParameters);
 
-            foreach (GroupeInvites groupeInvites in invitation.GroupesInvites)
+            foreach (GroupeInvites groupeInvites in invitation.GroupeInvites)
             {
                 var insertParameters = new Dictionary<string, object>()
                 {
