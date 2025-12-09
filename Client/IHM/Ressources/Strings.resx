@@ -294,4 +294,10 @@
   <data name="Allergene" xml:space="preserve">
     <value>Allergène(s)</value>
   </data>
+  <data name="Allergies_invite" xml:space="preserve">
+    <value>Allergies de l'invité</value>
+  </data>
+  <data name="Plats_detestes_invite" xml:space="preserve">
+    <value>Plats détestés par l'invité</value>
+  </data>
 </root>

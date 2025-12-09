@@ -58,130 +58,111 @@
             Click="RetourAPage_Click"/>
         </StackPanel>
 
-        <StackPanel Grid.Column="1" Margin="0,23,0,0">
+        <ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Auto" Margin="0,23,0,0">
+            <StackPanel>
 
-            <TextBlock Text="{x:Static res:Strings.InformationInvite}" 
-               FontSize="16" FontWeight="SemiBold" 
-               Foreground="#B44B3E" 
-               Margin="0,0,0,15" 
-               HorizontalAlignment="Center"/>
+                <TextBlock Text="{x:Static res:Strings.InformationInvite}" 
+                   FontSize="16" FontWeight="SemiBold" 
+                   Foreground="#B44B3E" 
+                   Margin="0,0,0,15" 
+                   HorizontalAlignment="Center"/>
 
-           
-            <Border Background="White" CornerRadius="12" Padding="20" Margin="40,0,40,20"
-                    BorderBrush="#E0E0E0" BorderThickness="1">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="170"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
+                <Border Background="White" CornerRadius="12" Padding="20" Margin="40,0,40,20"
+                        BorderBrush="#E0E0E0" BorderThickness="1">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="170"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
 
-                    <TextBlock Text="{x:Static res:Strings.Name}" FontWeight="Bold" FontSize="14"/>
-                    <TextBlock Text="{Binding InviteSelectionne.Nom, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1"
-                               FontSize="14" Foreground="#333" TextWrapping="Wrap"/>
+                        <TextBlock Text="{x:Static res:Strings.Name}" FontWeight="Bold" FontSize="14"/>
+                        <TextBlock Text="{Binding InviteSelectionne.Nom, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1"
+                                   FontSize="14" Foreground="#333" TextWrapping="Wrap"/>
 
-                    <TextBlock Text="{x:Static res:Strings.FirstName}" FontWeight="Bold" FontSize="14" Grid.Row="1"/>
-                    <TextBlock Text="{Binding InviteSelectionne.Prenom, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Grid.Column="1"
-                               FontSize="14" Foreground="#333" TextWrapping="Wrap"/>
+                        <TextBlock Text="{x:Static res:Strings.FirstName}" FontWeight="Bold" FontSize="14" Grid.Row="1"/>
+                        <TextBlock Text="{Binding InviteSelectionne.Prenom, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Grid.Column="1"
+                                   FontSize="14" Foreground="#333" TextWrapping="Wrap"/>
 
-                    <TextBlock Text="{x:Static res:Strings.Tel}" FontWeight="Bold" FontSize="14" Grid.Row="1" Margin="-5,18,5,18" Grid.RowSpan="3"/>
-                    <TextBlock Text="{Binding InviteSelectionne.Telephone, UpdateSourceTrigger=PropertyChanged}" Grid.Row="2" Grid.Column="1" 
-                               FontSize="14" Foreground="#333"/>
+                        <TextBlock Text="{x:Static res:Strings.Tel}" FontWeight="Bold" FontSize="14" Grid.Row="1" Margin="-5,18,5,18" Grid.RowSpan="3"/>
+                        <TextBlock Text="{Binding InviteSelectionne.Telephone, UpdateSourceTrigger=PropertyChanged}" Grid.Row="2" Grid.Column="1" 
+                                   FontSize="14" Foreground="#333"/>
 
-                    <TextBlock Text="{x:Static res:Strings.mail}" FontWeight="Bold" FontSize="14" Grid.Row="3"/>
-                    <TextBlock Text="{Binding InviteSelectionne.Email, UpdateSourceTrigger=PropertyChanged}" Grid.Row="3" Grid.Column="1"
-                               FontSize="14" Foreground="#333" TextWrapping="Wrap"/>
+                        <TextBlock Text="{x:Static res:Strings.mail}" FontWeight="Bold" FontSize="14" Grid.Row="3"/>
+                        <TextBlock Text="{Binding InviteSelectionne.Email, UpdateSourceTrigger=PropertyChanged}" Grid.Row="3" Grid.Column="1"
+                                   FontSize="14" Foreground="#333" TextWrapping="Wrap"/>
+                    </Grid>
+                </Border>
 
-                    <!--
-                    <TextBlock Text="{x:Static res:Strings.Allergie}" FontWeight="Bold" FontSize="14" Grid.Row="4"/>
-                    <TextBlock Text="{Binding InviteSelectionne.Allergies, UpdateSourceTrigger=PropertyChanged}" Grid.Row="4" Grid.Column="1"
-                               FontSize="14" TextWrapping="Wrap" Foreground="#333"/>
-
-                    <TextBlock Text="{x:Static res:Strings.Gout}" FontWeight="Bold" FontSize="14" Grid.Row="5"/>
-                    <TextBlock Text="{Binding InviteSelectionne.Allergies, UpdateSourceTrigger=PropertyChanged}" Grid.Row="5" Grid.Column="1"
-                               FontSize="14" TextWrapping="Wrap" Foreground="#333"/>
-
-                    <TextBlock Text="{x:Static res:Strings.PlatFavori}" FontWeight="Bold" FontSize="14" Grid.Row="6"/>
-                    <TextBlock Text="inconnu" Grid.Row="6" Grid.Column="1"
-                               FontSize="14" TextWrapping="Wrap" Foreground="#333"/>
-                    -->
-                </Grid>
-            </Border>
-
-            <TextBlock Text="Allergies du plat" FontSize="15" FontWeight="SemiBold" Foreground="#B44B3E" Margin="0,0,0,10" HorizontalAlignment="Center"/>
-            <Border Background="White" CornerRadius="12" Padding="15" Margin="40,0,40,20"
-             BorderBrush="#E0E0E0" BorderThickness="1">
-                <ScrollViewer VerticalScrollBarVisibility="Auto" MaxHeight="150">
-                    <ItemsControl ItemsSource="{Binding InviteSelectionne.AllergiesSelectionnes}">
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <WrapPanel Orientation="Horizontal"/>
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <Border Background="#FFF3E0" 
-                            BorderBrush="#FF9800" 
-                            BorderThickness="1"
-                            CornerRadius="15"
-                            Padding="12,6"
-                            Margin="5">
-                                    <TextBlock Text="{Binding Nom}"
+                <!-- Allergies -->
+                <TextBlock Text="{x:Static res:Strings.Allergies_invite}" FontSize="15" FontWeight="SemiBold" Foreground="#B44B3E" Margin="0,0,0,10" HorizontalAlignment="Center"/>
+                <Border Background="White" CornerRadius="12" Padding="15" Margin="40,0,40,20"
+                 BorderBrush="#E0E0E0" BorderThickness="1">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" MaxHeight="150">
+                        <ItemsControl ItemsSource="{Binding InviteSelectionne.AllergiesSelectionnes}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel Orientation="Horizontal"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Background="#FFF3E0" 
+                                BorderBrush="#8B0000" 
+                                BorderThickness="1"
+                                CornerRadius="15"
+                                Padding="12,6"
+                                Margin="5">
+                                        <TextBlock Text="{Binding Nom}"
                                    FontSize="12"
                                    FontWeight="Medium"
-                                   Foreground="#E65100"/>
-                                </Border>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                </ScrollViewer>
-            </Border>
+                                   Foreground="#8B0000"/>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                </Border>
+                
+                <!-- Plats detestés -->
+                <TextBlock Text="{x:Static res:Strings.Plats_detestes_invite}" FontSize="15" FontWeight="SemiBold" Foreground="#B44B3E" Margin="0,0,0,10" HorizontalAlignment="Center"/>
+                <Border Background="White" CornerRadius="12" Padding="15" Margin="40,0,40,20" BorderBrush="#E0E0E0" BorderThickness="1">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" MaxHeight="150">
+                        <ItemsControl ItemsSource="{Binding InviteSelectionne.PlatsDetestes}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel Orientation="Horizontal"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Background="#FFF3E0" 
+                                    BorderBrush="#FF9800" 
+                                    BorderThickness="1"
+                                    CornerRadius="15"
+                                    Padding="12,6"
+                                    Margin="5">
+                                        <TextBlock Text="{Binding Nom}"
+                                           FontSize="12"
+                                           FontWeight="Medium"
+                                           Foreground="#E65100"/>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                </Border>
 
-            <!--
-            <TextBlock Text="{x:Static res:Strings.RetoursCommentaires}" 
-               FontSize="15" FontWeight="SemiBold" Foreground="#B44B3E"
-               Margin="0,0,0,10" HorizontalAlignment="Center"/>
-
-            <Border Background="White" CornerRadius="12" Padding="15"
-                    Margin="40,0,40,0" BorderBrush="#E0E0E0" BorderThickness="1">
-
-                <StackPanel>
-                    <TextBlock Text="{x:Static res:Strings.CommentairesImpression}" FontWeight="Bold" FontSize="14" Margin="0,0,0,8"/>
-
-                    
-                    <ComboBox 
-                              Height="40" FontSize="14"
-                              Background="#FAFAFA" 
-                              BorderBrush="#B4B4B4"
-                              Padding="8">
-                        <ComboBox.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Vertical">
-                                    <TextBlock Text="20/11/2025" FontWeight="Bold"/>
-                                    <TextBlock Text="Nom de l'invitation" Foreground="#555"/>
-                                    <TextBlock Text="le retour : commentaire sur l'appriciation du menu" Foreground="#777" TextWrapping="Wrap"/>
-                                </StackPanel>
-                            </DataTemplate>
-                        </ComboBox.ItemTemplate>
-
-                        <ComboBoxItem Content="Item 1" />
-                        <ComboBoxItem Content="Item 2" />
-
-                    </ComboBox>
-
-                </StackPanel>
-            </Border>
-            -->
-
-        </StackPanel>
+            </StackPanel>
+        </ScrollViewer>
 
     </Grid>
 </Window>

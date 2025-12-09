@@ -124,6 +124,15 @@ namespace IHM_Footies.Ressources {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Allergies de l&apos;invité.
+        /// </summary>
+        public static string Allergies_invite {
+            get {
+                return ResourceManager.GetString("Allergies_invite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Anglais.
         /// </summary>
         public static string Anglais {
@@ -507,6 +516,15 @@ namespace IHM_Footies.Ressources {
         public static string Plats {
             get {
                 return ResourceManager.GetString("Plats", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Plats détestés par l&apos;invité.
+        /// </summary>
+        public static string Plats_detestes_invite {
+            get {
+                return ResourceManager.GetString("Plats_detestes_invite", resourceCulture);
             }
         }
         

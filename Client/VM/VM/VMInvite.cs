@@ -135,7 +135,7 @@ namespace VM_Footies.VM
         }
 
         /// <summary>
-        /// Liste des plats aimés par l'invité
+        /// Liste des plats détestés par l'invité
         /// </summary>
         public List<Plat>? PlatsDetestes
         {
