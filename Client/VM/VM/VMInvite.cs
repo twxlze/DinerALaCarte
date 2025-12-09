@@ -287,9 +287,16 @@ namespace VM_Footies.VM
         {
             if (e.PropertyName == "EstSelectionne")
             {
-                if (sender is VMPlat)
+                if (sender is VMPlat vmPlat)
                 {
-                    SynchroniserPlatsDetestes();
+                    if (this.platsDetestesListe.Contains(vmPlat))
+                    {
+                        SynchroniserPlatsDetestes();
+                    }
+                    else if (this.platsPreferesListe.Contains(vmPlat))
+                    {
+                        SynchroniserPlatsPreferes();
+                    }
                 }
             }
         }
@@ -312,17 +319,48 @@ namespace VM_Footies.VM
         }
 
         /// <summary>
-        /// Ajoute un gestionnaire d'événement pour un VMAllergeneSelectionne ou VMPlatSelectionne
+        /// Met à jour la liste des plats préférés dans le modèle
         /// </summary>
-        /// <param name="vmAllergene">L'allergène sélectionnable</param>
-        /// <param name="vmPlatsDetestes">Le plat sélectionnable</param>
-        public void GestionnaireEvenement(VMPlat vmPlatsDetestes)
+        public void SynchroniserPlatsPreferes()
         {
-            if (vmPlatsDetestes != null)
+            List<Plat> platsPreferes = new List<Plat>();
+            foreach (VMPlat vmPlatSelectionne in this.platsPreferesListe)
             {
-                vmPlatsDetestes.PropertyChanged += Vm_PropertyChanged;
+                if (vmPlatSelectionne.EstSelectionne)
+                {
+                    platsPreferes.Add(vmPlatSelectionne.Plat);
+                }
+            }
+            this.invite.PlatsPreferes = platsPreferes;
+            Notify("PlatsPreferes");
+        }
+
+        /// <summary>
+        /// Ajoute un gestionnaire d'événement pour un VMPlatSelectionne
+        /// </summary>
+        /// <param name="vmPlat">Le plat sélectionnable</param>
+        public void GestionnaireEvenement(VMPlat vmPlat)
+        {
+            if (vmPlat != null)
+            {
+                vmPlat.PropertyChanged += Vm_PropertyChanged;
             }
         }
+        #endregion
+
+        #region Propriétés supplémentaires
+
+        /// <summary>
+        /// Liste des plats préférés sélectionnés uniquement (pour l'affichage en lecture seule)
+        /// </summary>
+        public List<VMPlat> PlatsPreferesSelectionnes
+        {
+            get
+            {
+                return platsPreferesListe?.Where(p => p.EstSelectionne).Select(p => p).ToList() ?? new List<VMPlat>();
+            }
+        }
+
         #endregion
     }
 }

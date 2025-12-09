@@ -228,6 +228,40 @@ namespace VM_Footies
                 throw new Exception("Erreur lors du chargement des plats aimés pour l'invité : " + ex.Message);
             }
         }
+
+        /// <summary>
+        /// Charge tous les plats disponibles dans l'invité avec leur état de sélection pour les plats préférés
+        /// </summary>
+        /// <param name="invite">L'invité dans lequel charger les plats préférés</param>
+        public async Task ChargerPlatsPrefersDansInvite(VMInvite invite)
+        {
+            try
+            {
+                await this.vmPagePlat.ChargerPlats();
+
+                HashSet<long> idDesPlatsPreferes = new HashSet<long>();
+                if (invite.Invite.PlatsPreferes != null)
+                {
+                    foreach (Plat plat in invite.Invite.PlatsPreferes)
+                    {
+                        idDesPlatsPreferes.Add(plat.Id);
+                    }
+                }
+                invite.PlatsPreferesListe.Clear();
+
+                foreach (VMPlat vmPlat in this.vmPagePlat.VMPlat)
+                {
+                    bool estSelectionne = idDesPlatsPreferes.Contains(vmPlat.Plat.Id);
+                    VMPlat vmPlatSelectionne = new VMPlat(vmPlat.Plat, estSelectionne);
+                    invite.GestionnaireEvenement(vmPlatSelectionne);
+                    invite.PlatsPreferesListe.Add(vmPlatSelectionne);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erreur lors du chargement des plats préférés pour l'invité : " + ex.Message);
+            }
+        }
         #endregion
     }
 }

@@ -47,6 +47,7 @@ namespace IHM_Footies
             this.vmPageInvite = new VMPageInvite();
             this.DataContext = this.invite;
             this.vmPageInvite.ChargerPlatsDetestesDansInvite(this.invite);
+            this.vmPageInvite.ChargerPlatsPrefersDansInvite(this.invite);
             InitializeComponent();
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
         }
@@ -115,6 +116,7 @@ namespace IHM_Footies
                 {
                     this.invite.SauvegarderAllergies();
                     this.invite.SynchroniserPlatsDetestes();
+                    this.invite.SynchroniserPlatsPreferes();
                     this.DialogResult = true;
                 }
             }
