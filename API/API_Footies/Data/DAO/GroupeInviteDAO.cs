@@ -9,7 +9,7 @@ namespace API_Footies.Data.DAO
     /// </summary>
     public class GroupeInviteDAO : IGroupeInviteDAO
     {
-        public bool AjouterGroupeInvites(GroupeInvites groupeInvites)
+        public bool AjouterGroupeInvites(GroupeInvites groupeInvites, long IdUtilisateur)
         {
             bool ajoute = false;
             using (SQLiteConnector connection = new SQLiteConnector())
@@ -22,9 +22,13 @@ namespace API_Footies.Data.DAO
                 {
                     Dictionary<string, object> parameters = new Dictionary<string, object>()
                     {
-                        {"@Nom", groupeInvites.Nom }
+                        {"@Nom", groupeInvites.Nom },
+                        {"@IdUtilisateur", IdUtilisateur }
                     };
-                    groupeInvites.IdGroupeInvites = connection.ExecuteInsert("INSERT INTO GroupeInvite (Nom) VALUES (@Nom)", parameters);
+
+
+                    groupeInvites.IdGroupeInvites = connection.ExecuteInsert("INSERT INTO GroupeInvite (Nom, IdUtilisateur) VALUES (@Nom, @IdUtilisateur)", parameters);
+
                     foreach (Invite invite in groupeInvites.Invites)
                     {
                         Dictionary<string, object> parametersInvite = new Dictionary<string, object>()
@@ -41,7 +45,7 @@ namespace API_Footies.Data.DAO
             return ajoute;
         }
 
-        public List<GroupeInvites> ListeGroupesInvites()
+        public List<GroupeInvites> ListeGroupesInvites(long IdUtilisateur)
         {
             List<GroupeInvites> listeGroupesInvites = new List<GroupeInvites>();
 
@@ -53,13 +57,19 @@ namespace API_Footies.Data.DAO
                 }
                 else
                 {
-                    DataTable dataTable = connection.ExecuteQuery("SELECT * FROM GroupeInvite");
+                    Dictionary<string, object> parameters = new Dictionary<string, object>()
+                    {
+                        {"@IdUtilisateur", IdUtilisateur }
+                    };
+
+                    DataTable dataTable = connection.ExecuteQuery("SELECT * FROM GroupeInvite WHERE IdUtilisateur = @IdUtilisateur", parameters);
 
                     foreach (DataRow? row in dataTable.Rows)
                     {
                         long idGroupeInvite = (long)row["IdGroupeInvite"];
                         string nom = row["Nom"].ToString();
                         List<Invite> invitesGroupeInvite = new List<Invite>();
+
                         Dictionary<string, object> parametersGroupeInvite = new Dictionary<string, object>()
                         {
                             {"@IdGroupeInvite", idGroupeInvite }
@@ -92,7 +102,7 @@ namespace API_Footies.Data.DAO
             return listeGroupesInvites;
         }
 
-        public bool ModifierGroupe(GroupeInvites groupeInvite)
+        public bool ModifierGroupe(GroupeInvites groupeInvite, long IdUtilisateur)
         {
             bool modifie = false;
             using (SQLiteConnector connection = new SQLiteConnector())
@@ -106,9 +116,12 @@ namespace API_Footies.Data.DAO
                     Dictionary<string, object> parameters = new Dictionary<string, object>()
                     {
                         {"@IdGroupeInvite", groupeInvite.IdGroupeInvites },
-                        {"@Nom", groupeInvite.Nom }
+                        {"@Nom", groupeInvite.Nom },
+                        {"@IdUtilisateur", IdUtilisateur }
                     };
-                    connection.ExecuteQuery("UPDATE GroupeInvite SET Nom = @Nom WHERE IdGroupeInvite = @IdGroupeInvite", parameters);
+
+                    connection.ExecuteQuery("UPDATE GroupeInvite SET Nom = @Nom WHERE IdGroupeInvite = @IdGroupeInvite AND IdUtilisateur = @IdUtilisateur", parameters);
+
                     Dictionary<string, object> parametersDelete = new Dictionary<string, object>()
                     {
                         {"@IdGroupeInvite", groupeInvite.IdGroupeInvites }
@@ -131,7 +144,7 @@ namespace API_Footies.Data.DAO
             return modifie;
         }
 
-        public void SupprimerGroupeInvite(long idGroupeInvite)
+        public void SupprimerGroupeInvite(long idGroupeInvite, long IdUtilisateur)
         {
             using (SQLiteConnector connection = new SQLiteConnector())
             {
@@ -146,16 +159,19 @@ namespace API_Footies.Data.DAO
                         {"@IdGroupeInvite", idGroupeInvite }
                     };
                     connection.ExecuteQuery("DELETE FROM Invite_Groupe WHERE IdGroupeInvite = @IdGroupeInvite", parametersLiaison);
+
                     Dictionary<string, object> parameters = new Dictionary<string, object>()
                     {
-                        {"@IdGroupeInvite", idGroupeInvite }
+                        {"@IdGroupeInvite", idGroupeInvite },
+                        {"@IdUtilisateur", IdUtilisateur }
                     };
-                    connection.ExecuteQuery("DELETE FROM GroupeInvite WHERE IdGroupeInvite = @IdGroupeInvite", parameters);
+
+                    connection.ExecuteQuery("DELETE FROM GroupeInvite WHERE IdGroupeInvite = @IdGroupeInvite AND IdUtilisateur = @IdUtilisateur", parameters);
                 }
             }
         }
 
-        public List<GroupeInvites> ChercherGroupeInvites(string GroupeInvitesRechercher)
+        public List<GroupeInvites> ChercherGroupeInvites(string GroupeInvitesRechercher, long IdUtilisateur)
         {
             List<GroupeInvites> listeGroupeInvites = new List<GroupeInvites>();
             using (SQLiteConnector connection = new SQLiteConnector())
@@ -168,34 +184,41 @@ namespace API_Footies.Data.DAO
                 {
                     Dictionary<string, object> parameters = new Dictionary<string, object>()
                     {
-                        {"@Texte", $"%{GroupeInvitesRechercher}%" }
+                        {"@Texte", $"%{GroupeInvitesRechercher}%" },
+                        {"@IdUtilisateur", IdUtilisateur }
                     };
-                    DataTable dataTable = connection.ExecuteQuery("SELECT * FROM GroupeInvite WHERE Nom LIKE @Texte", parameters);
+
+
+                    DataTable dataTable = connection.ExecuteQuery("SELECT * FROM GroupeInvite WHERE Nom LIKE @Texte AND IdUtilisateur = @IdUtilisateur", parameters);
+
                     foreach (DataRow? row in dataTable.Rows)
                     {
                         long idGroupeInvite = (long)row["IdGroupeInvite"];
                         string nom = row["Nom"].ToString();
                         List<Invite> invitesGroupeInvite = new List<Invite>();
+
                         Dictionary<string, object> parametersGroupeInvite = new Dictionary<string, object>()
-                            {
-                                {"@IdGroupeInvite", idGroupeInvite }
-                            };
+                        {
+                            {"@IdGroupeInvite", idGroupeInvite }
+                        };
+
                         DataTable dataTableInvites = connection.ExecuteQuery(
                                 @"SELECT i.* FROM Invite i
                                   INNER JOIN Invite_Groupe ig ON i.IdInvite = ig.IdInvite 
                                   WHERE ig.IdGroupeInvite = @IdGroupeInvite",
                                 parametersGroupeInvite);
-                            foreach (DataRow? rowInvite in dataTableInvites.Rows)
-                            {
-                                Invite invite = new Invite(
-                                    (long)rowInvite["IdInvite"],
-                                    rowInvite["Nom"].ToString(),
-                                    rowInvite["Prenom"].ToString(),
-                                    rowInvite["NumTel"].ToString(),
-                                    rowInvite["Mail"].ToString()
-                                );
-                                invitesGroupeInvite.Add(invite);
-                            }
+
+                        foreach (DataRow? rowInvite in dataTableInvites.Rows)
+                        {
+                            Invite invite = new Invite(
+                                (long)rowInvite["IdInvite"],
+                                rowInvite["Nom"].ToString(),
+                                rowInvite["Prenom"].ToString(),
+                                rowInvite["NumTel"].ToString(),
+                                rowInvite["Mail"].ToString()
+                            );
+                            invitesGroupeInvite.Add(invite);
+                        }
                         GroupeInvites groupe = new GroupeInvites(idGroupeInvite, nom, invitesGroupeInvite);
                         listeGroupeInvites.Add(groupe);
                     }

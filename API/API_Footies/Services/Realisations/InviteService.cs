@@ -48,9 +48,9 @@ namespace API_Footies.Services.Realisations
         {
             this.dao.SupprimerInvite(id, IdUtilisateur);
         }
-        public bool EstDansUnGroupe(long idInvite, long IdUtilisateur)
+        public bool EstDansUnGroupe(long idInvite)
         {
-            return this.dao.EstDansUnGroupe(idInvite, IdUtilisateur);
+            return this.dao.EstDansUnGroupe(idInvite);
         }
 
         public List<Invite> ChercherInvite(string texterecherche, long IdUtilisateur)

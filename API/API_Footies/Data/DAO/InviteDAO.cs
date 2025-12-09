@@ -120,7 +120,7 @@ namespace API_Footies.Data.DAO
             }
         }
 
-        public bool EstDansUnGroupe(long idInvite, long idUtilisateur)
+        public bool EstDansUnGroupe(long idInvite)
         {
             // Note : Pour EstDansUnGroupe, techniquement la table de liaison Invite_Groupe n'a pas IdUtilisateur,
             // mais on pourrait vérifier si l'invité appartient bien à l'utilisateur avant de vérifier le groupe.
