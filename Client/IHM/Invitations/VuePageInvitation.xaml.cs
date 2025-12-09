@@ -225,7 +225,6 @@ namespace IHM_Footies.Invitations
                     "Aucune invitation sélectionnée",
                     MessageBoxButton.OK,
                     MessageBoxImage.Warning);
-                return;
             }
             VMInvitation invitationAModifier = new VMInvitation(this.vmPageInvitation.InvitationSelectionnee);
             await this.vmPageInvitation.ChargerElementsDansInvitation(invitationAModifier);

@@ -92,12 +92,12 @@ namespace API_Footies.Data.DAO
 
                             // Récupérer les allergènes du plat
                             List<NomAllergene> allergenesPlat = new List<NomAllergene>();
-                            var parametersAllergene = new Dictionary<string, object>()
+                            Dictionary<string, object> parametersAllergene = new Dictionary<string, object>()
                             {
                                 {"@IdPlat", idPlat }
                             };
 
-                            var dataTableAllergenes = connection.ExecuteQuery(
+                            DataTable dataTableAllergenes = connection.ExecuteQuery(
                                 @"SELECT a.Nom 
                                   FROM Allergene a
                                   INNER JOIN Plat_Allergene pa ON a.IDAllergene = pa.IDAllergene 

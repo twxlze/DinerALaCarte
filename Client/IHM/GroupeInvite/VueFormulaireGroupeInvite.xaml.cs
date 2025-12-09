@@ -80,7 +80,6 @@ namespace IHM_Footies
                 {
                     string message = string.Join("\n", erreurs);
                     MessageBox.Show(message, "Erreur de validation", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
                 }
                 else
                 {
