@@ -1,7 +1,10 @@
 using API_Footies.Data.DAO;
 using API_Footies.Data.Interfaces;
+using API_Footies.Metier;
+using API_Footies.Outils;
 using API_Footies.Services.Interfaces;
 using API_Footies.Services.Realisations;
+using Microsoft.AspNetCore.Identity;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -27,6 +30,13 @@ builder.Services.AddScoped<IMenuService, MenuService>();
 
 builder.Services.AddScoped<IInvitationDAO, InvitationDAO>();
 builder.Services.AddScoped<IInvitationService, InvitationService>();
+
+builder.Services.AddScoped<IAllergeneDAO, AllergeneDAO>();
+builder.Services.AddScoped<IAllergeneService, AllergeneService>();
+
+builder.Services.AddScoped<IUtilisateurDAO, UtilisateurDAO>();
+builder.Services.AddScoped<IAuthentificationService, AuthentificationService>();
+builder.Services.AddScoped<IAuthentification, Authentification>();
 
 SQLitePCL.Batteries.Init();
 

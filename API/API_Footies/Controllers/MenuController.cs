@@ -29,9 +29,9 @@ namespace API_Footies.Controllers
         /// <param name="menu">menu à ajouter</param>
         /// <returns>Le menu avec Id modifié</returns>
         [HttpPost("AjoutMenu")]
-        public Metier.Menu AjouterMenu(Menu menu)
+        public Metier.Menu AjouterMenu(Menu menu, long idUtilisateur)
         {
-            this.service.AjouterMenu(menu);
+            this.service.AjouterMenu(menu, idUtilisateur);
             return menu;
         }
 
@@ -40,9 +40,9 @@ namespace API_Footies.Controllers
         /// </summary>
         /// <param name="menu">le menus</param>
         [HttpPut("ModifierMenu")]
-        public void ModifierMenu(Metier.Menu menu)
+        public void ModifierMenu(Metier.Menu menu, long idUtilisateur)
         {
-            this.service.ModifierMenu(menu);
+            this.service.ModifierMenu(menu, idUtilisateur);
         }
 
         /// <summary>
@@ -51,9 +51,9 @@ namespace API_Footies.Controllers
         /// <param name="idMenu"> id du menu à supprimé </param>
         /// <returns></returns>
         [HttpDelete("SupprimerMenu")]
-        public void SupprimerMenu(long idMenu)
+        public void SupprimerMenu(long idMenu, long idUtilisateur)
         {
-            this.service.SupprimerMenu(idMenu);
+            this.service.SupprimerMenu(idMenu, idUtilisateur);
         }
 
 
@@ -61,9 +61,9 @@ namespace API_Footies.Controllers
         /// Récupérer la liste des menu
         ///</summary>
         [HttpGet("ListeMenu")]
-        public List<Metier.Menu> ListMenu()
+        public List<Metier.Menu> ListMenu(long idUtilisateur)
         {
-            return this.service.ListMenu();
+            return this.service.ListMenu(idUtilisateur);
         }
 
         /// <summary>
@@ -72,9 +72,9 @@ namespace API_Footies.Controllers
         /// <param name="menuRechercher"> le nom ou une partie du nom du menu à rechercher </param>
         /// <returns> la liste des menus correspondants </returns>
         [HttpGet("ChercherMenus")]
-        public List<Metier.Menu> ChercherMenus(string menuRechercher)
+        public List<Metier.Menu> ChercherMenus(string menuRechercher, long idUtilisateur)
         {
-            return this.service.ChercherMenus(menuRechercher);
+            return this.service.ChercherMenus(menuRechercher, idUtilisateur);
         }
     }
 }

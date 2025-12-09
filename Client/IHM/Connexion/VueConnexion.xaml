@@ -1,0 +1,97 @@
+﻿<Window x:Class="IHM_Footies.Connexion.VueConnexion"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:IHM_Footies.Connexion"
+        mc:Ignorable="d"
+        Title="Connexion - Hostably" Height="450" Width="800"
+        Background="#F9F9F9"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <BitmapImage x:Key="LogoHostably" UriSource="/Ressources/LogoHostably.png"/>
+        <Style x:Key="StyleBoutonConnexion" TargetType="Button">
+            <Setter Property="Background" Value="#8C2F26"/>
+            <Setter Property="Foreground" Value="#F9F9F9"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontFamily" Value="Poppins"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                                CornerRadius="10"
+                                Padding="20,10">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#B44B3E"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="StyleChamp" TargetType="TextBox">
+            <Setter Property="BorderBrush" Value="#8C2F26"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="FontFamily" Value="Poppins"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Foreground" Value="#333333"/>
+            <Setter Property="Padding" Value="10,8"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}" 
+                                CornerRadius="5">
+                            <ScrollViewer x:Name="PART_ContentHost" 
+                                          Margin="{TemplateBinding Padding}"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="StyleChampMotDePasse" TargetType="PasswordBox">
+            <Setter Property="BorderBrush" Value="#8C2F26"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="FontFamily" Value="Poppins"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Foreground" Value="#333333"/>
+            <Setter Property="Padding" Value="10,8"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="PasswordBox">
+                        <Border Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}" 
+                                CornerRadius="5">
+                            <ScrollViewer x:Name="PART_ContentHost" 
+                                          Margin="{TemplateBinding Padding}"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Button x:Name="CloseButton" Content="✖" FontSize="16" FontWeight="Bold" Foreground="#B44B3E" Background="Transparent" BorderThickness="0" Cursor="Hand" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,10,10,0" Click="BoutonFermerFenetre_Click"/>
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Width="300">
+            <Image Source="{StaticResource ResourceKey=LogoHostably}" Width="80" Height="80" Margin="0,0,0,20"/>
+            <TextBlock Text="HOSTABLY" FontSize="28" FontWeight="Bold" Foreground="#B44B3E" HorizontalAlignment="Center" FontFamily="Montserrat" Margin="0,0,0,40"/>
+            <TextBlock Text="Pseudo" FontFamily="Poppins" FontSize="14" FontWeight="SemiBold" Foreground="#B44B3E" Margin="0,0,0,5"/>
+            <TextBox x:Name="ChampPseudo" Text="{Binding Pseudo, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource StyleChamp}" Margin="0,0,0,20"/>
+            <TextBlock Text="Mot de passe" FontFamily="Poppins" FontSize="14"  FontWeight="SemiBold" Foreground="#B44B3E" Margin="0,0,0,5"/>
+            <PasswordBox x:Name="ChampMotDePasse" Style="{StaticResource StyleChampMotDePasse}" Margin="0,0,0,30"/>
+            <Button x:Name="BoutonConnexion" Content="Connexion" Style="{StaticResource StyleBoutonConnexion}" Width="200" Height="40" Click="BoutonConnexion_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>

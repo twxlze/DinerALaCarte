@@ -22,29 +22,29 @@ namespace API_Footies.Services.Realisations
         #endregion
 
         #region Méthodes
-        public void AjouterMenu(Menu menu)
+        public void AjouterMenu(Menu menu, long idUtilisateur)
         {
-            this.dao.AjouterMenu(menu);
+            this.dao.AjouterMenu(menu, idUtilisateur);
         }
 
-        public List<Menu> ListMenu()
+        public List<Menu> ListMenu(long idUtilisateur)
         {
-            return this.dao.ListMenu();
+            return this.dao.ListMenu(idUtilisateur);
         }
 
-        public void ModifierMenu(Menu menu)
+        public void ModifierMenu(Menu menu, long idUtilisateur)
         {
-            this.dao.ModifierMenu(menu);
+            this.dao.ModifierMenu(menu, idUtilisateur);
         }
 
-        public void SupprimerMenu(long idMenu)
+        public void SupprimerMenu(long idMenu, long idUtilisateur)
         {
-            this.dao.SupprimerMenu(idMenu);
+            this.dao.SupprimerMenu(idMenu, idUtilisateur);
         }
 
-        public List<Menu> ChercherMenus(string menuRechercher)
+        public List<Menu> ChercherMenus(string menuRechercher, long idUtilisateur)
         {
-            return this.dao.ChercherMenus(menuRechercher);
+            return this.dao.ChercherMenus(menuRechercher, idUtilisateur);
         }
         #endregion
     }
