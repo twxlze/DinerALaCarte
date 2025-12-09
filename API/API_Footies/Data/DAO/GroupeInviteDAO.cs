@@ -20,7 +20,6 @@ namespace API_Footies.Data.DAO
                     throw new Exception("Erreur de connexion à la base de données");
                 }
 
-                // On passe l'IdUtilisateur à la méthode d'insertion
                 InsererGroupeInvites(connection, groupeInvites, IdUtilisateur);
                 AjouterInvitesDansGroupe(connection, groupeInvites);
                 return true;
@@ -38,7 +37,6 @@ namespace API_Footies.Data.DAO
                     throw new Exception("Erreur de connexion à la base de données");
                 }
 
-                // Modification de la requête pour filtrer par utilisateur
                 Dictionary<string, object> parameters = new Dictionary<string, object>()
                 {
                     {"@IdUtilisateur", IdUtilisateur }
@@ -48,7 +46,6 @@ namespace API_Footies.Data.DAO
 
                 foreach (DataRow? row in dataTable.Rows)
                 {
-                    // On garde la méthode de création d'objet du HEAD pour la propreté
                     GroupeInvites groupeInvite = CreerGroupeInvitesDepuisDataRow(connection, row);
                     listeGroupesInvites.Add(groupeInvite);
                 }
@@ -65,10 +62,7 @@ namespace API_Footies.Data.DAO
                     throw new Exception("Erreur de connexion à la base de données");
                 }
 
-                // On passe l'IdUtilisateur pour sécuriser la modification
                 MettreAJourGroupeInvites(connection, groupeInvite, IdUtilisateur);
-
-                // La logique de gestion des liens reste la même (pas besoin d'ID utilisateur pour la table de liaison)
                 SupprimerInvitesDuGroupe(connection, groupeInvite.IdGroupeInvites);
                 AjouterInvitesDansGroupe(connection, groupeInvite);
                 return true;
@@ -85,7 +79,6 @@ namespace API_Footies.Data.DAO
                 }
 
                 SupprimerInvitesDuGroupe(connection, idGroupeInvite);
-                // On passe l'IdUtilisateur pour sécuriser la suppression
                 SupprimerGroupeInvitesParId(connection, idGroupeInvite, IdUtilisateur);
             }
         }

@@ -20,12 +20,10 @@ namespace API_Footies.Data.DAO
                     throw new Exception("Erreur de connexion à la base de données");
                 }
 
-                // On passe l'idUtilisateur
                 InsererInvite(connection, invite, idUtilisateur);
-
                 AjouterAllergenesInvite(connection, invite.Id, invite.Allergenes);
                 AjouterPlatsDetestesInvite(connection, invite.Id, invite.PlatsDetestes);
-                AjouterPlatsPreferesInvite(connection, invite.Id, invite.PlatsPreferes); // Ajouté car présent dans le HEAD
+                AjouterPlatsPreferesInvite(connection, invite.Id, invite.PlatsPreferes);
                 return true;
             }
         }
@@ -39,16 +37,11 @@ namespace API_Footies.Data.DAO
                     throw new Exception("Erreur de connexion à la base de données");
                 }
 
-                // On passe l'idUtilisateur pour sécuriser la modification
                 MettreAJourInformationsInvite(connection, invite, idUtilisateur);
-
-                // Gestion des listes liées (pas de changement ici, les ID sont uniques)
                 SupprimerAllergenesInvite(connection, invite.Id);
                 AjouterAllergenesInvite(connection, invite.Id, invite.Allergenes);
-
                 SupprimerPlatsDetestesInvite(connection, invite.Id);
                 AjouterPlatsDetestesInvite(connection, invite.Id, invite.PlatsDetestes);
-
                 SupprimerPlatsPreferesInvite(connection, invite.Id);
                 AjouterPlatsPreferesInvite(connection, invite.Id, invite.PlatsPreferes);
                 return true;
@@ -64,8 +57,6 @@ namespace API_Footies.Data.DAO
                 {
                     throw new Exception("Erreur de connexion à la base de données");
                 }
-
-                // Filtrage par utilisateur
                 Dictionary<string, object> parameters = new Dictionary<string, object>()
                 {
                     {"@IdUtilisateur", idUtilisateur }
@@ -89,20 +80,15 @@ namespace API_Footies.Data.DAO
                 {
                     throw new Exception("Erreur de connexion à la base de données");
                 }
-
-                // Suppression des dépendances
                 SupprimerAllergenesInvite(connection, id);
                 SupprimerPlatsDetestesInvite(connection, id);
                 SupprimerPlatsPreferesInvite(connection, id);
-
-                // Suppression de l'invité sécurisée par l'utilisateur
                 SupprimerInviteParId(connection, id, idUtilisateur);
             }
         }
 
         public bool EstDansUnGroupe(long idInvite)
         {
-            // Pas de changement ici
             using (SQLiteConnector connection = new SQLiteConnector())
             {
                 if (connection == null)
@@ -124,7 +110,6 @@ namespace API_Footies.Data.DAO
                     throw new Exception("Erreur de connexion à la base de données");
                 }
 
-                // Recherche filtrée par utilisateur
                 DataTable dataTable = RechercherInvitesParTexte(connection, texterecherche, idUtilisateur);
 
                 foreach (DataRow? row in dataTable.Rows)
@@ -195,7 +180,6 @@ namespace API_Footies.Data.DAO
                 {"@TexteRecherche", $"%{texteRecherche}%" },
                 {"@IdUtilisateur", idUtilisateur }
             };
-            // Ajout des parenthèses pour le OR et du AND IdUtilisateur
             return connection.ExecuteQuery("SELECT * FROM Invite WHERE (Nom LIKE @TexteRecherche OR Prenom LIKE @TexteRecherche) AND IdUtilisateur = @IdUtilisateur", parameters);
         }
         #endregion
