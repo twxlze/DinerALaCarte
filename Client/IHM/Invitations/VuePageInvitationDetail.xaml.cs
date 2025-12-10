@@ -20,6 +20,8 @@ namespace IHM_Footies.Invitations
         private List<VueGroupeInvite> vueGroupes = new List<VueGroupeInvite>();
         private VMPageMenu vmPageMenu = new VMPageMenu();
         private List<VueMenu> vueMenus = new List<VueMenu>();
+        private VMPagePlat VMPagePlat = new VMPagePlat();
+        private List<VuePlat> vuePlats = new List<VuePlat>();
         #endregion
 
         #region Constructeur
@@ -85,8 +87,6 @@ namespace IHM_Footies.Invitations
                 vue.MouseDoubleClick += (s, e) => this.OuvrirDetailMenu(vue);
                 this.vueMenus.Add(vue);
                 this.PanelMenus.Children.Add(vue);
-                //Border bordure = this.EsthetiqueVisuel(vmMenu.Nom);
-                //this.PanelMenus.Children.Add(bordure);
             }
         }
 
@@ -97,36 +97,19 @@ namespace IHM_Footies.Invitations
 
             foreach (VMPlat vmPlat in listeVM)
             {
-                Border bordure = this.EsthetiqueVisuel(vmPlat.Nom);
-                this.PanelPlats.Children.Add(bordure);
+                VuePlat vue = new VuePlat(vmPlat);
+                vue.MouseDown += (s, e) => this.SelectionnerPlat(vue);
+                vue.MouseDoubleClick += (s, e) => this.OuvrirDetailPlat(vue);
+                this.vuePlats.Add(vue);
+                this.PanelPlats.Children.Add(vue);
             }
         }
-
-        private Border EsthetiqueVisuel(string texte)
-        {
-            Border bordure = new Border();
-            bordure.Background = Brushes.White;
-            bordure.BorderBrush = (Brush)new BrushConverter().ConvertFrom("#E0E0E0");
-            bordure.BorderThickness = new Thickness(0, 0, 0, 1);
-            bordure.Padding = new Thickness(10);
-            bordure.Margin = new Thickness(0, 2, 0, 2);
-
-            TextBlock textBlock = new TextBlock();
-            textBlock.Text = texte;
-            textBlock.FontSize = 14;
-            textBlock.Foreground = (Brush)new BrushConverter().ConvertFrom("#333333");
-
-            bordure.Child = textBlock;
-
-            return bordure;
-        }
-
 
         /// <summary>
         /// Sélectionne un invité dans la liste d'invités
         /// </summary>
         /// <param name="vue"> VueInvite sélectionnée </param>
-        public void SelectionnerInvite(VueInvite vue)
+        private void SelectionnerInvite(VueInvite vue)
         {
             this.vmPageInvite.InviteSelectionne = vue.Invite;
             foreach (VueInvite vueI in this.vueInvites)
@@ -148,7 +131,7 @@ namespace IHM_Footies.Invitations
         /// Sélectionne un groupe dans la liste de groupe d'invités
         /// </summary>
         /// <param name="vue"> VueGroupe sélectionnée </param>
-        public void SelectionnerGroupe(VueGroupeInvite vue)
+        private void SelectionnerGroupe(VueGroupeInvite vue)
         {
             this.vMPageGroupeInvite.GroupeSelectionne = vue.Groupe;
             foreach (VueGroupeInvite vueG in this.vueGroupes)
@@ -170,7 +153,7 @@ namespace IHM_Footies.Invitations
         /// Sélectionne un menu dans la liste des menus
         /// </summary>
         /// <param name="vue"> VueMenu sélectionné </param>
-        public void SelectionnerMenu(VueMenu vue)
+        private void SelectionnerMenu(VueMenu vue)
         {
             this.vmPageMenu.MenuSelectionne = vue.Menu;
             foreach (VueMenu vueM in this.vueMenus)
@@ -185,6 +168,28 @@ namespace IHM_Footies.Invitations
             if (this.vmPageMenu.MenuSelectionne != null)
             {
                 Navigation.AllerDetailMenu(this, this.vmPageMenu.MenuSelectionne, "Invitation", this.vmInvitation);
+            }
+        }
+
+        /// <summary>
+        /// Sélectionne un plat dans la liste des plats
+        /// </summary>
+        /// <param name="vue"> VuePlat sélectionnée </param>
+        private void SelectionnerPlat(VuePlat vue)
+        {
+            this.VMPagePlat.PlatSelectionne = vue.Plat;
+            foreach (VuePlat vueP in this.vuePlats)
+            {
+                vueP.Deselectionner();
+            }
+            vue.Selectionner();
+        }
+
+        private async Task OuvrirDetailPlat(VuePlat vue)
+        {
+            if (this.VMPagePlat.PlatSelectionne != null)
+            {
+                Navigation.AllerDetailPlat(this, this.VMPagePlat.PlatSelectionne, "Invitation", this.vmInvitation);
             }
         }
 

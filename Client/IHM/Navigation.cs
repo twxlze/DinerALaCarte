@@ -81,9 +81,9 @@ namespace IHM_Footies
         /// <param name="fenetreActuelle">La fenêtre actuelle à fermer</param>
         /// <param name="plat">Le plat à afficher en détail</param>
         /// <param name="provenance">La fenêtre de provenance (optionnel, par défaut "Plat")</param>
-        public static void AllerDetailPlat(Window fenetreActuelle, VMPlat plat, string provenance = "Plat")
+        public static void AllerDetailPlat(Window fenetreActuelle, VMPlat plat, string provenance = "Plat", VMInvitation invitationPrecedente = null)
         {
-            VuePagePlatDetail fenetre = new VuePagePlatDetail(plat, provenance);
+            VuePagePlatDetail fenetre = new VuePagePlatDetail(plat, provenance, invitationPrecedente);
             fenetre.Show();
             fenetreActuelle.Close();
         }
