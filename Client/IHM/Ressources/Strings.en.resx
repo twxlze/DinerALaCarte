@@ -326,6 +326,7 @@
   </data>
   <data name="AfficherStats" xml:space="preserve">
     <value>View the statistics</value>
+  </data>
   <data name="Double_Click_invite" xml:space="preserve">
     <value>Double-click on a guest to view their information.</value>
   </data>
