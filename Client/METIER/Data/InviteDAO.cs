@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using METIER_Footies.Metier;
@@ -11,30 +8,34 @@ using METIER_Footies.Data.Interfaces;
 namespace METIER_Footies.Data
 {
     /// <summary>
-    // Classe d'accès aux données pour les invités avec la base de données
+    /// Classe d'accès aux données pour les invités avec la base de données
     /// </summary>
     public class InviteDAO : DAO, IInviteDAO
     {
-
         public async Task<HttpResponseMessage> AjouterInvite(Invite invite)
         {
             try
             {
-                HttpResponseMessage reponseHttp = await PostAsync("Invites/AjoutInvite", invite);
+                long idUtilisateur = SessionService.Instance.UtilisateurConnecte.Id;
+                string url = $"Invites/AjoutInvite?IdUtilisateur={idUtilisateur}";
+
+                HttpResponseMessage reponseHttp = await PostAsync(url, invite);
                 return reponseHttp;
             }
             catch (Exception ex)
             {
                 throw new Exception("Erreur lors de l'ajout de l'invité : " + ex.Message);
             }
-
         }
 
         public async Task<List<Invite>> ObtenirTout()
         {
             List<Invite> listeDesInvites = new List<Invite>();
 
-            HttpResponseMessage reponseHttp = await GetAsync("Invites/ListeInvite");
+            long idUtilisateur = SessionService.Instance.UtilisateurConnecte.Id;
+            string url = $"Invites/ListeInvite?IdUtilisateur={idUtilisateur}";
+
+            HttpResponseMessage reponseHttp = await GetAsync(url);
 
             if (reponseHttp.IsSuccessStatusCode)
             {
@@ -48,7 +49,10 @@ namespace METIER_Footies.Data
         {
             try
             {
-                HttpResponseMessage reponseHttp = await DeleteAsync($"Invites/SupprimerInvite?id={idInvite}");
+                long idUtilisateur = SessionService.Instance.UtilisateurConnecte.Id;
+                string url = $"Invites/SupprimerInvite?id={idInvite}&IdUtilisateur={idUtilisateur}";
+
+                HttpResponseMessage reponseHttp = await DeleteAsync(url);
                 return reponseHttp;
             }
             catch (Exception ex)
@@ -62,7 +66,10 @@ namespace METIER_Footies.Data
         {
             try
             {
-                HttpResponseMessage reponseHttp = await PutAsync("Invites/ModifierInvite", invite);
+                long idUtilisateur = SessionService.Instance.UtilisateurConnecte.Id;
+                string url = $"Invites/ModifierInvite?IdUtilisateur={idUtilisateur}";
+
+                HttpResponseMessage reponseHttp = await PutAsync(url, invite);
                 return reponseHttp;
             }
             catch (Exception ex)
@@ -94,7 +101,11 @@ namespace METIER_Footies.Data
         public async Task<List<Invite>> ChercherInvite(string texteRecherche)
         {
             List<Invite> listeDesInvites = new List<Invite>();
-            HttpResponseMessage reponseHttp = await GetAsync($"Invites/ChercherInvite?texterecherche={texteRecherche}");
+
+            long idUtilisateur = SessionService.Instance.UtilisateurConnecte.Id;
+            string url = $"Invites/ChercherInvite?texterecherche={texteRecherche}&IdUtilisateur={idUtilisateur}";
+
+            HttpResponseMessage reponseHttp = await GetAsync(url);
             if (reponseHttp.IsSuccessStatusCode)
             {
                 string reponse = await reponseHttp.Content.ReadAsStringAsync();

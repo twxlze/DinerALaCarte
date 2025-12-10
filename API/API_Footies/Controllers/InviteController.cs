@@ -28,11 +28,11 @@ namespace API_Footies.Controllers
         /// <param name="invite">invité à ajouter</param>
         /// <returns>L'invité avec Id modifié</returns>
         [HttpPost("AjoutInvite")]
-        public Metier.Invite AjouterInvite(Metier.Invite invite)
+        public Metier.Invite AjouterInvite(Metier.Invite invite, long IdUtilisateur)
         {
             try
             {
-                this.service.AjouterInvite(invite);
+                this.service.AjouterInvite(invite, IdUtilisateur);
                 return invite;
             }
             catch (Exception ex)
@@ -46,9 +46,9 @@ namespace API_Footies.Controllers
         /// </summary>
         /// <param name="invite">l'invité</param>
         [HttpPut("ModifierInvite")]
-        public void ModifierInvite(Metier.Invite invite)
+        public void ModifierInvite(Metier.Invite invite, long IdUtilisateur)
         {
-            this.service.ModifierInvite(invite);
+            this.service.ModifierInvite(invite, IdUtilisateur);
         }
 
         /// <summary>
@@ -56,9 +56,9 @@ namespace API_Footies.Controllers
         /// </summary>
         /// <param name="id"> id de l'invité à supprimé </param>
         [HttpDelete("SupprimerInvite")]
-        public void SupprimerInvite(long id)
+        public void SupprimerInvite(long id, long IdUtilisateur)
         {
-            this.service.SupprimerInvite(id);
+            this.service.SupprimerInvite(id, IdUtilisateur);
         }
 
 
@@ -66,9 +66,9 @@ namespace API_Footies.Controllers
         /// Récupérer la liste des invités
         ///</summary>
         [HttpGet("ListeInvite")]
-        public List<Metier.Invite> ListInvite()
+        public List<Metier.Invite> ListInvite(long IdUtilisateur)
         {
-            return this.service.ListInvite();
+            return this.service.ListInvite(IdUtilisateur);
         }
 
         /// <summary>
@@ -88,9 +88,9 @@ namespace API_Footies.Controllers
         /// <param name="texterecherche">Le texte permettant de rechercher un invité</param>
         /// <returns>Une liste d'invités correspondant à la recherche</returns>
         [HttpGet("ChercherInvite")]
-        public List<Metier.Invite> ChercherInvite(string texterecherche)
+        public List<Metier.Invite> ChercherInvite(string texterecherche, long IdUtilisateur)
         {
-            return this.service.ChercherInvite(texterecherche);
+            return this.service.ChercherInvite(texterecherche, IdUtilisateur);
         }
     }
 

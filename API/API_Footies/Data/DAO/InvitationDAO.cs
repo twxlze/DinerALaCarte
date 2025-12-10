@@ -11,7 +11,7 @@ namespace API_Footies.Data.DAO
     public class InvitationDAO : IInvitationDAO
     {
         #region Méthodes principales
-        public bool AjouterInvitation(Invitation invitation)
+        public bool AjouterInvitation(Invitation invitation, long idUtilisateur)
         {
             bool ajoute = false;
             using (SQLiteConnector connection = new SQLiteConnector())
@@ -21,8 +21,7 @@ namespace API_Footies.Data.DAO
                     throw new Exception("Erreur de connexion à la base de données");
                 }
 
-                invitation.IdInvitation = InsererInvitation(connection, invitation);
-
+                invitation.IdInvitation = InsererInvitation(connection, invitation, idUtilisateur);
                 AjouterGroupesInvitesDansInvitation(connection, invitation);
                 AjouterMenusDansInvitation(connection, invitation);
                 AjouterInvitesDansInvitation(connection, invitation);
@@ -34,7 +33,7 @@ namespace API_Footies.Data.DAO
             return ajoute;
         }
 
-        public List<Invitation> ObtenirToutInvitations()
+        public List<Invitation> ObtenirToutInvitations(long idUtilisateur)
         {
             List<Invitation> invitations = new List<Invitation>();
             using (SQLiteConnector connection = new SQLiteConnector())
@@ -44,7 +43,11 @@ namespace API_Footies.Data.DAO
                     throw new Exception("Erreur de connexion à la base de données");
                 }
 
-                DataTable dataTable = connection.ExecuteQuery("SELECT * FROM Invitation");
+                Dictionary<string, object> parameters = new Dictionary<string, object>()
+                {
+                    {"@IdUtilisateur", idUtilisateur }
+                };
+                DataTable dataTable = connection.ExecuteQuery("SELECT * FROM Invitation WHERE IdUtilisateur = @IdUtilisateur", parameters);
 
                 foreach (DataRow row in dataTable.Rows)
                 {
@@ -71,7 +74,7 @@ namespace API_Footies.Data.DAO
             return invitations;
         }
 
-        public bool ModifierInvitation(Invitation invitation)
+        public bool ModifierInvitation(Invitation invitation, long idUtilisateur)
         {
             bool modifie = false;
             using (SQLiteConnector connection = new SQLiteConnector())
@@ -80,9 +83,7 @@ namespace API_Footies.Data.DAO
                 {
                     throw new Exception("Erreur de connexion à la base de données");
                 }
-
-                invitation.IdInvitation = ModifierInvitation(connection, invitation);
-
+                invitation.IdInvitation = ModifierInvitationInternal(connection, invitation, idUtilisateur);
                 ModifierGroupesInvitesDansInvitation(connection, invitation);
                 ModifierMenusDansInvitation(connection, invitation);
                 ModifierInvitesDansInvitation(connection, invitation);
@@ -92,7 +93,7 @@ namespace API_Footies.Data.DAO
             return modifie;
         }
 
-        public void SupprimerInvitation(long idInvitation)
+        public void SupprimerInvitation(long idInvitation, long idUtilisateur)
         {
             using (SQLiteConnector connection = new SQLiteConnector())
             {
@@ -100,29 +101,37 @@ namespace API_Footies.Data.DAO
                 {
                     throw new Exception("Erreur de connexion à la base de données");
                 }
+
                 Dictionary<string, object> parameters = new Dictionary<string, object>()
+                {
+                    {"@IdInvitation", idInvitation },
+                    {"@IdUtilisateur", idUtilisateur }
+                };
+                Dictionary<string, object> parametersLiaison = new Dictionary<string, object>()
                 {
                     {"@IdInvitation", idInvitation }
                 };
-                connection.ExecuteQuery("DELETE FROM Invitation_GroupeInvite WHERE IdInvitation = @IdInvitation", parameters);
-                connection.ExecuteQuery("DELETE FROM Invitation_Menu WHERE IdInvitation = @IdInvitation", parameters);
-                connection.ExecuteQuery("DELETE FROM Invitation_Invite WHERE IdInvitation = @IdInvitation", parameters);
-                connection.ExecuteQuery("DELETE FROM Invitation_Plat WHERE IdInvitation = @IdInvitation", parameters);
-                connection.ExecuteQuery("DELETE FROM Invitation WHERE IdInvitation = @IdInvitation", parameters);
+
+                connection.ExecuteQuery("DELETE FROM Invitation_GroupeInvite WHERE IdInvitation = @IdInvitation", parametersLiaison);
+                connection.ExecuteQuery("DELETE FROM Invitation_Menu WHERE IdInvitation = @IdInvitation", parametersLiaison);
+                connection.ExecuteQuery("DELETE FROM Invitation_Invite WHERE IdInvitation = @IdInvitation", parametersLiaison);
+                connection.ExecuteQuery("DELETE FROM Invitation_Plat WHERE IdInvitation = @IdInvitation", parametersLiaison);
+                connection.ExecuteQuery("DELETE FROM Invitation WHERE IdInvitation = @IdInvitation AND IdUtilisateur = @IdUtilisateur", parameters);
             }
         }
         #endregion
 
         #region Méthodes Inserer / Ajouter
 
-        private long InsererInvitation(SQLiteConnector connection, Invitation invitation)
+        private long InsererInvitation(SQLiteConnector connection, Invitation invitation, long idUtilisateur)
         {
             Dictionary<string, object> parameters = new Dictionary<string, object>()
             {
                 {"@Nom", invitation.Nom },
-                {"@Date", invitation.Date }
+                {"@Date", invitation.Date },
+                {"@IdUtilisateur", idUtilisateur }
             };
-            return connection.ExecuteInsert("INSERT INTO Invitation (Nom, Date) VALUES (@Nom, @Date)", parameters);
+            return connection.ExecuteInsert("INSERT INTO Invitation (Nom, Date, IdUtilisateur) VALUES (@Nom, @Date, @IdUtilisateur)", parameters);
         }
 
         private void AjouterGroupesInvitesDansInvitation(SQLiteConnector connection, Invitation invitation)
@@ -189,7 +198,7 @@ namespace API_Footies.Data.DAO
             }
         }
 
-        public List<Invitation> ChercherInvitations(string InvitationsRechercher)
+        public List<Invitation> ChercherInvitations(string InvitationsRechercher, long idUtilisateur)
         {
             List<Invitation> listeInvitations = new List<Invitation>();
 
@@ -199,13 +208,27 @@ namespace API_Footies.Data.DAO
                 {
                     throw new Exception("Erreur de connexion à la base de données");
                 }
+                DataTable dataTable = RechercherInvitationsParTexte(connection, InvitationsRechercher, idUtilisateur);
 
-                DataTable dataTable = RechercherInvitationsParTexte(connection, InvitationsRechercher);
-                foreach (DataRow? row in dataTable.Rows)
+                foreach (DataRow row in dataTable.Rows)
                 {
                     long idInvitation = (long)row["IDInvitation"];
                     string nom = row["Nom"].ToString();
-                    Invitation invitation = new Invitation(new List<GroupeInvites>(), new List<Menu>(), new List<Invite>(), new List<Plat>(), idInvitation, nom, DateTime.Now); 
+                    DateTime date = DateTime.Parse(row["Date"].ToString());
+                    List<Invite> invites = ObtenirInvitesDansInvitation(connection, idInvitation);
+                    List<Plat> plats = ObtenirPlatsDansInvitation(connection, idInvitation);
+                    List<Menu> menus = ObtenirMenusDansInvitation(connection, idInvitation);
+                    List<GroupeInvites> groupesInvites = ObtenirGroupesInvitesDansInvitation(connection, idInvitation);
+
+                    Invitation invitation = new Invitation(
+                        groupesInvites,
+                        menus,
+                        invites,
+                        plats,
+                        idInvitation,
+                        nom,
+                        date
+                    );
                     listeInvitations.Add(invitation);
                 }
             }
@@ -256,8 +279,8 @@ namespace API_Footies.Data.DAO
                     row["NumTel"].ToString(),
                     row["Mail"].ToString(),
                     null,
-                    null, 
-                    null  
+                    null,
+                    null
                 );
                 invites.Add(invite);
             }
@@ -284,10 +307,10 @@ namespace API_Footies.Data.DAO
                 Plat plat = new Plat(
                     idPlat,
                     row["Nom"].ToString(),
-                    "", 
+                    "",
                     categorie,
-                    "", 
-                    null 
+                    "",
+                    null
                 );
                 plats.Add(plat);
             }
@@ -347,10 +370,10 @@ namespace API_Footies.Data.DAO
                 Plat plat = new Plat(
                     idPlat,
                     row["Nom"].ToString(),
-                    null, 
+                    null,
                     categorie,
-                    null, 
-                    null  
+                    null,
+                    null
                 );
                 plats.Add(plat);
             }
@@ -380,12 +403,12 @@ namespace API_Footies.Data.DAO
 
                 List<Invite> invitesGroupe = ObtenirInvitesDansGroupeInvites(connection, idGroupeInvite);
 
-                GroupeInvites groupeInvites = new GroupeInvites(
+                GroupeInvites groupe = new GroupeInvites(
                     idGroupeInvite,
                     nomGroupe,
                     invitesGroupe
                 );
-                groupesInvites.Add(groupeInvites);
+                groupesInvites.Add(groupe);
             }
 
             return groupesInvites;
@@ -412,9 +435,9 @@ namespace API_Footies.Data.DAO
                     (long)row["IdInvite"],
                     row["Nom"].ToString(),
                     row["Prenom"].ToString(),
-                    null, 
-                    null, 
-                    null, null, null 
+                    null,
+                    null,
+                    null, null, null
                 );
                 invites.Add(invite);
             }
@@ -425,15 +448,16 @@ namespace API_Footies.Data.DAO
         #endregion
 
         #region Méthodes Modifier
-        private long ModifierInvitation(SQLiteConnector connection, Invitation invitation)
+        private long ModifierInvitationInternal(SQLiteConnector connection, Invitation invitation, long idUtilisateur)
         {
             Dictionary<string, object> parameters = new Dictionary<string, object>()
             {
                 {"@IdInvitation", invitation.IdInvitation },
                 {"@Nom", invitation.Nom },
-                {"@Date", invitation.Date }
+                {"@Date", invitation.Date },
+                {"@IdUtilisateur", idUtilisateur }
             };
-            connection.ExecuteQuery("UPDATE Invitation SET Nom = @Nom, Date = @Date WHERE IdInvitation = @IdInvitation", parameters);
+            connection.ExecuteQuery("UPDATE Invitation SET Nom = @Nom, Date = @Date WHERE IdInvitation = @IdInvitation AND IdUtilisateur = @IdUtilisateur", parameters);
             return invitation.IdInvitation;
         }
 
@@ -528,16 +552,19 @@ namespace API_Footies.Data.DAO
         /// <summary>
         /// Recherche des invitations par nom
         /// </summary>
-        private DataTable RechercherInvitationsParTexte(SQLiteConnector connection, string texteRecherche)
+        /// <summary>
+        /// Recherche des invitations par nom ET par utilisateur
+        /// </summary>
+        private DataTable RechercherInvitationsParTexte(SQLiteConnector connection, string texteRecherche, long idUtilisateur)
         {
             Dictionary<string, object> parameters = new Dictionary<string, object>()
             {
-                {"@Texte", $"%{texteRecherche}%" }
+                {"@Texte", $"%{texteRecherche}%" },
+                {"@IdUtilisateur", idUtilisateur }
             };
-            return connection.ExecuteQuery("SELECT * FROM Invitation WHERE Nom LIKE @Texte", parameters);
+            return connection.ExecuteQuery("SELECT * FROM Invitation WHERE Nom LIKE @Texte AND IdUtilisateur = @IdUtilisateur", parameters);
         }
         #endregion
-
         #region Méthodes annexes
         #endregion
     }

@@ -12,29 +12,29 @@ namespace API_Footies.Services.Interfaces
         /// </summary>
         /// <param name="menu"> menu à ajouter </param>
         /// <returns> menu ajouter </returns>
-        void AjouterMenu(Menu menu);
+        void AjouterMenu(Menu menu, long idUtilisateur);
         /// <summary>
         /// Modifier un menu
         /// </summary>
         /// <param name="menu">menu à modifier</param>
-        void ModifierMenu(Menu menu);
+        void ModifierMenu(Menu menu, long idUtilisateur);
 
         /// <summary>
         /// Récupérer la liste des menus
         /// </summary>
         /// <returns> liste des menus</returns>
-        public List<Menu> ListMenu();
+        public List<Menu> ListMenu(long idUtilisateur);
 
         /// Supprimer un menu de la base de données
         /// </summary>
         /// <param name="idMenu"> id du menu à supprimer </param>
-        void SupprimerMenu(long idMenu);
+        void SupprimerMenu(long idMenu, long idUtilisateur);
 
         /// <summary>
         /// Chercher des menus par nom
         /// </summary>
         /// <param name="menuRechercher"> le nom ou une partie du nom du menu à rechercher </param>
         /// <returns> la liste des menus correspondants </returns>
-        List<Menu> ChercherMenus(string menuRechercher);
+        List<Menu> ChercherMenus(string menuRechercher, long idUtilisateur);
     }
 }

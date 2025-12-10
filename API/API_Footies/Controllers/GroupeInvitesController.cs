@@ -36,9 +36,9 @@ namespace API_Footies.Controllers
         /// <param name="groupeInvites">le groupe d'invite</param>
         /// <returns>un code pour designer si reussi ou pas</returns>
         [HttpPost("AjoutGroupeInvite")]
-        public IActionResult AjouterGroupeInvite(GroupeInvites groupeInvites)
+        public IActionResult AjouterGroupeInvite(GroupeInvites groupeInvites, long IdUtilisateur)
         {
-            bool ajouter = this._groupeInvitesService.AjouterGroupeInvites(groupeInvites);
+            bool ajouter = this._groupeInvitesService.AjouterGroupeInvites(groupeInvites, IdUtilisateur);
 
             IActionResult resultat;
             if (ajouter == false)
@@ -55,9 +55,9 @@ namespace API_Footies.Controllers
         /// <param name="groupeInvite">le groupe</param>
         /// <returns>un code pour designer si reussi ou pas + le json de groupe</returns>
         [HttpPut("ModifierGroupeInvite")]
-        public IActionResult ModifierGroupe(GroupeInvites groupeInvite)
+        public IActionResult ModifierGroupe(GroupeInvites groupeInvite, long IdUtilisateur)
         {
-            bool modifie = this._groupeInvitesService.ModifierGroupeInvite(groupeInvite);
+            bool modifie = this._groupeInvitesService.ModifierGroupeInvite(groupeInvite, IdUtilisateur);
 
             IActionResult resultat;
             if (modifie == false)
@@ -72,18 +72,18 @@ namespace API_Footies.Controllers
         /// Supprime un groupe d'invités via son ID
         /// </summary>
         [HttpDelete("SupprimerGroupeInvite")]
-        public void SupprimerGroupe(long idGroupeInvite)
+        public void SupprimerGroupe(long idGroupeInvite, long IdUtilisateur)
         {
-            this._groupeInvitesService.SupprimerGroupe(idGroupeInvite);
+            this._groupeInvitesService.SupprimerGroupe(idGroupeInvite, IdUtilisateur);
         }
 
         /// <summary>
         /// Récupérer la liste des groupes d'invités
         ///</summary>
         [HttpGet("ListeGroupeInvites")]
-        public List<GroupeInvites> ListGroupeInvites()
+        public List<GroupeInvites> ListGroupeInvites( long IdUtilisateur)
         {
-            return this._groupeInvitesService.ListeGroupesInvites();
+            return this._groupeInvitesService.ListeGroupesInvites( IdUtilisateur);
         }
 
         /// <summary>
@@ -92,12 +92,12 @@ namespace API_Footies.Controllers
         /// <param name="GroupeInvitesRechercher"> le nom ou une partie du nom du groupes d'invite à rechercher </param>
         /// <returns> la liste des groupes d'invite correspondants </returns>
         [HttpGet("ChercherGroupeInvites")]
-        public List<GroupeInvites> ChercherGroupeInvites(string GroupeInvitesRechercher)
+        public List<GroupeInvites> ChercherGroupeInvites(string GroupeInvitesRechercher, long IdUtilisateur)
         {
             List<GroupeInvites> listeGroupeInvites = new List<GroupeInvites>();
             if (!string.IsNullOrEmpty(GroupeInvitesRechercher))
             {
-                listeGroupeInvites = this._groupeInvitesService.ChercherGroupeInvites(GroupeInvitesRechercher);
+                listeGroupeInvites = this._groupeInvitesService.ChercherGroupeInvites(GroupeInvitesRechercher, IdUtilisateur);
             }
             return listeGroupeInvites;
         }

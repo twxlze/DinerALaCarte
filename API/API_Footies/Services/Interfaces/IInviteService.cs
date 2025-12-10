@@ -12,22 +12,22 @@ namespace API_Footies.Services.Interfaces
         /// </summary>
         /// <param name="invite"> Invite à ajouter </param>
         /// <returns> Invité ajouter </returns>
-        void AjouterInvite(Invite invite);
+        void AjouterInvite(Invite invite, long IdUtilisateur);
         /// <summary>
         /// Modifier un invité
         /// </summary>
         /// <param name="invite">invite à modifier</param>
-        void ModifierInvite(Invite invite);
+        void ModifierInvite(Invite invite, long IdUtilisateur);
 
         /// <summary>
         /// Récupérer la liste des invités
         /// </summary>
         /// <returns> liste des invités</returns>
-        public List<Invite> ListInvite();
+        public List<Invite> ListInvite(long IdUtilisateur);
         /// Supprimer un invité de la base de données
         /// </summary>
         /// <param name="id"> id de l'invité à supprimer </param>
-        void SupprimerInvite(long id);
+        void SupprimerInvite(long id, long IdUtilisateur);
 
         /// <summary>
         /// Vérifie si un invité est associé à un ou plusieurs groupes
@@ -40,6 +40,6 @@ namespace API_Footies.Services.Interfaces
         /// </summary>
         /// <param name="texterecherche">Le texte permettant de un invitée</param>
         /// <returns>Une liste d'invité correspondant à la recherche</returns>
-        public List<Invite> ChercherInvite(string texterecherche);
+        public List<Invite> ChercherInvite(string texterecherche, long IdUtilisateur);
     }
 }

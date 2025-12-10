@@ -9,8 +9,9 @@ namespace API_Footies.Data.DAO
     /// </summary>
     public class GroupeInviteDAO : IGroupeInviteDAO
     {
+
         #region Méthodes publiques
-        public bool AjouterGroupeInvites(GroupeInvites groupeInvites)
+        public bool AjouterGroupeInvites(GroupeInvites groupeInvites, long IdUtilisateur)
         {
             using (SQLiteConnector connection = new SQLiteConnector())
             {
@@ -18,13 +19,14 @@ namespace API_Footies.Data.DAO
                 {
                     throw new Exception("Erreur de connexion à la base de données");
                 }
-                InsererGroupeInvites(connection, groupeInvites);
+
+                InsererGroupeInvites(connection, groupeInvites, IdUtilisateur);
                 AjouterInvitesDansGroupe(connection, groupeInvites);
                 return true;
             }
         }
 
-        public List<GroupeInvites> ListeGroupesInvites()
+        public List<GroupeInvites> ListeGroupesInvites(long IdUtilisateur)
         {
             List<GroupeInvites> listeGroupesInvites = new List<GroupeInvites>();
 
@@ -34,7 +36,14 @@ namespace API_Footies.Data.DAO
                 {
                     throw new Exception("Erreur de connexion à la base de données");
                 }
-                DataTable dataTable = connection.ExecuteQuery("SELECT * FROM GroupeInvite");
+
+                Dictionary<string, object> parameters = new Dictionary<string, object>()
+                {
+                    {"@IdUtilisateur", IdUtilisateur }
+                };
+
+                DataTable dataTable = connection.ExecuteQuery("SELECT * FROM GroupeInvite WHERE IdUtilisateur = @IdUtilisateur", parameters);
+
                 foreach (DataRow? row in dataTable.Rows)
                 {
                     GroupeInvites groupeInvite = CreerGroupeInvitesDepuisDataRow(connection, row);
@@ -44,7 +53,7 @@ namespace API_Footies.Data.DAO
             return listeGroupesInvites;
         }
 
-        public bool ModifierGroupe(GroupeInvites groupeInvite)
+        public bool ModifierGroupe(GroupeInvites groupeInvite, long IdUtilisateur)
         {
             using (SQLiteConnector connection = new SQLiteConnector())
             {
@@ -52,14 +61,15 @@ namespace API_Footies.Data.DAO
                 {
                     throw new Exception("Erreur de connexion à la base de données");
                 }
-                MettreAJourGroupeInvites(connection, groupeInvite);
+
+                MettreAJourGroupeInvites(connection, groupeInvite, IdUtilisateur);
                 SupprimerInvitesDuGroupe(connection, groupeInvite.IdGroupeInvites);
                 AjouterInvitesDansGroupe(connection, groupeInvite);
                 return true;
             }
         }
 
-        public void SupprimerGroupeInvite(long idGroupeInvite)
+        public void SupprimerGroupeInvite(long idGroupeInvite, long IdUtilisateur)
         {
             using (SQLiteConnector connection = new SQLiteConnector())
             {
@@ -67,12 +77,13 @@ namespace API_Footies.Data.DAO
                 {
                     throw new Exception("Erreur de connexion à la base de données");
                 }
+
                 SupprimerInvitesDuGroupe(connection, idGroupeInvite);
-                SupprimerGroupeInvitesParId(connection, idGroupeInvite);
+                SupprimerGroupeInvitesParId(connection, idGroupeInvite, IdUtilisateur);
             }
         }
 
-        public List<GroupeInvites> ChercherGroupeInvites(string GroupeInvitesRechercher)
+        public List<GroupeInvites> ChercherGroupeInvites(string GroupeInvitesRechercher, long IdUtilisateur)
         {
             List<GroupeInvites> listeGroupeInvites = new List<GroupeInvites>();
 
@@ -83,12 +94,11 @@ namespace API_Footies.Data.DAO
                     throw new Exception("Erreur de connexion à la base de données");
                 }
 
-                DataTable dataTable = RechercherGroupesInvitesParTexte(connection, GroupeInvitesRechercher);
+                DataTable dataTable = RechercherGroupesInvitesParTexte(connection, GroupeInvitesRechercher, IdUtilisateur);
+
                 foreach (DataRow? row in dataTable.Rows)
                 {
-                    long idGroupeInvite = (long)row["IDGroupeInvite"];
-                    string nom = row["Nom"].ToString();
-                    GroupeInvites groupeInvite = new GroupeInvites(idGroupeInvite, nom, new List<Invite>());
+                    GroupeInvites groupeInvite = CreerGroupeInvitesDepuisDataRow(connection, row);
                     listeGroupeInvites.Add(groupeInvite);
                 }
             }
@@ -97,53 +107,58 @@ namespace API_Footies.Data.DAO
         #endregion
 
         #region Méthodes privées / Gestion du groupe d'invités
+
         /// <summary>
-        /// Insère un groupe d'invités et met à jour son ID
+        /// Insère un groupe d'invités et met à jour son ID (Avec IdUtilisateur)
         /// </summary>
-        private void InsererGroupeInvites(SQLiteConnector connection, GroupeInvites groupeInvites)
+        private void InsererGroupeInvites(SQLiteConnector connection, GroupeInvites groupeInvites, long idUtilisateur)
         {
             Dictionary<string, object> parameters = new Dictionary<string, object>()
             {
-                {"@Nom", groupeInvites.Nom }
+                {"@Nom", groupeInvites.Nom },
+                {"@IdUtilisateur", idUtilisateur }
             };
-            groupeInvites.IdGroupeInvites = connection.ExecuteInsert("INSERT INTO GroupeInvite (Nom) VALUES (@Nom)", parameters);
+            groupeInvites.IdGroupeInvites = connection.ExecuteInsert("INSERT INTO GroupeInvite (Nom, IdUtilisateur) VALUES (@Nom, @IdUtilisateur)", parameters);
         }
 
         /// <summary>
-        /// Met à jour les informations d'un groupe d'invités
+        /// Met à jour les informations d'un groupe d'invités (Sécurisé par IdUtilisateur)
         /// </summary>
-        private void MettreAJourGroupeInvites(SQLiteConnector connection, GroupeInvites groupeInvite)
+        private void MettreAJourGroupeInvites(SQLiteConnector connection, GroupeInvites groupeInvite, long idUtilisateur)
         {
             Dictionary<string, object> parameters = new Dictionary<string, object>()
             {
                 {"@IdGroupeInvite", groupeInvite.IdGroupeInvites },
-                {"@Nom", groupeInvite.Nom }
+                {"@Nom", groupeInvite.Nom },
+                {"@IdUtilisateur", idUtilisateur }
             };
-            connection.ExecuteQuery("UPDATE GroupeInvite SET Nom = @Nom WHERE IdGroupeInvite = @IdGroupeInvite", parameters);
+            connection.ExecuteQuery("UPDATE GroupeInvite SET Nom = @Nom WHERE IdGroupeInvite = @IdGroupeInvite AND IdUtilisateur = @IdUtilisateur", parameters);
         }
 
         /// <summary>
-        /// Supprime un groupe d'invités par son ID
+        /// Supprime un groupe d'invités par son ID (Sécurisé par IdUtilisateur)
         /// </summary>
-        private void SupprimerGroupeInvitesParId(SQLiteConnector connection, long idGroupeInvite)
+        private void SupprimerGroupeInvitesParId(SQLiteConnector connection, long idGroupeInvite, long idUtilisateur)
         {
             Dictionary<string, object> parameters = new Dictionary<string, object>()
             {
-                {"@IdGroupeInvite", idGroupeInvite }
+                {"@IdGroupeInvite", idGroupeInvite },
+                {"@IdUtilisateur", idUtilisateur }
             };
-            connection.ExecuteQuery("DELETE FROM GroupeInvite WHERE IdGroupeInvite = @IdGroupeInvite", parameters);
+            connection.ExecuteQuery("DELETE FROM GroupeInvite WHERE IdGroupeInvite = @IdGroupeInvite AND IdUtilisateur = @IdUtilisateur", parameters);
         }
 
         /// <summary>
-        /// Recherche des groupes d'invités par nom
+        /// Recherche des groupes d'invités par nom (Filtré par IdUtilisateur)
         /// </summary>
-        private DataTable RechercherGroupesInvitesParTexte(SQLiteConnector connection, string texteRecherche)
+        private DataTable RechercherGroupesInvitesParTexte(SQLiteConnector connection, string texteRecherche, long idUtilisateur)
         {
             Dictionary<string, object> parameters = new Dictionary<string, object>()
             {
-                {"@Texte", $"%{texteRecherche}%" }
+                {"@Texte", $"%{texteRecherche}%" },
+                {"@IdUtilisateur", idUtilisateur }
             };
-            return connection.ExecuteQuery("SELECT * FROM GroupeInvite WHERE Nom LIKE @Texte", parameters);
+            return connection.ExecuteQuery("SELECT * FROM GroupeInvite WHERE Nom LIKE @Texte AND IdUtilisateur = @IdUtilisateur", parameters);
         }
         #endregion
 
