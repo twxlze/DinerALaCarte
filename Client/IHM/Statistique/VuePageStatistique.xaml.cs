@@ -37,5 +37,12 @@ namespace IHM_Footies.Statistique
             InitializeComponent();
         }
         #endregion
+
+        #region Boutons de navigation
+        private void BoutonRetour_Click(object sender, RoutedEventArgs e)
+        {
+            Navigation.AllerSelectionInvite(this);
+        }
+        #endregion
     }
 }
