@@ -37,7 +37,7 @@
     </Window.Resources>
     <Grid>
 
-        <oxy:PlotView Model="{Binding StatistiqueModel}"/>
+        <oxy:PlotView Model="{Binding StatistiqueModel}" Background="#FFF5F5F5"/>
 
         <Button x:Name="BoutonRetourAprdesStats"
                 Style="{StaticResource StyleBoutonRetour}"

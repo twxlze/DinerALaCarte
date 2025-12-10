@@ -270,7 +270,7 @@
                     BorderThickness="3"
                     CornerRadius="10"
                     Padding="5">
-            <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="2">
+            <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="2" Margin="-8,33,0,0">
                 <StackPanel>
 
                 </StackPanel>

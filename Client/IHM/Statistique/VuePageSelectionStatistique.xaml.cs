@@ -170,12 +170,12 @@ namespace IHM_Footies.Statistique
         /// <param name="e"></param>
         private void BoutonRetour_Click(object sender, RoutedEventArgs e)
         {
-          
+            this.vmPageStatistique.TexteRechercheGroupe = string.Empty;
         }
 
         private void RechercheInvite_Click(object sender, RoutedEventArgs e)
         {
-
+            this.vmPageStatistique.RechercherInviteStatistique(this.vmPageStatistique.TexteRechercheGroupe);
         }
 
         #endregion

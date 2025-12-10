@@ -86,6 +86,7 @@ namespace VM_Footies.VM_Page
         private VMPageInvitation _invitation;
         private VMPageInvite _invite;
         private bool _toutSelectionner;
+        private string texteRecherche;
         private PlotModel statistiqueModel;
         private ObservableCollection<VMinviteStats> _invitesStats;
         #endregion
@@ -149,6 +150,18 @@ namespace VM_Footies.VM_Page
             }
         }
 
+        /// <summary>
+        /// Texte de recherche pour filtrer les invités
+        /// </summary>
+        public string TexteRechercheGroupe
+        {
+            get { return texteRecherche; }
+            set
+            {
+                texteRecherche = value;
+                Notify("TexteRechercheGroupe");
+            }
+        }
 
         /// <summary>
         /// Modèle de graphique pour les statistiques
@@ -189,6 +202,7 @@ namespace VM_Footies.VM_Page
             this._invite = new VMPageInvite();
             this._invitesStats = new ObservableCollection<VMinviteStats>();
             this._toutSelectionner = false;
+            this.texteRecherche = string.Empty;
             ChargerDonneesInvite();
         }
         #endregion
@@ -266,6 +280,42 @@ namespace VM_Footies.VM_Page
         }
 
         /// <summary>
+        /// Recherche un invité dans les statistiques en fonction du texte recherché
+        /// ici les invites correspondant au texte de recherche sont placés en haut de la liste
+        /// et les autres en bas et la selection est conservée
+        /// </summary>
+        /// <param name="textrechercher">le text de recherche</param>
+        public void RechercherInviteStatistique(string textrechercher)
+        {
+            List<VMinviteStats> invitesFiltres = new List<VMinviteStats>();
+            List<VMinviteStats> invitesNonFiltres = new List<VMinviteStats>();
+
+            foreach (VMinviteStats inviteStat in _invitesStats)
+            {
+                if (inviteStat.Invite.Identite.Contains(textrechercher, StringComparison.OrdinalIgnoreCase))
+                {
+                    invitesFiltres.Add(inviteStat);
+                }
+                else
+                {
+                    invitesNonFiltres.Add(inviteStat);
+                }
+            }
+
+            //trier les deux listes par ordre alphabétique
+            invitesFiltres = invitesFiltres.OrderBy(i => i.Invite.Identite).ToList();
+            invitesNonFiltres = invitesNonFiltres.OrderBy(i => i.Invite.Identite).ToList();
+            invitesFiltres.AddRange(invitesNonFiltres);
+
+            // reconstruire la collection observable
+            _invitesStats.Clear();
+            foreach (VMinviteStats inviteStat in invitesFiltres)
+            {
+                _invitesStats.Add(inviteStat);
+            }
+        }
+
+        /// <summary>
         /// Crée le modèle de statistique pour la fréquence de la venue de chaque invité (le graphique)
         /// </summary>
         public async void CreerStatistique()
@@ -273,7 +323,7 @@ namespace VM_Footies.VM_Page
             PlotModel model = new PlotModel
             {
                 Title = "Statistiques — fréquence de venue des invités",
-                PlotAreaBackground = OxyColors.WhiteSmoke,
+                PlotAreaBackground = OxyColor.FromRgb(255, 250, 240),
                 TitleFontSize = 18,
                 TitleColor = OxyColors.DarkBlue
             };
@@ -282,7 +332,9 @@ namespace VM_Footies.VM_Page
             {
                 Position = AxisPosition.Left,
                 Title = "Invités",
-                TextColor = OxyColors.DarkBlue,
+                TitleFontSize = 18,
+                TitleColor = OxyColors.DarkRed,
+                TextColor = OxyColors.Black,
                 FontSize = 14,
                 IsZoomEnabled = false
             };
@@ -290,13 +342,16 @@ namespace VM_Footies.VM_Page
             LinearAxis valueAxis = new LinearAxis
             {
                 Position = AxisPosition.Bottom,
-                Title = "Fréquence de la venue",
-                TextColor = OxyColors.DarkBlue,
+                Title = "Fréquence de venue",
+                TitleFontSize = 18,
+                TitleColor = OxyColors.DarkRed,
+                TextColor = OxyColors.Black,
                 FontSize = 14,
                 AbsoluteMinimum = 0,
                 MajorGridlineStyle = LineStyle.Solid,
                 MajorGridlineColor = OxyColors.LightGray,
                 MajorStep = 1,
+                MinorStep = 1,
                 StringFormat = "0"
             };
 
@@ -305,21 +360,30 @@ namespace VM_Footies.VM_Page
 
             BarSeries barSeries = new BarSeries
             {
-                Title = "Données des fréquence de la venue de chaque invité",
+                Title = "Fréquence de venue : ",
                 FillColor = OxyColor.FromArgb(255, 140, 47, 38),
                 StrokeColor = OxyColors.Black,
                 StrokeThickness = 1,
-                LabelFormatString = "{0}"
+                TextColor = OxyColor.FromRgb(10, 10, 10),
+                FontWeight = FontWeights.Bold, 
+                LabelFormatString = "{0} Fois"
             };
 
             Dictionary<string, int> donneesStatistiques = await GenererDonneesStatistiques();
 
+            int maxValeur = 0;
             foreach (KeyValuePair<string, int> element in donneesStatistiques)
             {
                 categoryAxis.Labels.Add(element.Key);
                 barSeries.Items.Add(new BarItem { Value = element.Value });
+                if (element.Value > maxValeur)
+                {
+                    maxValeur = element.Value;
+                }
             }
 
+            valueAxis.AbsoluteMaximum = maxValeur + 5;
+            valueAxis.Maximum = maxValeur + 1;
             model.Series.Add(barSeries);
             StatistiqueModel = model;
         }
