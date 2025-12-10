@@ -366,7 +366,7 @@ namespace VM_Footies.VM_Page
                 StrokeThickness = 1,
                 TextColor = OxyColor.FromRgb(10, 10, 10),
                 FontWeight = FontWeights.Bold, 
-                LabelFormatString = "{0} Fois"
+                LabelFormatString = "{0}"
             };
 
             Dictionary<string, int> donneesStatistiques = await GenererDonneesStatistiques();
