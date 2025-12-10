@@ -223,6 +223,24 @@ namespace IHM_Footies.Ressources {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Double-cliquez sur un invité pour voir ses informations..
+        /// </summary>
+        public static string Double_Click_invite {
+            get {
+                return ResourceManager.GetString("Double_Click_invite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Double-cliquez sur un plat pour voir ses informations..
+        /// </summary>
+        public static string Double_Click_Plat {
+            get {
+                return ResourceManager.GetString("Double_Click_Plat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Email.
         /// </summary>
         public static string Email {

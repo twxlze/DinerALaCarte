@@ -42,7 +42,7 @@ namespace IHM_Footies.Invitations
             this.DataContext = this.invitation;
             InitializeComponent();
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
-            ChargerDonnees();
+            this.Loaded += VueFormulaireMenuEtPlat_Invitation_Loaded;
         }
 
         public VueFormulaireMenuEtPlat_Invitation() : this(new VMInvitation())
@@ -52,6 +52,11 @@ namespace IHM_Footies.Invitations
         #endregion
 
         #region methodes
+
+        private async void VueFormulaireMenuEtPlat_Invitation_Loaded(object sender, RoutedEventArgs e)
+        {
+            await ChargerDonnees();
+        }
 
         private async Task ChargerDonnees()
         {
@@ -167,12 +172,10 @@ namespace IHM_Footies.Invitations
                 if (this.invitation.Invitation.IdInvitation != 0)
                 {
                     await this.invitationDAO.ModifierInvitation(this.invitation.Invitation);
-                    MessageBox.Show("L'invitation a été modifiée avec succès.", "Succès", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 else
                 {
                     await this.invitationDAO.AjouterInvitation(this.invitation.Invitation);
-                    MessageBox.Show("L'invitation a été enregistrée avec succès.", "Succès", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 Navigation.AllerInvitations(this);
             }

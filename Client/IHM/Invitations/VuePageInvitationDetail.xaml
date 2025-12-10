@@ -146,6 +146,7 @@
                     </StackPanel>
                 </Grid>
             </Border>
+            <TextBlock Text="{x:Static res:Strings.Double_Click}" TextWrapping="Wrap"  Margin="120,5,120,415" Opacity="0.9" FontSize="10" Grid.Column="1"/>
 
             <!-- Contenu principal centré -->
             <Border Grid.Column="1" Margin="15" Background="Transparent">

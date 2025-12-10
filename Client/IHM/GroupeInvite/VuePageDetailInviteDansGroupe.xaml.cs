@@ -25,6 +25,8 @@ namespace IHM_Footies.GroupeInvite
         private VMPageGroupeInvite vmPageGroupeInvite;
         private List<VueInvite> vueInvite;
         private VMGroupeInvite groupeInviteSelectionne;
+        private VMInvitation invitationPrecedente;
+        private VMPageInvite vmPageInvite;
         private string provenance;
         #endregion
 
@@ -32,9 +34,22 @@ namespace IHM_Footies.GroupeInvite
         /// <summary>
         /// Constructeur par défaut d'une page de détail des invités dans un groupe
         /// </summary>
-        public VuePageDetailInviteDansGroupe(VMGroupeInvite groupeInvite, string provenance = "GroupeInvite")
+        public VuePageDetailInviteDansGroupe(VMGroupeInvite groupeInvite, string provenance = "GroupeInvite", VMInvitation invitationParent = null)
         {
             InitializeComponent();
+            this.Initialiser(groupeInvite, provenance, invitationParent);
+            this.RafraichirListe();
+            this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+        }
+
+        /// <summary>
+        /// Initialise les composants de la page
+        /// </summary>
+        /// <param name="groupeInvite">Le groupe d'invités à afficher</param>
+        /// <param name="provenance">La provenance de la navigation</param>
+        /// <param name="invitationParent">L'invitation parente si applicable</param>
+        private void Initialiser(VMGroupeInvite groupeInvite, string provenance, VMInvitation invitationParent)
+        {
             this.groupeInviteSelectionne = groupeInvite;
             this.vueInvite = new List<VueInvite>();
 
@@ -42,10 +57,11 @@ namespace IHM_Footies.GroupeInvite
             this.vmPageGroupeInvite.GroupeSelectionne = groupeInvite;
             this.DataContext = this.vmPageGroupeInvite;
 
-            this.vmPageGroupeInvite.PropertyChanged += VMPageGroupeInvite_PropertyChanged;
-            this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            this.invitationPrecedente = invitationParent;
+            this.vmPageInvite = new VMPageInvite();
 
-            this.RafraichirListe();
+            this.vmPageGroupeInvite.PropertyChanged += VMPageGroupeInvite_PropertyChanged;
+
             this.provenance = provenance;
         }
         #endregion
@@ -74,8 +90,32 @@ namespace IHM_Footies.GroupeInvite
             foreach (VMInvite invite in this.vmPageGroupeInvite.ListeVMInviteGroupe)
             {
                 VueInvite vue = new VueInvite(invite);
+                vue.MouseDown += (s, e) => this.SelectionnerInvite(vue);
+                vue.MouseDoubleClick += (s, e) => this.OuvrirDetailInvite(vue);
                 this.vueInvite.Add(vue);
                 this.PanelInvitesDansGroupe.Children.Add(vue);
+            }
+        }
+
+        /// <summary>
+        /// Sélectionne un invité dans la liste des invités
+        /// </summary>
+        /// <param name="vue"> VueInvité sélectionnée </param>
+        public void SelectionnerInvite(VueInvite vue)
+        {
+            this.vmPageInvite.InviteSelectionne = vue.Invite;
+            foreach (VueInvite vueI in this.vueInvite)
+            {
+                vueI.Deselectionner();
+            }
+            vue.Selectionner();
+        }
+
+        private async Task OuvrirDetailInvite(VueInvite vue)
+        {
+            if (this.vmPageInvite.InviteSelectionne != null)
+            {
+                Navigation.AllerDetailInvite(this, this.vmPageInvite.InviteSelectionne, "GroupeInvite", this.invitationPrecedente, this.groupeInviteSelectionne);
             }
         }
 
@@ -86,13 +126,17 @@ namespace IHM_Footies.GroupeInvite
         /// <param name="e"></param>
         private void RetourAuGroupeInvite_Click(object sender, RoutedEventArgs e)
         {
-            if (this.provenance == "Accueil")
+            switch (this.provenance)
             {
-                Navigation.AllerAccueil(this);
-            }
-            else
-            {
-                Navigation.AllerGroupesInvites(this);
+                case "Accueil":
+                    Navigation.AllerAccueil(this);
+                    break;
+                case "Invitation":
+                    Navigation.AllerDetailInvitation(this, this.invitationPrecedente, "GroupeInvite");
+                    break;
+                default:
+                    Navigation.AllerGroupesInvites(this);
+                    break;
             }
         }
         #endregion

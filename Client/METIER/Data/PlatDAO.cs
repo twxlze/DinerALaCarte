@@ -16,7 +16,7 @@ namespace METIER_Footies.Data
         {
             try
             {
-                long idUtilisateur = SessionService.Instance.UtilisateurConnecte.Id;
+                long idUtilisateur = SessionService.Instance.UtilisateurConnecte.IdUtilisateur;
 
                 string url = $"Plats/AjoutPlat?IdUtilisateur={idUtilisateur}";
 
@@ -35,7 +35,7 @@ namespace METIER_Footies.Data
 
             try
             {
-                long idUtilisateur = SessionService.Instance.UtilisateurConnecte.Id;
+                long idUtilisateur = SessionService.Instance.UtilisateurConnecte.IdUtilisateur;
 
                 string url = $"Plats/ListePlat?IdUtilisateur={idUtilisateur}";
 
@@ -59,7 +59,7 @@ namespace METIER_Footies.Data
         {
             try
             {
-                long idUtilisateur = SessionService.Instance.UtilisateurConnecte.Id;
+                long idUtilisateur = SessionService.Instance.UtilisateurConnecte.IdUtilisateur;
 
                 string url = $"Plats/SupprimerPlat?id={idPlat}&IdUtilisateur={idUtilisateur}";
 
@@ -76,7 +76,7 @@ namespace METIER_Footies.Data
         {
             try
             {
-                long idUtilisateur = SessionService.Instance.UtilisateurConnecte.Id;
+                long idUtilisateur = SessionService.Instance.UtilisateurConnecte.IdUtilisateur;
 
                 string url = $"Plats/ModifierPlat?IdUtilisateur={idUtilisateur}";
 
@@ -116,7 +116,7 @@ namespace METIER_Footies.Data
             List<Plat> listeDesPlats = new List<Plat>();
             try
             {
-                long idUtilisateur = SessionService.Instance.UtilisateurConnecte.Id;
+                long idUtilisateur = SessionService.Instance.UtilisateurConnecte.IdUtilisateur;
 
                 string url = $"Plats/ChercherPlat?texterecherche={texteRecherche}&IdUtilisateur={idUtilisateur}";
 

@@ -253,7 +253,7 @@
         <StackPanel Orientation="Horizontal" Margin="374,13,16,4" Grid.RowSpan="5" Grid.Column="1" Grid.Row="1">
 
             <Calendar 
-                SelectedDate="{Binding Date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                SelectedDate="{Binding Date, Mode=TwoWay}"
                 DisplayDate="{Binding Date}"
                 DisplayDateStart="1/10/2025"
                 DisplayDateEnd="4/18/2100" 

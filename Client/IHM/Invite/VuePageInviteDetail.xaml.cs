@@ -1,19 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+﻿using System.Windows;
 using VM_Footies.VM;
 using VM_Footies;
-using VM_Footies.VM_Element_Selectionne;
 
 namespace IHM_Footies.Invite
 {
@@ -24,14 +11,23 @@ namespace IHM_Footies.Invite
     {
         #region Attributs
         private VMPageInvite vMPageInvite;
+        private VMPageGroupeInvite vMPageGroupeInvite; // pour la navigation
+        private VMInvitation pageinvitationPrecedente;
         private string provenance;
+        private VMGroupeInvite pageGroupePrecedente;
         #endregion
-        public VuePageInviteDetail(VMInvite vMInvite, string provenance = "Invite")
+        public VuePageInviteDetail(VMInvite vMInvite, string provenance = "Invite", VMInvitation invitationParent = null, VMGroupeInvite groupeParent = null)
         {
             InitializeComponent();
 
             this.vMPageInvite = new VMPageInvite();
             this.vMPageInvite.InviteSelectionne = vMInvite;
+
+            this.vMPageGroupeInvite = new VMPageGroupeInvite();
+
+            this.pageinvitationPrecedente = invitationParent;
+            this.pageGroupePrecedente = groupeParent;
+
             this.provenance = provenance;
             this.DataContext = this.vMPageInvite;
 
@@ -47,13 +43,26 @@ namespace IHM_Footies.Invite
         /// <param name="e"></param>
         private void RetourAPage_Click(object sender, RoutedEventArgs e)
         {
-            if (this.provenance == "Accueil")
+            switch (this.provenance)
             {
-                Navigation.AllerAccueil(this);
-            }
-            else
-            {
-                Navigation.AllerInvites(this);
+                case "Accueil":
+                    Navigation.AllerAccueil(this);
+                    break;
+                case "Invite":
+                    Navigation.AllerInvites(this);
+                    break;
+                case "GroupeInvite":
+                    if (this.pageinvitationPrecedente != null)
+                        Navigation.AllerDetailGroupeInvite(this, this.pageGroupePrecedente, "Invitation", this.pageinvitationPrecedente);
+                    else
+                        Navigation.AllerDetailGroupeInvite(this, this.pageGroupePrecedente);
+                    break;
+                case "Invitation":
+                        Navigation.AllerDetailInvitation(this, this.pageinvitationPrecedente);
+                    break;
+                default:
+                    Navigation.AllerInvites(this);
+                    break;
             }
         }
         #endregion

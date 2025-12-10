@@ -16,7 +16,7 @@ namespace METIER_Footies.Data
         {
             try
             {
-                long idUtilisateur = SessionService.Instance.UtilisateurConnecte.Id;
+                long idUtilisateur = SessionService.Instance.UtilisateurConnecte.IdUtilisateur;
                 string url = $"Invites/AjoutInvite?IdUtilisateur={idUtilisateur}";
 
                 HttpResponseMessage reponseHttp = await PostAsync(url, invite);
@@ -32,7 +32,7 @@ namespace METIER_Footies.Data
         {
             List<Invite> listeDesInvites = new List<Invite>();
 
-            long idUtilisateur = SessionService.Instance.UtilisateurConnecte.Id;
+            long idUtilisateur = SessionService.Instance.UtilisateurConnecte.IdUtilisateur;
             string url = $"Invites/ListeInvite?IdUtilisateur={idUtilisateur}";
 
             HttpResponseMessage reponseHttp = await GetAsync(url);
@@ -49,7 +49,7 @@ namespace METIER_Footies.Data
         {
             try
             {
-                long idUtilisateur = SessionService.Instance.UtilisateurConnecte.Id;
+                long idUtilisateur = SessionService.Instance.UtilisateurConnecte.IdUtilisateur;
                 string url = $"Invites/SupprimerInvite?id={idInvite}&IdUtilisateur={idUtilisateur}";
 
                 HttpResponseMessage reponseHttp = await DeleteAsync(url);
@@ -66,7 +66,7 @@ namespace METIER_Footies.Data
         {
             try
             {
-                long idUtilisateur = SessionService.Instance.UtilisateurConnecte.Id;
+                long idUtilisateur = SessionService.Instance.UtilisateurConnecte.IdUtilisateur;
                 string url = $"Invites/ModifierInvite?IdUtilisateur={idUtilisateur}";
 
                 HttpResponseMessage reponseHttp = await PutAsync(url, invite);
@@ -102,7 +102,7 @@ namespace METIER_Footies.Data
         {
             List<Invite> listeDesInvites = new List<Invite>();
 
-            long idUtilisateur = SessionService.Instance.UtilisateurConnecte.Id;
+            long idUtilisateur = SessionService.Instance.UtilisateurConnecte.IdUtilisateur;
             string url = $"Invites/ChercherInvite?texterecherche={texteRecherche}&IdUtilisateur={idUtilisateur}";
 
             HttpResponseMessage reponseHttp = await GetAsync(url);

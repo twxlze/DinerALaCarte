@@ -16,7 +16,7 @@ namespace METIER_Footies.Data
         {
             try
             {
-                long idUtilisateur = SessionService.Instance.UtilisateurConnecte.Id;
+                long idUtilisateur = SessionService.Instance.UtilisateurConnecte.IdUtilisateur;
 
                 string url = $"GroupeInvites/AjoutGroupeInvite?IdUtilisateur={idUtilisateur}";
 
@@ -33,7 +33,7 @@ namespace METIER_Footies.Data
         {
             List<GroupeInvites> listeDesGroupeInvites = new List<GroupeInvites>();
 
-            long idUtilisateur = SessionService.Instance.UtilisateurConnecte.Id;
+            long idUtilisateur = SessionService.Instance.UtilisateurConnecte.IdUtilisateur;
 
             string url = $"GroupeInvites/ChercherGroupeInvites?GroupeInvitesRechercher={GroupeInvitesRechercher}&IdUtilisateur={idUtilisateur}";
 
@@ -54,7 +54,7 @@ namespace METIER_Footies.Data
         {
             List<GroupeInvites> listeDesGroupesInvites = new List<GroupeInvites>();
 
-            long idUtilisateur = SessionService.Instance.UtilisateurConnecte.Id;
+            long idUtilisateur = SessionService.Instance.UtilisateurConnecte.IdUtilisateur;
 
             string url = $"GroupeInvites/ListeGroupeInvites?IdUtilisateur={idUtilisateur}";
 
@@ -75,7 +75,7 @@ namespace METIER_Footies.Data
         {
             try
             {
-                long idUtilisateur = SessionService.Instance.UtilisateurConnecte.Id;
+                long idUtilisateur = SessionService.Instance.UtilisateurConnecte.IdUtilisateur;
 
                 string url = $"GroupeInvites/ModifierGroupeInvite?IdUtilisateur={idUtilisateur}";
 
@@ -95,7 +95,7 @@ namespace METIER_Footies.Data
         {
             try
             {
-                long idUtilisateur = SessionService.Instance.UtilisateurConnecte.Id;
+                long idUtilisateur = SessionService.Instance.UtilisateurConnecte.IdUtilisateur;
 
                 string url = $"GroupeInvites/SupprimerGroupeInvite?idGroupeInvite={idGroupeInvite}&IdUtilisateur={idUtilisateur}";
 

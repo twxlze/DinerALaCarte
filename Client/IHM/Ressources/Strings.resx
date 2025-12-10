@@ -326,5 +326,10 @@
   </data>
   <data name="AfficherStats" xml:space="preserve">
     <value>Consulter les statistiques</value>
+  <data name="Double_Click_invite" xml:space="preserve">
+    <value>Double-cliquez sur un invité pour voir ses informations.</value>
+  </data>
+  <data name="Double_Click_Plat" xml:space="preserve">
+    <value>Double-cliquez sur un plat pour voir ses informations.</value>
   </data>
 </root>

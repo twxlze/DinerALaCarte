@@ -57,6 +57,8 @@
             Style="{StaticResource StyleBouton}"
             Click="RetourAuMenu_Click"/>
         </StackPanel>
+        <TextBlock Text="{x:Static res:Strings.Double_Click_Plat}" TextWrapping="Wrap"  Margin="173,0,67,420" Opacity="0.9" FontSize="10" Grid.Column="1"/>
+
 
         <ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Auto" Margin="10,10,10,10">
             <Grid>

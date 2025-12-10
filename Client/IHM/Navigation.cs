@@ -56,9 +56,9 @@ namespace IHM_Footies
             fenetreActuelle.Close();
         }
 
-        public static void AllerDetailInvite(Window fenetreActuelle, VMInvite invite, string provenance = "Invite")
+        public static void AllerDetailInvite(Window fenetreActuelle, VMInvite invite, string provenance = "Invite", VMInvitation invitationParent = null, VMGroupeInvite groupeParent = null)
         {
-            VuePageInviteDetail fenetre = new VuePageInviteDetail(invite, provenance);
+            VuePageInviteDetail fenetre = new VuePageInviteDetail(invite, provenance, invitationParent, groupeParent);
             fenetre.Show();
             fenetreActuelle.Close();
         }
@@ -83,9 +83,9 @@ namespace IHM_Footies
         /// <param name="fenetreActuelle">La fenêtre actuelle à fermer</param>
         /// <param name="plat">Le plat à afficher en détail</param>
         /// <param name="provenance">La fenêtre de provenance (optionnel, par défaut "Plat")</param>
-        public static void AllerDetailPlat(Window fenetreActuelle, VMPlat plat, string provenance = "Plat")
+        public static void AllerDetailPlat(Window fenetreActuelle, VMPlat plat, string provenance = "Plat", VMInvitation invitationPrecedente = null, VMMenu menuParent = null)
         {
-            VuePagePlatDetail fenetre = new VuePagePlatDetail(plat, provenance);
+            VuePagePlatDetail fenetre = new VuePagePlatDetail(plat, provenance, invitationPrecedente, menuParent);
             fenetre.Show();
             fenetreActuelle.Close();
         }
@@ -116,9 +116,9 @@ namespace IHM_Footies
             fenetreActuelle.Close();
         }
 
-        public static void AllerDetailGroupeInvite(Window fenetreActuelle, VMGroupeInvite groupeInvite, string provenance = "GroupeInvite")
+        public static void AllerDetailGroupeInvite(Window fenetreActuelle, VMGroupeInvite groupeInvite, string provenance = "GroupeInvite", VMInvitation invitationParent = null)
         {
-            VuePageDetailInviteDansGroupe fenetre = new VuePageDetailInviteDansGroupe(groupeInvite, provenance);
+            VuePageDetailInviteDansGroupe fenetre = new VuePageDetailInviteDansGroupe(groupeInvite, provenance, invitationParent);
             fenetre.Show();
             fenetreActuelle.Close();
         }
@@ -153,9 +153,9 @@ namespace IHM_Footies
         /// </summary>
         /// <param name="fenetreActuelle"> La fenêtre actuelle à fermer </param>
         /// <param name="menu"> Le menu à afficher en détail </param>
-        public static void AllerDetailMenu(Window fenetreActuelle, VMMenu menu, string provenance = "Menu")
+        public static void AllerDetailMenu(Window fenetreActuelle, VMMenu menu, string provenance = "Menu", VMInvitation invitationPrecedente = null)
         {
-            VuePageMenuDetail fenetre = new VuePageMenuDetail(menu, provenance);
+            VuePageMenuDetail fenetre = new VuePageMenuDetail(menu, provenance, invitationPrecedente);
             fenetre.Show();
             fenetreActuelle.Close();
         }

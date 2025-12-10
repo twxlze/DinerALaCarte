@@ -1,46 +1,33 @@
-﻿using API_Footies.Metier;
+﻿using Microsoft.AspNetCore.Mvc;
+using API_Footies.Metier;
 using API_Footies.Services.Interfaces;
-using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.Mvc;
 
 namespace API_Footies.Controllers
 {
-    /// <summary>
-    /// Controller permettant la gestion de l'authentification
-    /// </summary>
     [ApiController]
     [Route("authentification")]
     public class AuthentificationController : ControllerBase
     {
-        #region Attributs
         private IAuthentificationService service;
-        #endregion
 
-        #region Constructeur
-        /// <summary>
-        /// Constructeur du controlleur de l'authentification
-        /// </summary>
         public AuthentificationController(IAuthentificationService service)
         {
             this.service = service;
         }
-        #endregion
-
-        #region Méthodes
 
         /// <summary>
-        /// Vérification de la connexion
+        /// Vérifie la connexion d'un utilisateur
         /// </summary>
-        /// <param name=""> invitation à ajouter</param>
-        /// <returns> L'invitation ajoutée </returns>
+        /// <param name="identifiantRecu">l'identifiant recu</param>
+        /// <returns>l'utilisateur correspondant</returns>
         [HttpPost("VerifierConnexion")]
-        public IActionResult Login(Utilisateur utilisateurRecu)
+        public IActionResult VerifierConnexion(Identifiant identifiantRecu)
         {
             IActionResult resultat;
+
             try
             {
-                Utilisateur utilisateurConnecte = this.service.VerifierConnexion(utilisateurRecu.Pseudo, utilisateurRecu.MotDePasse);
-
+                Utilisateur utilisateurConnecte = this.service.VerifierConnexion(identifiantRecu.Pseudo, identifiantRecu.MotDePasse);
                 if (utilisateurConnecte != null)
                 {
                     resultat = Ok(utilisateurConnecte);
@@ -54,9 +41,7 @@ namespace API_Footies.Controllers
             {
                 resultat = StatusCode(500, "Erreur serveur : " + ex.Message);
             }
-
             return resultat;
         }
-        #endregion
     }
 }
