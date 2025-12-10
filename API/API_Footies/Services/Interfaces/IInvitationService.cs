@@ -36,6 +36,6 @@ namespace API_Footies.Services.Interfaces
         /// </summary>
         /// <param name="InvitationsRechercher"> le nom ou une partie du nom de l'invitation à rechercher </param>
         /// <returns> la liste des invitations correspondants </returns>
-        List<Invitation> ChercherInvitations(string InvitationsRechercher);
+        List<Invitation> ChercherInvitations(string InvitationsRechercher, long IdUtilisateur);
     }
 }

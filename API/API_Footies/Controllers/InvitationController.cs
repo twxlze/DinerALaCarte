@@ -74,9 +74,9 @@ namespace API_Footies.Controllers
         /// <param name="InvitationsRechercher">Le texte permettant de rechercher une invitation</param>
         /// <returns>Une liste d'invitations correspondant à la recherche</returns>
         [HttpGet("ChercherInvitations")]
-        public List<Metier.Invitation> ChercherInvitations(string InvitationsRechercher)
+        public List<Metier.Invitation> ChercherInvitations(string InvitationsRechercher, long IdUtilisateur)
         {
-            return this.service.ChercherInvitations(InvitationsRechercher);
+            return this.service.ChercherInvitations(InvitationsRechercher, IdUtilisateur);
         }
         #endregion
     }

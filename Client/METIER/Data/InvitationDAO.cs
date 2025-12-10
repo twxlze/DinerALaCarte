@@ -91,12 +91,25 @@ namespace METIER_Footies.Data
         public async Task<List<Invitation>> ChercherInvitation(string InvitationsRechercher)
         {
             List<Invitation> listeDesInvitations = new List<Invitation>();
-            HttpResponseMessage reponseHttp = await GetAsync($"Invitations/ChercherInvitations?InvitationsRechercher={InvitationsRechercher}");
-            if (reponseHttp.IsSuccessStatusCode)
+
+            try
             {
-                string reponse = await reponseHttp.Content.ReadAsStringAsync();
-                listeDesInvitations = JsonSerializer.Deserialize<List<Invitation>>(reponse, options);
+                long idUtilisateur = SessionService.Instance.UtilisateurConnecte.Id;
+                string url = $"Invitations/ChercherInvitations?InvitationsRechercher={InvitationsRechercher}&IdUtilisateur={idUtilisateur}";
+
+                HttpResponseMessage reponseHttp = await GetAsync(url);
+
+                if (reponseHttp.IsSuccessStatusCode)
+                {
+                    string reponse = await reponseHttp.Content.ReadAsStringAsync();
+                    listeDesInvitations = JsonSerializer.Deserialize<List<Invitation>>(reponse, options);
+                }
             }
+            catch (Exception ex)
+            {
+                throw new Exception("Erreur lors de la recherche des invitations : " + ex.Message);
+            }
+
             return listeDesInvitations;
         }
     }
