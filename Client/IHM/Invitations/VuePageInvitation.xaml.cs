@@ -50,7 +50,7 @@ namespace IHM_Footies.Invitations
             {
                 VueInvitation vue = new VueInvitation(invite);
                 vue.MouseDown += (s, e) => this.SelectionnerInvitation(vue);
-                vue.MouseDoubleClick += (s, e) => this.OuvrirModification(vue);
+                vue.MouseDoubleClick += (s, e) => this.OuvrirDetailInvitation(vue);
                 this.vueInvitations.Add(vue);
                 this.PanelListeInvitation.Children.Add(vue);
             }
@@ -60,17 +60,11 @@ namespace IHM_Footies.Invitations
         /// Ouvre la fenêtre de modification d'une invitation
         /// </summary>
         /// <param name="vue"> La vue de l'invitation à modifier </param>
-        private async Task OuvrirModification(VueInvitation vue)
+        private async Task OuvrirDetailInvitation(VueInvitation vue)
         {
-            VMInvitation memoire = new VMInvitation(vue.Invitation);
-
-            await this.vmPageInvitation.ChargerElementsDansInvitation(memoire);
-
-            VueFormulaireInvitation fenetre = new VueFormulaireInvitation(vue.Invitation);
-            bool? result = fenetre.ShowDialog();
-            if (result == true)
+            if (this.vmPageInvitation.InvitationSelectionnee != null)
             {
-                vue.Invitation.ModifierInvitation(memoire);
+                Navigation.AllerDetailInvitation(this, this.vmPageInvitation.InvitationSelectionnee);
             }
         }
 
@@ -264,7 +258,7 @@ namespace IHM_Footies.Invitations
                 {
                     VueInvitation vue = new VueInvitation(invitation);
                     vue.MouseDown += (s, e) => this.SelectionnerInvitation(vue);
-                    vue.MouseDoubleClick += (s, e) => this.OuvrirModification(vue);
+                    vue.MouseDoubleClick += (s, e) => this.OuvrirDetailInvitation(vue);
                     this.vueInvitations.Add(vue);
                     this.PanelListeInvitation.Children.Add(vue);
                 }
