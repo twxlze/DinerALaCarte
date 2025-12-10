@@ -329,21 +329,70 @@ namespace VM_Footies.VM
             Notify("Plats");
         }
 
-        /// <summary>
-        /// Modifie les informations d'une invitation
-        /// </summary>
-        /// <param name="invite"> L'invitation avec les nouvelles informations </param>
-        public void ModifierInvitation(VMInvitation invitation)
-        {
-            Nom = invitation.Nom;
-            Date = invitation.Date;
-            Menu = invitation.Menu;
-            GroupeInvites = invitation.GroupeInvites;
-            Invites = invitation.Invites;
-            Plats = invitation.Plats;
 
+        /// <summary>
+        /// Retourne la liste des Invités sous forme de ViewModels
+        /// </summary>
+        public List<VMInvite> ObtenirVMInvites()
+        {
+            List<VMInvite> listeVM = new List<VMInvite>();
+            if (this.invitation.Invites != null)
+            {
+                foreach (Invite i in this.invitation.Invites)
+                {
+                    listeVM.Add(new VMInvite(i));
+                }
+            }
+            return listeVM;
         }
 
+        /// <summary>
+        /// Retourne la liste des Groupes sous forme de ViewModels
+        /// </summary>
+        public List<VMGroupeInvite> ObtenirVMGroupes()
+        {
+            List<VMGroupeInvite> listeVM = new List<VMGroupeInvite>();
+            if (this.invitation.GroupeInvites != null)
+            {
+                foreach (GroupeInvites g in this.invitation.GroupeInvites)
+                {
+                    listeVM.Add(new VMGroupeInvite(g));
+                }
+            }
+            return listeVM;
+        }
+
+        /// <summary>
+        /// Retourne la liste des Menus sous forme de ViewModels
+        /// </summary>
+        public List<VMMenu> ObtenirVMMenus()
+        {
+            List<VMMenu> listeVM = new List<VMMenu>();
+            if (this.invitation.Menus != null)
+            {
+                foreach (Menu m in this.invitation.Menus)
+                {
+                    listeVM.Add(new VMMenu(m));
+                }
+            }
+            return listeVM;
+        }
+
+        /// <summary>
+        /// Retourne la liste des Plats sous forme de ViewModels
+        /// </summary>
+        public List<VMPlat> ObtenirVMPlats()
+        {
+            List<VMPlat> listeVM = new List<VMPlat>();
+            if (this.invitation.Plats != null)
+            {
+                foreach (Plat p in this.invitation.Plats)
+                {
+                    listeVM.Add(new VMPlat(p));
+                }
+            }
+            return listeVM;
+        }
         #endregion
 
         #region METHODES privées
