@@ -101,9 +101,9 @@ namespace VM_Footies.VM_Page
         /// Constructeur de VmPageStatistique
         /// </summary>
         /// <param name="vMPageInvitation">prend en parametre les invitations</param>
-        public VmPageStatistique(VMPageInvitation vMPageInvitation)
+        public VmPageStatistique()
         {
-            this._invitation = vMPageInvitation;
+            this._invitation = new VMPageInvitation();
             this._invite = new VMPageInvite();
         }
         #endregion

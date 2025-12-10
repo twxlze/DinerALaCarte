@@ -166,9 +166,9 @@ namespace IHM_Footies
         /// Permet de naviguer vers la fenêtre de sélection des invite pour les statistiques
         /// </summary>
         /// <param name="fenetreActuelle"></param>
-        public static void AllerSelectionInvite(Window fenetreActuelle, VMPageInvitation vMPageInvitation)
+        public static void AllerSelectionInvite(Window fenetreActuelle)
         {
-            VuePageSelectionStatistique vueSelection = new VuePageSelectionStatistique(vMPageInvitation);
+            VuePageSelectionStatistique vueSelection = new VuePageSelectionStatistique();
             vueSelection.Show();
             fenetreActuelle.Close();
         }
