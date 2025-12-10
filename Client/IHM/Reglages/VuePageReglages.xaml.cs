@@ -23,12 +23,12 @@ namespace IHM_Footies.Reglages
             try
             {
                 string currentCulture = IHM_Footies.Properties.Settings.Default.Language;
-                
+
                 if (string.IsNullOrEmpty(currentCulture))
                 {
                     currentCulture = "fr-FR";
                 }
-                
+
                 foreach (ComboBoxItem item in LanguageComboBox.Items)
                 {
                     if (item.Tag?.ToString() == currentCulture)
@@ -51,17 +51,14 @@ namespace IHM_Footies.Reglages
                 if (LanguageComboBox.SelectedItem is ComboBoxItem selectedItem)
                 {
                     string cultureName = selectedItem.Tag?.ToString();
-                    
+
                     if (!string.IsNullOrEmpty(cultureName))
                     {
-                        // Sauvegarder la langue
                         ChangerLangue(cultureName);
-                        
-                        // Demander si l'utilisateur veut redémarrer pour appliquer les changements de langue ou non
-                        string message = cultureName == "fr-FR" 
-                            ? "La langue a été changée.\n\nVoulez-vous redémarrer l'application pour appliquer les changements?"
+                        string message = cultureName == "fr-FR"
+                            ? "La langue a été changée.\n\nVoulez-vous recharger l'application pour appliquer les changements?"
                             : "Language has been changed.\n\nDo you want to restart the application to apply changes?";
-                        
+
                         MessageBoxResult result = MessageBox.Show(
                             message,
                             "Changement de langue / Language Change",
@@ -70,7 +67,7 @@ namespace IHM_Footies.Reglages
 
                         if (result == MessageBoxResult.Yes)
                         {
-                            RedemarrerApplication();
+                            AppliquerChangementLangue();
                         }
                     }
                 }
@@ -91,9 +88,9 @@ namespace IHM_Footies.Reglages
                 CultureInfo newCulture = new CultureInfo(cultureName);
                 Thread.CurrentThread.CurrentCulture = newCulture;
                 Thread.CurrentThread.CurrentUICulture = newCulture;
-                
+
                 IHM_Footies.Ressources.Strings.Culture = newCulture;
-                
+
                 IHM_Footies.Properties.Settings.Default.Language = cultureName;
                 IHM_Footies.Properties.Settings.Default.Save();
             }
@@ -104,19 +101,19 @@ namespace IHM_Footies.Reglages
         }
 
         /// <summary>
-        /// Redémarre l'application
+        /// Applique le changement de langue en rechargeant la fenêtre actuelle
         /// </summary>
-        private void RedemarrerApplication()
+        private void AppliquerChangementLangue()
         {
             try
             {
-                string exePath = System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName;
-                System.Diagnostics.Process.Start(exePath);
-                Application.Current.Shutdown();
+                VuePageReglages nouvelleVue = new VuePageReglages();
+                nouvelleVue.Show();
+                this.Close();
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Erreur lors du redémarrage : {ex.Message}", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"Erreur lors de l'application des changements : {ex.Message}", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 

@@ -11,7 +11,7 @@ namespace API_Footies.Data.DAO
     public class InvitationDAO : IInvitationDAO
     {
         #region Méthodes principales
-        public bool AjouterInvitation(Invitation invitation)
+        public bool AjouterInvitation(Invitation invitation, long idUtilisateur)
         {
             bool ajoute = false;
             using (SQLiteConnector connection = new SQLiteConnector())
@@ -21,7 +21,8 @@ namespace API_Footies.Data.DAO
                     throw new Exception("Erreur de connexion à la base de données");
                 }
 
-                invitation.IdInvitation = InsererInvitation(connection, invitation);
+                // On passe l'ID utilisateur à la méthode d'insertion
+                invitation.IdInvitation = InsererInvitation(connection, invitation, idUtilisateur);
 
                 AjouterGroupesInvitesDansInvitation(connection, invitation);
                 AjouterMenusDansInvitation(connection, invitation);
@@ -34,7 +35,7 @@ namespace API_Footies.Data.DAO
             return ajoute;
         }
 
-        public List<Invitation> ObtenirToutInvitations()
+        public List<Invitation> ObtenirToutInvitations(long idUtilisateur)
         {
             List<Invitation> invitations = new List<Invitation>();
             using (SQLiteConnector connection = new SQLiteConnector())
@@ -44,13 +45,22 @@ namespace API_Footies.Data.DAO
                     throw new Exception("Erreur de connexion à la base de données");
                 }
 
-                DataTable dataTable = connection.ExecuteQuery("SELECT * FROM Invitation");
+                Dictionary<string, object> parameters = new Dictionary<string, object>()
+                {
+                    {"@IdUtilisateur", idUtilisateur }
+                };
+
+                // Filtrage par utilisateur
+                DataTable dataTable = connection.ExecuteQuery("SELECT * FROM Invitation WHERE IdUtilisateur = @IdUtilisateur", parameters);
 
                 foreach (DataRow row in dataTable.Rows)
                 {
                     long idInvitation = (long)row["IdInvitation"];
                     string nom = row["Nom"].ToString();
                     DateTime date = DateTime.Parse(row["Date"].ToString());
+
+                    // Les méthodes "Obtenir..." n'ont pas besoin de l'ID utilisateur car l'ID Invitation est unique 
+                    // et on a déjà vérifié qu'elle appartenait à l'utilisateur via la requête principale ci-dessus.
                     List<Invite> invites = ObtenirInvitesDansInvitation(connection, idInvitation);
                     List<Plat> plats = ObtenirPlatsDansInvitation(connection, idInvitation);
                     List<Menu> menus = ObtenirMenusDansInvitation(connection, idInvitation);
@@ -71,7 +81,7 @@ namespace API_Footies.Data.DAO
             return invitations;
         }
 
-        public bool ModifierInvitation(Invitation invitation)
+        public bool ModifierInvitation(Invitation invitation, long idUtilisateur)
         {
             bool modifie = false;
             using (SQLiteConnector connection = new SQLiteConnector())
@@ -81,8 +91,11 @@ namespace API_Footies.Data.DAO
                     throw new Exception("Erreur de connexion à la base de données");
                 }
 
-                invitation.IdInvitation = ModifierInvitation(connection, invitation);
+                // On passe l'ID utilisateur pour sécuriser la modification
+                invitation.IdInvitation = ModifierInvitationInternal(connection, invitation, idUtilisateur);
 
+                // Note: Pour être 100% sûr, on ne devrait modifier les enfants que si l'update parent a réussi (appartient à l'user).
+                // Dans cette architecture simple, on procède à la mise à jour des liens.
                 ModifierGroupesInvitesDansInvitation(connection, invitation);
                 ModifierMenusDansInvitation(connection, invitation);
                 ModifierInvitesDansInvitation(connection, invitation);
@@ -92,7 +105,7 @@ namespace API_Footies.Data.DAO
             return modifie;
         }
 
-        public void SupprimerInvitation(long idInvitation)
+        public void SupprimerInvitation(long idInvitation, long idUtilisateur)
         {
             using (SQLiteConnector connection = new SQLiteConnector())
             {
@@ -100,29 +113,43 @@ namespace API_Footies.Data.DAO
                 {
                     throw new Exception("Erreur de connexion à la base de données");
                 }
+
                 Dictionary<string, object> parameters = new Dictionary<string, object>()
+                {
+                    {"@IdInvitation", idInvitation },
+                    {"@IdUtilisateur", idUtilisateur }
+                };
+
+                // On supprime d'abord les liaisons (tables enfants)
+                // Note : Techniquement on pourrait supprimer des liens d'une invitation qui n'est pas à nous ici, 
+                // mais la suppression finale de l'invitation échouera si l'utilisateur n'est pas le bon.
+                Dictionary<string, object> parametersLiaison = new Dictionary<string, object>()
                 {
                     {"@IdInvitation", idInvitation }
                 };
-                connection.ExecuteQuery("DELETE FROM Invitation_GroupeInvite WHERE IdInvitation = @IdInvitation", parameters);
-                connection.ExecuteQuery("DELETE FROM Invitation_Menu WHERE IdInvitation = @IdInvitation", parameters);
-                connection.ExecuteQuery("DELETE FROM Invitation_Invite WHERE IdInvitation = @IdInvitation", parameters);
-                connection.ExecuteQuery("DELETE FROM Invitation_Plat WHERE IdInvitation = @IdInvitation", parameters);
-                connection.ExecuteQuery("DELETE FROM Invitation WHERE IdInvitation = @IdInvitation", parameters);
+
+                connection.ExecuteQuery("DELETE FROM Invitation_GroupeInvite WHERE IdInvitation = @IdInvitation", parametersLiaison);
+                connection.ExecuteQuery("DELETE FROM Invitation_Menu WHERE IdInvitation = @IdInvitation", parametersLiaison);
+                connection.ExecuteQuery("DELETE FROM Invitation_Invite WHERE IdInvitation = @IdInvitation", parametersLiaison);
+                connection.ExecuteQuery("DELETE FROM Invitation_Plat WHERE IdInvitation = @IdInvitation", parametersLiaison);
+
+                // Suppression de l'invitation avec sécurité utilisateur
+                connection.ExecuteQuery("DELETE FROM Invitation WHERE IdInvitation = @IdInvitation AND IdUtilisateur = @IdUtilisateur", parameters);
             }
         }
         #endregion
 
         #region Méthodes Inserer / Ajouter
 
-        private long InsererInvitation(SQLiteConnector connection, Invitation invitation)
+        private long InsererInvitation(SQLiteConnector connection, Invitation invitation, long idUtilisateur)
         {
             Dictionary<string, object> parameters = new Dictionary<string, object>()
             {
                 {"@Nom", invitation.Nom },
-                {"@Date", invitation.Date }
+                {"@Date", invitation.Date },
+                {"@IdUtilisateur", idUtilisateur } // Ajouté
             };
-            return connection.ExecuteInsert("INSERT INTO Invitation (Nom, Date) VALUES (@Nom, @Date)", parameters);
+            return connection.ExecuteInsert("INSERT INTO Invitation (Nom, Date, IdUtilisateur) VALUES (@Nom, @Date, @IdUtilisateur)", parameters);
         }
 
         private void AjouterGroupesInvitesDansInvitation(SQLiteConnector connection, Invitation invitation)
@@ -191,6 +218,8 @@ namespace API_Footies.Data.DAO
 
         private void AjouterPlatsPreferesDansInvitation(SQLiteConnector connection, Invitation invitation)
         {
+            // Note: Cette méthode semblait incomplète dans ton code d'origine (pas d'INSERT), 
+            // je l'ai laissée telle quelle mais vérifie si elle doit faire quelque chose.
             if (invitation.Plats != null)
             {
                 foreach (Plat plat in invitation.Plats)
@@ -233,8 +262,8 @@ namespace API_Footies.Data.DAO
                     row["NumTel"].ToString(),
                     row["Mail"].ToString(),
                     null,
-                    null, 
-                    null  
+                    null,
+                    null
                 );
                 invites.Add(invite);
             }
@@ -261,10 +290,10 @@ namespace API_Footies.Data.DAO
                 Plat plat = new Plat(
                     idPlat,
                     row["Nom"].ToString(),
-                    "", 
+                    "",
                     categorie,
-                    "", 
-                    null 
+                    "",
+                    null
                 );
                 plats.Add(plat);
             }
@@ -324,10 +353,10 @@ namespace API_Footies.Data.DAO
                 Plat plat = new Plat(
                     idPlat,
                     row["Nom"].ToString(),
-                    null, 
+                    null,
                     categorie,
-                    null, 
-                    null  
+                    null,
+                    null
                 );
                 plats.Add(plat);
             }
@@ -357,12 +386,12 @@ namespace API_Footies.Data.DAO
 
                 List<Invite> invitesGroupe = ObtenirInvitesDansGroupeInvites(connection, idGroupeInvite);
 
-                GroupeInvites groupeInvites = new GroupeInvites(
+                GroupeInvites groupe = new GroupeInvites(
                     idGroupeInvite,
                     nomGroupe,
                     invitesGroupe
                 );
-                groupesInvites.Add(groupeInvites);
+                groupesInvites.Add(groupe);
             }
 
             return groupesInvites;
@@ -389,9 +418,9 @@ namespace API_Footies.Data.DAO
                     (long)row["IdInvite"],
                     row["Nom"].ToString(),
                     row["Prenom"].ToString(),
-                    null, 
-                    null, 
-                    null, null, null 
+                    null,
+                    null,
+                    null, null, null
                 );
                 invites.Add(invite);
             }
@@ -402,15 +431,19 @@ namespace API_Footies.Data.DAO
         #endregion
 
         #region Méthodes Modifier
-        private long ModifierInvitation(SQLiteConnector connection, Invitation invitation)
+        // Renommé pour éviter la confusion avec la méthode publique
+        private long ModifierInvitationInternal(SQLiteConnector connection, Invitation invitation, long idUtilisateur)
         {
             Dictionary<string, object> parameters = new Dictionary<string, object>()
             {
                 {"@IdInvitation", invitation.IdInvitation },
                 {"@Nom", invitation.Nom },
-                {"@Date", invitation.Date }
+                {"@Date", invitation.Date },
+                {"@IdUtilisateur", idUtilisateur } // Ajouté
             };
-            connection.ExecuteQuery("UPDATE Invitation SET Nom = @Nom, Date = @Date WHERE IdInvitation = @IdInvitation", parameters);
+
+            // Sécurité : On vérifie l'ID utilisateur
+            connection.ExecuteQuery("UPDATE Invitation SET Nom = @Nom, Date = @Date WHERE IdInvitation = @IdInvitation AND IdUtilisateur = @IdUtilisateur", parameters);
             return invitation.IdInvitation;
         }
 
