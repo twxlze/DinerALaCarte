@@ -1,4 +1,6 @@
 ﻿using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
 using VM_Footies.VM;
 using VM_Footies.VM_Page;
 
@@ -18,6 +20,7 @@ namespace IHM_Footies.Invitations
         {
             InitializeComponent();
             this.vmPageInvitation.PropertyChanged += VmPageInvitation_PropertyChanged;
+            this.DataContext = this.vmPageInvitation;
             this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             this.RafraichirListe();
         }
@@ -47,7 +50,7 @@ namespace IHM_Footies.Invitations
             {
                 VueInvitation vue = new VueInvitation(invite);
                 vue.MouseDown += (s, e) => this.SelectionnerInvitation(vue);
-                vue.MouseDoubleClick += (s, e) => this.OuvrirModification(vue);
+                vue.MouseDoubleClick += (s, e) => this.OuvrirDetailInvitation(vue);
                 this.vueInvitations.Add(vue);
                 this.PanelListeInvitation.Children.Add(vue);
             }
@@ -57,17 +60,11 @@ namespace IHM_Footies.Invitations
         /// Ouvre la fenêtre de modification d'une invitation
         /// </summary>
         /// <param name="vue"> La vue de l'invitation à modifier </param>
-        private async Task OuvrirModification(VueInvitation vue)
+        private async Task OuvrirDetailInvitation(VueInvitation vue)
         {
-            VMInvitation memoire = new VMInvitation(vue.Invitation);
-
-            await this.vmPageInvitation.ChargerElementsDansInvitation(memoire);
-
-            VueFormulaireInvitation fenetre = new VueFormulaireInvitation(vue.Invitation);
-            bool? result = fenetre.ShowDialog();
-            if (result == true)
+            if (this.vmPageInvitation.InvitationSelectionnee != null)
             {
-                vue.Invitation.ModifierInvitation(memoire);
+                Navigation.AllerDetailInvitation(this, this.vmPageInvitation.InvitationSelectionnee);
             }
         }
 
@@ -101,6 +98,16 @@ namespace IHM_Footies.Invitations
         private void BoutonVueAccueil(object sender, RoutedEventArgs e)
         {
             Navigation.AllerAccueil(this);
+        }
+
+        /// <summary>
+        /// Bouton pour aller à la vue d'invitation
+        /// </summary>
+        /// <param name="sender"> L'expéditeur </param>
+        /// <param name="e"> Les arguments de l'événement </param>
+        private void BoutonVueInvitation(object sender, RoutedEventArgs e)
+        {
+            Navigation.AllerInvitations(this);
         }
 
         /// <summary>
@@ -232,7 +239,51 @@ namespace IHM_Footies.Invitations
             fenetre.ShowDialog();
             this.RafraichirListe();
         }
-        
+
+        /// <summary>
+        /// Recherche les groupe invités selon le texte saisi
+        /// </summary>
+        /// <param name="sender"> L'expéditeur </param>
+        /// <param name="e"> Les arguments de l'événement </param>
+        private async void RechercheInvitation_Click(object sender, RoutedEventArgs e)
+        {
+            this.PanelListeInvitation.Children.Clear();
+            this.vueInvitations.Clear();
+
+            await this.vmPageInvitation.ChercherInvitation(this.vmPageInvitation.TexteRecherche);
+
+            if (this.vmPageInvitation.VMInvitations.Count != 0)
+            {
+                foreach (VMInvitation invitation in this.vmPageInvitation.VMInvitations)
+                {
+                    VueInvitation vue = new VueInvitation(invitation);
+                    vue.MouseDown += (s, e) => this.SelectionnerInvitation(vue);
+                    vue.MouseDoubleClick += (s, e) => this.OuvrirDetailInvitation(vue);
+                    this.vueInvitations.Add(vue);
+                    this.PanelListeInvitation.Children.Add(vue);
+                }
+            }
+            else
+            {
+                TextBlock aucunResultat = new TextBlock
+                {
+                    Text = "Aucun résultat trouvé",
+                    Foreground = Brushes.Gray,
+                    FontSize = 16,
+                    HorizontalAlignment = HorizontalAlignment.Center,
+                    Margin = new Thickness(0, 20, 0, 0)
+                };
+
+                this.PanelListeInvitation.Children.Add(aucunResultat);
+            }
+        }
+
+        private void BoutonRetour_Click(object sender, RoutedEventArgs e)
+        {
+            this.RafraichirListe();
+            this.vmPageInvitation.TexteRecherche = string.Empty;
+        }
+
 
         #endregion
 

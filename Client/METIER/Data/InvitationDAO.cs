@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using METIER_Footies.Data.Interface;
@@ -10,16 +8,19 @@ using METIER_Footies.Metier;
 namespace METIER_Footies.Data
 {
     /// <summary>
-    /// Classe caractérisant une invitation
+    /// Classe caractérisant une invitation (DAO Client)
     /// </summary>
     public class InvitationDAO : DAO, IInvitationDAO
     {
-        
+
         public async Task<HttpResponseMessage> AjouterInvitation(Invitation invitation)
         {
             try
             {
-                HttpResponseMessage reponseHttp = await PostAsync("Invitations/AjoutInvitation", invitation);
+                long idUtilisateur = SessionService.Instance.UtilisateurConnecte.Id;
+                string url = $"Invitations/AjoutInvitation?IdUtilisateur={idUtilisateur}";
+
+                HttpResponseMessage reponseHttp = await PostAsync(url, invitation);
                 return reponseHttp;
             }
             catch (Exception ex)
@@ -31,12 +32,26 @@ namespace METIER_Footies.Data
         public async Task<List<Invitation>> ObtenirToutesLesInvitations()
         {
             List<Invitation> listeInvitations = new List<Invitation>();
-            HttpResponseMessage reponseHttp = await this.GetAsync("Invitations/ListeInvitations");
-            if (reponseHttp.IsSuccessStatusCode)
+
+            try
             {
-                string reponse = await reponseHttp.Content.ReadAsStringAsync();
-                listeInvitations = JsonSerializer.Deserialize<List<Invitation>>(reponse, options);
+                long idUtilisateur = SessionService.Instance.UtilisateurConnecte.Id;
+
+                string url = $"Invitations/ListeInvitations?IdUtilisateur={idUtilisateur}";
+
+                HttpResponseMessage reponseHttp = await this.GetAsync(url);
+
+                if (reponseHttp.IsSuccessStatusCode)
+                {
+                    string reponse = await reponseHttp.Content.ReadAsStringAsync();
+                    listeInvitations = JsonSerializer.Deserialize<List<Invitation>>(reponse, options);
+                }
             }
+            catch (Exception ex)
+            {
+                throw new Exception("Erreur lors de la récupération des invitations : " + ex.Message);
+            }
+
             return listeInvitations;
         }
 
@@ -44,7 +59,10 @@ namespace METIER_Footies.Data
         {
             try
             {
-                HttpResponseMessage reponseHttp = await DeleteAsync($"Invitations/SupprimerInvitation?idInvitation={idInvitation}");
+                long idUtilisateur = SessionService.Instance.UtilisateurConnecte.Id;
+                string url = $"Invitations/SupprimerInvitation?idInvitation={idInvitation}&IdUtilisateur={idUtilisateur}";
+
+                HttpResponseMessage reponseHttp = await DeleteAsync(url);
                 return reponseHttp;
             }
             catch (Exception ex)
@@ -57,13 +75,42 @@ namespace METIER_Footies.Data
         {
             try
             {
-                HttpResponseMessage reponseHttp = await PutAsync("Invitations/ModifierInvitation", invitation);
+                long idUtilisateur = SessionService.Instance.UtilisateurConnecte.Id;
+
+                string url = $"Invitations/ModifierInvitation?IdUtilisateur={idUtilisateur}";
+
+                HttpResponseMessage reponseHttp = await PutAsync(url, invitation);
                 return reponseHttp;
             }
             catch (Exception ex)
             {
                 throw new Exception("Erreur lors de la modification de l'invitation : " + ex.Message);
             }
+        }
+
+        public async Task<List<Invitation>> ChercherInvitation(string InvitationsRechercher)
+        {
+            List<Invitation> listeDesInvitations = new List<Invitation>();
+
+            try
+            {
+                long idUtilisateur = SessionService.Instance.UtilisateurConnecte.Id;
+                string url = $"Invitations/ChercherInvitations?InvitationsRechercher={InvitationsRechercher}&IdUtilisateur={idUtilisateur}";
+
+                HttpResponseMessage reponseHttp = await GetAsync(url);
+
+                if (reponseHttp.IsSuccessStatusCode)
+                {
+                    string reponse = await reponseHttp.Content.ReadAsStringAsync();
+                    listeDesInvitations = JsonSerializer.Deserialize<List<Invitation>>(reponse, options);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erreur lors de la recherche des invitations : " + ex.Message);
+            }
+
+            return listeDesInvitations;
         }
     }
 }

@@ -30,23 +30,23 @@ namespace API_Footies.Services.Realisations
         #endregion
 
         #region methodes
-        public void AjouterPlat(Plat plat)
+        public void AjouterPlat(Plat plat, long idUtilisateur)
         {
-            this.dao.AjouterPlat(plat);
+            this.dao.AjouterPlat(plat, idUtilisateur);
         }
 
-        public void ModifierPlat(Plat plat)
+        public void ModifierPlat(Plat plat, long idUtilisateur)
         {
-            this.dao.ModifierPlat(plat);
+            this.dao.ModifierPlat(plat, idUtilisateur);
         }
 
-        public void SupprimerPlat(long id)
+        public void SupprimerPlat(long id, long idUtilisateur)
         {
-            this.dao.SupprimerPlat(id);
+            this.dao.SupprimerPlat(id, idUtilisateur);
         }
-        public List<Plat> ListPlat()
+        public List<Plat> ListPlat(long idUtilisateur)
         {
-            return this.dao.ListPlat();
+            return this.dao.ListPlat(idUtilisateur);
         }
 
         public bool EstDansUnMenu(long idInvite)
@@ -54,9 +54,9 @@ namespace API_Footies.Services.Realisations
             return this.dao.EstDansUnMenu(idInvite);
         }
 
-        public List<Plat> ChercherPlat(string texterecherche)
+        public List<Plat> ChercherPlat(string texterecherche, long idUtilisateur)
         {
-            return this.dao.ChercherPlat(texterecherche);
+            return this.dao.ChercherPlat(texterecherche, idUtilisateur);
         }
         #endregion
 

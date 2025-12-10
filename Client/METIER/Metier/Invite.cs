@@ -5,6 +5,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using METIER_Footies.Enum;
 
 namespace METIER_Footies.Metier
 {
@@ -20,6 +21,8 @@ namespace METIER_Footies.Metier
         private string? telephone; // string pour simplifier avec l'API
         private string? email;
         private List<Enum.NomAllergene>? allergenes;
+        private List<Plat> platsDetestes;
+        private List<Plat> platsPreferes;
         #endregion
 
         #region Propriétés
@@ -100,6 +103,24 @@ namespace METIER_Footies.Metier
             get { return allergenes; }
             set { allergenes = value; }
         }
+
+        /// <summary>
+        /// Retourne ou modifie la liste des plats détestés par l'invité
+        /// </summary>
+        public List<Plat> PlatsDetestes
+        {
+            get { return platsDetestes; }
+            set { platsDetestes = value; }
+        }
+
+        /// <summary>
+        /// Retourne ou modifie la liste des plats préférés par l'invité
+        /// </summary>
+        public List<Plat> PlatsPreferes
+        {
+            get { return platsPreferes; }
+            set { platsPreferes = value; }
+        }
         #endregion
 
         #region Constructeurs
@@ -110,13 +131,19 @@ namespace METIER_Footies.Metier
         /// <param name="prenom"> Prénom de l'invité </param>
         /// <param name="telephone"> Téléphone de l'invité </param>
         /// <param name="email"> Email de l'invité </param>
-        public Invite(long id, string nom, string prenom, string? telephone, string? email)
+        /// <param name="allergies"> Liste des allergènes de l'invité </param>
+        /// <param name="platsDetestes"> Liste des plats détestés par l'invité </param>
+        /// <param name="platsPreferes"> Liste des plats préférés par l'invité </param>
+        public Invite(long id, string nom, string prenom, string? telephone, string? email, List<NomAllergene> allergies = null, List<Plat> platsDetestes = null, List<Plat> platsPreferes = null)
         {
             this.id = id;
             this.nom = nom;
             this.prenom = prenom;
             this.telephone = telephone;
             this.email = email;
+            this.allergenes = allergies ;
+            this.platsDetestes = platsDetestes;
+            this.platsPreferes = platsPreferes;
         }
 
         /// <summary>
@@ -129,14 +156,23 @@ namespace METIER_Footies.Metier
             this.prenom = invite.prenom;
             this.telephone = invite.telephone;
             this.email = invite.email;
+            this.allergenes = invite.allergenes;
+            this.platsDetestes = invite.platsDetestes;
+            this.platsPreferes = invite.platsPreferes;
         }
 
+        /// <summary>
+        /// Constructeur par défaut 
+        /// </summary>
         public Invite()
         {
             this.nom = "";
             this.prenom = "";
             this.telephone = null;
             this.email = null;
+            this.allergenes = new List<NomAllergene>();
+            this.platsDetestes = new List<Plat>();
+            this.platsPreferes = new List<Plat>();
         }
         #endregion
     }

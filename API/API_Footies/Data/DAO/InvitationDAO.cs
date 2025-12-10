@@ -11,7 +11,7 @@ namespace API_Footies.Data.DAO
     public class InvitationDAO : IInvitationDAO
     {
         #region Méthodes principales
-        public bool AjouterInvitation(Invitation invitation)
+        public bool AjouterInvitation(Invitation invitation, long idUtilisateur)
         {
             bool ajoute = false;
             using (SQLiteConnector connection = new SQLiteConnector())
@@ -21,19 +21,19 @@ namespace API_Footies.Data.DAO
                     throw new Exception("Erreur de connexion à la base de données");
                 }
 
-                invitation.IdInvitation = InsererInvitation(connection, invitation);
-
+                invitation.IdInvitation = InsererInvitation(connection, invitation, idUtilisateur);
                 AjouterGroupesInvitesDansInvitation(connection, invitation);
                 AjouterMenusDansInvitation(connection, invitation);
                 AjouterInvitesDansInvitation(connection, invitation);
                 AjouterPlatsDansInvitation(connection, invitation);
+                AjouterPlatsPreferesDansInvitation(connection, invitation);
 
                 ajoute = true;
             }
             return ajoute;
         }
 
-        public List<Invitation> ObtenirToutInvitations()
+        public List<Invitation> ObtenirToutInvitations(long idUtilisateur)
         {
             List<Invitation> invitations = new List<Invitation>();
             using (SQLiteConnector connection = new SQLiteConnector())
@@ -43,17 +43,20 @@ namespace API_Footies.Data.DAO
                     throw new Exception("Erreur de connexion à la base de données");
                 }
 
-                var dataTable = connection.ExecuteQuery("SELECT * FROM Invitation");
+                Dictionary<string, object> parameters = new Dictionary<string, object>()
+                {
+                    {"@IdUtilisateur", idUtilisateur }
+                };
+                DataTable dataTable = connection.ExecuteQuery("SELECT * FROM Invitation WHERE IdUtilisateur = @IdUtilisateur", parameters);
 
                 foreach (DataRow row in dataTable.Rows)
                 {
                     long idInvitation = (long)row["IdInvitation"];
                     string nom = row["Nom"].ToString();
                     DateTime date = DateTime.Parse(row["Date"].ToString());
-
                     List<Invite> invites = ObtenirInvitesDansInvitation(connection, idInvitation);
                     List<Plat> plats = ObtenirPlatsDansInvitation(connection, idInvitation);
-                    List<Menu> menus = ObtenirMenusDansInvitation(connection, idInvitation, plats);
+                    List<Menu> menus = ObtenirMenusDansInvitation(connection, idInvitation);
                     List<GroupeInvites> groupesInvites = ObtenirGroupesInvitesDansInvitation(connection, idInvitation);
 
                     Invitation invitation = new Invitation(
@@ -71,7 +74,7 @@ namespace API_Footies.Data.DAO
             return invitations;
         }
 
-        public bool ModifierInvitation(Invitation invitation)
+        public bool ModifierInvitation(Invitation invitation, long idUtilisateur)
         {
             bool modifie = false;
             using (SQLiteConnector connection = new SQLiteConnector())
@@ -80,9 +83,7 @@ namespace API_Footies.Data.DAO
                 {
                     throw new Exception("Erreur de connexion à la base de données");
                 }
-
-                invitation.IdInvitation = ModifierInvitation(connection, invitation);
-
+                invitation.IdInvitation = ModifierInvitationInternal(connection, invitation, idUtilisateur);
                 ModifierGroupesInvitesDansInvitation(connection, invitation);
                 ModifierMenusDansInvitation(connection, invitation);
                 ModifierInvitesDansInvitation(connection, invitation);
@@ -92,7 +93,7 @@ namespace API_Footies.Data.DAO
             return modifie;
         }
 
-        public void SupprimerInvitation(long idInvitation)
+        public void SupprimerInvitation(long idInvitation, long idUtilisateur)
         {
             using (SQLiteConnector connection = new SQLiteConnector())
             {
@@ -100,115 +101,167 @@ namespace API_Footies.Data.DAO
                 {
                     throw new Exception("Erreur de connexion à la base de données");
                 }
-                var parameters = new Dictionary<string, object>()
+
+                Dictionary<string, object> parameters = new Dictionary<string, object>()
+                {
+                    {"@IdInvitation", idInvitation },
+                    {"@IdUtilisateur", idUtilisateur }
+                };
+                Dictionary<string, object> parametersLiaison = new Dictionary<string, object>()
                 {
                     {"@IdInvitation", idInvitation }
                 };
-                connection.ExecuteQuery("DELETE FROM Invitation_GroupeInvite WHERE IdInvitation = @IdInvitation", parameters);
-                connection.ExecuteQuery("DELETE FROM Invitation_Menu WHERE IdInvitation = @IdInvitation", parameters);
-                connection.ExecuteQuery("DELETE FROM Invitation_Invite WHERE IdInvitation = @IdInvitation", parameters);
-                connection.ExecuteQuery("DELETE FROM Invitation_Plat WHERE IdInvitation = @IdInvitation", parameters);
-                connection.ExecuteQuery("DELETE FROM Invitation WHERE IdInvitation = @IdInvitation", parameters);
+
+                connection.ExecuteQuery("DELETE FROM Invitation_GroupeInvite WHERE IdInvitation = @IdInvitation", parametersLiaison);
+                connection.ExecuteQuery("DELETE FROM Invitation_Menu WHERE IdInvitation = @IdInvitation", parametersLiaison);
+                connection.ExecuteQuery("DELETE FROM Invitation_Invite WHERE IdInvitation = @IdInvitation", parametersLiaison);
+                connection.ExecuteQuery("DELETE FROM Invitation_Plat WHERE IdInvitation = @IdInvitation", parametersLiaison);
+                connection.ExecuteQuery("DELETE FROM Invitation WHERE IdInvitation = @IdInvitation AND IdUtilisateur = @IdUtilisateur", parameters);
             }
         }
         #endregion
 
         #region Méthodes Inserer / Ajouter
 
-        /// <summary>
-        /// Insère l'invitation principale et retourne son ID
-        /// </summary>
-        private long InsererInvitation(SQLiteConnector connection, Invitation invitation)
+        private long InsererInvitation(SQLiteConnector connection, Invitation invitation, long idUtilisateur)
         {
-            var parameters = new Dictionary<string, object>()
+            Dictionary<string, object> parameters = new Dictionary<string, object>()
             {
-                {"@IdInvitation", invitation.IdInvitation },
                 {"@Nom", invitation.Nom },
-                {"@Date", invitation.Date }
+                {"@Date", invitation.Date },
+                {"@IdUtilisateur", idUtilisateur }
             };
-            return connection.ExecuteInsert("INSERT INTO Invitation (Nom, Date) VALUES (@Nom, @Date)", parameters);
+            return connection.ExecuteInsert("INSERT INTO Invitation (Nom, Date, IdUtilisateur) VALUES (@Nom, @Date, @IdUtilisateur)", parameters);
         }
 
-        /// <summary>
-        /// Ajoute les groupes d'invités dans une invitation
-        /// </summary>
         private void AjouterGroupesInvitesDansInvitation(SQLiteConnector connection, Invitation invitation)
         {
-            foreach (GroupeInvites groupeInvites in invitation.GroupeInvites)
+            if (invitation.GroupeInvites != null)
             {
-                var parameters = new Dictionary<string, object>()
+                foreach (GroupeInvites groupeInvites in invitation.GroupeInvites)
                 {
-                    {"@IdInvitation", invitation.IdInvitation },
-                    {"@IDGroupeInvite", groupeInvites.IdGroupeInvites }
-                };
-                connection.ExecuteQuery("INSERT INTO Invitation_GroupeInvite (IdInvitation, IDGroupeInvite) VALUES (@IdInvitation, @IDGroupeInvite)",parameters);
+                    Dictionary<string, object> parameters = new Dictionary<string, object>()
+                    {
+                        {"@IdInvitation", invitation.IdInvitation },
+                        {"@IDGroupeInvite", groupeInvites.IdGroupeInvites }
+                    };
+                    connection.ExecuteQuery("INSERT INTO Invitation_GroupeInvite (IdInvitation, IDGroupeInvite) VALUES (@IdInvitation, @IDGroupeInvite)", parameters);
+                }
             }
         }
 
-        /// <summary>
-        /// Ajoute les menus dans une invitation
-        /// </summary>
         private void AjouterMenusDansInvitation(SQLiteConnector connection, Invitation invitation)
         {
-            foreach (Menu menu in invitation.Menus)
+            if (invitation.Menus != null)
             {
-                var parameters = new Dictionary<string, object>()
+                foreach (Menu menu in invitation.Menus)
                 {
-                    {"@IdInvitation", invitation.IdInvitation },
-                    {"@IdMenu", menu.IdMenu }
-                };
-                connection.ExecuteQuery("INSERT INTO Invitation_Menu (IdInvitation, IdMenu) VALUES (@IdInvitation, @IdMenu)",parameters);
+                    Dictionary<string, object> parameters = new Dictionary<string, object>()
+                    {
+                        {"@IdInvitation", invitation.IdInvitation },
+                        {"@IdMenu", menu.IdMenu }
+                    };
+                    connection.ExecuteQuery("INSERT INTO Invitation_Menu (IdInvitation, IdMenu) VALUES (@IdInvitation, @IdMenu)", parameters);
+                }
             }
         }
 
-        /// <summary>
-        /// Ajoute les invités dans une invitation
-        /// </summary>
         private void AjouterInvitesDansInvitation(SQLiteConnector connection, Invitation invitation)
         {
-            foreach (Invite invite in invitation.Invites)
+            if (invitation.Invites != null)
             {
-                var parameters = new Dictionary<string, object>()
+                foreach (Invite invite in invitation.Invites)
                 {
-                    {"@IdInvitation", invitation.IdInvitation },
-                    {"@IdInvite", invite.Id }
-                };
-                connection.ExecuteQuery("INSERT INTO Invitation_Invite (IdInvitation, IdInvite) VALUES (@IdInvitation, @IdInvite)",parameters);
+                    Dictionary<string, object> parameters = new Dictionary<string, object>()
+                    {
+                        {"@IdInvitation", invitation.IdInvitation },
+                        {"@IdInvite", invite.Id }
+                    };
+                    connection.ExecuteQuery("INSERT INTO Invitation_Invite (IdInvitation, IdInvite) VALUES (@IdInvitation, @IdInvite)", parameters);
+                }
             }
         }
 
-        /// <summary>
-        /// Ajoute les plats dans une invitation
-        /// </summary>
         private void AjouterPlatsDansInvitation(SQLiteConnector connection, Invitation invitation)
         {
-            foreach (Plat plat in invitation.Plats)
+            if (invitation.Plats != null)
             {
-                var parameters = new Dictionary<string, object>()
+                foreach (Plat plat in invitation.Plats)
                 {
-                    {"@IdInvitation", invitation.IdInvitation },
-                    {"@IdPlat", plat.Id }
-                };
-                connection.ExecuteQuery("INSERT INTO Invitation_Plat (IdInvitation, IdPlat) VALUES (@IdInvitation, @IdPlat)",parameters);
+                    Dictionary<string, object> parameters = new Dictionary<string, object>()
+                    {
+                        {"@IdInvitation", invitation.IdInvitation },
+                        {"@IdPlat", plat.Id }
+                    };
+                    connection.ExecuteQuery("INSERT INTO Invitation_Plat (IdInvitation, IdPlat) VALUES (@IdInvitation, @IdPlat)", parameters);
+                }
             }
         }
 
+        public List<Invitation> ChercherInvitations(string InvitationsRechercher, long idUtilisateur)
+        {
+            List<Invitation> listeInvitations = new List<Invitation>();
+
+            using (SQLiteConnector connection = new SQLiteConnector())
+            {
+                if (connection == null)
+                {
+                    throw new Exception("Erreur de connexion à la base de données");
+                }
+                DataTable dataTable = RechercherInvitationsParTexte(connection, InvitationsRechercher, idUtilisateur);
+
+                foreach (DataRow row in dataTable.Rows)
+                {
+                    long idInvitation = (long)row["IDInvitation"];
+                    string nom = row["Nom"].ToString();
+                    DateTime date = DateTime.Parse(row["Date"].ToString());
+                    List<Invite> invites = ObtenirInvitesDansInvitation(connection, idInvitation);
+                    List<Plat> plats = ObtenirPlatsDansInvitation(connection, idInvitation);
+                    List<Menu> menus = ObtenirMenusDansInvitation(connection, idInvitation);
+                    List<GroupeInvites> groupesInvites = ObtenirGroupesInvitesDansInvitation(connection, idInvitation);
+
+                    Invitation invitation = new Invitation(
+                        groupesInvites,
+                        menus,
+                        invites,
+                        plats,
+                        idInvitation,
+                        nom,
+                        date
+                    );
+                    listeInvitations.Add(invitation);
+                }
+            }
+            return listeInvitations;
+        }
+
+        private void AjouterPlatsPreferesDansInvitation(SQLiteConnector connection, Invitation invitation)
+        {
+            if (invitation.Plats != null)
+            {
+                foreach (Plat plat in invitation.Plats)
+                {
+                    Dictionary<string, object> parameters = new Dictionary<string, object>()
+                    {
+                        {"@IdInvitation", invitation.IdInvitation },
+                        {"@IdPlat", plat.Id }
+                    };
+                }
+            }
+        }
         #endregion
 
         #region Méthodes Obtenir
 
-        /// <summary>
-        /// Obtient tous les invités d'une invitation
-        /// </summary>
         private List<Invite> ObtenirInvitesDansInvitation(SQLiteConnector connection, long idInvitation)
         {
             List<Invite> invites = new List<Invite>();
-            var parameters = new Dictionary<string, object>()
+            Dictionary<string, object> parameters = new Dictionary<string, object>()
             {
                 {"@IdInvitation", idInvitation }
             };
 
-            var dataTable = connection.ExecuteQuery(
+            DataTable dataTable = connection.ExecuteQuery(
                 @"SELECT I.IdInvite, I.Nom, I.Prenom, I.NumTel, I.Mail 
                   FROM Invite I 
                   INNER JOIN Invitation_Invite II ON I.IdInvite = II.IdInvite 
@@ -217,59 +270,63 @@ namespace API_Footies.Data.DAO
 
             foreach (DataRow row in dataTable.Rows)
             {
+                long idInvite = (long)row["IdInvite"];
+
                 Invite invite = new Invite(
-                    (long)row["IdInvite"],
+                    idInvite,
                     row["Nom"].ToString(),
                     row["Prenom"].ToString(),
                     row["NumTel"].ToString(),
-                    row["Mail"].ToString()
+                    row["Mail"].ToString(),
+                    null,
+                    null,
+                    null
                 );
                 invites.Add(invite);
             }
             return invites;
         }
 
-        /// <summary>
-        /// Obtient tous les plats d'une invitation
-        /// </summary>
         private List<Plat> ObtenirPlatsDansInvitation(SQLiteConnector connection, long idInvitation)
         {
             List<Plat> plats = new List<Plat>();
-            var parameters = new Dictionary<string, object>()
+            Dictionary<string, object> parameters = new Dictionary<string, object>()
             {
                 {"@IdInvitation", idInvitation }
             };
 
-            var dataTable = connection.ExecuteQuery(
-                @"SELECT P.IdPlat, P.Nom, P.Description, P.Categorie, P.Ingredients 
-                  FROM Plat P 
-                  INNER JOIN Invitation_Plat IP ON P.IdPlat = IP.IdPlat 
-                  WHERE IP.IdInvitation = @IdInvitation",
-                parameters);
+            DataTable dataTable = connection.ExecuteQuery(@"SELECT P.IdPlat, P.Nom, P.Categorie FROM Plat P INNER JOIN Invitation_Plat IP ON P.IdPlat = IP.IdPlat WHERE IP.IdInvitation = @IdInvitation", parameters);
 
             foreach (DataRow row in dataTable.Rows)
             {
                 long idPlat = (long)row["IdPlat"];
-                List<NomAllergene> allergenes = ObtenirAllergenesDuPlat(connection, idPlat);
-                Plat plat = CreerPlat(row, allergenes);
+
+                CategoriePlat categorie = CategoriePlat.plat;
+                Enum.TryParse(row["Categorie"].ToString(), true, out categorie);
+
+                Plat plat = new Plat(
+                    idPlat,
+                    row["Nom"].ToString(),
+                    "",
+                    categorie,
+                    "",
+                    null
+                );
                 plats.Add(plat);
             }
 
             return plats;
         }
 
-        /// <summary>
-        /// Obtient tous les menus d'une invitation
-        /// </summary>
-        private List<Menu> ObtenirMenusDansInvitation(SQLiteConnector connection, long idInvitation, List<Plat> platsDisponibles)
+        private List<Menu> ObtenirMenusDansInvitation(SQLiteConnector connection, long idInvitation)
         {
             List<Menu> menus = new List<Menu>();
-            var parameters = new Dictionary<string, object>()
+            Dictionary<string, object> parameters = new Dictionary<string, object>()
             {
                 {"@IdInvitation", idInvitation }
             };
 
-            var dataTable = connection.ExecuteQuery(
+            DataTable dataTable = connection.ExecuteQuery(
                 @"SELECT M.IdMenu, M.Nom 
                   FROM Menu M 
                   INNER JOIN Invitation_Menu IM ON M.IdMenu = IM.IdMenu 
@@ -281,7 +338,7 @@ namespace API_Footies.Data.DAO
                 long idMenu = (long)row["IdMenu"];
                 string nomMenu = row["Nom"].ToString();
 
-                List<Plat> platsMenu = ObtenirPlatsDansMenu(connection, idMenu);
+                List<Plat> platsMenu = ObtenirPlatsDansMenu_Optimise(connection, idMenu);
                 Menu menu = new Menu(platsMenu, idMenu, nomMenu);
                 menus.Add(menu);
             }
@@ -289,19 +346,16 @@ namespace API_Footies.Data.DAO
             return menus;
         }
 
-        /// <summary>
-        /// Obtient tous les plats d'un menu
-        /// </summary>
-        private List<Plat> ObtenirPlatsDansMenu(SQLiteConnector connection, long idMenu)
+        private List<Plat> ObtenirPlatsDansMenu_Optimise(SQLiteConnector connection, long idMenu)
         {
             List<Plat> plats = new List<Plat>();
-            var parameters = new Dictionary<string, object>()
+            Dictionary<string, object> parameters = new Dictionary<string, object>()
             {
                 {"@IdMenu", idMenu }
             };
 
-            var dataTable = connection.ExecuteQuery(
-                @"SELECT P.IdPlat, P.Nom, P.Description, P.Categorie, P.Ingredients 
+            DataTable dataTable = connection.ExecuteQuery(
+                @"SELECT P.IdPlat, P.Nom, P.Categorie 
                   FROM Plat P 
                   INNER JOIN Menu_Plat MP ON P.IdPlat = MP.IdPlat 
                   WHERE MP.IdMenu = @IdMenu",
@@ -310,26 +364,32 @@ namespace API_Footies.Data.DAO
             foreach (DataRow row in dataTable.Rows)
             {
                 long idPlat = (long)row["IdPlat"];
-                List<NomAllergene> allergenes = ObtenirAllergenesDuPlat(connection, idPlat);
-                Plat plat = CreerPlat(row, allergenes);
+                CategoriePlat categorie = CategoriePlat.plat;
+                Enum.TryParse(row["Categorie"].ToString(), true, out categorie);
+
+                Plat plat = new Plat(
+                    idPlat,
+                    row["Nom"].ToString(),
+                    null,
+                    categorie,
+                    null,
+                    null
+                );
                 plats.Add(plat);
             }
 
             return plats;
         }
 
-        /// <summary>
-        /// Obtient tous les groupes d'invités d'une invitation
-        /// </summary>
         private List<GroupeInvites> ObtenirGroupesInvitesDansInvitation(SQLiteConnector connection, long idInvitation)
         {
             List<GroupeInvites> groupesInvites = new List<GroupeInvites>();
-            var parameters = new Dictionary<string, object>()
+            Dictionary<string, object> parameters = new Dictionary<string, object>()
             {
                 {"@IdInvitation", idInvitation }
             };
 
-            var dataTable = connection.ExecuteQuery(
+            DataTable dataTable = connection.ExecuteQuery(
                 @"SELECT GI.IDGroupeInvite, GI.Nom 
                   FROM GroupeInvite GI 
                   INNER JOIN Invitation_GroupeInvite IGI ON GI.IDGroupeInvite = IGI.IDGroupeInvite 
@@ -342,30 +402,28 @@ namespace API_Footies.Data.DAO
                 string nomGroupe = row["Nom"].ToString();
 
                 List<Invite> invitesGroupe = ObtenirInvitesDansGroupeInvites(connection, idGroupeInvite);
-                GroupeInvites groupeInvites = new GroupeInvites(
+
+                GroupeInvites groupe = new GroupeInvites(
                     idGroupeInvite,
                     nomGroupe,
                     invitesGroupe
                 );
-                groupesInvites.Add(groupeInvites);
+                groupesInvites.Add(groupe);
             }
 
             return groupesInvites;
         }
 
-        /// <summary>
-        /// Obtient tous les invités d'un groupe d'invités
-        /// </summary>
         private List<Invite> ObtenirInvitesDansGroupeInvites(SQLiteConnector connection, long idGroupeInvite)
         {
             List<Invite> invites = new List<Invite>();
-            var parameters = new Dictionary<string, object>()
+            Dictionary<string, object> parameters = new Dictionary<string, object>()
             {
                 {"@IDGroupeInvite", idGroupeInvite }
             };
 
-            var dataTable = connection.ExecuteQuery(
-                @"SELECT I.IdInvite, I.Nom, I.Prenom, I.NumTel, I.Mail 
+            DataTable dataTable = connection.ExecuteQuery(
+                @"SELECT I.IdInvite, I.Nom, I.Prenom 
                   FROM Invite I 
                   INNER JOIN Invite_Groupe IG ON I.IdInvite = IG.IdInvite 
                   WHERE IG.IDGroupeInvite = @IDGroupeInvite",
@@ -377,8 +435,9 @@ namespace API_Footies.Data.DAO
                     (long)row["IdInvite"],
                     row["Nom"].ToString(),
                     row["Prenom"].ToString(),
-                    row["NumTel"].ToString(),
-                    row["Mail"].ToString()
+                    null,
+                    null,
+                    null, null, null
                 );
                 invites.Add(invite);
             }
@@ -386,170 +445,127 @@ namespace API_Footies.Data.DAO
             return invites;
         }
 
-        /// <summary>
-        /// Obtient tous les allergènes d'un plat
-        /// </summary>
-        private List<NomAllergene> ObtenirAllergenesDuPlat(SQLiteConnector connection, long idPlat)
-        {
-            List<NomAllergene> allergenes = new List<NomAllergene>();
-            var parameters = new Dictionary<string, object>()
-            {
-                {"@IdPlat", idPlat }
-            };
-
-            var dataTable = connection.ExecuteQuery(
-                @"SELECT a.Nom 
-                  FROM Allergene a
-                  INNER JOIN Plat_Allergene pa ON a.IDAllergene = pa.IDAllergene 
-                  WHERE pa.IDPlat = @IdPlat",
-                parameters);
-
-            foreach (DataRow row in dataTable.Rows)
-            {
-                NomAllergene allergene;
-                if (Enum.TryParse(row["Nom"].ToString(), true, out allergene))
-                {
-                    allergenes.Add(allergene);
-                }
-            }
-
-            return allergenes;
-        }
-
         #endregion
 
         #region Méthodes Modifier
-        /// <summary>
-        /// Insère l'invitation principale et retourne son ID
-        /// </summary>
-        private long ModifierInvitation(SQLiteConnector connection, Invitation invitation)
+        private long ModifierInvitationInternal(SQLiteConnector connection, Invitation invitation, long idUtilisateur)
         {
-            var parameters = new Dictionary<string, object>()
+            Dictionary<string, object> parameters = new Dictionary<string, object>()
             {
                 {"@IdInvitation", invitation.IdInvitation },
                 {"@Nom", invitation.Nom },
-                {"@Date", invitation.Date }
+                {"@Date", invitation.Date },
+                {"@IdUtilisateur", idUtilisateur }
             };
-            connection.ExecuteQuery("UPDATE Invitation SET Nom = @Nom, Date = @Date WHERE IdInvitation = @IdInvitation", parameters);
+            connection.ExecuteQuery("UPDATE Invitation SET Nom = @Nom, Date = @Date WHERE IdInvitation = @IdInvitation AND IdUtilisateur = @IdUtilisateur", parameters);
             return invitation.IdInvitation;
         }
 
-        /// <summary>
-        /// Modifie les groupes d'invités dans une invitation
-        /// </summary>
-        /// <param name="connection"> la connexion à la base de données </param>
-        /// <param name="invitation"> l'invitation à modifier </param>
         private void ModifierGroupesInvitesDansInvitation(SQLiteConnector connection, Invitation invitation)
         {
-            var deleteParameters = new Dictionary<string, object>()
+            Dictionary<string, object> deleteParameters = new Dictionary<string, object>()
             {
                 {"@IdInvitation", invitation.IdInvitation }
             };
             connection.ExecuteQuery("DELETE FROM Invitation_GroupeInvite WHERE IdInvitation = @IdInvitation", deleteParameters);
 
-            foreach (GroupeInvites groupeInvites in invitation.GroupeInvites)
+            if (invitation.GroupeInvites != null)
             {
-                var insertParameters = new Dictionary<string, object>()
+                foreach (GroupeInvites groupeInvites in invitation.GroupeInvites)
                 {
-                    {"@IdInvitation", invitation.IdInvitation },
-                    {"@IDGroupeInvite", groupeInvites.IdGroupeInvites }
-                };
-                connection.ExecuteQuery("INSERT INTO Invitation_GroupeInvite (IdInvitation, IDGroupeInvite) VALUES (@IdInvitation, @IDGroupeInvite)", insertParameters);
+                    Dictionary<string, object> insertParameters = new Dictionary<string, object>()
+                    {
+                        {"@IdInvitation", invitation.IdInvitation },
+                        {"@IDGroupeInvite", groupeInvites.IdGroupeInvites }
+                    };
+                    connection.ExecuteQuery("INSERT INTO Invitation_GroupeInvite (IdInvitation, IDGroupeInvite) VALUES (@IdInvitation, @IDGroupeInvite)", insertParameters);
+                }
             }
         }
 
-        /// <summary>
-        /// Modifie les menus dans une invitation
-        /// </summary>
-        /// <param name="connection"> la connexion à la base de données </param>
-        /// <param name="invitation"> l'invitation à modifier </param>
         private void ModifierMenusDansInvitation(SQLiteConnector connection, Invitation invitation)
         {
-            var deleteParameters = new Dictionary<string, object>()
+            Dictionary<string, object> deleteParameters = new Dictionary<string, object>()
             {
                 {"@IdInvitation", invitation.IdInvitation }
             };
             connection.ExecuteQuery("DELETE FROM Invitation_Menu WHERE IdInvitation = @IdInvitation", deleteParameters);
-            foreach (Menu menu in invitation.Menus)
+
+            if (invitation.Menus != null)
             {
-                var insertParameters = new Dictionary<string, object>()
+                foreach (Menu menu in invitation.Menus)
                 {
-                    {"@IdInvitation", invitation.IdInvitation },
-                    {"@IdMenu", menu.IdMenu }
-                };
-                connection.ExecuteQuery("INSERT INTO Invitation_Menu (IdInvitation, IdMenu) VALUES (@IdInvitation, @IdMenu)", insertParameters);
+                    Dictionary<string, object> insertParameters = new Dictionary<string, object>()
+                    {
+                        {"@IdInvitation", invitation.IdInvitation },
+                        {"@IdMenu", menu.IdMenu }
+                    };
+                    connection.ExecuteQuery("INSERT INTO Invitation_Menu (IdInvitation, IdMenu) VALUES (@IdInvitation, @IdMenu)", insertParameters);
+                }
             }
         }
 
-        /// <summary>
-        /// Modifie les invités dans une invitation
-        /// </summary>
-        /// <param name="connection"> la connexion à la base de données </param>
-        /// <param name="invitation"> l'invitation à modifier </param>
         private void ModifierInvitesDansInvitation(SQLiteConnector connection, Invitation invitation)
         {
-            var deleteParameters = new Dictionary<string, object>()
+            Dictionary<string, object> deleteParameters = new Dictionary<string, object>()
             {
                 {"@IdInvitation", invitation.IdInvitation }
             };
             connection.ExecuteQuery("DELETE FROM Invitation_Invite WHERE IdInvitation = @IdInvitation", deleteParameters);
-            foreach (Invite invite in invitation.Invites)
+
+            if (invitation.Invites != null)
             {
-                var insertParameters = new Dictionary<string, object>()
+                foreach (Invite invite in invitation.Invites)
                 {
-                    {"@IdInvitation", invitation.IdInvitation },
-                    {"@IdInvite", invite.Id }
-                };
-                connection.ExecuteQuery("INSERT INTO Invitation_Invite (IdInvitation, IdInvite) VALUES (@IdInvitation, @IdInvite)", insertParameters);
+                    Dictionary<string, object> insertParameters = new Dictionary<string, object>()
+                    {
+                        {"@IdInvitation", invitation.IdInvitation },
+                        {"@IdInvite", invite.Id }
+                    };
+                    connection.ExecuteQuery("INSERT INTO Invitation_Invite (IdInvitation, IdInvite) VALUES (@IdInvitation, @IdInvite)", insertParameters);
+                }
             }
         }
 
-        /// <summary>
-        /// Modifie les plats dans une invitation
-        /// </summary>
-        /// <param name="connection"> la connexion à la base de données </param>
-        /// <param name="invitation"> l'invitation à modifier </param>
         private void ModifierPlatsDansInvitation(SQLiteConnector connection, Invitation invitation)
         {
-            var deleteParameters = new Dictionary<string, object>()
+            Dictionary<string, object> deleteParameters = new Dictionary<string, object>()
             {
                 {"@IdInvitation", invitation.IdInvitation }
             };
             connection.ExecuteQuery("DELETE FROM Invitation_Plat WHERE IdInvitation = @IdInvitation", deleteParameters);
-            foreach (Plat plat in invitation.Plats)
+
+            if (invitation.Plats != null)
             {
-                var insertParameters = new Dictionary<string, object>()
+                foreach (Plat plat in invitation.Plats)
                 {
-                    {"@IdInvitation", invitation.IdInvitation },
-                    {"@IdPlat", plat.Id }
-                };
-                connection.ExecuteQuery("INSERT INTO Invitation_Plat (IdInvitation, IdPlat) VALUES (@IdInvitation, @IdPlat)", insertParameters);
+                    Dictionary<string, object> insertParameters = new Dictionary<string, object>()
+                    {
+                        {"@IdInvitation", invitation.IdInvitation },
+                        {"@IdPlat", plat.Id }
+                    };
+                    connection.ExecuteQuery("INSERT INTO Invitation_Plat (IdInvitation, IdPlat) VALUES (@IdInvitation, @IdPlat)", insertParameters);
+                }
             }
         }
-        #endregion
-
-        #region Méthodes annexes
 
         /// <summary>
-        /// Crée un objet Plat à partir d'une ligne de données
+        /// Recherche des invitations par nom
         /// </summary>
-        private Plat CreerPlat(DataRow row, List<NomAllergene> allergenes)
+        /// <summary>
+        /// Recherche des invitations par nom ET par utilisateur
+        /// </summary>
+        private DataTable RechercherInvitationsParTexte(SQLiteConnector connection, string texteRecherche, long idUtilisateur)
         {
-            CategoriePlat categorie;
-            if (!Enum.TryParse(row["Categorie"].ToString(), true, out categorie))
+            Dictionary<string, object> parameters = new Dictionary<string, object>()
             {
-                categorie = CategoriePlat.plat;
-            }
-
-            return new Plat(
-                (long)row["IdPlat"],
-                row["Nom"].ToString(),
-                row["Description"].ToString(),
-                categorie,
-                row["Ingredients"]?.ToString(),
-                allergenes.Count > 0 ? allergenes : null
-            );
+                {"@Texte", $"%{texteRecherche}%" },
+                {"@IdUtilisateur", idUtilisateur }
+            };
+            return connection.ExecuteQuery("SELECT * FROM Invitation WHERE Nom LIKE @Texte AND IdUtilisateur = @IdUtilisateur", parameters);
         }
+        #endregion
+        #region Méthodes annexes
         #endregion
     }
 }

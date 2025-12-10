@@ -202,6 +202,13 @@ namespace IHM_Footies
             vueFormulaireInvitation.Show();
             fenetreActuelle.Close();
         }
+
+        public static void AllerDetailInvitation(Window fenetreActuelle, VMInvitation invitation, string provenance = "Invitation")
+        {
+            VuePageInvitationDetail fenetre = new VuePageInvitationDetail(invitation, provenance);
+            fenetre.Show();
+            fenetreActuelle.Close();
+        }
         #endregion
 
         /// <summary>

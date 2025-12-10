@@ -21,6 +21,7 @@ namespace VM_Footies
         private VMInvite inviteSelectionne;
         private IInviteDAO inviteDAO;
         private string texteRecherche;
+        private VMPagePlat vmPagePlat;
         #endregion
 
         #region Propriétés 
@@ -66,6 +67,7 @@ namespace VM_Footies
         {
             this.inviteDAO = new InviteDAO();
             this.listeVMInvite = new List<VMInvite>();
+            this.vmPagePlat = new VMPagePlat();
         }
         #endregion
 
@@ -154,35 +156,6 @@ namespace VM_Footies
             }
         }
 
-        public async Task ChargerAllergenesDansInvite(VMInvite invite)
-        {
-            try
-            {
-                var tousLesAllergenes = Enum.GetValues(typeof(NomAllergene)).Cast<NomAllergene>();
-                HashSet<NomAllergene> allergenesSelectionnes = new HashSet<NomAllergene>();
-
-                if (invite.Invite.Allergenes != null)
-                {
-                   foreach (NomAllergene allergene in invite.Invite.Allergenes)
-                    {
-                        allergenesSelectionnes.Add(allergene);
-                    }
-                }
-                invite.AllergenesListe.Clear();
-                foreach (NomAllergene allergene in tousLesAllergenes)
-                {
-                    bool estSelectionne = allergenesSelectionnes.Contains(allergene);
-                    VMAllergeneSelectionne vmAllergeneSelectionne = new VMAllergeneSelectionne(allergene, estSelectionne);
-                    invite.GestionnaireEvenement(vmAllergeneSelectionne);
-                    invite.AllergenesListe.Add(vmAllergeneSelectionne);
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Erreur lors du chargement des allergènes pour l'invité : " + ex.Message);
-            }
-        }   
-
         /// <summary>
         /// Vérifie si un invité avec le même nom et prénom existe déjà
         /// </summary>
@@ -221,6 +194,74 @@ namespace VM_Footies
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(message));
         }
 
+        /// <summary>
+        /// Charge tous les plats disponibles dans l'invité avec leur état de sélection
+        /// </summary>
+        /// <param name="invite">L'invité dans lequel charger les plats aimés</param>
+        public async Task ChargerPlatsDetestesDansInvite(VMInvite invite)
+        {
+            try
+            {
+                await this.vmPagePlat.ChargerPlats();
+
+                HashSet<long> idDesPlatsDetestes = new HashSet<long>();
+                if (invite.Invite.PlatsDetestes != null)
+                {
+                    foreach (Plat plat in invite.Invite.PlatsDetestes)
+                    {
+                        idDesPlatsDetestes.Add(plat.Id);
+                    }
+                }
+
+                invite.PlatsDetestesListe.Clear();
+
+                foreach (VMPlat vmPlat in this.vmPagePlat.VMPlat)
+                {
+                    bool estSelectionne = idDesPlatsDetestes.Contains(vmPlat.Plat.Id);
+                    VMPlat vmPlatSelectionne = new VMPlat(vmPlat.Plat, estSelectionne);
+                    invite.GestionnaireEvenement(vmPlatSelectionne);
+                    invite.PlatsDetestesListe.Add(vmPlatSelectionne);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erreur lors du chargement des plats aimés pour l'invité : " + ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Charge tous les plats disponibles dans l'invité avec leur état de sélection pour les plats préférés
+        /// </summary>
+        /// <param name="invite">L'invité dans lequel charger les plats préférés</param>
+        public async Task ChargerPlatsPrefersDansInvite(VMInvite invite)
+        {
+            try
+            {
+                await this.vmPagePlat.ChargerPlats();
+
+                HashSet<long> idDesPlatsPreferes = new HashSet<long>();
+                if (invite.Invite.PlatsPreferes != null)
+                {
+                    foreach (Plat plat in invite.Invite.PlatsPreferes)
+                    {
+                        idDesPlatsPreferes.Add(plat.Id);
+                    }
+                }
+                invite.PlatsPreferesListe.Clear();
+
+                foreach (VMPlat vmPlat in this.vmPagePlat.VMPlat)
+                {
+                    bool estSelectionne = idDesPlatsPreferes.Contains(vmPlat.Plat.Id);
+                    VMPlat vmPlatSelectionne = new VMPlat(vmPlat.Plat, estSelectionne);
+                    invite.GestionnaireEvenement(vmPlatSelectionne);
+                    invite.PlatsPreferesListe.Add(vmPlatSelectionne);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erreur lors du chargement des plats préférés pour l'invité : " + ex.Message);
+            }
+        }
         #endregion
     }
 }

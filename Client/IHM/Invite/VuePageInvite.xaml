@@ -73,6 +73,34 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
+
+        <Style x:Key="StyleBoutonRetour" TargetType="Button">
+            <Setter Property="Background" Value="#F9F9F9"/>
+            <Setter Property="Foreground" Value="#B44B3E"/>
+            <Setter Property="FontSize" Value="24"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Width" Value="60"/>
+            <Setter Property="Height" Value="50"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="5">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#E0E0E0"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        
         <BitmapImage x:Key="LogoHostably" UriSource="/Ressources/LogoHostably.png"/>
         <Style x:Key="BoutonMenu" TargetType="Button">
             <Setter Property="Background" Value="#F9F9F9"/>
@@ -190,6 +218,12 @@
         </Border>
         <Image Source="{StaticResource ResourceKey=LogoHostably}" Margin="14,10,122,17"/>
 
+        <Button x:Name="BoutonRetourApresRecherche"
+        Style="{StaticResource StyleBoutonRetour}"
+        Content="⟳"
+        Click="BoutonRetour_Click"
+        Grid.Column="1"
+        Grid.Row="0" RenderTransformOrigin="0.217,0.517" Width="34" Height="33" Margin="26,58,0,0" Grid.RowSpan="2"/>
 
         <Border Style="{StaticResource StyleContainerRecherche}" Grid.Column="1" Margin="0,64,0,0" Width="440" Grid.RowSpan="2" HorizontalAlignment="Center" Height="27">
             <Grid>
@@ -221,6 +255,8 @@
                 </StackPanel>
             </ScrollViewer>
         </Border>
+        <TextBlock Text="{x:Static res:Strings.Double_Click}" TextWrapping="Wrap"  Margin="160,25,128,77" Opacity="0.9" FontSize="10" Grid.Column="1" Grid.RowSpan="2" Grid.Row="6"/>
+
 
         <!-- Boutons -->
         <Button Grid.RowSpan="2" Grid.Column="1" Content="{x:Static res:Strings.AjouterInvite}" HorizontalAlignment="Left" Margin="40,0,0,30" Grid.Row="6" VerticalAlignment="Bottom" Height="40" Width="240" Style="{StaticResource StyleBoutonInvite}" Click="BoutonAjouterInvite_Click" />

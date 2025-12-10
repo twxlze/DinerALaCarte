@@ -20,10 +20,10 @@ namespace VM_Footies.VM
 
         #region Attributs
         private Menu menu;
-        private ObservableCollection<VMPlatSelectionne> platsAperitif;
-        private ObservableCollection<VMPlatSelectionne> platsEntree;
-        private ObservableCollection<VMPlatSelectionne> platsPlat;
-        private ObservableCollection<VMPlatSelectionne> platsDessert;
+        private ObservableCollection<VMPlat> platsAperitif;
+        private ObservableCollection<VMPlat> platsEntree;
+        private ObservableCollection<VMPlat> platsPlat;
+        private ObservableCollection<VMPlat> platsDessert;
         #endregion
 
         #region Événement
@@ -62,7 +62,7 @@ namespace VM_Footies.VM
         /// <summary>
         /// Plats apéritifs sélectionnables
         /// </summary>
-        public ObservableCollection<VMPlatSelectionne> PlatsAperitif
+        public ObservableCollection<VMPlat> PlatsAperitif
         {
             get => platsAperitif;
             set
@@ -75,7 +75,7 @@ namespace VM_Footies.VM
         /// <summary>
         /// Plats entrées sélectionnables
         /// </summary>
-        public ObservableCollection<VMPlatSelectionne> PlatsEntree
+        public ObservableCollection<VMPlat> PlatsEntree
         {
             get => platsEntree;
             set
@@ -88,7 +88,7 @@ namespace VM_Footies.VM
         /// <summary>
         /// Plats principaux sélectionnables
         /// </summary>
-        public ObservableCollection<VMPlatSelectionne> PlatsPlat
+        public ObservableCollection<VMPlat> PlatsPlat
         {
             get => platsPlat;
             set
@@ -101,7 +101,7 @@ namespace VM_Footies.VM
         /// <summary>
         /// Plats desserts sélectionnables
         /// </summary>
-        public ObservableCollection<VMPlatSelectionne> PlatsDessert
+        public ObservableCollection<VMPlat> PlatsDessert
         {
             get => platsDessert;
             set
@@ -147,10 +147,10 @@ namespace VM_Footies.VM
         /// </summary>
         private void InitialiserCollections()
         {
-            this.platsAperitif = new ObservableCollection<VMPlatSelectionne>();
-            this.platsEntree = new ObservableCollection<VMPlatSelectionne>();
-            this.platsPlat = new ObservableCollection<VMPlatSelectionne>();
-            this.platsDessert = new ObservableCollection<VMPlatSelectionne>();
+            this.platsAperitif = new ObservableCollection<VMPlat>();
+            this.platsEntree = new ObservableCollection<VMPlat>();
+            this.platsPlat = new ObservableCollection<VMPlat>();
+            this.platsDessert = new ObservableCollection<VMPlat>();
         }
         #endregion*
 
@@ -191,7 +191,7 @@ namespace VM_Footies.VM
 
         private void SynchroniserPlatsAperitifs(List<Plat> platsSelectionnes)
         {
-            foreach (VMPlatSelectionne vmPlat in PlatsAperitif)
+            foreach (VMPlat vmPlat in PlatsAperitif)
             {
                 if (vmPlat.EstSelectionne)
                 {
@@ -202,7 +202,7 @@ namespace VM_Footies.VM
 
         private void SynchroniserPlatsEntree(List<Plat> platsSelectionnes)
         {
-            foreach (VMPlatSelectionne vmPlat in PlatsEntree)
+            foreach (VMPlat vmPlat in PlatsEntree)
             {
                 if (vmPlat.EstSelectionne)
                 {
@@ -213,7 +213,7 @@ namespace VM_Footies.VM
 
         private void SynchroniserPlatsPlats(List<Plat> platsSelectionnes)
         {
-            foreach (VMPlatSelectionne vmPlat in PlatsPlat)
+            foreach (VMPlat vmPlat in PlatsPlat)
             {
                 if (vmPlat.EstSelectionne)
                 {
@@ -224,7 +224,7 @@ namespace VM_Footies.VM
 
         private void SynchroniserPlatsDesserts(List<Plat> platsSelectionnes)
         {
-            foreach (VMPlatSelectionne vmPlat in PlatsDessert)
+            foreach (VMPlat vmPlat in PlatsDessert)
             {
                 if (vmPlat.EstSelectionne)
                 {
@@ -237,7 +237,7 @@ namespace VM_Footies.VM
         /// Ajoute un gestionnaire d'événement pour un VMPlatSelectionne
         /// </summary>
         /// <param name="vmInvite">Le plat sélectionnable</param>
-        public void GestionnaireEvenement(VMPlatSelectionne vmPlat)
+        public void GestionnaireEvenement(VMPlat vmPlat)
         {
             vmPlat.PropertyChanged += VmPlat_PropertyChanged;
         }

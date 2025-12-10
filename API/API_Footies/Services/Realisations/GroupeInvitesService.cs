@@ -25,28 +25,28 @@ namespace API_Footies.Services.Realisations
         #endregion
 
         #region Méthodes
-        public bool AjouterGroupeInvites(GroupeInvites groupeInvites)
+        public bool AjouterGroupeInvites(GroupeInvites groupeInvites, long IdUtilisateur)
         {
-            return this._groupeInviteDAO.AjouterGroupeInvites(groupeInvites);
+            return this._groupeInviteDAO.AjouterGroupeInvites(groupeInvites, IdUtilisateur);
         }
 
-        public List<GroupeInvites> ChercherGroupeInvites(string GroupeInvitesRechercher)
+        public List<GroupeInvites> ChercherGroupeInvites(string GroupeInvitesRechercher, long IdUtilisateur)
         {
-            return this._groupeInviteDAO.ChercherGroupeInvites(GroupeInvitesRechercher);
+            return this._groupeInviteDAO.ChercherGroupeInvites(GroupeInvitesRechercher, IdUtilisateur);
         }
 
-        public List<GroupeInvites> ListeGroupesInvites()
+        public List<GroupeInvites> ListeGroupesInvites(long IdUtilisateur)
         {
-            return this._groupeInviteDAO.ListeGroupesInvites();
+            return this._groupeInviteDAO.ListeGroupesInvites( IdUtilisateur);
         }
 
-        public bool ModifierGroupeInvite(GroupeInvites groupeInvite)
+        public bool ModifierGroupeInvite(GroupeInvites groupeInvite, long IdUtilisateur)
         {
-            return this._groupeInviteDAO.ModifierGroupe(groupeInvite);
+            return this._groupeInviteDAO.ModifierGroupe(groupeInvite, IdUtilisateur);
         }
-        public void SupprimerGroupe(long idGroupeInvite)
+        public void SupprimerGroupe(long idGroupeInvite, long IdUtilisateur)
         {
-            this._groupeInviteDAO.SupprimerGroupeInvite(idGroupeInvite);
+            this._groupeInviteDAO.SupprimerGroupeInvite(idGroupeInvite, IdUtilisateur);
         }
         #endregion
     }

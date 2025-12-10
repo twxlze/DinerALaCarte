@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using METIER_Footies.Data.Interfaces;
@@ -11,7 +8,7 @@ using METIER_Footies.Metier;
 namespace METIER_Footies.Data
 {
     /// <summary>
-    // Classe d'accès aux données pour les plats avec la base de données
+    /// Classe d'accès aux données pour les plats avec la base de données (Côté Client)
     /// </summary>
     public class PlatDAO : DAO, IPlatDAO
     {
@@ -19,7 +16,11 @@ namespace METIER_Footies.Data
         {
             try
             {
-                HttpResponseMessage reponseHttp = await PostAsync("Plats/AjoutPlat", plat);
+                long idUtilisateur = SessionService.Instance.UtilisateurConnecte.Id;
+
+                string url = $"Plats/AjoutPlat?IdUtilisateur={idUtilisateur}";
+
+                HttpResponseMessage reponseHttp = await PostAsync(url, plat);
                 return reponseHttp;
             }
             catch (Exception ex)
@@ -32,22 +33,37 @@ namespace METIER_Footies.Data
         {
             List<Plat> listeDesPlats = new List<Plat>();
 
-            HttpResponseMessage reponseHttp = await this.GetAsync("Plats/ListePlat");
-
-            if (reponseHttp.IsSuccessStatusCode)
+            try
             {
-                string reponse = await reponseHttp.Content.ReadAsStringAsync();
-                listeDesPlats = JsonSerializer.Deserialize<List<Plat>>(reponse, options);
+                long idUtilisateur = SessionService.Instance.UtilisateurConnecte.Id;
+
+                string url = $"Plats/ListePlat?IdUtilisateur={idUtilisateur}";
+
+                HttpResponseMessage reponseHttp = await this.GetAsync(url);
+
+                if (reponseHttp.IsSuccessStatusCode)
+                {
+                    string reponse = await reponseHttp.Content.ReadAsStringAsync();
+                    listeDesPlats = JsonSerializer.Deserialize<List<Plat>>(reponse, options);
+                }
             }
+            catch (Exception ex)
+            {
+                throw new Exception("Erreur lors de la récupération des plats : " + ex.Message);
+            }
+
             return listeDesPlats;
         }
-
 
         public async Task<HttpResponseMessage> SupprimerPlat(long idPlat)
         {
             try
             {
-                HttpResponseMessage reponseHttp = await DeleteAsync($"Plats/SupprimerPlat?id={idPlat}");
+                long idUtilisateur = SessionService.Instance.UtilisateurConnecte.Id;
+
+                string url = $"Plats/SupprimerPlat?id={idPlat}&IdUtilisateur={idUtilisateur}";
+
+                HttpResponseMessage reponseHttp = await DeleteAsync(url);
                 return reponseHttp;
             }
             catch (Exception ex)
@@ -56,12 +72,15 @@ namespace METIER_Footies.Data
             }
         }
 
-
         public async Task<HttpResponseMessage> ModifierPlat(Plat plat)
         {
             try
             {
-                HttpResponseMessage reponseHttp = await PutAsync("Plats/ModifierPlat", plat);
+                long idUtilisateur = SessionService.Instance.UtilisateurConnecte.Id;
+
+                string url = $"Plats/ModifierPlat?IdUtilisateur={idUtilisateur}";
+
+                HttpResponseMessage reponseHttp = await PutAsync(url, plat);
                 return reponseHttp;
             }
             catch (Exception ex)
@@ -70,13 +89,14 @@ namespace METIER_Footies.Data
             }
         }
 
-
         public async Task<bool> EstDansUnMenu(long idPlat)
         {
             bool resultat = false;
             try
             {
-                HttpResponseMessage reponseHttp = await GetAsync($"Plats/EstDansUnMenu?id={idPlat}");
+                string url = $"Plats/EstDansUnMenu?id={idPlat}";
+
+                HttpResponseMessage reponseHttp = await GetAsync(url);
 
                 if (reponseHttp.IsSuccessStatusCode)
                 {
@@ -94,14 +114,25 @@ namespace METIER_Footies.Data
         public async Task<List<Plat>> ChercherPlat(string texteRecherche)
         {
             List<Plat> listeDesPlats = new List<Plat>();
-            HttpResponseMessage reponseHttp = await GetAsync($"Plats/ChercherPlat?texterecherche={texteRecherche}");
-            if (reponseHttp.IsSuccessStatusCode)
+            try
             {
-                string reponse = await reponseHttp.Content.ReadAsStringAsync();
-                listeDesPlats = JsonSerializer.Deserialize<List<Plat>>(reponse, options);
+                long idUtilisateur = SessionService.Instance.UtilisateurConnecte.Id;
+
+                string url = $"Plats/ChercherPlat?texterecherche={texteRecherche}&IdUtilisateur={idUtilisateur}";
+
+                HttpResponseMessage reponseHttp = await GetAsync(url);
+
+                if (reponseHttp.IsSuccessStatusCode)
+                {
+                    string reponse = await reponseHttp.Content.ReadAsStringAsync();
+                    listeDesPlats = JsonSerializer.Deserialize<List<Plat>>(reponse, options);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erreur lors de la recherche de plats : " + ex.Message);
             }
             return listeDesPlats;
         }
-
     }
 }

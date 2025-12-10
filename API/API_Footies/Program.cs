@@ -1,25 +1,26 @@
 using API_Footies.Data.DAO;
 using API_Footies.Data.Interfaces;
+using API_Footies.Metier;
+using API_Footies.Outils;
 using API_Footies.Services.Interfaces;
 using API_Footies.Services.Realisations;
+using Microsoft.AspNetCore.Identity;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+// Learn more about configuring Swagger/OpenAPI at https:gai//aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 /// ---- Injections des dépendances ----
 builder.Services.AddScoped<IInviteDAO, InviteDAO>();
 builder.Services.AddScoped<IInviteService, InviteService>();
+
 builder.Services.AddScoped<IPlatDAO, PlatDAO>();
 builder.Services.AddScoped<IPlatService, PlatService>();
-
-builder.Services.AddScoped<IInviteDAO, InviteDAO>();
-builder.Services.AddScoped<IPlatDAO, PlatDAO>();
 
 builder.Services.AddScoped<IGroupeInviteDAO, GroupeInviteDAO>();
 builder.Services.AddScoped<IGroupeInvitesService, GroupeInvitesService>();
@@ -30,9 +31,10 @@ builder.Services.AddScoped<IMenuService, MenuService>();
 builder.Services.AddScoped<IInvitationDAO, InvitationDAO>();
 builder.Services.AddScoped<IInvitationService, InvitationService>();
 
-builder.Services.AddScoped<IAllergeneDAO, AllergeneDAO>();
-builder.Services.AddScoped<IAllergeneService, AllergeneService>();
 
+builder.Services.AddScoped<IUtilisateurDAO, UtilisateurDAO>();
+builder.Services.AddScoped<IAuthentificationService, AuthentificationService>();
+builder.Services.AddScoped<IAuthentification, Authentification>();
 
 SQLitePCL.Batteries.Init();
 

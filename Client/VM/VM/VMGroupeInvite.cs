@@ -18,7 +18,7 @@ namespace VM_Footies.VM
     {
         #region Attributs
         private GroupeInvites groupe; 
-        private ObservableCollection<VMInviteSelectionne> invitesListe;
+        private ObservableCollection<VMInvite> invitesListe;
         #endregion
 
         #region Evénement
@@ -58,7 +58,7 @@ namespace VM_Footies.VM
         #endregion
 
         #region Propriétés pour les invités séléctionnables
-        public ObservableCollection<VMInviteSelectionne> InvitesListe
+        public ObservableCollection<VMInvite> InvitesListe
         {
             get => invitesListe;
             set
@@ -78,7 +78,7 @@ namespace VM_Footies.VM
         public VMGroupeInvite(GroupeInvites groupeInvite)
         {
             this.groupe = groupeInvite;
-            this.invitesListe = new ObservableCollection<VMInviteSelectionne>();
+            this.invitesListe = new ObservableCollection<VMInvite>();
         }
 
         /// <summary>
@@ -87,7 +87,7 @@ namespace VM_Footies.VM
         public VMGroupeInvite(VMGroupeInvite modele)
         {
             this.groupe = new GroupeInvites(modele.Groupe);
-            this.invitesListe = new ObservableCollection<VMInviteSelectionne>();
+            this.invitesListe = new ObservableCollection<VMInvite>();
         }
 
         /// <summary>
@@ -96,7 +96,7 @@ namespace VM_Footies.VM
         public VMGroupeInvite()
         {
             this.groupe = new GroupeInvites();
-            this.invitesListe = new ObservableCollection<VMInviteSelectionne>();
+            this.invitesListe = new ObservableCollection<VMInvite>();
         }
         #endregion
 
@@ -132,7 +132,7 @@ namespace VM_Footies.VM
         public void SynchroniserInvitesSelectionnes()
         {
             List<Invite> inviteSelectionne = new List<Invite>();
-            foreach (VMInviteSelectionne vmInvite in this.invitesListe)
+            foreach (VMInvite vmInvite in this.invitesListe)
             {
                 if (vmInvite.EstSelectionne)
                 {
@@ -147,7 +147,7 @@ namespace VM_Footies.VM
         /// Ajoute un gestionnaire d'événement pour un VMInviteSelectionne
         /// </summary>
         /// <param name="vmInvite">L'invité sélectionnable</param>
-        public void GestionnaireEvenement(VMInviteSelectionne vmInvite)
+        public void GestionnaireEvenement(VMInvite vmInvite)
         {
             vmInvite.PropertyChanged += VmInvite_PropertyChanged;
         }

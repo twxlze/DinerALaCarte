@@ -25,24 +25,29 @@ namespace API_Footies.Services.Realisations
         #endregion
 
         #region Méthodes
-        public void AjouterInvitation(Invitation invitation)
+        public void AjouterInvitation(Invitation invitation, long IdUtilisateur)
         {
-            this.invitationDAO.AjouterInvitation(invitation);
+            this.invitationDAO.AjouterInvitation(invitation, IdUtilisateur);
         }
 
-        public void ModifierInvitation(Invitation invitation)
+        public void ModifierInvitation(Invitation invitation, long IdUtilisateur)
         {
-            this.invitationDAO.ModifierInvitation(invitation);
+            this.invitationDAO.ModifierInvitation(invitation, IdUtilisateur);
         }
 
-        public List<Invitation> ObtenirToutInvitations()
+        public List<Invitation> ObtenirToutInvitations(long IdUtilisateur)
         {
-            return this.invitationDAO.ObtenirToutInvitations();
+            return this.invitationDAO.ObtenirToutInvitations(IdUtilisateur);
         }
 
-        public void SupprimerInvitation(long idInvitation)
+        public void SupprimerInvitation(long idInvitation, long IdUtilisateur)
         {
-            this.invitationDAO.SupprimerInvitation(idInvitation);
+            this.invitationDAO.SupprimerInvitation(idInvitation, IdUtilisateur);
+        }
+
+        public List<Invitation> ChercherInvitations(string InvitationsRechercher, long IdUtilisateur)
+        {
+            return this.invitationDAO.ChercherInvitations(InvitationsRechercher, IdUtilisateur);
         }
         #endregion
     }
