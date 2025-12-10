@@ -1,7 +1,10 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using VM_Footies;
 using VM_Footies.VM;
+using VM_Footies.VM_Element_Selectionne;
+using VM_Footies.VM_Page;
 
 namespace IHM_Footies.Invitations
 {
@@ -10,6 +13,9 @@ namespace IHM_Footies.Invitations
         #region Attributs
         private VMInvitation vmInvitation;
         private string provenance;
+        private VMPageInvite vmPageInvite = new VMPageInvite();
+        private List<VueInvite> VueInvites = new List<VueInvite>();
+
         #endregion
 
         #region Constructeur
@@ -40,8 +46,11 @@ namespace IHM_Footies.Invitations
 
             foreach (VMInvite vmInvite in listeVM)
             {
-                VueInvite vue = new VueInvite(vmInvite);
-                this.PanelInvites.Children.Add(vue);
+                VueInvite vueInvite = new VueInvite(vmInvite);
+                vueInvite.MouseDown += (s, e) => this.SelectionnerInvite(vueInvite);
+                vueInvite.MouseDoubleClick += (s, e) => this.OuvrirDetailInvite(vueInvite);
+                this.VueInvites.Add(vueInvite);
+                this.PanelInvites.Children.Add(vueInvite);
             }
         }
 
@@ -99,6 +108,31 @@ namespace IHM_Footies.Invitations
 
             return bordure;
         }
+
+
+        /// <summary>
+        /// Sélectionne un menu dans la liste d'invitations
+        /// </summary>
+        /// <param name="vue"> VueInvitation sélectionnée </param>
+        public void SelectionnerInvite(VueInvite vue)
+        {
+            this.vmPageInvite.InviteSelectionne = vue.Invite;
+            foreach (VueInvite vueI in this.VueInvites)
+            {
+                vueI.Deselectionner();
+            }
+            vue.Selectionner();
+        }
+
+        private async Task OuvrirDetailInvite(VueInvite vue)
+        {
+            if (this.vmPageInvite.InviteSelectionne != null)
+            {
+                Navigation.AllerDetailInvite(this, this.vmPageInvite.InviteSelectionne, "Invitation", this.vmInvitation);
+            }
+        }
+
+
 
         private void RetourAuxInvitations_Click(object sender, RoutedEventArgs e)
         {

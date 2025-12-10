@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 using VM_Footies.VM;
 using VM_Footies;
 using VM_Footies.VM_Element_Selectionne;
+using VM_Footies.VM_Page;
 
 namespace IHM_Footies.Invite
 {
@@ -24,14 +25,21 @@ namespace IHM_Footies.Invite
     {
         #region Attributs
         private VMPageInvite vMPageInvite;
+        private VMPageGroupeInvite vMPageGroupeInvite;
+        private VMInvitation invitationPrecedente;
         private string provenance;
         #endregion
-        public VuePageInviteDetail(VMInvite vMInvite, string provenance = "Invite")
+        public VuePageInviteDetail(VMInvite vMInvite, string provenance = "Invite", VMInvitation invitationParent = null)
         {
             InitializeComponent();
 
             this.vMPageInvite = new VMPageInvite();
             this.vMPageInvite.InviteSelectionne = vMInvite;
+
+            this.vMPageGroupeInvite = new VMPageGroupeInvite();
+
+            this.invitationPrecedente = invitationParent;
+
             this.provenance = provenance;
             this.DataContext = this.vMPageInvite;
 
@@ -47,13 +55,26 @@ namespace IHM_Footies.Invite
         /// <param name="e"></param>
         private void RetourAPage_Click(object sender, RoutedEventArgs e)
         {
-            if (this.provenance == "Accueil")
+            switch (this.provenance)
             {
-                Navigation.AllerAccueil(this);
-            }
-            else
-            {
-                Navigation.AllerInvites(this);
+                case "Accueil":
+                    Navigation.AllerAccueil(this);
+                    break;
+                case "Invite":
+                    Navigation.AllerInvites(this);
+                    break;
+                case "GroupeInvite":
+                    Navigation.AllerDetailGroupeInvite(this, this.vMPageGroupeInvite.GroupeSelectionne);
+                    break;
+                case "Invitation":
+                    if (this.invitationPrecedente != null)
+                    {
+                        Navigation.AllerDetailInvitation(this, this.invitationPrecedente);
+                    }
+                    break;
+                default:
+                    Navigation.AllerInvites(this);
+                    break;
             }
         }
         #endregion
