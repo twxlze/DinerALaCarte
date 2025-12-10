@@ -88,16 +88,6 @@ namespace IHM_Footies.GroupeInvite
         /// <param name="e"></param>
         private void RetourAuGroupeInvite_Click(object sender, RoutedEventArgs e)
         {
-            /*
-            if (this.provenance == "Accueil")
-            {
-                Navigation.AllerAccueil(this);
-            }
-            else
-            {
-                Navigation.AllerGroupesInvites(this);
-            }
-            */
             switch (this.provenance)
             {
                 case "Accueil":

@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using IHM_Footies.Menu;
 using VM_Footies;
 using VM_Footies.VM;
 using VM_Footies.VM_Element_Selectionne;
@@ -17,6 +18,8 @@ namespace IHM_Footies.Invitations
         private List<VueInvite> vueInvites = new List<VueInvite>();
         private VMPageGroupeInvite vMPageGroupeInvite = new VMPageGroupeInvite();
         private List<VueGroupeInvite> vueGroupes = new List<VueGroupeInvite>();
+        private VMPageMenu vmPageMenu = new VMPageMenu();
+        private List<VueMenu> vueMenus = new List<VueMenu>();
         #endregion
 
         #region Constructeur
@@ -77,8 +80,13 @@ namespace IHM_Footies.Invitations
 
             foreach (VMMenu vmMenu in listeVM)
             {
-                Border bordure = this.EsthetiqueVisuel(vmMenu.Nom);
-                this.PanelMenus.Children.Add(bordure);
+                VueMenu vue = new VueMenu(vmMenu);
+                vue.MouseDown += (s, e) => this.SelectionnerMenu(vue);
+                vue.MouseDoubleClick += (s, e) => this.OuvrirDetailMenu(vue);
+                this.vueMenus.Add(vue);
+                this.PanelMenus.Children.Add(vue);
+                //Border bordure = this.EsthetiqueVisuel(vmMenu.Nom);
+                //this.PanelMenus.Children.Add(bordure);
             }
         }
 
@@ -155,6 +163,28 @@ namespace IHM_Footies.Invitations
             if (this.vMPageGroupeInvite.GroupeSelectionne != null)
             {
                 Navigation.AllerDetailGroupeInvite(this, this.vMPageGroupeInvite.GroupeSelectionne, "Invitation", this.vmInvitation);
+            }
+        }
+
+        /// <summary>
+        /// Sélectionne un menu dans la liste des menus
+        /// </summary>
+        /// <param name="vue"> VueMenu sélectionné </param>
+        public void SelectionnerMenu(VueMenu vue)
+        {
+            this.vmPageMenu.MenuSelectionne = vue.Menu;
+            foreach (VueMenu vueM in this.vueMenus)
+            {
+                vueM.Deselectionner();
+            }
+            vue.Selectionner();
+        }
+
+        private async Task OuvrirDetailMenu(VueMenu vue)
+        {
+            if (this.vmPageMenu.MenuSelectionne != null)
+            {
+                Navigation.AllerDetailMenu(this, this.vmPageMenu.MenuSelectionne, "Invitation", this.vmInvitation);
             }
         }
 

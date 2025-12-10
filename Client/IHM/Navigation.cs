@@ -151,9 +151,9 @@ namespace IHM_Footies
         /// </summary>
         /// <param name="fenetreActuelle"> La fenêtre actuelle à fermer </param>
         /// <param name="menu"> Le menu à afficher en détail </param>
-        public static void AllerDetailMenu(Window fenetreActuelle, VMMenu menu, string provenance = "Menu")
+        public static void AllerDetailMenu(Window fenetreActuelle, VMMenu menu, string provenance = "Menu", VMInvitation invitationPrecedente = null)
         {
-            VuePageMenuDetail fenetre = new VuePageMenuDetail(menu, provenance);
+            VuePageMenuDetail fenetre = new VuePageMenuDetail(menu, provenance, invitationPrecedente);
             fenetre.Show();
             fenetreActuelle.Close();
         }
