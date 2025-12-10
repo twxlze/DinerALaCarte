@@ -48,7 +48,8 @@ namespace IHM_Footies.Connexion
             bool connexionReussie = await this.vmPageConnexion.Inscription();
             if (connexionReussie)
             {
-                Navigation.AllerAccueil(this);
+                MessageBox.Show("Compte créé avec succès. Connectez-vous.", "Succès", MessageBoxButton.OK, MessageBoxImage.Information);
+                Navigation.AllerConnexion(this);
             }
             else
             {

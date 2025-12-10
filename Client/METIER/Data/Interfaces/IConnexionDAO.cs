@@ -29,9 +29,10 @@ namespace METIER_Footies.Data.Interfaces
         /// <summary>
         /// Créer un nouvel utilisateur
         /// </summary>
+        /// <param name="identifiant">Les informations d'identification de l'utilisateur à créer</param>
         /// <param name="utilisateur">L'utilisateur à créer</param>
         /// <returns></returns>
-        Task<bool> Inscription(Utilisateur utilisateur);
+        Task<bool> Inscription(Identifiant identifiant, Utilisateur utilisateur);
 
     }
 }

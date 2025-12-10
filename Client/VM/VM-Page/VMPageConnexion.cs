@@ -18,6 +18,10 @@ namespace VM_Footies.VM_Page
         private string pseudo;
         private string motDePasse;
         private string messageErreur;
+        private string? nom;
+        private string? prenom;
+        private string? telephone;
+        private string? email;
         #endregion
 
         #region propriétés
@@ -59,6 +63,58 @@ namespace VM_Footies.VM_Page
                 Notify("MessageErreur");
             }
         }
+
+        /// <summary>
+        /// Retourne ou modifie le nom de l'utilisateur
+        /// </summary>
+        public string? Nom
+        {
+            get { return nom; }
+            set
+            {
+                nom = value;
+                Notify("Nom");
+            }
+        }
+
+        /// <summary>
+        /// Retourne ou modifie le prénom de l'utilisateur
+        /// </summary>
+        public string? Prenom
+        {
+            get { return prenom; }
+            set
+            {
+                prenom = value;
+                Notify("Prenom");
+            }
+        }
+
+        /// <summary>
+        /// Retourne ou modifie le numéro de téléphone de l'utilisateur
+        /// </summary>
+        public string? Telephone
+        {
+            get { return telephone; }
+            set
+            {
+                telephone = value;
+                Notify("Telephone");
+            }
+        }
+
+        /// <summary>
+        /// Retourne ou modifie l'email de l'utilisateur
+        /// </summary>
+        public string? Email
+        {
+            get { return email; }
+            set
+            {
+                email = value;
+                Notify("Email");
+            }
+        }
         #endregion
 
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -73,6 +129,10 @@ namespace VM_Footies.VM_Page
             this.pseudo = string.Empty;
             this.motDePasse = string.Empty;
             this.messageErreur = string.Empty;
+            this.nom = string.Empty;
+            this.prenom = string.Empty;
+            this.telephone = string.Empty;
+            this.email = string.Empty;
         }
         #endregion
 
@@ -109,6 +169,7 @@ namespace VM_Footies.VM_Page
         public async Task<bool> Inscription()
         {
             bool inscriptionReussie = false;
+
             if (ValiderChamps())
             {
                 bool disponible = await this.connexionDAO.VerifierPseudoDisponible(this.pseudo);
@@ -119,7 +180,10 @@ namespace VM_Footies.VM_Page
                 else
                 {
                     this.MessageErreur = string.Empty;
-                    Identifiant nouvelUtilisateur = new Identifiant(0, this.pseudo, this.motDePasse);
+                    Identifiant nouvelIdentifiant = new Identifiant(0, this.pseudo, this.motDePasse);
+                    Utilisateur nouvelUtilisateur = new Utilisateur(0, this.pseudo, this.nom, this.prenom, this.telephone, this.email);
+
+                    inscriptionReussie = await this.connexionDAO.Inscription(nouvelIdentifiant, nouvelUtilisateur);
                 }
             }
             return inscriptionReussie;

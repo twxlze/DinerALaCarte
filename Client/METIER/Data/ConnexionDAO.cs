@@ -56,17 +56,19 @@ namespace METIER_Footies.Data
             return resultat;
         }
 
-        public async Task<bool> Inscription(Utilisateur utilisateur)
+        public async Task<bool> Inscription(Identifiant identifiant, Utilisateur utilisateur)
         {
             bool resultat = false;
             try
             {
-                HttpResponseMessage reponseHttp = await PostAsync($"Authentification/CreerUnUtilisateur", utilisateur);
+                Dictionary<string, object> paquet = new Dictionary<string, object>();
+                paquet.Add("Identifiant", identifiant);
+                paquet.Add("Utilisateur", utilisateur);
+                HttpResponseMessage reponseHttp = await PostAsync("Authentification/Inscription", paquet);
 
                 if (reponseHttp.IsSuccessStatusCode)
                 {
-                    string reponse = await reponseHttp.Content.ReadAsStringAsync();
-                    resultat = JsonSerializer.Deserialize<bool>(reponse, options);
+                    resultat = true;
                 }
             }
             catch (Exception ex)
@@ -76,6 +78,6 @@ namespace METIER_Footies.Data
             return resultat;
         }
 
-        
+
     }
 }

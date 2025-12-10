@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel;
 using METIER_Footies.Data;
 using METIER_Footies.Data.Interfaces;
-using METIER_Footies.Data.Interfaces;
 using METIER_Footies.Metier;
 using VM_Footies.VM;
 using VM_Footies.VM_Element_Selectionne;
