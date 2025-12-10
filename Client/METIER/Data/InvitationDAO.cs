@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
-using METIER_Footies.Data.Interface;
+using METIER_Footies.Data.Interfaces;
 using METIER_Footies.Metier;
 
 namespace METIER_Footies.Data
