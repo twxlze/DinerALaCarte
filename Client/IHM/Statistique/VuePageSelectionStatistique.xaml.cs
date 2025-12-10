@@ -49,9 +49,9 @@ namespace IHM_Footies.Statistique
         {
             try
             {
-                bool AumoinUnSelection = this.vmPageStatistique.InvitesSelectionnes != null;
+                bool AuMoinUnSelection = this.vmPageStatistique.InvitesSelectionnes != null;
 
-                if (!AumoinUnSelection)
+                if (!AuMoinUnSelection)
                 {
                     MessageBox.Show(
                         "Sélectionnez au moins un invité pour voir les stats",

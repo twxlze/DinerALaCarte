@@ -312,4 +312,19 @@
   <data name="Double_Click" xml:space="preserve">
     <value>*Double-click on an item to view its details.</value>
   </data>
+  <data name="Stats" xml:space="preserve">
+    <value>📊 Statistics</value>
+  </data>
+  <data name="StatsPage" xml:space="preserve">
+    <value>Guest Statistics</value>
+  </data>
+  <data name="messageStats" xml:space="preserve">
+    <value>🛈Select guests to view their attendance frequency statistics</value>
+  </data>
+  <data name="selecttout" xml:space="preserve">
+    <value>Select all</value>
+  </data>
+  <data name="AfficherStats" xml:space="preserve">
+    <value>View the statistics</value>
+  </data>
 </root>

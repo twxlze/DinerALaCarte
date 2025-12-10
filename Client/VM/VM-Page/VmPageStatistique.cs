@@ -307,7 +307,7 @@ namespace VM_Footies.VM_Page
             invitesNonFiltres = invitesNonFiltres.OrderBy(i => i.Invite.Identite).ToList();
             invitesFiltres.AddRange(invitesNonFiltres);
 
-            // reconstruire la collection observable
+            // raffraichir la collection observable
             _invitesStats.Clear();
             foreach (VMinviteStats inviteStat in invitesFiltres)
             {
@@ -371,19 +371,19 @@ namespace VM_Footies.VM_Page
 
             Dictionary<string, int> donneesStatistiques = await GenererDonneesStatistiques();
 
-            int maxValeur = 0;
+            int maxZoom = 0;
             foreach (KeyValuePair<string, int> element in donneesStatistiques)
             {
                 categoryAxis.Labels.Add(element.Key);
                 barSeries.Items.Add(new BarItem { Value = element.Value });
-                if (element.Value > maxValeur)
+                if (element.Value > maxZoom)
                 {
-                    maxValeur = element.Value;
+                    maxZoom = element.Value;
                 }
             }
 
-            valueAxis.AbsoluteMaximum = maxValeur + 5;
-            valueAxis.Maximum = maxValeur + 1;
+            valueAxis.AbsoluteMaximum = maxZoom + 5;
+            valueAxis.Maximum = maxZoom + 1;
             model.Series.Add(barSeries);
             StatistiqueModel = model;
         }

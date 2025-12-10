@@ -244,7 +244,7 @@
                 <Button x:Name="BoutonInvitations" Content="{x:Static res:Strings.Invitations}" Grid.Row="4" Grid.Column="0" Style="{StaticResource BoutonMenu}" Click="BoutonAllerInvitation_Click"/>
                 <Button x:Name="BoutonMenus" Content="{x:Static res:Strings.Menus}" Grid.Row="5" Grid.Column="0" Style="{StaticResource BoutonMenu}" Cursor="Hand" Click="BoutonAllerMenu_Click"/>
                 <Button x:Name="BoutonPlats" Content="{x:Static res:Strings.Plats}" Grid.Row="6" Grid.Column="0" Style="{StaticResource BoutonMenu}" Click="BoutonAllerPlat_Click"/>
-                <Button x:Name="BoutonStatistique" Content="📊 Statistique" Grid.Row="7" Grid.Column="0" Style="{StaticResource BoutonMenu}" Click="BoutonAllerStatistique_Click" Background="#BFBFBF" FontWeight="Bold"/>
+                <Button x:Name="BoutonStatistique" Content="{x:Static res:Strings.Stats}" Grid.Row="7" Grid.Column="0" Style="{StaticResource BoutonMenu}" Click="BoutonAllerStatistique_Click" Background="#BFBFBF" FontWeight="Bold"/>
                 <!-- <Button x:Name="BoutonTableauDeBord" Content="📈Tableau de Bord" Grid.Row="8" Grid.Column="0" Style="{StaticResource BoutonMenu}" Click="BoutonAllerTableauDeBord_Click"/> -->
                 <Button x:Name="BoutonUtilisateur" Content="👤" Grid.Row="10" Grid.Column="0" Style="{StaticResource BoutonMenu}" Margin="0,0,100,0" HorizontalContentAlignment="Center" FontSize="25"/>
                 <Button x:Name="BoutonReglage" Content="⚙️" Grid.Row="10" Grid.Column="0" Style="{StaticResource BoutonMenu}" HorizontalContentAlignment="Center" Margin="100,0,0,0" FontSize="25" Click="BoutonAllerReglages_Click"/>
@@ -261,7 +261,7 @@
 
 
         <!-- Titre -->
-        <TextBlock Grid.Column="1" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Statistiques des invités" VerticalAlignment="Top" FontWeight="Bold" FontSize="20" Foreground="#B44B3E" Margin="0,20,0,0"/>
+        <TextBlock Grid.Column="1" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{x:Static res:Strings.StatsPage}" VerticalAlignment="Top" FontWeight="Bold" FontSize="20" Foreground="#B44B3E" Margin="0,20,0,0"/>
 
         <!-- Container formulaire -->
         <Border BorderBrush="#8C2F26" 
@@ -298,7 +298,7 @@
             Grid.Column="1"
             Grid.RowSpan="5" 
             Margin="54,110,54,100">
-            <TextBlock Text="🛈Sélectionnez les invités pour afficher leurs statistiques de fréquence de venue"
+            <TextBlock Text="{x:Static res:Strings.messageStats}"
                        FontSize="14"
                        Foreground="#FF4F4F4F"
                        TextWrapping="Wrap"
@@ -311,7 +311,7 @@
                     BorderThickness="3"
                     CornerRadius="10"
                     Padding="5" Grid.Row="2">
-                <CheckBox Content="Sélectionner tout"
+            <CheckBox Content="{x:Static res:Strings.selecttout}"
                   IsChecked="{Binding ToutSelectionner}"
                   FontWeight="Bold"
                   FontSize="14"
@@ -341,7 +341,7 @@
             </Border>
 
         <!-- Boutons -->
-        <Button Grid.RowSpan="2" Grid.Column="1" Content="Afficher les Stats" HorizontalAlignment="Center" Margin="0,58,0,0" Grid.Row="7" VerticalAlignment="Top" Height="40" Width="240" Style="{StaticResource StyleBoutonEnregistrer}" Click="Afficher_Click" />
+        <Button Grid.RowSpan="2" Grid.Column="1" Content="{x:Static res:Strings.AfficherStats}" HorizontalAlignment="Center" Margin="0,58,0,0" Grid.Row="7" VerticalAlignment="Top" Height="40" Width="240" Style="{StaticResource StyleBoutonEnregistrer}" Click="Afficher_Click" />
 
     </Grid>
 

@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:IHM_Footies.Invitations"
+        xmlns:res="clr-namespace:IHM_Footies.Ressources"
         mc:Ignorable="d"
         Title="VuePageFormulaireInvitation" Height="450" Width="800"
         Background="#F9F9F9"
@@ -188,7 +189,7 @@
                 <Button x:Name="BoutonInvitations" Content="🎟️ Invitations" Background="#BFBFBF" Grid.Row="4" Style="{StaticResource BoutonMenu}" Click="BoutonAllerFormulaireInvitation_Click" FontWeight="Bold"/>
                 <Button x:Name="BoutonMenus" Content="📋 Menus" Grid.Row="5" Style="{StaticResource BoutonMenu}" Click="BoutonAllerMenu_Click" />
                 <Button x:Name="BoutonPlats" Content="🍽️ Plats" Grid.Row="6" Style="{StaticResource BoutonMenu}" Click="BoutonAllerPlat_Click" />
-                <Button x:Name="BoutonStatistique" Content="📊 Statistique" Grid.Row="7" Grid.Column="0" Style="{StaticResource BoutonMenu}" Click="BoutonAllerStatistique_Click"/>
+                <Button x:Name="BoutonStatistique" Content="{x:Static res:Strings.Stats}" Grid.Row="7" Grid.Column="0" Style="{StaticResource BoutonMenu}" Click="BoutonAllerStatistique_Click"/>
                 <!-- <Button x:Name="BoutonTableauDeBord" Content="📈Tableau de Bord" Grid.Row="8" Grid.Column="0" Style="{StaticResource BoutonMenu}" Click="BoutonAllerTableauDeBord_Click"/> -->
                 <Button x:Name="BoutonUtilisateur" Content="👤" Grid.Row="10" Grid.Column="0" Style="{StaticResource BoutonMenu}" Margin="0,0,100,0" HorizontalContentAlignment="Center" FontSize="25"/>
                 <Button x:Name="BoutonReglage" Content="⚙️" Grid.Row="10" Grid.Column="0" Style="{StaticResource BoutonMenu}" HorizontalContentAlignment="Center" Margin="100,0,0,0" FontSize="25" Click="BoutonAllerReglages_Click"/>
