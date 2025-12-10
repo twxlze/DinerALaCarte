@@ -43,5 +43,26 @@ namespace API_Footies.Controllers
             }
             return resultat;
         }
+
+        /// <summary>
+        /// Vérifie si un pseudo est disponible
+        /// </summary>
+        /// <param name="pseudo">le pseudo à rechercher</param>
+        /// <returns></returns>
+        [HttpPost("VerifierPseudoDisponible")]
+        public IActionResult VerifierPseudoDisponible([FromBody]string pseudo)
+        {
+            IActionResult resultat;
+            try
+            {
+                bool estDisponible = this.service.VerifierPseudoDisponible(pseudo);
+                resultat = Ok(estDisponible);
+            }
+            catch (Exception ex)
+            {
+                resultat = StatusCode(500, "Erreur serveur : " + ex.Message);
+            }
+            return resultat;
+        }
     }
 }

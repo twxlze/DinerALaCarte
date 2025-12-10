@@ -31,7 +31,7 @@ namespace METIER_Footies.Data.Interfaces
         /// </summary>
         /// <param name="utilisateur">L'utilisateur à créer</param>
         /// <returns></returns>
-        Task<bool> CreerUnUtilisateur(Utilisateur utilisateur);
+        Task<bool> Inscription(Utilisateur utilisateur);
 
     }
 }

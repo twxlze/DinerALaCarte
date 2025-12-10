@@ -11,5 +11,12 @@ namespace API_Footies.Services.Interfaces
         /// <param name="mdp">le mot de passe de l'utilisateur</param>
         /// <returns></returns>
         Utilisateur VerifierConnexion(string pseudo, string mdp);
+
+        /// <summary>
+        /// Vérifie si un pseudo est disponible
+        /// </summary>
+        /// <param name="pseudo">le pseudo à rechercher</param>
+        /// <returns>true si le pseudo est disponible</returns>
+        bool VerifierPseudoDisponible(string pseudo);
     }
 }

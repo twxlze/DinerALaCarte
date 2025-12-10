@@ -41,7 +41,7 @@ namespace METIER_Footies.Data
             bool resultat = false;
             try
             {
-                HttpResponseMessage reponseHttp = await GetAsync($"Authentification/VerifierConnexion?pseudo={pseudo}");
+                HttpResponseMessage reponseHttp = await PostAsync("authentification/VerifierPseudoDisponible", pseudo);
 
                 if (reponseHttp.IsSuccessStatusCode)
                 {
@@ -56,7 +56,7 @@ namespace METIER_Footies.Data
             return resultat;
         }
 
-        public async Task<bool> CreerUnUtilisateur(Utilisateur utilisateur)
+        public async Task<bool> Inscription(Utilisateur utilisateur)
         {
             bool resultat = false;
             try

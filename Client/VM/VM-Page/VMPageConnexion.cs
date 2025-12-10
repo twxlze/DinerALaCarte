@@ -106,6 +106,25 @@ namespace VM_Footies.VM_Page
             return connexionReussie;
         }
 
+        public async Task<bool> Inscription()
+        {
+            bool inscriptionReussie = false;
+            if (ValiderChamps())
+            {
+                bool disponible = await this.connexionDAO.VerifierPseudoDisponible(this.pseudo);
+                if (!disponible)
+                {
+                    this.MessageErreur = "Le pseudo est déjà utilisé";
+                }
+                else
+                {
+                    this.MessageErreur = string.Empty;
+                    Identifiant nouvelUtilisateur = new Identifiant(0, this.pseudo, this.motDePasse);
+                }
+            }
+            return inscriptionReussie;
+        }
+
         /// <summary>
         /// Valide que les champs pseudo et mot de passe ne sont pas vides
         /// </summary>

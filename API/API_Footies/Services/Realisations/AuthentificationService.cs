@@ -32,5 +32,11 @@ namespace API_Footies.Services.Realisations
 
             return utilisateurRetour;
         }
+
+        public bool VerifierPseudoDisponible(string pseudo)
+        {
+            Utilisateur utilisateurTrouve = this.dao.RecupererUtilisateurParPseudo(pseudo);
+            return utilisateurTrouve == null;
+        }
     }
 }

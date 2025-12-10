@@ -35,6 +35,7 @@ namespace IHM_Footies.Connexion
             this.DataContext = this.vmPageConnexion;
         }
         #endregion
+
         #region Méthodes
         /// <summary>
         /// Gère le clic sur le bouton de connexion
@@ -43,7 +44,16 @@ namespace IHM_Footies.Connexion
         /// <param name="e"> Les arguments de l'événement </param>
         private async void BoutonEnregistrer_Click(object sender, RoutedEventArgs e)
         {
-           
+            this.vmPageConnexion.MotDePasse = ChampMotDePasse.Password;
+            bool connexionReussie = await this.vmPageConnexion.Inscription();
+            if (connexionReussie)
+            {
+                Navigation.AllerAccueil(this);
+            }
+            else
+            {
+                MessageBox.Show(this.vmPageConnexion.MessageErreur, "Erreur d'inscription", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         /// <summary>
@@ -51,7 +61,7 @@ namespace IHM_Footies.Connexion
         /// </summary>
         /// <param name="sender"> L'expéditeur du clic </param>
         /// <param name="e"> Les arguments de l'événement </param>
-        private async void BoutonRetourConnexion_Click(object sender, RoutedEventArgs e)
+        private void BoutonRetourConnexion_Click(object sender, RoutedEventArgs e)
         {
             Navigation.AllerConnexion(this);
         }
