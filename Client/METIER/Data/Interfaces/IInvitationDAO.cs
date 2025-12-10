@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using METIER_Footies.Metier;
 
-namespace METIER_Footies.Data.Interface
+namespace METIER_Footies.Data.Interfaces
 {
     /// <summary>
     /// Interface pour la gestion des invitations
