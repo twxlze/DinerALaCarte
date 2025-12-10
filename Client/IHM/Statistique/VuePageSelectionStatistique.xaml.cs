@@ -47,7 +47,29 @@ namespace IHM_Footies.Statistique
 
         private async void Afficher_Click(object sender, RoutedEventArgs e)
         {
-            
+            try
+            {
+                bool AumoinUnSelection = this.vmPageStatistique.InvitesSelectionnes != null;
+
+                if (!AumoinUnSelection)
+                {
+                    MessageBox.Show(
+                        "Sélectionnez au moins un invité pour voir les stats",
+                        "Erreur de validation",
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Error
+                    );
+                }
+                else
+                {
+                    this.vmPageStatistique.CreerStatistique();
+                    Navigation.AllerStatistique(this, this.vmPageStatistique);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
         #endregion
 
