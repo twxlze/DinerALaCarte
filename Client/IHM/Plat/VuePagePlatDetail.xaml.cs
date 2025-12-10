@@ -1,20 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using METIER_Footies.Metier;
+﻿using System.Windows;
 using VM_Footies;
 using VM_Footies.VM;
-using VM_Footies.VM_Element_Selectionne;
 
 namespace IHM_Footies.Plat
 {
@@ -26,6 +12,7 @@ namespace IHM_Footies.Plat
         #region Attributs
         private VMPagePlat vmPagePlat;
         private string provenance;
+        private VMInvitation invitation;
         #endregion
 
         #region Constructeurs
@@ -34,12 +21,13 @@ namespace IHM_Footies.Plat
         /// </summary>
         /// <param name="vmPlat">Le plat à afficher</param>
         /// <param name="provenance">La page de provenance ("Plat" ou "Accueil")</param>
-        public VuePagePlatDetail(VMPlat vmPlat, string provenance = "Plat")
+        public VuePagePlatDetail(VMPlat vmPlat, string provenance = "Plat", VMInvitation invitationPrecedente = null)
         {
             InitializeComponent();
             this.vmPagePlat = new VMPagePlat();
             this.vmPagePlat.PlatSelectionne = vmPlat;
             this.provenance = provenance;
+            this.invitation = invitationPrecedente;
             this.DataContext = this.vmPagePlat;
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
         }
@@ -53,13 +41,17 @@ namespace IHM_Footies.Plat
         /// </summary>
         private void RetourAPlat_Click(object sender, RoutedEventArgs e)
         {
-            if (this.provenance == "Accueil")
+            switch (this.provenance)
             {
-                Navigation.AllerAccueil(this);
-            }
-            else
-            {
-                Navigation.AllerPlat(this);
+                case "Accueil":
+                    Navigation.AllerAccueil(this);
+                    break;
+                case "Invitation":
+                    Navigation.AllerDetailInvitation(this, this.invitation, "Plat");
+                    break;
+                default:
+                    Navigation.AllerPlat(this);
+                    break;
             }
         }
         #endregion

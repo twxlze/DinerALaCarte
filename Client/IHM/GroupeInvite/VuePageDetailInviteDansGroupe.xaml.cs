@@ -25,6 +25,7 @@ namespace IHM_Footies.GroupeInvite
         private VMPageGroupeInvite vmPageGroupeInvite;
         private List<VueInvite> vueInvite;
         private VMGroupeInvite groupeInviteSelectionne;
+        private VMInvitation invitationPrecedente;
         private string provenance;
         #endregion
 
@@ -32,7 +33,7 @@ namespace IHM_Footies.GroupeInvite
         /// <summary>
         /// Constructeur par défaut d'une page de détail des invités dans un groupe
         /// </summary>
-        public VuePageDetailInviteDansGroupe(VMGroupeInvite groupeInvite, string provenance = "GroupeInvite")
+        public VuePageDetailInviteDansGroupe(VMGroupeInvite groupeInvite, string provenance = "GroupeInvite", VMInvitation invitationParent = null)
         {
             InitializeComponent();
             this.groupeInviteSelectionne = groupeInvite;
@@ -41,6 +42,7 @@ namespace IHM_Footies.GroupeInvite
             this.vmPageGroupeInvite = new VMPageGroupeInvite();
             this.vmPageGroupeInvite.GroupeSelectionne = groupeInvite;
             this.DataContext = this.vmPageGroupeInvite;
+            this.invitationPrecedente = invitationParent;
 
             this.vmPageGroupeInvite.PropertyChanged += VMPageGroupeInvite_PropertyChanged;
             this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
@@ -86,13 +88,17 @@ namespace IHM_Footies.GroupeInvite
         /// <param name="e"></param>
         private void RetourAuGroupeInvite_Click(object sender, RoutedEventArgs e)
         {
-            if (this.provenance == "Accueil")
+            switch (this.provenance)
             {
-                Navigation.AllerAccueil(this);
-            }
-            else
-            {
-                Navigation.AllerGroupesInvites(this);
+                case "Accueil":
+                    Navigation.AllerAccueil(this);
+                    break;
+                case "Invitation":
+                    Navigation.AllerDetailInvitation(this, this.invitationPrecedente, "GroupeInvite");
+                    break;
+                default:
+                    Navigation.AllerGroupesInvites(this);
+                    break;
             }
         }
         #endregion
