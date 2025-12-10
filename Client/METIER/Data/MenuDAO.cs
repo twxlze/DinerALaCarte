@@ -17,7 +17,7 @@ namespace METIER_Footies.Data
         {
             try
             {
-                long idUtilisateur = SessionService.Instance.UtilisateurConnecte.Id;
+                long idUtilisateur = SessionService.Instance.UtilisateurConnecte.IdUtilisateur;
                 string url = $"Menus/AjoutMenu?IdUtilisateur={idUtilisateur}";
 
                 HttpResponseMessage reponseHttp = await PostAsync(url, menu);
@@ -35,7 +35,7 @@ namespace METIER_Footies.Data
 
             try
             {
-                long idUtilisateur = SessionService.Instance.UtilisateurConnecte.Id;
+                long idUtilisateur = SessionService.Instance.UtilisateurConnecte.IdUtilisateur;
 
                 string url = $"Menus/ListeMenu?IdUtilisateur={idUtilisateur}";
 
@@ -59,7 +59,7 @@ namespace METIER_Footies.Data
         {
             try
             {
-                long idUtilisateur = SessionService.Instance.UtilisateurConnecte.Id;
+                long idUtilisateur = SessionService.Instance.UtilisateurConnecte.IdUtilisateur;
 
                 string url = $"Menus/SupprimerMenu?idMenu={idMenu}&IdUtilisateur={idUtilisateur}";
 
@@ -76,7 +76,7 @@ namespace METIER_Footies.Data
         {
             try
             {
-                long idUtilisateur = SessionService.Instance.UtilisateurConnecte.Id;
+                long idUtilisateur = SessionService.Instance.UtilisateurConnecte.IdUtilisateur;
 
                 string url = $"Menus/ModifierMenu?IdUtilisateur={idUtilisateur}";
 
@@ -94,7 +94,7 @@ namespace METIER_Footies.Data
             List<Menu> listeDesMenus = new List<Menu>();
             try
             {
-                long idUtilisateur = SessionService.Instance.UtilisateurConnecte.Id;
+                long idUtilisateur = SessionService.Instance.UtilisateurConnecte.IdUtilisateur;
 
                 string url = $"Menus/ChercherMenus?menuRechercher={menuRechercher}&IdUtilisateur={idUtilisateur}";
 
