@@ -39,5 +39,13 @@ namespace METIER_Footies.Data.Interface
         /// <param name="idInvitation">L'id de l'invitation à supprimer </param>
         /// <returns> Une réponse HTPP</returns>
         Task<HttpResponseMessage> SupprimerInvitation(long idInvitation);
+
+        /// <summary>
+        /// Recherche des invitations via un texte de recherche
+        /// </summary>
+        /// <param name="InvitationRechercher">le texte en question </param>
+        /// <returns>une liste de groupe invite dont le nom resemble au texte de la barre de recherche</returns>
+        Task<List<Invitation>> ChercherInvitation(string InvitationRechercher);
     }
+
 }

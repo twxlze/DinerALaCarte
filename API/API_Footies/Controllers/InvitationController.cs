@@ -1,4 +1,5 @@
-﻿using API_Footies.Services.Interfaces;
+﻿using API_Footies.Metier;
+using API_Footies.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API_Footies.Controllers
@@ -66,6 +67,18 @@ namespace API_Footies.Controllers
         {
             return this.service.ObtenirToutInvitations(IdUtilisateur);
         }
+
+        /// <summary>
+        /// Recherche des invitations via un texte de recherche
+        /// </summary>
+        /// <param name="InvitationsRechercher">Le texte permettant de rechercher une invitation</param>
+        /// <returns>Une liste d'invitations correspondant à la recherche</returns>
+        [HttpGet("ChercherInvitations")]
+        public List<Metier.Invitation> ChercherInvitations(string InvitationsRechercher)
+        {
+            return this.service.ChercherInvitations(InvitationsRechercher);
+        }
         #endregion
     }
 }
+    

@@ -183,8 +183,8 @@
                 <Button x:Name="BoutonAccueil"  Content="🏠 Accueil" Grid.Row="1" Style="{StaticResource BoutonMenu}" Click="BoutonVueAccueil"  />
                 <Button x:Name="BoutonInvites" Content="👤 Invités" Grid.Row="2" Style="{StaticResource BoutonMenu}" Click="BoutonInvite_Click" />
                 <Button x:Name="BoutonGroupes" Content="👥 Groupes d'invités" Grid.Row="3" Style="{StaticResource BoutonMenu}" Click="BoutonGroupeInvite_Click"/>
-                <Button x:Name="BoutonInvitations" Content="🎟️ Invitations" Background="#BFBFBF" Grid.Row="4" Style="{StaticResource BoutonMenu}" Click="BoutonAllerFormulaireInvitation_Click"/>
-                <Button x:Name="BoutonMenus" Content="📋 Menus" Grid.Row="5" Style="{StaticResource BoutonMenu}" FontWeight="Bold" Click="BoutonAllerMenu_Click" />
+                <Button x:Name="BoutonInvitations" Content="🎟️ Invitations" Background="#BFBFBF" Grid.Row="4" Style="{StaticResource BoutonMenu}" Click="BoutonAllerFormulaireInvitation_Click" FontWeight="Bold"/>
+                <Button x:Name="BoutonMenus" Content="📋 Menus" Grid.Row="5" Style="{StaticResource BoutonMenu}" Click="BoutonAllerMenu_Click" />
                 <Button x:Name="BoutonPlats" Content="🍽️ Plats" Grid.Row="6" Style="{StaticResource BoutonMenu}" Click="BoutonAllerPlat_Click" />
                 <Button x:Name="BoutonUtilisateur" Content="👤" Grid.Row="8" Style="{StaticResource BoutonMenu}" Margin="0,0,100,0" HorizontalContentAlignment="Center" FontSize="25"/>
                 <Button x:Name="BoutonReglage" Content="⚙️" Grid.Row="8" Style="{StaticResource BoutonMenu}" HorizontalContentAlignment="Center" Margin="100,0,0,0" FontSize="25" Click="BoutonAllerReglages_Click"/>

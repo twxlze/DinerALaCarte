@@ -44,6 +44,11 @@ namespace API_Footies.Services.Realisations
         {
             this.invitationDAO.SupprimerInvitation(idInvitation, IdUtilisateur);
         }
+
+        public List<Invitation> ChercherInvitations(string InvitationsRechercher)
+        {
+            return this.invitationDAO.ChercherInvitations(InvitationsRechercher);
+        }
         #endregion
     }
 }

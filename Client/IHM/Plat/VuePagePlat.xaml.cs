@@ -105,6 +105,7 @@ namespace IHM_Footies
             vue.Selectionner();
         }
 
+
         /// <summary>
         /// Recherche les plats selon le texte saisi
         /// </summary>
@@ -112,13 +113,13 @@ namespace IHM_Footies
         /// <param name="e"> Les arguments de l'événement </param>
         private async void RecherchePlat_Click(object sender, RoutedEventArgs e)
         {
-            if (!string.IsNullOrWhiteSpace(this.vmPagePlat.TexteRecherche))
+            this.PanelListePlat.Children.Clear();
+            this.vuePlat.Clear();
+
+            await this.vmPagePlat.ChercherPlat(this.vmPagePlat.TexteRecherche);
+
+            if (this.vmPagePlat.VMPlat.Count != 0)
             {
-                this.PanelListePlat.Children.Clear();
-                this.vuePlat.Clear();
-
-                await this.vmPagePlat.ChercherPlat(this.vmPagePlat.TexteRecherche);
-
                 foreach (VMPlat plat in this.vmPagePlat.VMPlat)
                 {
                     VuePlat vue = new VuePlat(plat);
@@ -130,7 +131,16 @@ namespace IHM_Footies
             }
             else
             {
-                this.RafraichirListe();
+                TextBlock aucunResultat = new TextBlock
+                {
+                    Text = "Aucun résultat trouvé",
+                    Foreground = Brushes.Gray,
+                    FontSize = 16,
+                    HorizontalAlignment = HorizontalAlignment.Center,
+                    Margin = new Thickness(0, 20, 0, 0)
+                };
+
+                this.PanelListePlat.Children.Add(aucunResultat);
             }
         }
         #endregion
@@ -218,6 +228,12 @@ namespace IHM_Footies
                     MessageBoxButton.OK,
                     MessageBoxImage.Warning);
             }
+        }
+
+        private void BoutonRetour_Click(object sender, RoutedEventArgs e)
+        {
+            this.RafraichirListe();
+            this.vmPagePlat.TexteRecherche = string.Empty;
         }
 
         #endregion

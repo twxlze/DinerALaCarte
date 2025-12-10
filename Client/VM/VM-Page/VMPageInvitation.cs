@@ -21,6 +21,7 @@ namespace VM_Footies.VM_Page
         private VMPageGroupeInvite vmPageGroupeInvite;
         private VMPageInvite vmPageInvite;
         private VMPagePlat vmPagePlat;
+        private string texteRecherche;
 
         private IGroupeInviteDAO groupeDAO;
 
@@ -39,6 +40,19 @@ namespace VM_Footies.VM_Page
             {
                 invitationSelectionnee = value;
                 Notify("InvitationSelectionnee");
+            }
+        }
+
+        /// <summary>
+        /// Texte de recherche pour filtrer les invitations
+        /// </summary>
+        public string TexteRecherche
+        {
+            get { return texteRecherche; }
+            set
+            {
+                texteRecherche = value;
+                Notify("TexteRecherche");
             }
         }
 
@@ -173,6 +187,24 @@ namespace VM_Footies.VM_Page
         {
             return this.listeVMInvitation.Any(vm => vm.Invitation.Nom.Equals(invitation.Invitation.Nom, StringComparison.OrdinalIgnoreCase) &&
                                               vm.Invitation.Date.Date == invitation.Invitation.Date.Date);
+        }
+
+        /// <summary>
+        // Charge la liste des groupe d'invités correspondant au paramètre de recherche depuis la base de données
+        /// </summary>
+        public async Task ChercherInvitation(string InvitationsRechercher)
+        {
+            this.listeVMInvitation.Clear();
+
+            List<Invitation> invitations = await this.invitationDAO.ChercherInvitation(InvitationsRechercher);
+            foreach (Invitation i in invitations)
+            {
+                VMInvitation vmInvitation = new VMInvitation(i);
+                this.listeVMInvitation.Add(vmInvitation);
+            }
+            this.listeVMInvitation = this.listeVMInvitation.OrderBy(vm => vm.Invitation.Nom).ToList();
+
+            this.Notify("VMInvitation");
         }
         #endregion
 
