@@ -42,10 +42,16 @@ namespace IHM_Footies
         #endregion
 
         #region Méthodes
+        /// <summary>
+        /// Désélectionne cette vue
+        /// </summary>
         public void Deselectionner()
         {
             ExtensionVue.Deselectionner(this);
         }
+        /// <summary>
+        /// Sélectionne cette vue
+        /// </summary>
         public void Selectionner()
         {
             ExtensionVue.Selectionner(this);

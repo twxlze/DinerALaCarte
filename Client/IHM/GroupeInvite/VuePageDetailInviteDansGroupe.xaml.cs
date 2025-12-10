@@ -26,6 +26,7 @@ namespace IHM_Footies.GroupeInvite
         private List<VueInvite> vueInvite;
         private VMGroupeInvite groupeInviteSelectionne;
         private VMInvitation invitationPrecedente;
+        private VMPageInvite vmPageInvite;
         private string provenance;
         #endregion
 
@@ -36,13 +37,17 @@ namespace IHM_Footies.GroupeInvite
         public VuePageDetailInviteDansGroupe(VMGroupeInvite groupeInvite, string provenance = "GroupeInvite", VMInvitation invitationParent = null)
         {
             InitializeComponent();
+
             this.groupeInviteSelectionne = groupeInvite;
+
             this.vueInvite = new List<VueInvite>();
 
             this.vmPageGroupeInvite = new VMPageGroupeInvite();
             this.vmPageGroupeInvite.GroupeSelectionne = groupeInvite;
             this.DataContext = this.vmPageGroupeInvite;
+
             this.invitationPrecedente = invitationParent;
+            this.vmPageInvite = new VMPageInvite();
 
             this.vmPageGroupeInvite.PropertyChanged += VMPageGroupeInvite_PropertyChanged;
             this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
@@ -76,8 +81,32 @@ namespace IHM_Footies.GroupeInvite
             foreach (VMInvite invite in this.vmPageGroupeInvite.ListeVMInviteGroupe)
             {
                 VueInvite vue = new VueInvite(invite);
+                vue.MouseDown += (s, e) => this.SelectionnerInvite(vue);
+                vue.MouseDoubleClick += (s, e) => this.OuvrirDetailInvite(vue);
                 this.vueInvite.Add(vue);
                 this.PanelInvitesDansGroupe.Children.Add(vue);
+            }
+        }
+
+        /// <summary>
+        /// Sélectionne un invité dans la liste des invités
+        /// </summary>
+        /// <param name="vue"> VueInvité sélectionnée </param>
+        public void SelectionnerInvite(VueInvite vue)
+        {
+            this.vmPageInvite.InviteSelectionne = vue.Invite;
+            foreach (VueInvite vueI in this.vueInvite)
+            {
+                vueI.Deselectionner();
+            }
+            vue.Selectionner();
+        }
+
+        private async Task OuvrirDetailInvite(VueInvite vue)
+        {
+            if (this.vmPageInvite.InviteSelectionne != null)
+            {
+                Navigation.AllerDetailInvite(this, this.vmPageInvite.InviteSelectionne, "GroupeInvite", this.invitationPrecedente, this.groupeInviteSelectionne);
             }
         }
 

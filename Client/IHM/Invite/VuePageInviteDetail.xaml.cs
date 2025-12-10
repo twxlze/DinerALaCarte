@@ -1,20 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+﻿using System.Windows;
 using VM_Footies.VM;
 using VM_Footies;
-using VM_Footies.VM_Element_Selectionne;
-using VM_Footies.VM_Page;
 
 namespace IHM_Footies.Invite
 {
@@ -25,11 +11,12 @@ namespace IHM_Footies.Invite
     {
         #region Attributs
         private VMPageInvite vMPageInvite;
-        private VMPageGroupeInvite vMPageGroupeInvite;
-        private VMInvitation invitationPrecedente;
+        private VMPageGroupeInvite vMPageGroupeInvite; // pour la navigation
+        private VMInvitation pageinvitationPrecedente;
         private string provenance;
+        private VMGroupeInvite pageGroupePrecedente;
         #endregion
-        public VuePageInviteDetail(VMInvite vMInvite, string provenance = "Invite", VMInvitation invitationParent = null)
+        public VuePageInviteDetail(VMInvite vMInvite, string provenance = "Invite", VMInvitation invitationParent = null, VMGroupeInvite groupeParent = null)
         {
             InitializeComponent();
 
@@ -38,7 +25,8 @@ namespace IHM_Footies.Invite
 
             this.vMPageGroupeInvite = new VMPageGroupeInvite();
 
-            this.invitationPrecedente = invitationParent;
+            this.pageinvitationPrecedente = invitationParent;
+            this.pageGroupePrecedente = groupeParent;
 
             this.provenance = provenance;
             this.DataContext = this.vMPageInvite;
@@ -64,13 +52,13 @@ namespace IHM_Footies.Invite
                     Navigation.AllerInvites(this);
                     break;
                 case "GroupeInvite":
-                    Navigation.AllerDetailGroupeInvite(this, this.vMPageGroupeInvite.GroupeSelectionne);
+                    if (this.pageinvitationPrecedente != null)
+                        Navigation.AllerDetailGroupeInvite(this, this.pageGroupePrecedente, "Invitation", this.pageinvitationPrecedente);
+                    else
+                        Navigation.AllerDetailGroupeInvite(this, this.pageGroupePrecedente);
                     break;
                 case "Invitation":
-                    if (this.invitationPrecedente != null)
-                    {
-                        Navigation.AllerDetailInvitation(this, this.invitationPrecedente);
-                    }
+                        Navigation.AllerDetailInvitation(this, this.pageinvitationPrecedente);
                     break;
                 default:
                     Navigation.AllerInvites(this);
