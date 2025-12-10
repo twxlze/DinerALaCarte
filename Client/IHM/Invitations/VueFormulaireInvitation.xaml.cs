@@ -165,16 +165,6 @@ namespace IHM_Footies.Invitations
                 MessageBox.Show("Veuillez saisir un nom pour l'invitation.", "Validation", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
 
-            if (!this.invitation.InvitesListe.Any(i => i.EstSelectionne))
-            {
-                MessageBox.Show("Veuillez sélectionner au moins un invité.", "Validation", MessageBoxButton.OK, MessageBoxImage.Warning);
-            }
-
-            if (!this.invitation.GroupesInvitesListe.Any(g => g.EstSelectionne))
-            {
-                MessageBox.Show("Veuillez sélectionner un groupe d'invités.", "Validation", MessageBoxButton.OK, MessageBoxImage.Warning);
-            }
-
             VueFormulaireMenuEtPlat_Invitation fenetreMenuPlat = new VueFormulaireMenuEtPlat_Invitation(invitation);
             fenetreMenuPlat.ShowDialog();
 

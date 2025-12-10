@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using VM_Footies;
 using VM_Footies.VM;
 using VM_Footies.VM_Page;
 
@@ -26,6 +27,8 @@ namespace IHM_Footies.Menu
         private VMMenu menuSelectionne;
         private string provenance;
         private VMInvitation invitationPrecedente;
+        private VMPagePlat vmPagePlat;
+        private List<VuePlat> vuePlat = new List<VuePlat>();
         #endregion
 
         #region Constructeur
@@ -55,6 +58,7 @@ namespace IHM_Footies.Menu
             this.vmPageMenu = new VMPageMenu();
             this.vmPageMenu.MenuSelectionne = menu;
             this.DataContext = this.vmPageMenu;
+            this.vmPagePlat = new VMPagePlat();
 
             this.vmPageMenu.PropertyChanged += VMPageMenu_PropertyChanged;
             this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
@@ -111,8 +115,11 @@ namespace IHM_Footies.Menu
             {
                 foreach (VMPlat vmPlat in this.vmPageMenu.ListeVMPlatAperitif)
                 {
-                    TextBlock textBlock = CreerTextBlockPlat(vmPlat.Nom);
-                    this.PanelAperitif.Children.Add(textBlock);
+                    VuePlat vue = new VuePlat(vmPlat);
+                    vue.MouseDown += (s, e) => this.SelectionnerPlat(vue);
+                    vue.MouseDoubleClick += (s, e) => this.OuvrirDetailPlat(vue);
+                    this.vuePlat.Add(vue);
+                    this.PanelAperitif.Children.Add(vue);
                 }
             }
 
@@ -134,8 +141,11 @@ namespace IHM_Footies.Menu
             {
                 foreach (VMPlat vmPlat in this.vmPageMenu.ListeVMPlatEntree)
                 {
-                    TextBlock textBlock = CreerTextBlockPlat(vmPlat.Nom);
-                    this.PanelEntree.Children.Add(textBlock);
+                    VuePlat vue = new VuePlat(vmPlat);
+                    vue.MouseDown += (s, e) => this.SelectionnerPlat(vue);
+                    vue.MouseDoubleClick += (s, e) => this.OuvrirDetailPlat(vue);
+                    this.vuePlat.Add(vue);
+                    this.PanelEntree.Children.Add(vue);
                 }
             }
 
@@ -157,8 +167,11 @@ namespace IHM_Footies.Menu
             {
                 foreach (VMPlat vmPlat in this.vmPageMenu.ListeVMPlatPlat)
                 {
-                    TextBlock textBlock = CreerTextBlockPlat(vmPlat.Nom);
-                    this.PanelPlat.Children.Add(textBlock);
+                    VuePlat vue = new VuePlat(vmPlat);
+                    vue.MouseDown += (s, e) => this.SelectionnerPlat(vue);
+                    vue.MouseDoubleClick += (s, e) => this.OuvrirDetailPlat(vue);
+                    this.vuePlat.Add(vue);
+                    this.PanelPlat.Children.Add(vue);
                 }
             }
 
@@ -180,8 +193,11 @@ namespace IHM_Footies.Menu
             {
                 foreach (VMPlat vmPlat in this.vmPageMenu.ListeVMPlatDessert)
                 {
-                    TextBlock textBlock = CreerTextBlockPlat(vmPlat.Nom);
-                    this.PanelDessert.Children.Add(textBlock);
+                    VuePlat vue = new VuePlat(vmPlat);
+                    vue.MouseDown += (s, e) => this.SelectionnerPlat(vue);
+                    vue.MouseDoubleClick += (s, e) => this.OuvrirDetailPlat(vue);
+                    this.vuePlat.Add(vue);
+                    this.PanelDessert.Children.Add(vue);
                 }
             }
 
@@ -190,23 +206,6 @@ namespace IHM_Footies.Menu
                 TextBlock textBlockVide = CreerTextBlockVide("Aucun dessert");
                 this.PanelDessert.Children.Add(textBlockVide);
             }
-        }
-
-        /// <summary>
-        /// Crée un TextBlock pour afficher un nom de plat
-        /// </summary>
-        /// <param name="nomPlat">Le nom du plat à afficher</param>
-        /// <returns>Un TextBlock stylisé</returns>
-        private TextBlock CreerTextBlockPlat(string nomPlat)
-        {
-            return new TextBlock
-            {
-                Text = nomPlat,
-                FontSize = 13,
-                Foreground = new SolidColorBrush(Color.FromRgb(51, 51, 51)),
-                Margin = new Thickness(5, 3, 5, 3),
-                TextWrapping = TextWrapping.Wrap
-            };
         }
 
         /// <summary>
@@ -225,6 +224,24 @@ namespace IHM_Footies.Menu
                 Margin = new Thickness(5),
                 HorizontalAlignment = HorizontalAlignment.Center
             };
+        }
+
+        private void SelectionnerPlat(VuePlat vue)
+        {
+            this.vmPagePlat.PlatSelectionne = vue.Plat;
+            foreach (VuePlat vueI in this.vuePlat)
+            {
+                vueI.Deselectionner();
+            }
+            vue.Selectionner();
+        }
+
+        private async Task OuvrirDetailPlat(VuePlat vue)
+        {
+            if (this.vmPagePlat.PlatSelectionne != null)
+            {
+                Navigation.AllerDetailPlat(this, this.vmPagePlat.PlatSelectionne, "Menu", this.invitationPrecedente, this.menuSelectionne);
+            }
         }
 
         /// <summary>

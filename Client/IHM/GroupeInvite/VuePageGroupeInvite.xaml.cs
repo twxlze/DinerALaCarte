@@ -34,13 +34,19 @@ namespace IHM_Footies
         public VuePageGroupeInvite()
         {
             InitializeComponent();
+            this.Initialiser();
+            this.RafraichirListe();
+        }
+
+        private void Initialiser()
+        {
             this.vueGroupeInvite = new List<VueGroupeInvite>();
             this.vmPageGroupeInvite = new VMPageGroupeInvite();
             this.vmPageGroupeInvite.PropertyChanged += VMPageGroupeInvite_PropertyChanged;
 
             this.DataContext = this.vmPageGroupeInvite;
             this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-            this.RafraichirListe();
+
         }
 
         #region Méthodes

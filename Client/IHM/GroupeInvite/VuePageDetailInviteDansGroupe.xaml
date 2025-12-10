@@ -58,6 +58,8 @@
             Click="RetourAuGroupeInvite_Click"/>
         </StackPanel>
 
+        <TextBlock Text="{x:Static res:Strings.Double_Click_invite}" TextWrapping="Wrap"  Margin="120,5,120,415" Opacity="0.9" FontSize="10" Grid.Column="1"/>
+
 
         <StackPanel Grid.Column="1" Margin="0,40,0,0"
 >

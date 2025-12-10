@@ -312,4 +312,10 @@
   <data name="Double_Click" xml:space="preserve">
     <value>*Double-cliquez sur un élément pour afficher ses détails.</value>
   </data>
+  <data name="Double_Click_invite" xml:space="preserve">
+    <value>Double-cliquez sur un invité pour voir ses informations.</value>
+  </data>
+  <data name="Double_Click_Plat" xml:space="preserve">
+    <value>Double-cliquez sur un plat pour voir ses informations.</value>
+  </data>
 </root>

@@ -37,9 +37,20 @@ namespace IHM_Footies.GroupeInvite
         public VuePageDetailInviteDansGroupe(VMGroupeInvite groupeInvite, string provenance = "GroupeInvite", VMInvitation invitationParent = null)
         {
             InitializeComponent();
+            this.Initialiser(groupeInvite, provenance, invitationParent);
+            this.RafraichirListe();
+            this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+        }
 
+        /// <summary>
+        /// Initialise les composants de la page
+        /// </summary>
+        /// <param name="groupeInvite">Le groupe d'invités à afficher</param>
+        /// <param name="provenance">La provenance de la navigation</param>
+        /// <param name="invitationParent">L'invitation parente si applicable</param>
+        private void Initialiser(VMGroupeInvite groupeInvite, string provenance, VMInvitation invitationParent)
+        {
             this.groupeInviteSelectionne = groupeInvite;
-
             this.vueInvite = new List<VueInvite>();
 
             this.vmPageGroupeInvite = new VMPageGroupeInvite();
@@ -50,9 +61,7 @@ namespace IHM_Footies.GroupeInvite
             this.vmPageInvite = new VMPageInvite();
 
             this.vmPageGroupeInvite.PropertyChanged += VMPageGroupeInvite_PropertyChanged;
-            this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
 
-            this.RafraichirListe();
             this.provenance = provenance;
         }
         #endregion
