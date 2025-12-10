@@ -16,13 +16,13 @@ namespace METIER_Footies.Data
         /// </summary>
         /// <param name="utilisateur"> l'utilisateur à connecter </param>
         /// <returns> L'utilisateur connecté avec son ID, ou null si la connexion a échoué </returns>
-        public async Task<Utilisateur?> Connexion(Utilisateur utilisateur)
+        public async Task<Utilisateur?> Connexion(Identifiant identifiant)
         {
             Utilisateur? utilisateurConnecte = null;
 
             try
             {
-                HttpResponseMessage reponseHttp = await PostAsync("Authentification/VerifierConnexion", utilisateur);
+                HttpResponseMessage reponseHttp = await PostAsync("Authentification/VerifierConnexion", identifiant);
 
                 if (reponseHttp.IsSuccessStatusCode)
                 {

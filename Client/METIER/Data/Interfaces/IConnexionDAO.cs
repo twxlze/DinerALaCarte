@@ -15,9 +15,9 @@ namespace METIER_Footies.Data.Interfaces
         /// <summary>
         /// Connexion d'un utilisateur
         /// </summary>
-        /// <param name="utilisateur"> l'utilisateur à connecter si les informations correspondent </param>
+        /// <param name="identifiant"> les informations de l'utilisateur à connecter si les informations correspondent </param>
         /// <returns> L'utilisateur connecté avec son ID, ou null si la connexion a échoué </returns>
-        Task<Utilisateur?> Connexion(Utilisateur utilisateur);
+        Task<Utilisateur?> Connexion(Identifiant identifiant);
 
     }
 }

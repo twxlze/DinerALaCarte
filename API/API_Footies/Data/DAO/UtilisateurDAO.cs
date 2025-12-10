@@ -6,6 +6,31 @@ namespace API_Footies.Data.DAO
 {
     public class UtilisateurDAO : IUtilisateurDAO
     {
+        public Identifiant RecupererIdentifiantParPseudo(string pseudo)
+        {
+            Identifiant identifiantTrouve = null;
+            using (SQLiteConnector connection = new SQLiteConnector())
+            {
+                if (connection == null) throw new Exception("Erreur BDD");
+
+                Dictionary<string, object> parameters = new Dictionary<string, object>()
+                {
+                    {"@Pseudo", pseudo }
+                };
+                DataTable table = connection.ExecuteQuery("SELECT * FROM Identifiant WHERE Pseudo = @Pseudo", parameters);
+
+                if (table.Rows.Count > 0)
+                {
+                    DataRow row = table.Rows[0];
+                    identifiantTrouve = new Identifiant();
+                    identifiantTrouve.Id = (long)row["IDIdentifiant"];
+                    identifiantTrouve.Pseudo = row["Pseudo"].ToString();
+                    identifiantTrouve.MotDePasseHash = row["MotDePasseHash"].ToString();
+                }
+            }
+            return identifiantTrouve;
+        }
+
         public Utilisateur RecupererUtilisateurParPseudo(string pseudo)
         {
             Utilisateur utilisateurTrouve = null;
@@ -18,21 +43,27 @@ namespace API_Footies.Data.DAO
                 {
                     {"@Pseudo", pseudo }
                 };
-
                 DataTable table = connection.ExecuteQuery("SELECT * FROM Utilisateur WHERE Pseudo = @Pseudo", parameters);
 
                 if (table.Rows.Count > 0)
                 {
                     DataRow row = table.Rows[0];
-                    utilisateurTrouve = new Utilisateur();
-                    utilisateurTrouve.Id = (long)row["IDUtilisateur"];
-                    utilisateurTrouve.Pseudo = row["Pseudo"].ToString();
-                    utilisateurTrouve.MotDePasseHash = row["MotDePasseHash"].ToString();
-                    utilisateurTrouve.MotDePasseSel = row["MotDePasseSel"].ToString();
+                    string? nom = row["Nom"] as string;
+                    string? prenom = row["Prenom"] as string;
+                    string? mail = row["Mail"] as string;
+                    string? numTel = row["NumTel"] as string;
+
+                    utilisateurTrouve = new Utilisateur(
+                        (long)row["IDUtilisateur"],
+                        row["Pseudo"].ToString(),
+                        nom,
+                        prenom,
+                        mail,
+                        numTel
+                    );
                 }
             }
             return utilisateurTrouve;
         }
-
     }
 }
