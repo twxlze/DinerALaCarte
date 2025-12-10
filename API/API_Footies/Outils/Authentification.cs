@@ -8,17 +8,17 @@ namespace API_Footies.Outils
     /// </summary>
     public class Authentification : IAuthentification
     {
-        public string CalculerHash(string motDePasse, string sel)
+        private string sel;
+        public Authentification(IConfigHelper configHelper)
         {
-            byte[] donnees = Encoding.UTF8.GetBytes(motDePasse + sel);
-            byte[] hashBytes = SHA256.HashData(donnees);
-            return Convert.ToBase64String(hashBytes);
+            this.sel = configHelper.LireSelDansIni();
         }
 
-        public string GenererSel()
+        public string CalculerHash(string motDePasse)
         {
-            byte[] octets = RandomNumberGenerator.GetBytes(32);
-            return Convert.ToBase64String(octets);
+            byte[] donnees = Encoding.UTF8.GetBytes(motDePasse + this.sel);
+            byte[] hashBytes = SHA256.HashData(donnees);
+            return Convert.ToBase64String(hashBytes);
         }
     }
 }
