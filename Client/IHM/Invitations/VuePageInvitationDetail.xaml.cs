@@ -14,8 +14,9 @@ namespace IHM_Footies.Invitations
         private VMInvitation vmInvitation;
         private string provenance;
         private VMPageInvite vmPageInvite = new VMPageInvite();
-        private List<VueInvite> VueInvites = new List<VueInvite>();
-
+        private List<VueInvite> vueInvites = new List<VueInvite>();
+        private VMPageGroupeInvite vMPageGroupeInvite = new VMPageGroupeInvite();
+        private List<VueGroupeInvite> vueGroupes = new List<VueGroupeInvite>();
         #endregion
 
         #region Constructeur
@@ -49,7 +50,7 @@ namespace IHM_Footies.Invitations
                 VueInvite vueInvite = new VueInvite(vmInvite);
                 vueInvite.MouseDown += (s, e) => this.SelectionnerInvite(vueInvite);
                 vueInvite.MouseDoubleClick += (s, e) => this.OuvrirDetailInvite(vueInvite);
-                this.VueInvites.Add(vueInvite);
+                this.vueInvites.Add(vueInvite);
                 this.PanelInvites.Children.Add(vueInvite);
             }
         }
@@ -62,6 +63,9 @@ namespace IHM_Footies.Invitations
             foreach (VMGroupeInvite vmGroupe in listeVM)
             {
                 VueGroupeInvite vue = new VueGroupeInvite(vmGroupe);
+                vue.MouseDown += (s, e) => this.SelectionnerGroupe(vue);
+                vue.MouseDoubleClick += (s, e) => this.OuvrirDetailGroupe(vue);
+                this.vueGroupes.Add(vue);
                 this.PanelGroupes.Children.Add(vue);
             }
         }
@@ -111,13 +115,13 @@ namespace IHM_Footies.Invitations
 
 
         /// <summary>
-        /// Sélectionne un menu dans la liste d'invitations
+        /// Sélectionne un invité dans la liste d'invités
         /// </summary>
-        /// <param name="vue"> VueInvitation sélectionnée </param>
+        /// <param name="vue"> VueInvite sélectionnée </param>
         public void SelectionnerInvite(VueInvite vue)
         {
             this.vmPageInvite.InviteSelectionne = vue.Invite;
-            foreach (VueInvite vueI in this.VueInvites)
+            foreach (VueInvite vueI in this.vueInvites)
             {
                 vueI.Deselectionner();
             }
@@ -132,7 +136,27 @@ namespace IHM_Footies.Invitations
             }
         }
 
+        /// <summary>
+        /// Sélectionne un groupe dans la liste de groupe d'invités
+        /// </summary>
+        /// <param name="vue"> VueGroupe sélectionnée </param>
+        public void SelectionnerGroupe(VueGroupeInvite vue)
+        {
+            this.vMPageGroupeInvite.GroupeSelectionne = vue.Groupe;
+            foreach (VueGroupeInvite vueG in this.vueGroupes)
+            {
+                vueG.Deselectionner();
+            }
+            vue.Selectionner();
+        }
 
+        private async Task OuvrirDetailGroupe(VueGroupeInvite vue)
+        {
+            if (this.vMPageGroupeInvite.GroupeSelectionne != null)
+            {
+                Navigation.AllerDetailGroupeInvite(this, this.vMPageGroupeInvite.GroupeSelectionne, "Invitation", this.vmInvitation);
+            }
+        }
 
         private void RetourAuxInvitations_Click(object sender, RoutedEventArgs e)
         {
