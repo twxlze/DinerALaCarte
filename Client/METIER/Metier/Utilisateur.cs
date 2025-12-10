@@ -9,18 +9,21 @@ namespace METIER_Footies.Metier
     public class Utilisateur
     {
         #region Attributs
-        private long id;
+        private long idUtilisateur;
         private string pseudo;
-        private string motDePasse;
+        private string? nom;
+        private string? prenom;
+        private string? numTel;
+        private string? mail;
         #endregion
         #region Propriétés
         /// <summary>
         /// Retourne ou modifie l'id de l'utilisateur
         /// </summary>
-        public long Id
+        public long IdUtilisateur
         {
-            get { return id; }
-            set { id = value; }
+            get { return idUtilisateur; }
+            set { idUtilisateur = value; }
         }
         /// <summary>
         /// Retourne ou modifie le pseudo de l'utilisateur
@@ -30,13 +33,41 @@ namespace METIER_Footies.Metier
             get { return pseudo; }
             set { pseudo = value; }
         }
+
         /// <summary>
-        /// Retourne ou modifie le mot de passe de l'utilisateur
+        /// Retourne ou modifie le nom de l'utilisateur
         /// </summary>
-        public string MotDePasse
+        public string? Nom
         {
-            get { return motDePasse; }
-            set { motDePasse = value; }
+            get { return nom; }
+            set { nom = value; }
+        }
+
+        /// <summary>
+        /// Retourne ou modifie le prénom de l'utilisateur
+        /// </summary>
+        public string? Prenom
+        {
+            get { return prenom; }
+            set { prenom = value; }
+        }
+
+        /// <summary>
+        /// Retourne ou modifie le numéro de téléphone de l'utilisateur
+        /// </summary>
+        public string? NumTel
+        {
+            get { return numTel; }
+            set { numTel = value; }
+        }
+
+        /// <summary>
+        /// Retourne ou modifie l'email de l'utilisateur
+        /// </summary>
+        public string? Mail
+        {
+            get { return mail; }
+            set { mail = value; }
         }
         #endregion
 
@@ -44,12 +75,20 @@ namespace METIER_Footies.Metier
         /// <summary>
         /// Constructeur d'un utilisateur
         /// </summary>
-        /// 
-        public Utilisateur(long id, string pseudo, string motDePasse)
+        /// <param name="idUtilisateur"> L'id de l'utilisateur </param>
+        /// <param name="mail"> L'email de l'utilisateur </param>
+        /// <param name="nom"> Le nom de l'utilisateur </param>
+        /// <param name="numTel"> Le numéro de téléphone de l'utilisateur </param>
+        /// <param name="prenom"> Le prénom de l'utilisateur </param>
+        /// <param name="pseudo"> Le pseudo de l'utilisateur </param>
+        public Utilisateur(long idUtilisateur, string pseudo,  string? nom, string? prenom, string? numTel, string? mail)
         {
-            this.Id = id;
+            this.IdUtilisateur = idUtilisateur;
             this.Pseudo = pseudo;
-            this.MotDePasse = motDePasse;
+            this.Nom = nom;
+            this.Prenom = prenom;
+            this.NumTel = numTel;
+            this.Mail = mail;
         }
         #endregion
     }

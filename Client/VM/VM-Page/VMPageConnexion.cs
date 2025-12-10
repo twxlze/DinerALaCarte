@@ -87,8 +87,8 @@ namespace VM_Footies.VM_Page
 
             if (ValiderChamps())
             {
-                Utilisateur utilisateur = new Utilisateur(0, this.pseudo, this.motDePasse);
-                Utilisateur? utilisateurConnecte = await this.connexionDAO.Connexion(utilisateur);
+                Identifiant identifiant = new Identifiant(0, this.pseudo, this.motDePasse);
+                Utilisateur? utilisateurConnecte = await this.connexionDAO.Connexion(identifiant);
 
                 if (utilisateurConnecte != null)
                 {

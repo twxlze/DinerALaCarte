@@ -14,5 +14,12 @@ namespace API_Footies.Data.Interfaces
         /// <param name="pseudo">le pseudo de l'utilisateur</param>
         /// <returns>l'utilisateur avec sont pseudo</returns>
         Utilisateur RecupererUtilisateurParPseudo(string pseudo);
+
+        /// <summary>
+        /// Permet de récupérer l'identifiant d'un utilisateur par son pseudo
+        /// </summary>
+        /// <param name="pseudo">le pseudo</param>
+        /// <returns>l'identifiant de l'utilisateur</returns>
+        Identifiant RecupererIdentifiantParPseudo(string pseudo);
     }
 }

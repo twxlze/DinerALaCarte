@@ -35,6 +35,7 @@ builder.Services.AddScoped<IInvitationService, InvitationService>();
 builder.Services.AddScoped<IUtilisateurDAO, UtilisateurDAO>();
 builder.Services.AddScoped<IAuthentificationService, AuthentificationService>();
 builder.Services.AddScoped<IAuthentification, Authentification>();
+builder.Services.AddScoped<IConfigHelper,ConfigHelper>();
 
 SQLitePCL.Batteries.Init();
 
