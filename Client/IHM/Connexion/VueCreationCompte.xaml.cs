@@ -53,7 +53,7 @@ namespace IHM_Footies.Connexion
         /// <param name="e"> Les arguments de l'événement </param>
         private async void BoutonRetourConnexion_Click(object sender, RoutedEventArgs e)
         {
-
+            Navigation.AllerConnexion(this);
         }
         
         /// <summary>

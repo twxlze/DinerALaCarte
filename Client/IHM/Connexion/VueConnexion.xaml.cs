@@ -58,6 +58,16 @@ namespace IHM_Footies.Connexion
         }
 
         /// <summary>
+        /// Gère le clic sur le bouton de création de compte
+        /// </summary>
+        /// <param name="sender">L'éxpéditeur du clic</param>
+        /// <param name="e">Les arguments de l'événement</param>
+        private async void BoutonCreationCompte_Click(object sender, RoutedEventArgs e)
+        {
+            Navigation.AllerCreerUtilisateur(this);
+        }
+
+        /// <summary>
         /// Bouton pour fermer la fenêtre
         /// </summary>
         /// <param name="sender"> L'expéditeur du clic </param>

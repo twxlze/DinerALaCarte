@@ -199,11 +199,6 @@ namespace IHM_Footies.Reglages
         {
             Navigation.AllerInvitations(this);
         }
-
-
-
         #endregion
-
-
     }
 }
