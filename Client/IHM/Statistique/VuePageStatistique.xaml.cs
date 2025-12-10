@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using VM_Footies.VM_Page;
 
 namespace IHM_Footies.Statistique
 {
@@ -19,9 +20,22 @@ namespace IHM_Footies.Statistique
     /// </summary>
     public partial class VuePageStatistique : Window
     {
-        public VuePageStatistique()
+        #region Attributs
+        private VmPageStatistique vmPageStatistique;
+        #endregion
+
+        #region constructeurs
+        /// <summary>
+        /// Constructeur de la vue des statistiques
+        /// </summary>
+        /// <param name="vmPageStatistique">le model statistique</param>
+        public VuePageStatistique(VmPageStatistique vmPageStatistique)
         {
+            this.vmPageStatistique = vmPageStatistique;
+            this.DataContext = vmPageStatistique;
+            WindowStartupLocation = WindowStartupLocation.CenterScreen;
             InitializeComponent();
         }
+        #endregion
     }
 }
