@@ -227,8 +227,10 @@ namespace API_Footies.Data.DAO
             {
                 long idInvite = (long)row["IdInvite"];
                 List<NomAllergene> allergenes = ObtenirAllergenesDeInvite(connection, idInvite);
+                List<Plat> platsPreferes = ObtenirPlatsPreferesDeInvite(connection, idInvite);
 
-                Invite invite = new Invite(idInvite, row["Nom"].ToString(), row["Prenom"].ToString(), row["NumTel"].ToString(), row["Mail"].ToString(), allergenes.Count > 0 ? allergenes : null, null, null);
+
+                Invite invite = new Invite(idInvite, row["Nom"].ToString(), row["Prenom"].ToString(), row["NumTel"].ToString(), row["Mail"].ToString(), allergenes.Count > 0 ? allergenes : null, null, platsPreferes.Count > 0 ? platsPreferes : null);
                 invites.Add(invite);
             }
             return invites;
@@ -252,9 +254,24 @@ namespace API_Footies.Data.DAO
             return allergenes;
         }
 
-        
 
-        
+        private List<Plat> ObtenirPlatsPreferesDeInvite(SQLiteConnector connection, long idInvite)
+        {
+            List<Plat> plats = new List<Plat>();
+            Dictionary<string, object> parameters = new Dictionary<string, object>() { { "@IdInvite", idInvite } };
+            DataTable dataTable = connection.ExecuteQuery(@"SELECT P.IDPlat, P.Nom  FROM Plat P INNER JOIN Invite_PlatPrefere IPP ON P.IDPlat = IPP.IDPlat WHERE IPP.IdInvite = @IdInvite", parameters);
+
+            foreach (DataRow row in dataTable.Rows)
+            {
+                long idPlat = (long)row["IDPlat"];
+                List<NomAllergene> allergenesPlat = ObtenirAllergenesDuPlat(connection, idPlat);
+
+                Plat plat = new Plat(idPlat, row["Nom"].ToString(), null, CategoriePlat.plat, null, allergenesPlat.Count > 0 ? allergenesPlat : null);
+                plats.Add(plat);
+            }
+            return plats;
+        }
+
 
         private List<NomAllergene> ObtenirAllergenesDuPlat(SQLiteConnector connection, long idPlat)
         {
@@ -388,7 +405,9 @@ namespace API_Footies.Data.DAO
             foreach (DataRow row in dataTable.Rows)
             {
                 List<NomAllergene> allergenes = ObtenirAllergenesDeInvite(connection, (long)row["IdInvite"]);
+                List<Plat> platsPreferes = ObtenirPlatsPreferesDeInvite(connection, (long)row["IdInvite"]);
                 Invite invite = new Invite((long)row["IdInvite"], row["Nom"].ToString(), row["Prenom"].ToString(), null, null, allergenes, null, null);
+
                 invites.Add(invite);
             }
             return invites;
