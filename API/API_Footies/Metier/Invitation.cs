@@ -13,6 +13,7 @@
         private long idInvitation;
         private string nom;
         private DateTime date;
+        private string? remarques;
         #endregion
 
         #region --- Propriétés ---
@@ -80,9 +81,20 @@
         }
 
         /// <summary>
+        /// Retourne ou modifie les remarques de l'invitation
+        /// </summary>
+        public string? Remarques
+        {
+            get { return remarques; }
+            set { remarques = value; }
+        }
+        #endregion
+
+        #region Constructeurs
+        /// <summary>
         /// Constructeur de l'invitation
         /// </summary>
-        public Invitation(List<GroupeInvites> groupesInvites, List<Menu> menus, List<Invite> invites, List<Plat> plats, long idInvitation, string nom, DateTime date)
+        public Invitation(List<GroupeInvites> groupesInvites, List<Menu> menus, List<Invite> invites, List<Plat> plats, long idInvitation, string nom, DateTime date, string? remarques = null)
         {
             this.groupesInvites = groupesInvites;
             this.menus = menus;
@@ -91,6 +103,7 @@
             this.idInvitation = idInvitation;
             this.nom = nom;
             this.date = date;
+            this.remarques = remarques;
         }
 
         /// <summary>
@@ -102,6 +115,7 @@
             this.menus = new List<Menu>();
             this.invites = new List<Invite>();
             this.plats = new List<Plat>();
+            this.remarques = "";
         }
         #endregion
     }
