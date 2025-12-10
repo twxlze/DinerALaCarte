@@ -37,5 +37,126 @@ namespace IHM_Footies.Statistique
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
         }
         #endregion
+
+        #region Boutons enregistrer l'affichage 
+        /// <summary>
+        /// Gestion du clic sur le bouton Enregistrer
+        /// </summary>
+        /// <param name="sender"> L'expéditeur </param>
+        /// <param name="e"> Les arguments de l'événement </param>
+
+        private async void Afficher_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
+        #endregion
+
+        #region Boutons de navigation
+        /// <summary>
+        /// Bouton pour aller à la page plat
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BoutonAllerPlat_Click(object sender, RoutedEventArgs e)
+        {
+            Navigation.AllerPlat(this);
+        }
+
+        /// <summary>
+        /// Bouton pour aller à l'accueil
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BoutonAllerAccueil_Click(object sender, RoutedEventArgs e)
+        {
+            Navigation.AllerAccueil(this);
+        }
+
+        /// <summary>
+        /// Bouton pour aller au menu
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BoutonAllerMenu_Click(object sender, RoutedEventArgs e)
+        {
+            Navigation.AllerMenu(this);
+        }
+        /// <summary>
+        /// Bouton pour aller à la page invité
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BoutonAllerInvite_Click(object sender, RoutedEventArgs e)
+        {
+            Navigation.AllerInvites(this);
+        }
+
+        /// <summary>
+        /// Bouton pour aller à la page des réglages
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BoutonAllerReglages_Click(object sender, RoutedEventArgs e)
+        {
+            Navigation.AllerReglages(this);
+        }
+
+        /// <summary>
+        /// Bouton pour aller à la page des groupes d'invités
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BoutonAllerGroupeInvite_Click(object sender, RoutedEventArgs e)
+        {
+            Navigation.AllerGroupesInvites(this);
+        }
+
+        /// <summary>
+        /// Bouton pour aller à la page des invitations
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BoutonAllerInvitation_Click(object sender, RoutedEventArgs e)
+        {
+            Navigation.AllerInvitations(this);
+        }
+
+        /// <summary>
+        /// Bouton pour fermer la fenêtre
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ButonFermerFenetre_Click(object sender, RoutedEventArgs e)
+        {
+            Navigation.FermerFenetre(this);
+        }
+
+        /// <summary>
+        /// Bouton pour aller à la page des statistiques d'invités
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BoutonAllerStatistique_Click(object sender, RoutedEventArgs e)
+        {
+            Navigation.AllerSelectionInvite(this);
+        }
+
+        /// <summary>
+        /// Bouton pour reinitialiser le contenu de la barre de recherche
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BoutonRetour_Click(object sender, RoutedEventArgs e)
+        {
+          
+        }
+
+        private void RechercheInvite_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        #endregion
+
     }
 }
