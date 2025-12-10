@@ -49,13 +49,14 @@ namespace API_Footies.Data.DAO
                 {
                     long idInvitation = (long)row["IdInvitation"];
                     string nom = row["Nom"].ToString();
+                    string? remarque = row["Remarque"].ToString();
                     DateTime date = DateTime.Parse(row["Date"].ToString());
                     List<Invite> invites = ObtenirInvitesDansInvitation(connection, idInvitation);
                     List<Plat> plats = ObtenirPlatsDansInvitation(connection, idInvitation);
                     List<Menu> menus = ObtenirMenusDansInvitation(connection, idInvitation);
                     List<GroupeInvites> groupesInvites = ObtenirGroupesInvitesDansInvitation(connection, idInvitation);
 
-                    Invitation invitation = new Invitation(groupesInvites, menus, invites, plats, idInvitation, nom, date);
+                    Invitation invitation = new Invitation(groupesInvites, menus, invites, plats, idInvitation, nom, date, remarque);
                     invitations.Add(invitation);
                 }
             }
@@ -114,9 +115,10 @@ namespace API_Footies.Data.DAO
             {
                 {"@Nom", invitation.Nom },
                 {"@Date", invitation.Date },
-                {"@IdUtilisateur", idUtilisateur }
+                {"@IdUtilisateur", idUtilisateur },
+                {"@Remarque", invitation.Remarques ?? "" }
             };
-            return connection.ExecuteInsert("INSERT INTO Invitation (Nom, Date, IdUtilisateur) VALUES (@Nom, @Date, @IdUtilisateur)", parameters);
+            return connection.ExecuteInsert("INSERT INTO Invitation (Nom, Date, IdUtilisateur, Remarque) VALUES (@Nom, @Date, @IdUtilisateur, @Remarque)", parameters);
         }
 
         private void AjouterGroupesInvitesDansInvitation(SQLiteConnector connection, Invitation invitation)
@@ -440,9 +442,10 @@ namespace API_Footies.Data.DAO
                 {"@IdInvitation", invitation.IdInvitation },
                 {"@Nom", invitation.Nom },
                 {"@Date", invitation.Date },
-                {"@IdUtilisateur", idUtilisateur }
+                {"@IdUtilisateur", idUtilisateur },
+                {"@Remarque", invitation.Remarques ?? ""   }
             };
-            connection.ExecuteQuery("UPDATE Invitation SET Nom = @Nom, Date = @Date WHERE IdInvitation = @IdInvitation AND IdUtilisateur = @IdUtilisateur", parameters);
+            connection.ExecuteQuery("UPDATE Invitation SET Nom = @Nom, Date = @Date, Remarque = @Remarque WHERE IdInvitation = @IdInvitation AND IdUtilisateur = @IdUtilisateur", parameters);
             return invitation.IdInvitation;
         }
 
