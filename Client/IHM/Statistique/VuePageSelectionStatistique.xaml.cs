@@ -11,80 +11,59 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using VM_Footies.VM;
+using VM_Footies.VM_Page;
 
-namespace IHM_Footies
+namespace IHM_Footies.Statistique
 {
     /// <summary>
-    /// Logique d'interaction pour VueFormulaireGroupeInvite.xaml
+    /// Logique d'interaction pour VuePageSelectionStatistique.xaml
     /// </summary>
-    public partial class VueFormulaireGroupeInvite : Window
+    public partial class VuePageSelectionStatistique : Window
     {
-
         #region Attributs
-        private VMGroupeInvite groupeInvite;
+        private VmPageStatistique vmPageStatistique;
         #endregion
-
-        #region Propriétés
-        /// <summary>
-        /// La viewModel du groupe d'invités
-        /// </summary>
-        public VMGroupeInvite GroupeInvite => this.groupeInvite;
-        #endregion
-
 
         #region Constructeurs
         /// <summary>
-        /// Constructeur avec ViewModel
+        /// Constructeur de la vue de sélection des statistiques
         /// </summary>
-        /// <param name="groupeInvite">la viewModel</param>
-        public VueFormulaireGroupeInvite(VMGroupeInvite groupeInvite)
+        /// <param name="vMPageInvitation">prend en parametre le model des invitations</param>
+        public VuePageSelectionStatistique()
         {
-            this.groupeInvite = groupeInvite;
-            this.DataContext = this.groupeInvite;
             InitializeComponent();
+            this.vmPageStatistique = new VmPageStatistique();
+            this.DataContext = this.vmPageStatistique;
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
         }
-
-        /// <summary>
-        /// Constructeur par défaut
-        /// </summary>
-        public VueFormulaireGroupeInvite() : this(new VMGroupeInvite())
-        {
-        }
-        
         #endregion
 
-        #region Boutons enregistrer modifications 
+        #region Boutons enregistrer l'affichage 
         /// <summary>
         /// Gestion du clic sur le bouton Enregistrer
         /// </summary>
         /// <param name="sender"> L'expéditeur </param>
         /// <param name="e"> Les arguments de l'événement </param>
 
-        private async void Enregistrer_Click(object sender, RoutedEventArgs e)
+        private async void Afficher_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                List<string> erreurs = new List<string>();
-                // nom
-                if (string.IsNullOrWhiteSpace(this.groupeInvite.Nom))
+                bool AuMoinUnSelection = this.vmPageStatistique.InvitesSelectionnes != null;
+
+                if (!AuMoinUnSelection)
                 {
-                    erreurs.Add("Entrez le nom du groupe d'invités");
-                }
-                if (this.groupeInvite.Invites == null || this.groupeInvite.Invites.Count == 0)
-                {
-                    erreurs.Add("Sélectionnez au moins un invité pour le groupe");
-                }
-                if (erreurs.Count > 0)
-                {
-                    string message = string.Join("\n", erreurs);
-                    MessageBox.Show(message, "Erreur de validation", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show(
+                        "Sélectionnez au moins un invité pour voir les stats",
+                        "Erreur de validation",
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Error
+                    );
                 }
                 else
                 {
-                    this.DialogResult = true;
-
+                    this.vmPageStatistique.CreerStatistique();
+                    Navigation.AllerStatistique(this, this.vmPageStatistique);
                 }
             }
             catch (Exception ex)
@@ -92,9 +71,7 @@ namespace IHM_Footies
                 MessageBox.Show(ex.Message, "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-
         #endregion
-
 
         #region Boutons de navigation
         /// <summary>
@@ -177,7 +154,7 @@ namespace IHM_Footies
         }
 
         /// <summary>
-        /// Bouton pour aller à la page des Statistiques
+        /// Bouton pour aller à la page des statistiques d'invités
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -185,8 +162,23 @@ namespace IHM_Footies
         {
             Navigation.AllerSelectionInvite(this);
         }
-        #endregion
 
+        /// <summary>
+        /// Bouton pour reinitialiser le contenu de la barre de recherche
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BoutonRetour_Click(object sender, RoutedEventArgs e)
+        {
+            this.vmPageStatistique.TexteRechercheGroupe = string.Empty;
+        }
+
+        private void RechercheInvite_Click(object sender, RoutedEventArgs e)
+        {
+            this.vmPageStatistique.RechercherInviteStatistique(this.vmPageStatistique.TexteRechercheGroupe);
+        }
+
+        #endregion
 
     }
 }

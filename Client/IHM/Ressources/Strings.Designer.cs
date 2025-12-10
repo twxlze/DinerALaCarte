@@ -70,6 +70,15 @@ namespace IHM_Footies.Ressources {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Consulter les statistiques.
+        /// </summary>
+        public static string AfficherStats {
+            get {
+                return ResourceManager.GetString("AfficherStats", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Ajouter un groupe d&apos;invité.
         /// </summary>
         public static string AjouterGroupeInvite {
@@ -457,6 +466,15 @@ namespace IHM_Footies.Ressources {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à 🛈Sélectionnez les invités pour afficher leurs statistiques de fréquence de venue.
+        /// </summary>
+        public static string messageStats {
+            get {
+                return ResourceManager.GetString("messageStats", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Modifer un groupe d&apos;invité.
         /// </summary>
         public static string ModifierGroupeInvite {
@@ -606,6 +624,33 @@ namespace IHM_Footies.Ressources {
         public static string RetoursCommentaires {
             get {
                 return ResourceManager.GetString("RetoursCommentaires", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Sélectionner tout.
+        /// </summary>
+        public static string selecttout {
+            get {
+                return ResourceManager.GetString("selecttout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à 📊 Statistiques.
+        /// </summary>
+        public static string Stats {
+            get {
+                return ResourceManager.GetString("Stats", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Statistiques des invités.
+        /// </summary>
+        public static string StatsPage {
+            get {
+                return ResourceManager.GetString("StatsPage", resourceCulture);
             }
         }
         
