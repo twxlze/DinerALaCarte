@@ -50,7 +50,7 @@ namespace API_Footies.Controllers
         /// <param name="pseudo">le pseudo à rechercher</param>
         /// <returns></returns>
         [HttpPost("VerifierPseudoDisponible")]
-        public IActionResult VerifierPseudoDisponible([FromBody]string pseudo)
+        public IActionResult VerifierPseudoDisponible([FromBody] string pseudo)
         {
             IActionResult resultat;
             try
@@ -61,6 +61,28 @@ namespace API_Footies.Controllers
             catch (Exception ex)
             {
                 resultat = StatusCode(500, "Erreur serveur : " + ex.Message);
+            }
+            return resultat;
+        }
+
+        [HttpPost("Inscription")]
+        public IActionResult Inscription(InscriptionModele inscriptionModele)
+        {
+            IActionResult resultat;
+            try
+            {
+                if (inscriptionModele == null || inscriptionModele.Identifiant == null || inscriptionModele.Utilisateur == null)
+                {
+                    resultat = BadRequest("Les données sont incomplètes.");
+                }
+
+                this.service.Inscription(inscriptionModele.Identifiant, inscriptionModele.Utilisateur);
+
+                resultat = Ok("Compte créé");
+            }
+            catch (Exception ex)
+            {
+                resultat = StatusCode(500, "Erreur lors de l'inscription : " + ex.Message);
             }
             return resultat;
         }

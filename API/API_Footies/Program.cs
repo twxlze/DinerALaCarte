@@ -32,7 +32,7 @@ builder.Services.AddScoped<IInvitationDAO, InvitationDAO>();
 builder.Services.AddScoped<IInvitationService, InvitationService>();
 
 
-builder.Services.AddScoped<IUtilisateurDAO, UtilisateurDAO>();
+builder.Services.AddScoped<IConnexionDAO, ConnexionDAO>();
 builder.Services.AddScoped<IAuthentificationService, AuthentificationService>();
 builder.Services.AddScoped<IAuthentification, Authentification>();
 builder.Services.AddScoped<IConfigHelper,ConfigHelper>();

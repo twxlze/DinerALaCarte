@@ -7,10 +7,10 @@ namespace API_Footies.Services.Realisations
 {
     public class AuthentificationService : IAuthentificationService
     {
-        private IUtilisateurDAO dao;
+        private IConnexionDAO dao;
         private IAuthentification securite;
 
-        public AuthentificationService(IUtilisateurDAO dao, IAuthentification securite)
+        public AuthentificationService(IConnexionDAO dao, IAuthentification securite)
         {
             this.dao = dao;
             this.securite = securite;
@@ -38,5 +38,12 @@ namespace API_Footies.Services.Realisations
             Utilisateur utilisateurTrouve = this.dao.RecupererUtilisateurParPseudo(pseudo);
             return utilisateurTrouve == null;
         }
-    }
+
+        public bool Inscription(Identifiant identifiant, Utilisateur utilisateur)
+        {
+            identifiant.MotDePasseHash = this.securite.CalculerHash(identifiant.MotDePasse);
+            bool AjoutIdentifiant = this.dao.AjouterIdentifiantEtUtilisateur(identifiant, utilisateur);
+            return true;
+        }
+}
 }

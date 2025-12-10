@@ -15,6 +15,7 @@ namespace API_Footies.Metier
         private string? numTel;
         private string? mail;
         #endregion
+
         #region Propriétés
         /// <summary>
         /// Retourne ou modifie l'id de l'utilisateur

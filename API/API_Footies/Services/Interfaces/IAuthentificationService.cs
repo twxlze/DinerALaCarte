@@ -18,5 +18,13 @@ namespace API_Footies.Services.Interfaces
         /// <param name="pseudo">le pseudo à rechercher</param>
         /// <returns>true si le pseudo est disponible</returns>
         bool VerifierPseudoDisponible(string pseudo);
+
+        /// <summary>
+        /// Inscrit un nouvel utilisateur
+        /// </summary>
+        /// <param name="identifiant">L'identifiant de l'utilisateur à ajouter</param>
+        /// <param name="utilisateur">l'utilisateur à ajouter</param>
+        /// <returns></returns>
+        bool Inscription(Identifiant identifiant, Utilisateur utilisateur);
     }
 }
