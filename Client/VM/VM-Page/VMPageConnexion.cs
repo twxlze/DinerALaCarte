@@ -13,214 +13,85 @@ namespace VM_Footies.VM_Page
 {
     public class VMPageConnexion : INotifyPropertyChanged
     {
-        #region attributs
+        #region Attributs
         private IConnexionDAO connexionDAO;
         private string pseudo;
-        private string motDePasse;
         private string messageErreur;
-        private string? nom;
-        private string? prenom;
-        private string? telephone;
-        private string? email;
         #endregion
 
-        #region propriétés
+        #region Propriétés 
         /// <summary>
-        /// Retourne ou modifie le pseudo saisi
+        /// Renvoye ou modifie le pseudo de l'utilisateur
         /// </summary>
         public string Pseudo
         {
             get { return pseudo; }
-            set
-            {
-                pseudo = value;
-                Notify("Pseudo");
-            }
+            set { pseudo = value; Notify("Pseudo"); }
         }
-
         /// <summary>
-        /// Retourne ou modifie le mot de passe saisi
-        /// </summary>
-        public string MotDePasse
-        {
-            get { return motDePasse; }
-            set
-            {
-                motDePasse = value;
-                Notify("MotDePasse");
-            }
-        }
-
-        /// <summary>
-        /// Retourne ou modifie le message d'erreur
+        /// Renvoye ou modifie le message d'erreur
         /// </summary>
         public string MessageErreur
         {
             get { return messageErreur; }
-            set
-            {
-                messageErreur = value;
-                Notify("MessageErreur");
-            }
-        }
-
-        /// <summary>
-        /// Retourne ou modifie le nom de l'utilisateur
-        /// </summary>
-        public string? Nom
-        {
-            get { return nom; }
-            set
-            {
-                nom = value;
-                Notify("Nom");
-            }
-        }
-
-        /// <summary>
-        /// Retourne ou modifie le prénom de l'utilisateur
-        /// </summary>
-        public string? Prenom
-        {
-            get { return prenom; }
-            set
-            {
-                prenom = value;
-                Notify("Prenom");
-            }
-        }
-
-        /// <summary>
-        /// Retourne ou modifie le numéro de téléphone de l'utilisateur
-        /// </summary>
-        public string? Telephone
-        {
-            get { return telephone; }
-            set
-            {
-                telephone = value;
-                Notify("Telephone");
-            }
-        }
-
-        /// <summary>
-        /// Retourne ou modifie l'email de l'utilisateur
-        /// </summary>
-        public string? Email
-        {
-            get { return email; }
-            set
-            {
-                email = value;
-                Notify("Email");
-            }
+            set { messageErreur = value; Notify("MessageErreur"); }
         }
         #endregion
 
-        public event PropertyChangedEventHandler? PropertyChanged;
+        public event PropertyChangedEventHandler PropertyChanged;
 
-        #region constructeurs
+        #region Constructeur
         /// <summary>
-        /// Constructeur par défaut de la page de connexion
+        /// Constructeur de VMPageConnexion
         /// </summary>
         public VMPageConnexion()
         {
             this.connexionDAO = new ConnexionDAO();
-            this.pseudo = string.Empty;
-            this.motDePasse = string.Empty;
-            this.messageErreur = string.Empty;
-            this.nom = string.Empty;
-            this.prenom = string.Empty;
-            this.telephone = string.Empty;
-            this.email = string.Empty;
         }
         #endregion
 
-        #region méthodes
+        #region Methodes 
         /// <summary>
-        /// Vérifie les champs et tente la connexion
+        /// Connecte un utilisateur
         /// </summary>
-        /// <returns> true si la connexion a réussi, false sinon </returns>
-        public async Task<bool> Connexion()
+        /// <param name="motDePasse">Le mot de passe de l'utilisateur</param>
+        /// <returns>true si l'utilisateur</returns>
+        public async Task<bool> Connexion(string motDePasse)
         {
             bool connexionReussie = false;
 
-            if (ValiderChamps())
+            if (!string.IsNullOrWhiteSpace(this.Pseudo) && !string.IsNullOrWhiteSpace(motDePasse))
             {
-                Identifiant identifiant = new Identifiant(0, this.pseudo, this.motDePasse);
-                Utilisateur? utilisateurConnecte = await this.connexionDAO.Connexion(identifiant);
+                Identifiant identifiant = new Identifiant(0, this.Pseudo, motDePasse);
+                Utilisateur utilisateurConnecte = await this.connexionDAO.Connexion(identifiant);
 
                 if (utilisateurConnecte != null)
                 {
                     SessionService.Instance.UtilisateurConnecte = utilisateurConnecte;
-
                     connexionReussie = true;
-                    this.MessageErreur = string.Empty;
                 }
                 else
                 {
                     this.MessageErreur = "Pseudo ou mot de passe incorrect";
                 }
             }
+            else
+            {
+                this.MessageErreur = "Pseudo et mot de passe obligatoires";
+            }
 
             return connexionReussie;
         }
+        #endregion
 
-        public async Task<bool> Inscription()
-        {
-            bool inscriptionReussie = false;
-
-            if (ValiderChamps())
-            {
-                bool disponible = await this.connexionDAO.VerifierPseudoDisponible(this.pseudo);
-                if (!disponible)
-                {
-                    this.MessageErreur = "Le pseudo est déjà utilisé";
-                }
-                else
-                {
-                    this.MessageErreur = string.Empty;
-                    Identifiant nouvelIdentifiant = new Identifiant(0, this.pseudo, this.motDePasse);
-                    Utilisateur nouvelUtilisateur = new Utilisateur(0, this.pseudo, this.nom, this.prenom, this.telephone, this.email);
-
-                    inscriptionReussie = await this.connexionDAO.Inscription(nouvelIdentifiant, nouvelUtilisateur);
-                }
-            }
-            return inscriptionReussie;
-        }
-
+        #region méthodes privées
         /// <summary>
-        /// Valide que les champs pseudo et mot de passe ne sont pas vides
+        /// Notifie l'UI d'un changement de propriété
         /// </summary>
-        /// <returns> true si les champs sont valides, false sinon </returns>
-        private bool ValiderChamps()
+        /// <param name="propriete">Nom de la propriété modifiée</param>
+        private void Notify(string propriete)
         {
-            bool champsValides = false;
-
-            if (string.IsNullOrWhiteSpace(this.pseudo))
-            {
-                this.MessageErreur = "Le pseudo est obligatoire";
-            }
-            else if (string.IsNullOrWhiteSpace(this.motDePasse))
-            {
-                this.MessageErreur = "Le mot de passe est obligatoire";
-            }
-            else
-            {
-                champsValides = true;
-                this.MessageErreur = string.Empty;
-            }
-
-            return champsValides;
-        }
-
-        /// <summary>
-        /// Notifie le changement d'une propriété
-        /// </summary>
-        /// <param name="message"> Nom de la propriété changée </param>
-        private void Notify(string message)
-        {
-            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(message));
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propriete));
         }
         #endregion
     }

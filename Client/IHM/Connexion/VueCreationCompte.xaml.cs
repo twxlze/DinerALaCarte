@@ -21,61 +21,66 @@ namespace IHM_Footies.Connexion
     public partial class VueCreationCompte : Window
     {
         #region Attributs
-        private VMPageConnexion vmPageConnexion;
+        private VMPageInscription vmInscription;
         #endregion
 
         #region Constructeurs
         /// <summary>
-        /// Constructeur de la vue de connexion
+        /// Constructeur de la vue de création de compte
         /// </summary>
         public VueCreationCompte()
         {
             InitializeComponent();
-            this.vmPageConnexion = new VMPageConnexion();
-            this.DataContext = this.vmPageConnexion;
+            this.vmInscription = new VMPageInscription();
+            this.DataContext = this.vmInscription;
         }
         #endregion
 
-        #region Méthodes
+        #region Méthodes (Gestionnaires d'événements)
+
         /// <summary>
-        /// Gère le clic sur le bouton de connexion
+        /// Gère le clic sur le bouton "S'enregistrer"
         /// </summary>
-        /// <param name="sender"> L'expéditeur du clic </param>
-        /// <param name="e"> Les arguments de l'événement </param>
+        /// <param name="sender">L'expéditeur du clic</param>
+        /// <param name="e">Les arguments de l'événement</param>
         private async void BoutonEnregistrer_Click(object sender, RoutedEventArgs e)
         {
-            this.vmPageConnexion.MotDePasse = ChampMotDePasse.Password;
-            bool connexionReussie = await this.vmPageConnexion.Inscription();
-            if (connexionReussie)
+            try
             {
-                MessageBox.Show("Compte créé avec succès. Connectez-vous.", "Succès", MessageBoxButton.OK, MessageBoxImage.Information);
-                Navigation.AllerConnexion(this);
+                string motDePasseSaisi = ChampMotDePasse.Password;
+                bool inscriptionReussie = await this.vmInscription.Inscription(motDePasseSaisi);
+                if (inscriptionReussie)
+                {
+                    MessageBox.Show( "Compte créé avec succès ! Vous pouvez maintenant vous connecter.", "Succès", MessageBoxButton.OK, MessageBoxImage.Information);
+                    Navigation.AllerConnexion(this);
+                }
+                else
+                {
+                    MessageBox.Show( this.vmInscription.MessageErreur, "Erreur d'inscription", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show(this.vmPageConnexion.MessageErreur, "Erreur d'inscription", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show( "Une erreur inattendue est survenue : " + ex.Message, "Erreur Critique", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
         /// <summary>
-        /// Gère le clic sur le bouton fe retour à la connexion
+        /// Gère le clic sur le bouton de retour à la connexion
         /// </summary>
-        /// <param name="sender"> L'expéditeur du clic </param>
-        /// <param name="e"> Les arguments de l'événement </param>
         private void BoutonRetourConnexion_Click(object sender, RoutedEventArgs e)
         {
             Navigation.AllerConnexion(this);
         }
-        
+
         /// <summary>
-        /// Bouton pour fermer la fenêtre
+        /// Gère le clic sur le bouton pour fermer la fenêtre
         /// </summary>
-        /// <param name="sender"> L'expéditeur du clic </param>
-        /// <param name="e"> Les arguments de l'événement </param>
         private void BoutonFermerFenetre_Click(object sender, RoutedEventArgs e)
         {
             Navigation.FermerFenetre(this);
         }
+
         #endregion
     }
 }

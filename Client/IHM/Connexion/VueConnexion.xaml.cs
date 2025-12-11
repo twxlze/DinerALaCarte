@@ -44,16 +44,22 @@ namespace IHM_Footies.Connexion
         /// <param name="e"> Les arguments de l'événement </param>
         private async void BoutonConnexion_Click(object sender, RoutedEventArgs e)
         {
-            this.vmPageConnexion.MotDePasse = ChampMotDePasse.Password;
-            bool connexionReussie = await this.vmPageConnexion.Connexion();
-
-            if (connexionReussie)
+            try
             {
-                Navigation.AllerAccueil(this);
+                string motDePasseSaisi = ChampMotDePasse.Password;
+                bool connexionReussie = await this.vmPageConnexion.Connexion(motDePasseSaisi);
+                if (connexionReussie)
+                {
+                    Navigation.AllerAccueil(this);
+                }
+                else
+                {
+                    MessageBox.Show(this.vmPageConnexion.MessageErreur, "Erreur de connexion", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show(this.vmPageConnexion.MessageErreur, "Erreur de connexion", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Une erreur inattendue est survenue : " + ex.Message, "Erreur Critique", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
