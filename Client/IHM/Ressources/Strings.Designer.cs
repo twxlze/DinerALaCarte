@@ -718,6 +718,15 @@ namespace IHM_Footies.Ressources {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à 💬 Remarques.
+        /// </summary>
+        public static string Remarque {
+            get {
+                return ResourceManager.GetString("Remarque", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Retours et Commentaires.
         /// </summary>
         public static string RetoursCommentaires {

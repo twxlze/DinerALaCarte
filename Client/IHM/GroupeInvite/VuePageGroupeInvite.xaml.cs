@@ -124,8 +124,10 @@ namespace IHM_Footies
             VMGroupeInvite nvGroupe = new VMGroupeInvite();
             await this.vmPageGroupeInvite.ChargerInvitesDansGroupe(nvGroupe);
 
+            
             VueFormulaireGroupeInvite fenetre = new VueFormulaireGroupeInvite(nvGroupe);
             bool? result = fenetre.ShowDialog();
+            
             if (result == true)
             {
                 try

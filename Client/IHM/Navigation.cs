@@ -13,6 +13,7 @@ using IHM_Footies.Menu;
 using IHM_Footies.Plat;
 using IHM_Footies.Reglages;
 using IHM_Footies.Statistique;
+using METIER_Footies.Metier;
 using VM_Footies.VM;
 using VM_Footies.VM_Page;
 
@@ -66,7 +67,6 @@ namespace IHM_Footies
         #endregion
 
         #region Plat
-
         /// <summary>
         /// Aller à la page des plats
         /// </summary>
@@ -94,7 +94,6 @@ namespace IHM_Footies
         #endregion
 
         #region Groupe invités
-
         /// <summary>
         /// Permet de naviguer vers la fenêtre des groupes d'invités
         /// </summary>
@@ -207,7 +206,6 @@ namespace IHM_Footies
         }
 
         #region Invitation
-
         /// <summary>
         /// Aller à la page invitations
         /// </summary>
@@ -230,6 +228,19 @@ namespace IHM_Footies
             fenetreActuelle.Close();
         }
 
+        public static void AllerFormulaireInvitation(Window fenetreActuelle, VMInvitation invitation)
+        {
+            VueFormulaireInvitation vueFormulaireInvitation = new VueFormulaireInvitation(invitation);
+            vueFormulaireInvitation.Show();
+            fenetreActuelle.Close();
+        }
+
+        /// <summary>
+        /// Permet de naviguer vers la fenêtre de détail d'une invitation
+        /// </summary>
+        /// <param name="fenetreActuelle"> La fenêtre actuelle à fermer</param>
+        /// <param name="invitation"> L'invitation à afficher en détail</param>
+        /// <param name="provenance"> La fenêtre de provenance (optionnel, par défaut "Invitation")</param>
         public static void AllerDetailInvitation(Window fenetreActuelle, VMInvitation invitation, string provenance = "Invitation")
         {
             VuePageInvitationDetail fenetre = new VuePageInvitationDetail(invitation, provenance);
@@ -238,12 +249,13 @@ namespace IHM_Footies
         }
 
         /// <summary>
-        /// Aller au formulaire d'invitation des menus et des plats
+        /// Aller au formulaire d'invitation des menus et des plats avec une invitation existante
         /// </summary>
-        /// <param name="fenetreActuelle"></param>
-        public static void AllerFormulaireInvitationPlatMenu(Window fenetreActuelle)
+        /// <param name="fenetreActuelle">La fenêtre actuelle à fermer</param>
+        /// <param name="invitation">L'invitation à utiliser</param>
+        public static void AllerFormulaireInvitationPlatMenu(Window fenetreActuelle, VMInvitation invitation)
         {
-            VueFormulaireMenuEtPlat_Invitation vueFormulaireInvitation = new VueFormulaireMenuEtPlat_Invitation();
+            VueFormulaireMenuEtPlat_Invitation vueFormulaireInvitation = new VueFormulaireMenuEtPlat_Invitation(invitation);
             vueFormulaireInvitation.Show();
             fenetreActuelle.Close();
         }
@@ -283,8 +295,5 @@ namespace IHM_Footies
             fenetreActuelle.Close();
         }
         #endregion
-
-
-
     }
 }

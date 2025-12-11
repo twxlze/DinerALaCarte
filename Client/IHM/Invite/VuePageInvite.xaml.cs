@@ -119,6 +119,7 @@ namespace IHM_Footies
         {
             VueFormulaireInvite fenetre = new VueFormulaireInvite();
             bool? result = fenetre.ShowDialog();
+
             if (result == true)
             {
                 try

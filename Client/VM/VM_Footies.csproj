@@ -14,4 +14,8 @@
     <ProjectReference Include="..\METIER\METIER_Footies.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="VM-Element-Selectionne\" />
+  </ItemGroup>
+
 </Project>
