@@ -58,6 +58,21 @@ namespace API_Footies.Services.Realisations
         {
             return this.dao.ChercherPlat(texterecherche, idUtilisateur);
         }
+
+        public void AjouterAvis(Metier.Avis avis)
+        {
+            if (avis.Note < 1 || avis.Note > 10)
+            {
+                throw new ArgumentException("La note doit être comprise entre 1 et 10.");
+            }
+
+            if (avis.IdPlat <= 0 || avis.IdInvite <= 0)
+            {
+                throw new ArgumentException("Il faut un invité et un plat séléctionné.");
+            }
+            this.dao.AjouterAvis(avis.IdPlat, avis.IdInvite, avis.Note, avis.Commentaire);
+        }
+
         #endregion
 
     }
