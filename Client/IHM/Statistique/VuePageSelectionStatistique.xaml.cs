@@ -171,6 +171,7 @@ namespace IHM_Footies.Statistique
         private void BoutonRetour_Click(object sender, RoutedEventArgs e)
         {
             this.vmPageStatistique.TexteRechercheGroupe = string.Empty;
+            this.vmPageStatistique.RechercherInviteStatistique(string.Empty);
         }
 
         private void RechercheInvite_Click(object sender, RoutedEventArgs e)

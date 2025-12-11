@@ -233,25 +233,23 @@ namespace VM_Footies.VM_Page
         /// <param name="textrechercher">le text de recherche</param>
         public void RechercherInviteStatistique(string textrechercher)
         {
+            if (string.IsNullOrWhiteSpace(textrechercher))
+            {
+                InitialiserStatsInvites(); 
+            }
             List<VMInvite> invitesFiltres = new List<VMInvite>();
-            List<VMInvite> invitesNonFiltres = new List<VMInvite>();
 
             foreach (VMInvite inviteStat in _invitesStats)
             {
                 if (inviteStat.Invite.Identite.Contains(textrechercher, StringComparison.OrdinalIgnoreCase))
                 {
-                    invitesFiltres.Add(inviteStat);
-                }
-                else
-                {
-                    invitesNonFiltres.Add(inviteStat);
+                    invitesFiltres.Add(new VMInvite(inviteStat.Invite)
+                    {
+                        InviteSelectionne = inviteStat.InviteSelectionne
+                    });
                 }
             }
-
             invitesFiltres = invitesFiltres.OrderBy(i => i.Invite.Identite).ToList();
-            invitesNonFiltres = invitesNonFiltres.OrderBy(i => i.Invite.Identite).ToList();
-            invitesFiltres.AddRange(invitesNonFiltres);
-
             _invitesStats.Clear();
             foreach (VMInvite inviteStat in invitesFiltres)
             {
