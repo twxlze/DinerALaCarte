@@ -127,5 +127,21 @@ namespace METIER_Footies.Data
                 throw new Exception("Erreur lors de l'ajout du commentaire sur le plat : " + ex.Message);
             }
         }
+
+        public async Task<HttpResponseMessage> AjouterNotePlat(int note)
+        {
+            try
+            {
+                long idUtilisateur = SessionService.Instance.UtilisateurConnecte.IdUtilisateur;
+                string url = $"Invitations/AjoutCommentairePlat?IdUtilisateur={idUtilisateur}";
+                HttpResponseMessage reponseHttp = await PostAsync(url, note);
+                return reponseHttp;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erreur lors de l'ajout de la note sur le plat : " + ex.Message);
+            }
+        }
+
     }
 }
