@@ -159,6 +159,7 @@ namespace IHM_Footies.Invitations
             try
             {
                 this.invitation.SynchroniserTout();
+                
                 if (this.invitation.Invitation.IdInvitation != 0)
                 {
                     await this.invitationDAO.ModifierInvitation(this.invitation.Invitation);

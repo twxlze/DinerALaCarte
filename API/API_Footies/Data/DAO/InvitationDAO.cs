@@ -116,7 +116,7 @@ namespace API_Footies.Data.DAO
                 {"@Nom", invitation.Nom },
                 {"@Date", invitation.Date },
                 {"@IdUtilisateur", idUtilisateur },
-                {"@Remarque", invitation.Remarques ?? "" }
+                {"@Remarque", invitation.Remarque ?? "" }
             };
             return connection.ExecuteInsert("INSERT INTO Invitation (Nom, Date, IdUtilisateur, Remarque) VALUES (@Nom, @Date, @IdUtilisateur, @Remarque)", parameters);
         }
@@ -443,7 +443,7 @@ namespace API_Footies.Data.DAO
                 {"@Nom", invitation.Nom },
                 {"@Date", invitation.Date },
                 {"@IdUtilisateur", idUtilisateur },
-                {"@Remarque", invitation.Remarques ?? ""   }
+                {"@Remarque", invitation.Remarque ?? ""   }
             };
             connection.ExecuteQuery("UPDATE Invitation SET Nom = @Nom, Date = @Date, Remarque = @Remarque WHERE IdInvitation = @IdInvitation AND IdUtilisateur = @IdUtilisateur", parameters);
             return invitation.IdInvitation;

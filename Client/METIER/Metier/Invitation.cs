@@ -11,7 +11,7 @@ namespace METIER_Footies.Metier
     /// </summary>
     public class Invitation
     {
-        #region --- Attributs ---
+        #region Attributs
         private long idInvitation;
         private string nom;
         private List<GroupeInvites> groupeInvites;
@@ -19,9 +19,10 @@ namespace METIER_Footies.Metier
         private List<Invite> invites;
         private List<Plat> plats;
         private DateTime date;
+        private string? remarque;
         #endregion
 
-        #region --- Propriétés ---
+        #region Propriétés
         /// <summary>
         /// Id de l'invitation
         /// </summary>
@@ -92,11 +93,18 @@ namespace METIER_Footies.Metier
             get { return plats; }
             set { plats = value; }
         }
-        
 
+        /// <summary>
+        /// Remarque de l'invitation
+        /// </summary>
+        public string? Remarque
+        {
+            get { return remarque; }
+            set { remarque = value; }
+        }
         #endregion
 
-        #region --- Constructeurs ---
+        #region Constructeurs
         /// <summary>
         /// Constructeur par copie d'une invitation
         /// </summary>
@@ -110,6 +118,7 @@ namespace METIER_Footies.Metier
             this.invites = invitation.invites;
             this.plats = invitation.plats;
             this.date = invitation.date;
+            this.remarque = invitation.remarque;
         }
 
         /// <summary>
@@ -123,8 +132,8 @@ namespace METIER_Footies.Metier
             this.menu = new List<Menu>();
             this.invites = new List<Invite>();
             this.plats = new List<Plat>();
+            this.remarque = "";
         }
         #endregion
-
     }
 }

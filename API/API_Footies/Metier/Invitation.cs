@@ -13,7 +13,7 @@
         private long idInvitation;
         private string nom;
         private DateTime date;
-        private string? remarques;
+        private string? remarque;
         #endregion
 
         #region --- Propriétés ---
@@ -83,10 +83,10 @@
         /// <summary>
         /// Retourne ou modifie les remarques de l'invitation
         /// </summary>
-        public string? Remarques
+        public string? Remarque
         {
-            get { return remarques; }
-            set { remarques = value; }
+            get { return remarque; }
+            set { remarque = value; }
         }
         #endregion
 
@@ -103,7 +103,7 @@
             this.idInvitation = idInvitation;
             this.nom = nom;
             this.date = date;
-            this.remarques = remarques;
+            this.remarque = remarques;
         }
 
         /// <summary>
@@ -115,7 +115,7 @@
             this.menus = new List<Menu>();
             this.invites = new List<Invite>();
             this.plats = new List<Plat>();
-            this.remarques = "";
+            this.remarque = "";
         }
         #endregion
     }

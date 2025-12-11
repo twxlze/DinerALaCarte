@@ -164,14 +164,9 @@ namespace IHM_Footies.Invitations
             {
                 MessageBox.Show("Veuillez saisir un nom pour l'invitation.", "Validation", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
+            Navigation.AllerFormulaireInvitationPlatMenu(this, this.invitation);
+            #endregion
 
-            VueFormulaireMenuEtPlat_Invitation fenetreMenuPlat = new VueFormulaireMenuEtPlat_Invitation(invitation);
-            fenetreMenuPlat.ShowDialog();
-
-            this.Close();
         }
-
-        #endregion
-
     }
 }

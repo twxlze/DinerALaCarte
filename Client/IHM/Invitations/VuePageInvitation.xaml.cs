@@ -235,8 +235,7 @@ namespace IHM_Footies.Invitations
             }
             VMInvitation invitationAModifier = new VMInvitation(this.vmPageInvitation.InvitationSelectionnee);
             await this.vmPageInvitation.ChargerElementsDansInvitation(invitationAModifier);
-            VueFormulaireInvitation fenetre = new VueFormulaireInvitation(invitationAModifier);
-            fenetre.ShowDialog();
+            Navigation.AllerFormulaireInvitation(this, invitationAModifier);
             this.RafraichirListe();
         }
 
