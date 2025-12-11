@@ -119,17 +119,17 @@
 
                 <StackPanel Grid.Column="0" Grid.Row="1" Margin="0,0,0,10">
                     <TextBlock Text="Nom" Style="{StaticResource StyleLabel}"/>
-                    <TextBox x:Name="ChampNom" Text="{Binding Nom}" Style="{StaticResource StyleChampSaisie}"/>
+                    <TextBox x:Name="ChampNom" Text="{Binding NouvelUtilisateur.Nom}" Style="{StaticResource StyleChampSaisie}"/>
                 </StackPanel>
 
                 <StackPanel Grid.Column="2" Grid.Row="1" Margin="0,0,0,10">
                     <TextBlock Text="Prénom" Style="{StaticResource StyleLabel}"/>
-                    <TextBox x:Name="ChampPrenom" Text="{Binding Prenom}" Style="{StaticResource StyleChampSaisie}"/>
+                    <TextBox x:Name="ChampPrenom" Text="{Binding NouvelUtilisateur.Prenom}" Style="{StaticResource StyleChampSaisie}"/>
                 </StackPanel>
 
                 <StackPanel Grid.Column="0" Grid.Row="2">
                     <TextBlock Text="Email" Style="{StaticResource StyleLabel}"/>
-                    <TextBox x:Name="ChampEmail" Text="{Binding Email}" Style="{StaticResource StyleChampSaisie}"/>
+                    <TextBox x:Name="ChampEmail" Text="{Binding NouvelUtilisateur.Email}" Style="{StaticResource StyleChampSaisie}"/>
                 </StackPanel>
 
 
@@ -138,12 +138,12 @@
                         <TextBlock Text="Pseudo" Style="{StaticResource StyleLabel}"/>
                         <TextBlock Text="*" Foreground="Red" FontWeight="Bold" Margin="4,0,0,0"/>
                     </StackPanel>
-                    <TextBox x:Name="ChampPseudo" Text="{Binding Pseudo}" Style="{StaticResource StyleChampSaisie}"/>
+                    <TextBox x:Name="ChampPseudo" Text="{Binding NouvelUtilisateur.Pseudo}" Style="{StaticResource StyleChampSaisie}"/>
                 </StackPanel>
 
                 <StackPanel Grid.Column="2" Grid.Row="2" Margin="0,0,0,10">
                     <TextBlock Text="Numéro de téléphone" Style="{StaticResource StyleLabel}"/>
-                    <TextBox x:Name="ChampTelephone" Text="{Binding Telephone}" Style="{StaticResource StyleChampSaisie}"/>
+                    <TextBox x:Name="ChampTelephone" Text="{Binding NouvelUtilisateur.Telephone}" Style="{StaticResource StyleChampSaisie}"/>
                 </StackPanel>
 
                 <StackPanel Grid.Column="2" Grid.Row="0">

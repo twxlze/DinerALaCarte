@@ -1,12 +1,8 @@
-﻿using System.Data;
-using API_Footies.Metier;
+﻿using API_Footies.Metier;
 
 namespace API_Footies.Data.Interfaces
 {
-    /// <summary>
-    /// interface pour le DAO en charge de la gestion des utilisateurs
-    /// </summary>
-    public interface IUtilisateurDAO
+    public interface IConnexionDAO 
     {
         /// <summary>
         /// Permet de récupérer un utilisateur par son pseudo
@@ -21,5 +17,13 @@ namespace API_Footies.Data.Interfaces
         /// <param name="pseudo">le pseudo</param>
         /// <returns>l'identifiant de l'utilisateur</returns>
         Identifiant RecupererIdentifiantParPseudo(string pseudo);
+
+        /// <summary>
+        /// Permet d'ajouter un identifiant et un utilisateur dans la base de données (oblgatoire de réaliser les deux ensembles car ils ne sont pas séparable)
+        /// </summary>
+        /// <param name="identifiant">les identifiant de l'utilisateur</param>
+        /// <param name="utilisateur">l'utilisateur à ajouter</param>
+        /// <returns>true si tout à bien été ajouter</returns>
+        bool AjouterIdentifiantEtUtilisateur(Identifiant identifiant, Utilisateur utilisateur);
     }
 }

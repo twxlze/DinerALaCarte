@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using IHM;
+using IHM_Footies.Connexion;
 using IHM_Footies.GroupeInvite;
 using IHM_Footies.Invitations;
 using IHM_Footies.Invite;
@@ -235,7 +236,6 @@ namespace IHM_Footies
             fenetre.Show();
             fenetreActuelle.Close();
         }
-        #endregion
 
         /// <summary>
         /// Aller au formulaire d'invitation des menus et des plats
@@ -247,5 +247,52 @@ namespace IHM_Footies
             vueFormulaireInvitation.Show();
             fenetreActuelle.Close();
         }
+        #endregion
+
+        #region Connexion 
+        /// <summary>
+        /// Aller à la page de connexion
+        /// </summary>
+        /// <param name="fenetreActuelle">La fenêtre actuelle</param>
+        public static void AllerConnexion(Window fenetreActuelle)
+        {
+            VueConnexion vueConnexion = new VueConnexion();
+            vueConnexion.Show();
+            fenetreActuelle.Close();
+        }
+
+        /// <summary>
+        /// Aller à la page de connexion
+        /// </summary>
+        /// <param name="fenetreActuelle">La fenêtre actuelle</param>
+        public static void AllerCreerUtilisateur(Window fenetreActuelle)
+        {
+            VueCreationCompte vueCreationCompte = new VueCreationCompte();
+            vueCreationCompte.Show();
+            fenetreActuelle.Close();
+        }
+        #endregion
+
+        /// <summary>
+        /// Aller à la page des réglages
+        /// </summary>
+        /// <param name="fenetreActuelle">La fenêtre actuelle</param>
+        public static void AllerReglages(Window fenetreActuelle)
+        {
+            VuePageReglages vueReglages = new VuePageReglages();
+            vueReglages.Show();
+            fenetreActuelle.Close();
+        }
+
+        /// <summary>
+        /// Permet de fermer la fenêtre actuelle
+        /// </summary>
+        /// <param name="fenetreActuelle"> La fenêtre actuelle à fermer</param>
+        public static void FermerFenetre(Window fenetreActuelle)
+        {
+            fenetreActuelle.Close();
+        }
+
+        
     }
 }
