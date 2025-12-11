@@ -81,7 +81,7 @@
                                 <Setter Property="Foreground" Value="White"/>
                             </Trigger>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="BorderItem" Property="Background" Value="#EFEFEF"/>
+                                <Setter TargetName="BorderItem" Property="Background" Value="#B44B3E"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -234,7 +234,7 @@
 
             <Button Grid.Row="4" Content="Enregistrer la note" 
                     HorizontalAlignment="Right" Margin="0,0,10,20" Width="200" Height="40"
-                    Style="{StaticResource StyleBoutonMenu}" />
+                    Style="{StaticResource StyleBoutonMenu}" Click="BoutonEnregistrer_Click" />
         </Grid>
     </Grid>
 </Window>

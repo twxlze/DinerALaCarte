@@ -112,5 +112,20 @@ namespace METIER_Footies.Data
 
             return listeDesInvitations;
         }
+
+        public async Task<HttpResponseMessage> AjouterCommentairePlat(Invitation invitation)
+        {
+            try
+            {
+                long idUtilisateur = SessionService.Instance.UtilisateurConnecte.IdUtilisateur;
+                string url = $"Invitations/AjoutCommentairePlat?IdUtilisateur={idUtilisateur}";
+                HttpResponseMessage reponseHttp = await PostAsync(url, invitation);
+                return reponseHttp;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erreur lors de l'ajout du commentaire sur le plat : " + ex.Message);
+            }
+        }
     }
 }
