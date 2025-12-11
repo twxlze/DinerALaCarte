@@ -12,25 +12,17 @@ namespace IHM_Footies.Invitations
     {
 
         #region attributs
-
         private VMInvitation invitation;
-
         private InvitationDAO invitationDAO;
-
         private VMPageInvitation pageInvitation;
-
-
         #endregion
 
         #region proprietes
-
         /// <summary>
         /// Récupérer les invitations
         /// </summary>
         public VMInvitation Invitation => this.invitation;
-
         #endregion
-
 
         #region constructeurs
 
@@ -52,7 +44,6 @@ namespace IHM_Footies.Invitations
         #endregion
 
         #region methodes
-
         private async void VueFormulaireMenuEtPlat_Invitation_Loaded(object sender, RoutedEventArgs e)
         {
             await ChargerDonnees();
@@ -62,10 +53,7 @@ namespace IHM_Footies.Invitations
         {
             await this.pageInvitation.ChargerElementsDansInvitation(invitation);
         }
-
-
         #endregion
-
 
         #region boutons navigations 
 
@@ -170,9 +158,7 @@ namespace IHM_Footies.Invitations
         }
         #endregion
 
-
         #region boutons 
-
         private async void BoutonEnregistrerInvitation_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -188,21 +174,13 @@ namespace IHM_Footies.Invitations
                     if (this.invitation.Invitation.IdInvitation != 0)
                     {
                         await this.invitationDAO.ModifierInvitation(this.invitation.Invitation);
-                        MessageBox.Show("L'invitation a été modifiée avec succès.", "Succès", MessageBoxButton.OK, MessageBoxImage.Information);
                     }
                     else
                     {
                         await this.invitationDAO.AjouterInvitation(this.invitation.Invitation);
-                        MessageBox.Show("L'invitation a été enregistrée avec succès.", "Succès", MessageBoxButton.OK, MessageBoxImage.Information);
                     }
 
                     Navigation.AllerInvitations(this);
-                }
-                else if (fenetreVerif.RetournerAuxPlats)
-                {
-                }
-                else
-                {
                 }
             }
             catch (Exception ex)
@@ -210,7 +188,6 @@ namespace IHM_Footies.Invitations
                 MessageBox.Show($"Erreur lors de l'analyse ou l'enregistrement : {ex.Message}", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-
         #endregion
 
     }

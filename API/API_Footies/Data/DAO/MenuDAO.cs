@@ -38,7 +38,6 @@ namespace API_Footies.Data.DAO
                         };
                         connection.ExecuteQuery("INSERT INTO Menu_Plat (IDMenu, IDPlat) VALUES (@IdMenu, @IdPlat)", parametersPlat);
                     }
-
                     ajoute = true;
                 }
             }
@@ -75,12 +74,7 @@ namespace API_Footies.Data.DAO
                             {"@IdMenu", idMenu }
                         };
 
-                        DataTable dataTablePlats = connection.ExecuteQuery(
-                            @"SELECT p.IDPlat, p.Nom, p.Description, p.Categorie, p.Ingredients 
-                              FROM Plat p
-                              INNER JOIN Menu_Plat mp ON p.IDPlat = mp.IDPlat 
-                              WHERE mp.IDMenu = @IdMenu",
-                            parametersPlat);
+                        DataTable dataTablePlats = connection.ExecuteQuery(@"SELECT p.IDPlat, p.Nom, p.Description, p.Categorie, p.Ingredients  FROM Plat p INNER JOIN Menu_Plat mp ON p.IDPlat = mp.IDPlat  WHERE mp.IDMenu = @IdMenu",parametersPlat);
 
                         foreach (DataRow? rowPlat in dataTablePlats.Rows)
                         {
@@ -104,12 +98,7 @@ namespace API_Footies.Data.DAO
                                 {"@IdPlat", idPlat }
                             };
 
-                            DataTable dataTableAllergenes = connection.ExecuteQuery(
-                                @"SELECT a.Nom 
-                                  FROM Allergene a
-                                  INNER JOIN Plat_Allergene pa ON a.IDAllergene = pa.IDAllergene 
-                                  WHERE pa.IDPlat = @IdPlat",
-                                parametersAllergene);
+                            DataTable dataTableAllergenes = connection.ExecuteQuery(@"SELECT a.Nom FROM Allergene a INNER JOIN Plat_Allergene pa ON a.IDAllergene = pa.IDAllergene WHERE pa.IDPlat = @IdPlat",parametersAllergene);
 
                             foreach (DataRow? rowAllergene in dataTableAllergenes.Rows)
                             {
@@ -119,18 +108,9 @@ namespace API_Footies.Data.DAO
                                     allergenesPlat.Add(allergene);
                                 }
                             }
-
-                            Plat plat = new Plat(
-                                idPlat,
-                                rowPlat["Nom"].ToString(),
-                                rowPlat["Description"]?.ToString() ?? "",
-                                categorie,
-                                ingredients,
-                                allergenesPlat.Count > 0 ? allergenesPlat : null
-                            );
+                            Plat plat = new Plat(idPlat,rowPlat["Nom"].ToString(), rowPlat["Description"]?.ToString() ?? "", categorie, ingredients, allergenesPlat.Count > 0 ? allergenesPlat : null);
                             platsMenu.Add(plat);
                         }
-
                         Menu menu = new Menu(platsMenu, idMenu, nom);
                         listeMenu.Add(menu);
                     }
