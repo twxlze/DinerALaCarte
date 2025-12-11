@@ -39,13 +39,15 @@
             </Setter>
         </Style>
 
-        <Style x:Key="StyleBoutonAction" TargetType="Button">
+        <Style x:Key="StyleBoutonMenu" TargetType="Button">
             <Setter Property="Background" Value="#8C2F26"/>
             <Setter Property="Foreground" Value="#F9F9F9"/>
             <Setter Property="FontSize" Value="15"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="Padding" Value="20,0"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="FontFamily" Value="Poppins"/>
             <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="Template">
                 <Setter.Value>
@@ -69,7 +71,7 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="ListBoxItem">
-                        <Border x:Name="BorderItem" Background="White" BorderBrush="#E0E0E0" BorderThickness="1" CornerRadius="5" Padding="10">
+                        <Border x:Name="BorderItem" Background="Transparent" BorderBrush="#E0E0E0" BorderThickness="0,0,0,1" Padding="10">
                             <ContentPresenter/>
                         </Border>
                         <ControlTemplate.Triggers>
@@ -78,21 +80,24 @@
                                 <Setter Property="Foreground" Value="White"/>
                             </Trigger>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="BorderItem" Property="BorderBrush" Value="#B44B3E"/>
+                                <Setter TargetName="BorderItem" Property="Background" Value="#EFEFEF"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
-
     </Window.Resources>
+
+
 
     <Grid Cursor="Hand">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
+
+        <Image Source="{StaticResource ResourceKey=LogoHostably}" Margin="-8,-2,117,525"/>
 
         <Border BorderBrush="#8C2F26" BorderThickness="0,0,2,0" Grid.Column="0">
             <Grid>
@@ -118,128 +123,120 @@
                 <Button x:Name="BoutonMenus" Content="📋 Menus" Grid.Row="5" Style="{StaticResource BoutonMenu}"/>
                 <Button x:Name="BoutonPlats" Content="🍽️ Plats" Grid.Row="6" Style="{StaticResource BoutonMenu}"/>
                 <Button x:Name="BoutonStatistique" Content="📊 Statistiques" Grid.Row="7" Style="{StaticResource BoutonMenu}" FontWeight="Bold"/>
-
-                <Button x:Name="BoutonUtilisateur" 
-                        Content="👤" 
-                        Grid.Row="10" Grid.Column="0" 
-                        Style="{StaticResource BoutonMenu}" 
-                        Margin="0,0,100,0" 
-                        HorizontalContentAlignment="Center" FontSize="25" />
-
-                <Button x:Name="BoutonReglage" 
-                        Content="⚙️" 
-                        Grid.Row="10" Grid.Column="0" 
-                        Style="{StaticResource BoutonMenu}" 
-                        Margin="100,0,0,0" 
-                        HorizontalContentAlignment="Center" FontSize="25"/>
+                <Button x:Name="BoutonUtilisateur" Content="👤" Grid.Row="10" Grid.Column="0" Style="{StaticResource BoutonMenu}" Margin="0,0,100,0" HorizontalContentAlignment="Center" FontSize="25" />
+                <Button x:Name="BoutonReglage" Content="⚙️" Grid.Row="10" Grid.Column="0" Style="{StaticResource BoutonMenu}" HorizontalContentAlignment="Center" Margin="100,0,0,0" FontSize="25"/>
             </Grid>
         </Border>
 
-        <Grid Grid.Column="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="11*"/>
-                <ColumnDefinition Width="21*"/>
-            </Grid.ColumnDefinitions>
+        <Grid Grid.Column="1" Margin="10">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition Height="2*"/>
+                <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition Height="1.5*"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <Button Content="✖" FontSize="16" FontWeight="Bold" Foreground="#B44B3E" Background="Transparent" BorderThickness="0" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,5,8,0" Grid.Column="1"/>
+            <TextBlock Text="Notation des plats" FontWeight="Bold" FontSize="24" Foreground="#B44B3E" FontFamily="Poppins" Width="234"/>
+            <Button Content="✖" FontSize="16" FontWeight="Bold" BorderThickness="0" Foreground="#B44B3E" Background="Transparent" Margin="724,-5,0,5"/>
 
-            <TextBlock Text="Notation des plats" FontWeight="Bold" FontSize="24" Foreground="#B44B3E" FontFamily="Poppins" Margin="16,3,290,221" Grid.RowSpan="2" Grid.Column="1"/>
-            <Image Source="{StaticResource ResourceKey=LogoHostably}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="-187,13,0,0" Height="55" Grid.RowSpan="2" Width="69"/>
 
-            <Grid Grid.Row="1" Margin="20,0,20,10" Grid.ColumnSpan="2">
+            <Grid Grid.Row="1" Margin="10,20,10,10">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="20"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Liste des invité" VerticalAlignment="Top" FontWeight="Bold" FontSize="15" Foreground="#B44B3E" RenderTransformOrigin="0.5,0.5" Height="19" Margin="108,-1,0,0" />
-                <Grid Grid.Column="0" Margin="0,0,10,0">
+                <Grid Grid.Column="0">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <Border BorderBrush="#8C2F26" BorderThickness="1" CornerRadius="5" Background="White" Margin="0,21,25,-17" Grid.Row="1">
-                        <ListBox ItemsSource="{Binding ListeInvites}" 
-                                 SelectedItem="{Binding InviteSelectionne}"
-                                 ItemContainerStyle="{StaticResource StyleItemSelection}"
-                                 BorderThickness="0" Margin="0,9,25,0">
-                            <ListBox.ItemTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding Identite}" FontSize="14" FontWeight="Medium"/>
-                                </DataTemplate>
-                            </ListBox.ItemTemplate>
-                        </ListBox>
+
+                    <TextBlock Text="1. Sélectionnez un invité" FontWeight="Bold" FontSize="15" Foreground="#B44B3E" Margin="0,0,0,5"/>
+
+                    <Border Grid.Row="1" BorderBrush="#8C2F26" BorderThickness="3" CornerRadius="10" Background="White" Padding="2">
+                        <ScrollViewer VerticalScrollBarVisibility="Auto">
+                            <ListBox ItemsSource="{Binding ListeInvites}" 
+                                     SelectedItem="{Binding InviteSelectionne}"
+                                     ItemContainerStyle="{StaticResource StyleItemSelection}"
+                                     BorderThickness="0" Background="Transparent">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Identite}" FontSize="14" FontWeight="Medium" Padding="5"/>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </ScrollViewer>
                     </Border>
                 </Grid>
 
-                <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Liste des plats" VerticalAlignment="Top" FontWeight="Bold" FontSize="15" Foreground="#B44B3E" RenderTransformOrigin="0.5,0.5" Margin="149,-2,0,0" Height="19" Grid.Column="1" />
-                <Grid Grid.Column="1" Margin="10,0,0,0">
+                <Grid Grid.Column="2">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <Border BorderBrush="#8C2F26" BorderThickness="1" CornerRadius="5" Background="White" Margin="0,20,0,-17" Grid.RowSpan="2">
-                        <ListBox ItemsSource="{Binding ListePlats}" 
-                                 SelectedItem="{Binding PlatSelectionne}"
-                                 ItemContainerStyle="{StaticResource StyleItemSelection}"
-                                 BorderThickness="0" Margin="1,0,9,11" Height="204" VerticalAlignment="Bottom">
-                            <ListBox.ItemTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding NomPlat}" FontSize="14" FontWeight="Medium"/>
-                                </DataTemplate>
-                            </ListBox.ItemTemplate>
-                        </ListBox>
+
+                    <TextBlock Text="2. Sélectionnez un plat" FontWeight="Bold" FontSize="15" Foreground="#B44B3E" Margin="0,0,0,5"/>
+
+                    <Border Grid.Row="1" BorderBrush="#8C2F26" BorderThickness="3" CornerRadius="10" Background="White" Padding="2">
+                        <ScrollViewer VerticalScrollBarVisibility="Auto">
+                            <ListBox ItemsSource="{Binding ListePlats}" 
+                                     SelectedItem="{Binding PlatSelectionne}"
+                                     ItemContainerStyle="{StaticResource StyleItemSelection}"
+                                     BorderThickness="0" Background="Transparent">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding NomPlat}" FontSize="14" FontWeight="Medium" Padding="5"/>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </ScrollViewer>
                     </Border>
                 </Grid>
             </Grid>
 
-            <StackPanel Grid.Row="2" Margin="38,18,0,2" HorizontalAlignment="Left" Grid.Column="1">
-                <TextBlock Text="3. Note attribuée (1-10)" FontWeight="Bold" Foreground="#B44B3E" Height="22"/>
+            <Grid Grid.Row="2" Margin="329,10,278,10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="127*"/>
+                    <ColumnDefinition Width="46*"/>
+                </Grid.ColumnDefinitions>
 
-                <Border BorderBrush="#8C2F26" BorderThickness="2" CornerRadius="10" Background="White" Width="100" Height="60">
+
+                <TextBlock Text="3. Note attribuée (1-10)" FontWeight="Bold" FontSize="15" Foreground="#B44B3E" Margin="-30,-14,30,42" Grid.ColumnSpan="2"/>
+
+                <Border BorderBrush="#8C2F26" BorderThickness="2" CornerRadius="10" Background="White" Width="100" Height="50" HorizontalAlignment="Left" Margin="0,8,0,-8">
                     <TextBox Text="{Binding NoteSaisie, UpdateSourceTrigger=PropertyChanged}"
                              MaxLength="2"
-                             FontSize="24" 
-                             FontWeight="Bold"
-                             Foreground="#333"
-                             HorizontalContentAlignment="Center" 
-                             VerticalContentAlignment="Center"
-                             BorderThickness="0"
-                             Background="Transparent" Margin="0,1,0,-1"/>
+                             FontSize="20" FontWeight="Bold" Foreground="#333"
+                             HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                             BorderThickness="0" Background="Transparent"/>
                 </Border>
-            </StackPanel>
+            </Grid>
 
-            <Grid Grid.Row="2" Margin="20,96,20,10" Grid.ColumnSpan="2" Grid.RowSpan="2">
+            <Grid Grid.Row="3" Margin="10,0,10,20">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <TextBlock Text="Commentaire (facultatif)" FontWeight="Bold" Foreground="#B44B3E" Margin="0,0,0,5"/>
 
-                <Border Grid.Row="1" BorderBrush="#8C2F26" BorderThickness="1" CornerRadius="5" Background="White">
-                    <TextBox Text="{Binding CommentaireSaisi}"
-                             AcceptsReturn="True"
-                             TextWrapping="Wrap"
-                             VerticalContentAlignment="Top"
-                             Padding="10"
-                             BorderThickness="0"
-                             Background="Transparent"
-                             FontSize="14"
-                             FontFamily="Poppins"/>
+                <TextBlock Text="Commentaire (facultatif)" FontWeight="Bold" FontSize="15" Foreground="#B44B3E" Margin="0,0,0,5"/>
+
+                <Border Grid.Row="1" BorderBrush="#8C2F26" BorderThickness="2" CornerRadius="10" Background="White" Height="100">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <TextBox Text="{Binding CommentaireSaisi}"
+                             AcceptsReturn="True" TextWrapping="Wrap"
+                             VerticalContentAlignment="Top" Padding="10"
+                             BorderThickness="0" Background="Transparent"
+                             FontSize="14" FontFamily="Poppins"/>
+                    </ScrollViewer>
                 </Border>
             </Grid>
 
-            <Button Grid.Row="4" Content="Sauvegarder cette note" 
-                    HorizontalAlignment="Right" Margin="0,0,20,20" Width="220" Height="40"
-                    Style="{StaticResource StyleBoutonAction}" Grid.Column="1"/>
-
+            <Button Grid.Row="4" Content="Enregistrer la note" 
+                    HorizontalAlignment="Right" Margin="0,0,10,20" Width="200" Height="40"
+                    Style="{StaticResource StyleBoutonMenu}"/>
         </Grid>
     </Grid>
 </Window>

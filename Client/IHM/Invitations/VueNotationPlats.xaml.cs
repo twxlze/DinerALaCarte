@@ -11,6 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using VM_Footies;
+using VM_Footies.VM;
 
 namespace IHM_Footies.Invitations
 {
@@ -19,11 +21,15 @@ namespace IHM_Footies.Invitations
     /// </summary>
     public partial class VueNotationPlats : Window
     {
+
+        
+
         public VueNotationPlats()
         {
             InitializeComponent();
             this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
         }
+
 
         
 
