@@ -22,6 +22,8 @@ namespace VM_Footies.VM
         private ObservableCollection<VMGroupeInvite> groupesInvitesListe;
         private ObservableCollection<VMInvite> invitesListe;
         private ObservableCollection<VMPlat> platsListe;
+        private string _texteRechercheInvite;
+        private string _texteRechercheGroupeInvite;
         #endregion
 
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -139,6 +141,32 @@ namespace VM_Footies.VM
                     invitation.Remarque = value;
                     Notify("Remarque");
                 }
+            }
+        }
+
+        /// <summary>
+        /// Texte de recherche pour les invités
+        /// </summary>
+        public string TexteRechercheInvite
+        {
+            get => _texteRechercheInvite;
+            set
+            {
+                _texteRechercheInvite = value;
+                Notify("TexteRechercheInvite");
+            }
+        }
+
+        /// <summary>
+        /// Texte de recherche pour les groupes d'invités
+        /// </summary>
+        public string TexteRechercheGroupeInvite
+        {
+            get => _texteRechercheGroupeInvite;
+            set
+            {
+                _texteRechercheGroupeInvite = value;
+                Notify("TexteRechercheGroupeInvite"); 
             }
         }
         #endregion

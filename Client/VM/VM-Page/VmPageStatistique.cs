@@ -66,22 +66,6 @@ namespace VM_Footies.VM_Page
             get => _toutSelectionner;
             set
             {
-                /*
-                _toutSelectionner = value;
-
-                _invitesStats.Clear();
-                foreach (VMInvite invite in _invite.VMInvites)
-                {
-                    VMInvite vmStats = new VMInvite(invite)
-                    {
-                        EstSelectionne = value
-                    };
-
-                    _invitesStats.Add(vmStats);
-                }
-
-                Notify("ToutSelectionner");
-                */
                 if (_toutSelectionner != value)
                 {
                     _toutSelectionner = value;
@@ -153,7 +137,6 @@ namespace VM_Footies.VM_Page
         #endregion
 
         #region Méthodes publiques
-
         /// <summary>
         /// Initialise les statistiques des invités
         /// </summary>
@@ -234,12 +217,9 @@ namespace VM_Footies.VM_Page
         public void RechercherInviteStatistique(string textrechercher)
         {
             if (string.IsNullOrWhiteSpace(textrechercher))
-            {
-                InvitesStats = new ObservableCollection<VMInvite>(invitesSelectionnesSauvegardes);
-                return;
-            }
+                this._invitesStats = new ObservableCollection<VMInvite>(invitesSelectionnesSauvegardes);
             List<VMInvite> resultatsFiltres = invitesSelectionnesSauvegardes.Where(i => i.Identite.Contains(textrechercher, StringComparison.OrdinalIgnoreCase)).OrderBy(i => i.Identite).ToList();
-            InvitesStats = new ObservableCollection<VMInvite>(resultatsFiltres);
+            this._invitesStats = new ObservableCollection<VMInvite>(resultatsFiltres);
         }
 
         /// <summary>

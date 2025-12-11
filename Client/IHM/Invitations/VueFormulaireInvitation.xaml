@@ -14,6 +14,32 @@
 
     <Window.Resources>
         <BitmapImage x:Key="LogoHostably" UriSource="/Ressources/LogoHostably.png"/>
+        <Style x:Key="StyleBoutonRetour" TargetType="Button">
+            <Setter Property="Background" Value="#F9F9F9"/>
+            <Setter Property="Foreground" Value="#B44B3E"/>
+            <Setter Property="FontSize" Value="24"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Width" Value="60"/>
+            <Setter Property="Height" Value="50"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="5">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#E0E0E0"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
         <Style x:Key="BoutonMenu" TargetType="Button">
             <Setter Property="Background" Value="#F9F9F9"/>
             <Setter Property="Foreground" Value="#B44B3E"/>
@@ -322,7 +348,12 @@
         <!-- Barre de recherche pour les Menus -->
 
 
-
+        <Button 
+         Style="{StaticResource StyleBoutonRetour}"
+         Content="⟳"
+         Click="RefreshGroupe_Click"
+         Grid.Column="1"
+         Grid.Row="1" RenderTransformOrigin="0.217,0.517" Width="34" Height="33" Margin="316,9,0,0" Grid.RowSpan="2"/>
         <!-- Barre de recherche pour les Groupe Invité -->
         <Border Style="{StaticResource StyleContainerRecherche}" Grid.Column="1" Grid.Row="1" Margin="350,14,0,0" Width="173" Height="25">
             <Grid>
@@ -338,12 +369,17 @@
 
                 <Button x:Name="rechercheGroupeInvite" 
                 Grid.Column="1" 
-                Style="{StaticResource StyleLoupeRecherche}"/>
+                Style="{StaticResource StyleLoupeRecherche}" Click="RechercheGroupe_Click"/>
             </Grid>
         </Border>
 
-        <!-- Barre de recherche pour les plats -->
-
+        <!-- souton refresh -->
+        <Button x:Name="BoutonRetourApresRecherche"
+         Style="{StaticResource StyleBoutonRetour}"
+         Content="⟳"
+         Click="RefreshInvite_Click"
+         Grid.Column="1"
+         Grid.Row="1" RenderTransformOrigin="0.217,0.517" Width="34" Height="33" Margin="26,6,0,0"/>
 
         <!-- Barre de recherche pour les Invites -->
         <Border Style="{StaticResource StyleContainerRecherche}" Grid.Column="1" Grid.Row="1" Margin="65,13,0,0" Width="162" Height="25">
@@ -361,7 +397,7 @@
 
                 <Button x:Name="rechercheinvite" 
                 Grid.Column="2" 
-                Style="{StaticResource StyleLoupeRecherche}"/>
+                Style="{StaticResource StyleLoupeRecherche}" Click="RechercheInvite_Click" />
             </Grid>
         </Border>
         <Image Source="{StaticResource ResourceKey=LogoHostably}" Margin="15,10,121,17" />

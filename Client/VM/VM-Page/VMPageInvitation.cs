@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
 using METIER_Footies.Data;
 using METIER_Footies.Data.Interfaces;
 using METIER_Footies.Metier;
@@ -15,17 +16,24 @@ namespace VM_Footies.VM_Page
         private List<VMInvitation> listeVMInvitation;
         private VMInvitation invitationSelectionnee;
         private IInvitationDAO invitationDAO;
+
+        // VM des sous-pages
         private VMPageMenu vmPageMenu;
         private VMPageGroupeInvite vmPageGroupeInvite;
         private VMPageInvite vmPageInvite;
         private VMPagePlat vmPagePlat;
+
+        // Attributs pour la recherche des invités
+        private List<VMInvite> _cacheInvites;
+        private List<VMGroupeInvite> _cacheGroupes;
+
         private string texteRecherche;
-
         private IGroupeInviteDAO groupeDAO;
-
         #endregion
 
+        #region Evenement
         public event PropertyChangedEventHandler? PropertyChanged;
+        #endregion
 
         #region Propriétés
         /// <summary>
@@ -66,18 +74,29 @@ namespace VM_Footies.VM_Page
         /// </summary>
         public VMPageInvitation()
         {
+            this.Initialiser();
+        }
+
+        private void Initialiser()
+        {
             this.invitationDAO = new InvitationDAO();
             this.listeVMInvitation = new List<VMInvitation>();
+
             this.vmPageMenu = new VMPageMenu();
             this.vmPageGroupeInvite = new VMPageGroupeInvite();
             this.vmPageInvite = new VMPageInvite();
             this.vmPagePlat = new VMPagePlat();
+
             this.groupeDAO = new GroupeInviteDAO();
+
+            this.texteRecherche = string.Empty;
+
+            this._cacheInvites = new List<VMInvite>();
+            this._cacheGroupes = new List<VMGroupeInvite>();
         }
         #endregion
 
         #region Méthodes publiques - CRUD
-
         /// <summary>
         /// Charge toutes les invitations depuis la base de données
         /// </summary>
@@ -103,9 +122,9 @@ namespace VM_Footies.VM_Page
         {
             try
             {
-                await ChargerMenusDansInvitation(invitation);
-                await ChargerGroupesInvitesDansInvitation(invitation);
                 await ChargerInvitesDansInvitation(invitation);
+                await ChargerGroupesInvitesDansInvitation(invitation);
+                await ChargerMenusDansInvitation(invitation);
                 await ChargerPlatsDansInvitation(invitation);
             }
             catch (Exception ex)
@@ -125,7 +144,7 @@ namespace VM_Footies.VM_Page
                 throw new Exception("Une invitation avec le même nom et la même date existe déjà");
             }
 
-            invitation.SynchroniserTout();
+            PreparerSauvegarde(invitation);
 
             await this.invitationDAO.AjouterInvitation(invitation.Invitation);
             this.listeVMInvitation.Add(invitation);
@@ -140,7 +159,7 @@ namespace VM_Footies.VM_Page
         {
             if (invitation != null)
             {
-                invitation.SynchroniserTout();
+                PreparerSauvegarde(invitation);
                 await this.invitationDAO.ModifierInvitation(invitation.Invitation);
                 this.Notify("VMInvitations");
             }
@@ -250,15 +269,16 @@ namespace VM_Footies.VM_Page
                 }
             }
 
-            invitation.GroupesInvitesListe.Clear();
+            this._cacheGroupes.Clear();
 
             foreach (VMGroupeInvite vmGroupe in this.vmPageGroupeInvite.VMGroupeInvite)
             {
                 bool estSelectionne = idDesGroupes.Contains(vmGroupe.Groupe.IdGroupeInvites);
                 VMGroupeInvite vmGroupeSelectionne = new VMGroupeInvite(vmGroupe.Groupe, estSelectionne);
                 vmGroupeSelectionne.PropertyChanged += invitation.VmElement_PropertyChanged;
-                invitation.GroupesInvitesListe.Add(vmGroupeSelectionne);
+                this._cacheGroupes.Add(vmGroupeSelectionne);
             }
+            invitation.GroupesInvitesListe = new ObservableCollection<VMGroupeInvite>(_cacheGroupes);
         }
 
         /// <summary>
@@ -277,15 +297,16 @@ namespace VM_Footies.VM_Page
                 }
             }
 
-            invitation.InvitesListe.Clear();
+            this._cacheInvites.Clear();
 
             foreach (VMInvite vmInvite in this.vmPageInvite.VMInvites)
             {
                 bool estSelectionne = idDesInvites.Contains(vmInvite.Id);
                 VMInvite vmInviteSelectionne = new VMInvite(vmInvite.Invite, estSelectionne);
                 vmInviteSelectionne.PropertyChanged += invitation.VmElement_PropertyChanged;
-                invitation.InvitesListe.Add(vmInviteSelectionne);
+                this._cacheInvites.Add(vmInviteSelectionne);
             }
+            invitation.InvitesListe = new ObservableCollection<VMInvite>(_cacheInvites);
         }
 
         /// <summary>
@@ -316,8 +337,46 @@ namespace VM_Footies.VM_Page
         }
         #endregion
 
-        #region Méthodes privées
+        #region Méthodes - Recherche des éléments
         /// <summary>
+        /// Recherche un invité dans le cache et met à jour la liste visible de l'invitation
+        /// </summary>
+        /// <param name="invitation"> L'invitation courante </param>
+        /// <param name="texteRecherche"> Le texte de recherche </param>
+        public void RechercherInviteDansFormulaire(VMInvitation invitation, string texteRecherche)
+        {
+            if (string.IsNullOrWhiteSpace(texteRecherche))
+                invitation.InvitesListe = new ObservableCollection<VMInvite>(_cacheInvites);
+            var resultats = _cacheInvites.Where(i => i.Identite.Contains(texteRecherche, StringComparison.OrdinalIgnoreCase)).OrderBy(i => i.Identite).ToList();
+            invitation.InvitesListe = new ObservableCollection<VMInvite>(resultats);
+        }
+
+        /// <summary>
+        /// Recherche un groupe dans le cache et met à jour la liste visible de l'invitation.
+        /// </summary>
+        /// <param name="invitation"> L'invitation courante </param>
+        /// <param name="texteRecherche"> Le texte de recherche </param>
+        public void RechercherGroupeDansFormulaire(VMInvitation invitation, string texteRecherche)
+        {
+            if (string.IsNullOrWhiteSpace(texteRecherche))
+                invitation.GroupesInvitesListe = new ObservableCollection<VMGroupeInvite>(_cacheGroupes);
+            var resultats = _cacheGroupes.Where(g => g.Nom.Contains(texteRecherche, StringComparison.OrdinalIgnoreCase)).OrderBy(g => g.Nom).ToList();
+            invitation.GroupesInvitesListe = new ObservableCollection<VMGroupeInvite>(resultats);
+        }
+
+        /// <summary>
+        /// Prépare l'invitation pour la sauvegarde en récupérant les sélections 
+        /// </summary>
+        public void PreparerSauvegarde(VMInvitation invitation)
+        {
+            invitation.SynchroniserTout();
+            invitation.Invitation.Invites = _cacheInvites.Where(vm => vm.InviteSelectionne).Select(vm => vm.Invite).ToList();
+            invitation.Invitation.GroupeInvites = _cacheGroupes.Where(vm => vm.EstSelectionne).Select(vm => vm.Groupe).ToList();
+        }
+        #endregion
+
+        #region Méthodes privées
+        /// <summary>   
         /// Notifie l'UI d'un changement de propriété
         /// </summary>
         private void Notify(string message)
