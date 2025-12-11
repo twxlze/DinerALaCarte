@@ -32,7 +32,6 @@ namespace VM_Footies.VM
             return InvitesListe.Where(i => i.EstSelectionne).Select(i => i.Invite).ToList();
         }
 
-
         #region PROPRIETES
         /// <summary>
         /// Invitation encapsulée
@@ -127,9 +126,25 @@ namespace VM_Footies.VM
         /// Format d'affichage de l'invitation avec le nom et la date
         /// </summary>
         public string FormatInvitation => $"{Nom} - {Date.ToShortDateString()}";
+
+        /// <summary>
+        /// Remarque de l'invitation 
+        /// </summary>
+        public string? Remarque
+        {
+            get => this.invitation.Remarque;
+            set
+            {
+                if (invitation.Remarque != value)
+                {
+                    invitation.Remarque = value;
+                    Notify("Remarque");
+                }
+            }
+        }
         #endregion
 
-        #region PROPRIETES / Eléments sélectionnables
+        #region Propriétés / Eléments sélectionnables
         /// <summary>
         /// Liste des menus sélectionnables
         /// </summary>
@@ -181,6 +196,8 @@ namespace VM_Footies.VM
                 Notify("PlatsListe");
             }
         }
+
+
         #endregion
 
         #region Constructeurs
