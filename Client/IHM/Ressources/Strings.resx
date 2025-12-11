@@ -369,4 +369,7 @@
   <data name="Messageaucunconflit" xml:space="preserve">
     <value>Votre invitation ne présente aucun conflit. Vous pouvez la valider sereinement.</value>
   </data>
+  <data name="Remarque" xml:space="preserve">
+    <value>💬 Remarques</value>
+  </data>
 </root>
