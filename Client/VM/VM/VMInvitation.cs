@@ -29,7 +29,7 @@ namespace VM_Footies.VM
 
         public List<Invite> ObtenirInvitesSelectionnes()
         {
-            return InvitesListe.Where(i => i.EstSelectionne).Select(i => i.Invite).ToList();
+            return InvitesListe.Where(i => i.InviteSelectionne).Select(i => i.Invite).ToList();
         }
 
         #region PROPRIETES
@@ -320,7 +320,7 @@ namespace VM_Footies.VM
             List<Invite> invitesSelectionnes = new List<Invite>();
             foreach (VMInvite vmInvite in this.invitesListe)
             {
-                if (vmInvite.EstSelectionne)
+                if (vmInvite.InviteSelectionne)
                 {
                     invitesSelectionnes.Add(vmInvite.Invite);
                 }

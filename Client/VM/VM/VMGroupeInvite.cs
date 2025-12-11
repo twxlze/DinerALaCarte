@@ -134,7 +134,7 @@ namespace VM_Footies.VM
             List<Invite> inviteSelectionne = new List<Invite>();
             foreach (VMInvite vmInvite in this.invitesListe)
             {
-                if (vmInvite.EstSelectionne)
+                if (vmInvite.InviteSelectionne)
                 {
                     inviteSelectionne.Add(vmInvite.Invite);
                 }

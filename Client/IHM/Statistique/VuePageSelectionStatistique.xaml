@@ -330,7 +330,7 @@
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <CheckBox Content="{Binding Identite}"
-                                  IsChecked="{Binding EstSelectionne}"
+                                  IsChecked="{Binding InviteSelectionne}"
                                   Margin="5"
                                   FontSize="12"
                                   Foreground="#333333"/>
