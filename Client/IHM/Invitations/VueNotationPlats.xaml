@@ -1,0 +1,245 @@
+﻿<Window x:Class="IHM_Footies.Invitations.VueNotationPlats"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:res="clr-namespace:IHM_Footies.Ressources"
+        mc:Ignorable="d"
+        Title="VueNotationPlats" Height="600" Width="1000"
+        Background="#F9F9F9"
+        WindowStyle="None"
+        AllowsTransparency="True">
+
+    <Window.Resources>
+        <BitmapImage x:Key="LogoHostably" UriSource="/Ressources/LogoHostably.png"/>
+
+        <Style x:Key="BoutonMenu" TargetType="Button">
+            <Setter Property="Background" Value="#F9F9F9"/>
+            <Setter Property="Foreground" Value="#B44B3E"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="20,0"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="FontFamily" Value="Poppins"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#E0E0E0"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="StyleBoutonAction" TargetType="Button">
+            <Setter Property="Background" Value="#8C2F26"/>
+            <Setter Property="Foreground" Value="#F9F9F9"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="20,0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="10" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#B44B3E"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="StyleItemSelection" TargetType="ListBoxItem">
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Margin" Value="2"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListBoxItem">
+                        <Border x:Name="BorderItem" Background="White" BorderBrush="#E0E0E0" BorderThickness="1" CornerRadius="5" Padding="10">
+                            <ContentPresenter/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="BorderItem" Property="Background" Value="#B44B3E"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="BorderItem" Property="BorderBrush" Value="#B44B3E"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+    </Window.Resources>
+
+    <Grid Cursor="Hand">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Border BorderBrush="#8C2F26" BorderThickness="0,0,2,0" Grid.Column="0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Text="A table !" FontSize="19" FontWeight="Bold" Foreground="#B44B3E" VerticalAlignment="Center" Margin="73,0,23,0" FontFamily="Montserrat"/>
+
+                <Button x:Name="BoutonAccueil" Content="🏠 Accueil" Grid.Row="1" Style="{StaticResource BoutonMenu}"/>
+                <Button x:Name="BoutonInvites" Content="👤 Invités" Grid.Row="2" Style="{StaticResource BoutonMenu}"/>
+                <Button x:Name="BoutonGroupes" Content="👥 Groupes" Grid.Row="3" Style="{StaticResource BoutonMenu}"/>
+                <Button x:Name="BoutonInvitations" Background="#BFBFBF" Content="🎟️ Invitations" Grid.Row="4" Style="{StaticResource BoutonMenu}"/>
+                <Button x:Name="BoutonMenus" Content="📋 Menus" Grid.Row="5" Style="{StaticResource BoutonMenu}"/>
+                <Button x:Name="BoutonPlats" Content="🍽️ Plats" Grid.Row="6" Style="{StaticResource BoutonMenu}"/>
+                <Button x:Name="BoutonStatistique" Content="📊 Statistiques" Grid.Row="7" Style="{StaticResource BoutonMenu}" FontWeight="Bold"/>
+
+                <Button x:Name="BoutonUtilisateur" 
+                        Content="👤" 
+                        Grid.Row="10" Grid.Column="0" 
+                        Style="{StaticResource BoutonMenu}" 
+                        Margin="0,0,100,0" 
+                        HorizontalContentAlignment="Center" FontSize="25" />
+
+                <Button x:Name="BoutonReglage" 
+                        Content="⚙️" 
+                        Grid.Row="10" Grid.Column="0" 
+                        Style="{StaticResource BoutonMenu}" 
+                        Margin="100,0,0,0" 
+                        HorizontalContentAlignment="Center" FontSize="25"/>
+            </Grid>
+        </Border>
+
+        <Grid Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="11*"/>
+                <ColumnDefinition Width="21*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="1.5*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Button Content="✖" FontSize="16" FontWeight="Bold" Foreground="#B44B3E" Background="Transparent" BorderThickness="0" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,5,8,0" Grid.Column="1"/>
+
+            <TextBlock Text="Notation des plats" FontWeight="Bold" FontSize="24" Foreground="#B44B3E" FontFamily="Poppins" Margin="16,3,290,221" Grid.RowSpan="2" Grid.Column="1"/>
+            <Image Source="{StaticResource ResourceKey=LogoHostably}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="-187,13,0,0" Height="55" Grid.RowSpan="2" Width="69"/>
+
+            <Grid Grid.Row="1" Margin="20,0,20,10" Grid.ColumnSpan="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Liste des invité" VerticalAlignment="Top" FontWeight="Bold" FontSize="15" Foreground="#B44B3E" RenderTransformOrigin="0.5,0.5" Height="19" Margin="108,-1,0,0" />
+                <Grid Grid.Column="0" Margin="0,0,10,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Border BorderBrush="#8C2F26" BorderThickness="1" CornerRadius="5" Background="White" Margin="0,21,25,-17" Grid.Row="1">
+                        <ListBox ItemsSource="{Binding ListeInvites}" 
+                                 SelectedItem="{Binding InviteSelectionne}"
+                                 ItemContainerStyle="{StaticResource StyleItemSelection}"
+                                 BorderThickness="0" Margin="0,9,25,0">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Identite}" FontSize="14" FontWeight="Medium"/>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </Border>
+                </Grid>
+
+                <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Liste des plats" VerticalAlignment="Top" FontWeight="Bold" FontSize="15" Foreground="#B44B3E" RenderTransformOrigin="0.5,0.5" Margin="149,-2,0,0" Height="19" Grid.Column="1" />
+                <Grid Grid.Column="1" Margin="10,0,0,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Border BorderBrush="#8C2F26" BorderThickness="1" CornerRadius="5" Background="White" Margin="0,20,0,-17" Grid.RowSpan="2">
+                        <ListBox ItemsSource="{Binding ListePlats}" 
+                                 SelectedItem="{Binding PlatSelectionne}"
+                                 ItemContainerStyle="{StaticResource StyleItemSelection}"
+                                 BorderThickness="0" Margin="1,0,9,11" Height="204" VerticalAlignment="Bottom">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding NomPlat}" FontSize="14" FontWeight="Medium"/>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </Border>
+                </Grid>
+            </Grid>
+
+            <StackPanel Grid.Row="2" Margin="38,18,0,2" HorizontalAlignment="Left" Grid.Column="1">
+                <TextBlock Text="3. Note attribuée (1-10)" FontWeight="Bold" Foreground="#B44B3E" Height="22"/>
+
+                <Border BorderBrush="#8C2F26" BorderThickness="2" CornerRadius="10" Background="White" Width="100" Height="60">
+                    <TextBox Text="{Binding NoteSaisie, UpdateSourceTrigger=PropertyChanged}"
+                             MaxLength="2"
+                             FontSize="24" 
+                             FontWeight="Bold"
+                             Foreground="#333"
+                             HorizontalContentAlignment="Center" 
+                             VerticalContentAlignment="Center"
+                             BorderThickness="0"
+                             Background="Transparent" Margin="0,1,0,-1"/>
+                </Border>
+            </StackPanel>
+
+            <Grid Grid.Row="2" Margin="20,96,20,10" Grid.ColumnSpan="2" Grid.RowSpan="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="Commentaire (facultatif)" FontWeight="Bold" Foreground="#B44B3E" Margin="0,0,0,5"/>
+
+                <Border Grid.Row="1" BorderBrush="#8C2F26" BorderThickness="1" CornerRadius="5" Background="White">
+                    <TextBox Text="{Binding CommentaireSaisi}"
+                             AcceptsReturn="True"
+                             TextWrapping="Wrap"
+                             VerticalContentAlignment="Top"
+                             Padding="10"
+                             BorderThickness="0"
+                             Background="Transparent"
+                             FontSize="14"
+                             FontFamily="Poppins"/>
+                </Border>
+            </Grid>
+
+            <Button Grid.Row="4" Content="Sauvegarder cette note" 
+                    HorizontalAlignment="Right" Margin="0,0,20,20" Width="220" Height="40"
+                    Style="{StaticResource StyleBoutonAction}" Grid.Column="1"/>
+
+        </Grid>
+    </Grid>
+</Window>

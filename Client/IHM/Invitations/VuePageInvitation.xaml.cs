@@ -180,6 +180,11 @@ namespace IHM_Footies.Invitations
             Navigation.AllerMenu(this);
         }
 
+        private void BoutonClickAllerNoterPlats_Click(object sender, RoutedEventArgs e)
+        {
+            Navigation.AllerNotePlats(this);
+        }
+
         #endregion
 
         #region boutons
@@ -294,8 +299,9 @@ namespace IHM_Footies.Invitations
             Navigation.AllerSelectionInvite(this);
         }
 
+
         #endregion
 
-
+        
     }
 }

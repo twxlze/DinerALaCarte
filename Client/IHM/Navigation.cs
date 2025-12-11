@@ -235,6 +235,18 @@ namespace IHM_Footies
             fenetre.Show();
             fenetreActuelle.Close();
         }
+
+        /// <summary>
+        /// Aller à la page de notation des plats d'une invitation
+        /// </summary>
+        /// <param name="fenetreActuelle"> la fenêtre à fermer </param>
+        public static void AllerNotePlats(Window fenetreActuelle)
+        {
+            VueNotationPlats fenetre = new VueNotationPlats();
+            fenetre.Show();
+            fenetreActuelle.Close();
+        }
+
         #endregion
 
         /// <summary>
