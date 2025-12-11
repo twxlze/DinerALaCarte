@@ -47,5 +47,11 @@ namespace API_Footies.Data.Interfaces
         /// <param name="texterecherche">Le texte permettant d'un plat</param>
         /// <returns>Une liste de plats correspondant à la recherche</returns>
         public List<Plat> ChercherPlat(string texterecherche, long idUtilisateur);
+
+        /// <summary>
+        /// Ajoute ou modifie un avis pour un plat donné par un invité
+        /// </summary>
+        bool AjouterAvis(long idPlat, long idInvite, int note, string commentaire);
+
     }
 }
