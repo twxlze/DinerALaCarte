@@ -284,6 +284,7 @@ namespace VM_Footies.VM
         private void SynchroniserGroupeInviteSelectionne()
         {
             List<GroupeInvites> groupesInvitesSelectionnes = new List<GroupeInvites>();
+
             foreach (VMGroupeInviteSelectionne vmGroupe in this.groupesInvitesListe)
             {
                 if (vmGroupe.EstSelectionne)
@@ -291,6 +292,7 @@ namespace VM_Footies.VM
                     groupesInvitesSelectionnes.Add(vmGroupe.GroupeInvite);
                 }
             }
+
             this.invitation.GroupeInvites = groupesInvitesSelectionnes;
             Notify("GroupeInvites");
         }
