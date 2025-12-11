@@ -300,7 +300,7 @@
         <TextBlock Grid.Column="1" 
                    HorizontalAlignment="Left" 
                    TextWrapping="Wrap" 
-                   Text="";
+                   Text="{x:Static res:Strings.Remarque}"
                    VerticalAlignment="Top" 
                    FontWeight="Normal" 
                    FontSize="12" 

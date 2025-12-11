@@ -333,4 +333,7 @@
   <data name="Double_Click_Plat" xml:space="preserve">
     <value>Double-click on a dish to see its information.</value>
   </data>
+  <data name="Remarque" xml:space="preserve">
+    <value>💬 Remarks</value>
+  </data>
 </root>
