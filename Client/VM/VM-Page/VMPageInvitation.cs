@@ -3,7 +3,6 @@ using METIER_Footies.Data;
 using METIER_Footies.Data.Interfaces;
 using METIER_Footies.Metier;
 using VM_Footies.VM;
-using VM_Footies.VM_Element_Selectionne;
 
 namespace VM_Footies.VM_Page
 {
@@ -229,7 +228,7 @@ namespace VM_Footies.VM_Page
             foreach (VMMenu vmMenu in this.vmPageMenu.VMMenu)
             {
                 bool estSelectionne = idDesMenus.Contains(vmMenu.Menu.IdMenu);
-                VMMenuSelectionne vmMenuSelectionne = new VMMenuSelectionne(vmMenu.Menu, estSelectionne);
+                VMMenu vmMenuSelectionne = new VMMenu(vmMenu.Menu, estSelectionne);
                 vmMenuSelectionne.PropertyChanged += invitation.VmElement_PropertyChanged;
                 invitation.MenusListe.Add(vmMenuSelectionne);
             }
