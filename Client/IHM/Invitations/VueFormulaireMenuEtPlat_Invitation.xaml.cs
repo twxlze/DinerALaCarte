@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.ComponentModel;
+using System.Windows;
 using METIER_Footies.Data;
 using VM_Footies.VM;
 using VM_Footies.VM_Page;
@@ -25,7 +26,10 @@ namespace IHM_Footies.Invitations
         #endregion
 
         #region constructeurs
-
+        /// <summary>
+        /// Constructeur de la vue de formulaire d'invitation
+        /// </summary>
+        /// <param name="invitation"> prend en parametre le model des invitations</param>
         public VueFormulaireMenuEtPlat_Invitation(VMInvitation invitation)
         {
             this.pageInvitation = new VMPageInvitation();
@@ -37,6 +41,9 @@ namespace IHM_Footies.Invitations
             this.Loaded += VueFormulaireMenuEtPlat_Invitation_Loaded;
         }
 
+        /// <summary>
+        /// Constructeur par défaut
+        /// </summary>
         public VueFormulaireMenuEtPlat_Invitation() : this(new VMInvitation())
         {
         }
@@ -52,6 +59,19 @@ namespace IHM_Footies.Invitations
         private async Task ChargerDonnees()
         {
             await this.pageInvitation.ChargerElementsDansInvitation(invitation);
+        }
+
+        private void Invitation_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            switch (e.PropertyName)
+            {
+                case "TexteRechercheMenu":
+                    this.pageInvitation.RechercherMenuDansFormulaire(this.invitation, this.invitation.TexteRechercheInvite);
+                    break;
+                case "TexteRecherchePlat":
+                    this.pageInvitation.RechercherPlatDansFormulaire(this.invitation, this.invitation.TexteRechercheGroupeInvite);
+                    break;
+            }
         }
         #endregion
 
@@ -187,6 +207,28 @@ namespace IHM_Footies.Invitations
             {
                 MessageBox.Show($"Erreur lors de l'analyse ou l'enregistrement : {ex.Message}", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+        }
+
+        private void RechercheMenu_Click(object sender, RoutedEventArgs e)
+        {
+            this.pageInvitation.RechercherMenuDansFormulaire(this.invitation, this.invitation.TexteRechercheInvite);
+        }
+
+        private void RefreshMenu_Click(object sender, RoutedEventArgs e)
+        {
+            this.invitation.TexteRechercheInvite = string.Empty;
+            this.pageInvitation.RechercherMenuDansFormulaire(this.invitation, string.Empty);
+        }
+
+        private void RecherchePlat_Click(object sender, RoutedEventArgs e)
+        {
+            this.pageInvitation.RechercherPlatDansFormulaire(this.invitation, this.invitation.TexteRechercheGroupeInvite);
+        }
+
+        private void RefreshPlat_Click(object sender, RoutedEventArgs e)
+        {
+            this.invitation.TexteRechercheGroupeInvite = string.Empty;
+            this.pageInvitation.RechercherPlatDansFormulaire(this.invitation, string.Empty);
         }
         #endregion
 
