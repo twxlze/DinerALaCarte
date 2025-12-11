@@ -271,9 +271,20 @@ namespace IHM_Footies
             vueCreationCompte.Show();
             fenetreActuelle.Close();
         }
+
+        /// <summary>
+        /// Aller à la page des informations de l'utilisateur
+        /// </summary>
+        /// <param name="fenetreActuelle">La fenêtre actuelle</param>
+        public static void AllerInformationUtilisateur(Window fenetreActuelle)
+        {
+            VueInformationUtilisateur vueInformationUtilisateur = new VueInformationUtilisateur();
+            vueInformationUtilisateur.Show();
+            fenetreActuelle.Close();
+        }
         #endregion
 
 
-        
+
     }
 }

@@ -419,6 +419,16 @@ public partial class MainWindow : Window
     {
         Navigation.AllerSelectionInvite(this);
     }
+
+    /// <summary>
+    /// Bouton pour aller à la page des informations utilisateur
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void BoutonAllerInformationUtilisateur_Click(object sender, RoutedEventArgs e)
+    {
+        Navigation.AllerInformationUtilisateur(this);
+    }
     #endregion
 
 

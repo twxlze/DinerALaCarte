@@ -82,6 +82,8 @@ namespace IHM_Footies.Connexion
         {
             Navigation.FermerFenetre(this);
         }
+
+
         #endregion
     }
 }
