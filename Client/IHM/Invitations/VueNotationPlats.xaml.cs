@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using METIER_Footies.Data;
 using VM_Footies.VM;
 using VM_Footies.VM_Page;
 
@@ -13,6 +14,18 @@ namespace IHM_Footies.Invitations
         #region attributs
 
         private VMPageNotePlats vmPageNotePlat;
+        private VMPageNotePlats notePlat;
+        private VMInvitation invitation;
+        private InvitationDAO invitationDAO;
+
+        #endregion
+
+        #region proprietes
+
+        /// <summary>
+        /// Récupérer les invitations
+        /// </summary>
+        public VMPageNotePlats NotePlat => this.notePlat;
 
         #endregion
 
@@ -25,6 +38,8 @@ namespace IHM_Footies.Invitations
             {
                 this.vmPageNotePlat.ChargerDonneesInvitation(invitationSelectionnee.Invitation);
             }
+            this.invitation = invitationSelectionnee;
+            this.invitationDAO = new InvitationDAO();
             this.DataContext = this.vmPageNotePlat;
             this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
         }
@@ -118,9 +133,32 @@ namespace IHM_Footies.Invitations
             Navigation.FermerFenetre(this);
         }
 
+
+
         #endregion
 
 
+        #region boutons 
+        
+        
+        private async void BoutonEnregistrer_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                this.invitation.SynchroniserTout();
+                if (this.vmPageNotePlat.CommentaireSaisi.Length != 0)
+                {
+                    await this.invitationDAO.AjouterCommentairePlat(this.vmPageNotePlat.CommentaireSaisi);
+                    MessageBox.Show("Commentaire enregistré avec succès.", "Succès", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                Navigation.AllerInvitations(this);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erreur lors de l'enregistrement de l'invitation : {ex.Message}", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
 
+        #endregion
     }
 }

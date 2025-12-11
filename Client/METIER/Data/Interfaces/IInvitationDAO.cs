@@ -52,7 +52,7 @@ namespace METIER_Footies.Data.Interfaces
         /// </summary>
         /// <param name="invitation"> invitation sélectionnée </param>
         /// <returns>>Une réponse HTTP</returns>
-        Task<HttpResponseMessage> AjouterCommentairePlat(Invitation invitation);
+        Task<HttpResponseMessage> AjouterCommentairePlat(string commentaire);
 
 
     }

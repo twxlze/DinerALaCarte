@@ -113,13 +113,13 @@ namespace METIER_Footies.Data
             return listeDesInvitations;
         }
 
-        public async Task<HttpResponseMessage> AjouterCommentairePlat(Invitation invitation)
+        public async Task<HttpResponseMessage> AjouterCommentairePlat(string commentaire)
         {
             try
             {
                 long idUtilisateur = SessionService.Instance.UtilisateurConnecte.IdUtilisateur;
                 string url = $"Invitations/AjoutCommentairePlat?IdUtilisateur={idUtilisateur}";
-                HttpResponseMessage reponseHttp = await PostAsync(url, invitation);
+                HttpResponseMessage reponseHttp = await PostAsync(url, commentaire);
                 return reponseHttp;
             }
             catch (Exception ex)

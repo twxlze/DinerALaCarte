@@ -19,6 +19,8 @@ namespace VM_Footies.VM
     {
         #region Attributs
         private Invitation invitation;
+        private string noteSaisie;
+        private string commentaireSaisi;
         private ObservableCollection<VMMenuSelectionne> menusListe;
         private ObservableCollection<VMGroupeInviteSelectionne> groupesInvitesListe;
         private ObservableCollection<VMInvite> invitesListe;
@@ -55,6 +57,32 @@ namespace VM_Footies.VM
                         invitation.Nom = value;
                     Notify("Nom");
                 }
+            }
+        }
+
+        /// <summary>
+        /// Note saisi par l'utilisateur de 1 à 10
+        /// </summary>
+        public string NoteSaisie
+        {
+            get => noteSaisie;
+            set
+            {
+                noteSaisie = value;
+                Notify("NoteSaisie");
+            }
+        }
+
+        /// <summary>
+        /// Commentaire saisi par l'utilisateur
+        /// </summary>
+        public string CommentaireSaisi
+        {
+            get => commentaireSaisi;
+            set
+            {
+                commentaireSaisi = value;
+                Notify("CommentaireSaisi");
             }
         }
 
