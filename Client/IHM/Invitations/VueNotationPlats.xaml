@@ -8,7 +8,8 @@
         Title="VueNotationPlats" Height="600" Width="1000"
         Background="#F9F9F9"
         WindowStyle="None"
-        AllowsTransparency="True">
+        AllowsTransparency="True"
+        WindowStartupLocation="CenterScreen">
 
     <Window.Resources>
         <BitmapImage x:Key="LogoHostably" UriSource="/Ressources/LogoHostably.png"/>
@@ -89,8 +90,6 @@
         </Style>
     </Window.Resources>
 
-
-
     <Grid Cursor="Hand">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200"/>
@@ -114,15 +113,15 @@
                     <RowDefinition/>
                 </Grid.RowDefinitions>
 
-                <TextBlock Text="A table !" FontSize="19" FontWeight="Bold" Foreground="#B44B3E" VerticalAlignment="Center" Margin="73,0,23,0" FontFamily="Montserrat"/>
+                <TextBlock Text="À table !" FontSize="19" FontWeight="Bold" Foreground="#B44B3E" VerticalAlignment="Center" Margin="73,0,23,0" FontFamily="Montserrat"/>
 
-                <Button x:Name="BoutonAccueil" Content="🏠 Accueil" Grid.Row="1" Style="{StaticResource BoutonMenu}"/>
-                <Button x:Name="BoutonInvites" Content="👤 Invités" Grid.Row="2" Style="{StaticResource BoutonMenu}"/>
-                <Button x:Name="BoutonGroupes" Content="👥 Groupes" Grid.Row="3" Style="{StaticResource BoutonMenu}"/>
-                <Button x:Name="BoutonInvitations" Background="#BFBFBF" Content="🎟️ Invitations" Grid.Row="4" Style="{StaticResource BoutonMenu}"/>
-                <Button x:Name="BoutonMenus" Content="📋 Menus" Grid.Row="5" Style="{StaticResource BoutonMenu}"/>
-                <Button x:Name="BoutonPlats" Content="🍽️ Plats" Grid.Row="6" Style="{StaticResource BoutonMenu}"/>
-                <Button x:Name="BoutonStatistique" Content="📊 Statistiques" Grid.Row="7" Style="{StaticResource BoutonMenu}" FontWeight="Bold"/>
+                <Button x:Name="BoutonAccueil" Content="🏠 Accueil" Grid.Row="1" Style="{StaticResource BoutonMenu}" Click="BoutonVueAccueil" />
+                <Button x:Name="BoutonInvites" Content="👤 Invités" Grid.Row="2" Style="{StaticResource BoutonMenu}" Click="BoutonInvite_Click"/>
+                <Button x:Name="BoutonGroupes" Content="👥 Groupes" Grid.Row="3" Style="{StaticResource BoutonMenu}" Click="BoutonGroupeInvite_Click"/>
+                <Button x:Name="BoutonInvitations" Background="#BFBFBF" Content="🎟️ Invitations" Grid.Row="4" Style="{StaticResource BoutonMenu}" Click="BoutonAllerInvitation_Click"/>
+                <Button x:Name="BoutonMenus" Content="📋 Menus" Grid.Row="5" Style="{StaticResource BoutonMenu}" Click="BoutonAllerMenu_Click"/>
+                <Button x:Name="BoutonPlats" Content="🍽️ Plats" Grid.Row="6" Style="{StaticResource BoutonMenu}" Click="BoutonAllerPlat_Click"/>
+                <Button x:Name="BoutonStatistique" Content="📊 Statistiques" Grid.Row="7" Style="{StaticResource BoutonMenu}" FontWeight="Bold" Click="BoutonAllerStatistique_Click"/>
                 <Button x:Name="BoutonUtilisateur" Content="👤" Grid.Row="10" Grid.Column="0" Style="{StaticResource BoutonMenu}" Margin="0,0,100,0" HorizontalContentAlignment="Center" FontSize="25" />
                 <Button x:Name="BoutonReglage" Content="⚙️" Grid.Row="10" Grid.Column="0" Style="{StaticResource BoutonMenu}" HorizontalContentAlignment="Center" Margin="100,0,0,0" FontSize="25"/>
             </Grid>
@@ -138,8 +137,8 @@
             </Grid.RowDefinitions>
 
             <TextBlock Text="Notation des plats" FontWeight="Bold" FontSize="24" Foreground="#B44B3E" FontFamily="Poppins" Width="234"/>
-            <Button Content="✖" FontSize="16" FontWeight="Bold" BorderThickness="0" Foreground="#B44B3E" Background="Transparent" Margin="724,-5,0,5"/>
 
+            <Button Content="✖" FontSize="16" FontWeight="Bold" BorderThickness="0" Foreground="#B44B3E" Background="Transparent" Margin="724,-5,0,5" Click="ButonFermerFenetre_Click"/>
 
             <Grid Grid.Row="1" Margin="10,20,10,10">
                 <Grid.ColumnDefinitions>
@@ -188,7 +187,7 @@
                                      BorderThickness="0" Background="Transparent">
                                 <ListBox.ItemTemplate>
                                     <DataTemplate>
-                                        <TextBlock Text="{Binding NomPlat}" FontSize="14" FontWeight="Medium" Padding="5"/>
+                                        <TextBlock Text="{Binding Nom}" FontSize="14" FontWeight="Medium" Padding="5"/>
                                     </DataTemplate>
                                 </ListBox.ItemTemplate>
                             </ListBox>
@@ -202,7 +201,6 @@
                     <ColumnDefinition Width="127*"/>
                     <ColumnDefinition Width="46*"/>
                 </Grid.ColumnDefinitions>
-
 
                 <TextBlock Text="3. Note attribuée (1-10)" FontWeight="Bold" FontSize="15" Foreground="#B44B3E" Margin="-30,-14,30,42" Grid.ColumnSpan="2"/>
 
@@ -225,7 +223,7 @@
 
                 <Border Grid.Row="1" BorderBrush="#8C2F26" BorderThickness="2" CornerRadius="10" Background="White" Height="100">
                     <ScrollViewer VerticalScrollBarVisibility="Auto">
-                        <TextBox Text="{Binding CommentaireSaisi}"
+                        <TextBox Text="{Binding CommentaireSaisi, UpdateSourceTrigger=PropertyChanged}"
                              AcceptsReturn="True" TextWrapping="Wrap"
                              VerticalContentAlignment="Top" Padding="10"
                              BorderThickness="0" Background="Transparent"
@@ -236,7 +234,7 @@
 
             <Button Grid.Row="4" Content="Enregistrer la note" 
                     HorizontalAlignment="Right" Margin="0,0,10,20" Width="200" Height="40"
-                    Style="{StaticResource StyleBoutonMenu}"/>
+                    Style="{StaticResource StyleBoutonMenu}" />
         </Grid>
     </Grid>
 </Window>

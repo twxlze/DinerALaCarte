@@ -240,9 +240,9 @@ namespace IHM_Footies
         /// Aller à la page de notation des plats d'une invitation
         /// </summary>
         /// <param name="fenetreActuelle"> la fenêtre à fermer </param>
-        public static void AllerNotePlats(Window fenetreActuelle)
+        public static void AllerNotePlats(Window fenetreActuelle, VMInvitation invitation)
         {
-            VueNotationPlats fenetre = new VueNotationPlats();
+            VueNotationPlats fenetre = new VueNotationPlats(invitation);
             fenetre.Show();
             fenetreActuelle.Close();
         }

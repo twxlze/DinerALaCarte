@@ -182,7 +182,7 @@ namespace IHM_Footies.Invitations
 
         private void BoutonClickAllerNoterPlats_Click(object sender, RoutedEventArgs e)
         {
-            Navigation.AllerNotePlats(this);
+            Navigation.AllerNotePlats(this, this.vmPageInvitation.InvitationSelectionnee);
         }
 
         #endregion
