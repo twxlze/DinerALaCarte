@@ -8,7 +8,6 @@ using System.Text;
 using System.Threading.Tasks;
 using METIER_Footies.Data;
 using METIER_Footies.Metier;
-using VM_Footies.VM_Element_Selectionne;
 
 namespace VM_Footies.VM
 {
@@ -19,8 +18,8 @@ namespace VM_Footies.VM
     {
         #region Attributs
         private Invitation invitation;
-        private ObservableCollection<VMMenuSelectionne> menusListe;
-        private ObservableCollection<VMGroupeInviteSelectionne> groupesInvitesListe;
+        private ObservableCollection<VMMenu> menusListe;
+        private ObservableCollection<VMGroupeInvite> groupesInvitesListe;
         private ObservableCollection<VMInvite> invitesListe;
         private ObservableCollection<VMPlat> platsListe;
         #endregion
@@ -148,7 +147,7 @@ namespace VM_Footies.VM
         /// <summary>
         /// Liste des menus sélectionnables
         /// </summary>
-        public ObservableCollection<VMMenuSelectionne> MenusListe
+        public ObservableCollection<VMMenu> MenusListe
         {
             get => menusListe;
             set
@@ -161,7 +160,7 @@ namespace VM_Footies.VM
         /// <summary>
         /// Liste des groupes d'invités sélectionnables
         /// </summary>
-        public ObservableCollection<VMGroupeInviteSelectionne> GroupesInvitesListe
+        public ObservableCollection<VMGroupeInvite> GroupesInvitesListe
         {
             get => groupesInvitesListe;
             set
@@ -235,8 +234,8 @@ namespace VM_Footies.VM
         /// </summary>
         private void InitialiserCollections()
         {
-            this.menusListe = new ObservableCollection<VMMenuSelectionne>();
-            this.groupesInvitesListe = new ObservableCollection<VMGroupeInviteSelectionne>();
+            this.menusListe = new ObservableCollection<VMMenu>();
+            this.groupesInvitesListe = new ObservableCollection<VMGroupeInvite>();
             this.invitesListe = new ObservableCollection<VMInvite>();
             this.platsListe = new ObservableCollection<VMPlat>();
         }
@@ -284,7 +283,7 @@ namespace VM_Footies.VM
         private void SynchroniserMenuSelectionne()
         {
             List<Menu> menusSelectionnes = new List<Menu>();
-            foreach (VMMenuSelectionne vmMenu in this.menusListe)
+            foreach (VMMenu vmMenu in this.menusListe)
             {
                 if (vmMenu.EstSelectionne)
                 {
@@ -302,11 +301,11 @@ namespace VM_Footies.VM
         {
             List<GroupeInvites> groupesInvitesSelectionnes = new List<GroupeInvites>();
 
-            foreach (VMGroupeInviteSelectionne vmGroupe in this.groupesInvitesListe)
+            foreach (VMGroupeInvite vmGroupe in this.groupesInvitesListe)
             {
                 if (vmGroupe.EstSelectionne)
                 {
-                    groupesInvitesSelectionnes.Add(vmGroupe.GroupeInvite);
+                    groupesInvitesSelectionnes.Add(vmGroupe.Groupe);
                 }
             }
 

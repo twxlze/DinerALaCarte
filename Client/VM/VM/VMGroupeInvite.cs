@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using METIER_Footies.Data;
 using METIER_Footies.Data.Interfaces;
 using METIER_Footies.Metier;
-using VM_Footies.VM_Element_Selectionne;
 
 namespace VM_Footies.VM
 {
@@ -18,6 +17,7 @@ namespace VM_Footies.VM
     {
         #region Attributs
         private GroupeInvites groupe; 
+        private bool estSelectionne;
         private ObservableCollection<VMInvite> invitesListe;
         #endregion
 
@@ -55,6 +55,21 @@ namespace VM_Footies.VM
             get => this.groupe.Invites;
         }
 
+        /// <summary>
+        /// État de sélection du groupe d'invités
+        /// </summary>
+        public bool EstSelectionne
+        {
+            get => estSelectionne;
+            set
+            {
+                if (estSelectionne != value)
+                {
+                    estSelectionne = value;
+                    Notify("GroupeSelectionne");
+                }
+            }
+        }
         #endregion
 
         #region Propriétés pour les invités séléctionnables
@@ -69,15 +84,15 @@ namespace VM_Footies.VM
         }
         #endregion
 
-
         #region Constructeurs
         /// <summary>
         /// Constructeur d'un VMGroupeInvite à partir d'un modèle GroupeInvites
         /// </summary>
         /// <param name="groupe">Le groupe à gérer</param>
-        public VMGroupeInvite(GroupeInvites groupeInvite)
+        public VMGroupeInvite(GroupeInvites groupeInvite, bool estSelectionne = false)
         {
             this.groupe = groupeInvite;
+            this.estSelectionne = estSelectionne;
             this.invitesListe = new ObservableCollection<VMInvite>();
         }
 
@@ -88,18 +103,16 @@ namespace VM_Footies.VM
         {
             this.groupe = new GroupeInvites(modele.Groupe);
             this.invitesListe = new ObservableCollection<VMInvite>();
+            this.estSelectionne = modele.EstSelectionne;
         }
 
         /// <summary>
         /// Initialise une nouvelle instance de la classe VMGroupeInvite
         /// </summary>
-        public VMGroupeInvite()
+        public VMGroupeInvite() : this(new GroupeInvites())
         {
-            this.groupe = new GroupeInvites();
-            this.invitesListe = new ObservableCollection<VMInvite>();
         }
         #endregion
-
 
         #region Méthodes privées
         /// <summary>

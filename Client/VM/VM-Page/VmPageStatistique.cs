@@ -10,7 +10,6 @@ using VM_Footies.VM;
 using OxyPlot;
 using OxyPlot.Series;
 using OxyPlot.Axes;
-using VM_Footies.VM_Element_Selectionne;
 
 namespace VM_Footies.VM_Page
 {
