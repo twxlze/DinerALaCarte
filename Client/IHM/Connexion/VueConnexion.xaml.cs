@@ -44,17 +44,33 @@ namespace IHM_Footies.Connexion
         /// <param name="e"> Les arguments de l'événement </param>
         private async void BoutonConnexion_Click(object sender, RoutedEventArgs e)
         {
-            this.vmPageConnexion.MotDePasse = ChampMotDePasse.Password;
-            bool connexionReussie = await this.vmPageConnexion.Connexion();
+            try
+            {
+                string motDePasseSaisi = ChampMotDePasse.Password;
+                bool connexionReussie = await this.vmPageConnexion.Connexion(motDePasseSaisi);
+                if (connexionReussie)
+                {
+                    Navigation.AllerAccueil(this);
+                }
+                else
+                {
+                    MessageBox.Show(this.vmPageConnexion.MessageErreur, "Erreur de connexion", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Une erreur inattendue est survenue : " + ex.Message, "Erreur Critique", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
 
-            if (connexionReussie)
-            {
-                Navigation.AllerAccueil(this);
-            }
-            else
-            {
-                MessageBox.Show(this.vmPageConnexion.MessageErreur, "Erreur de connexion", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+        /// <summary>
+        /// Gère le clic sur le bouton de création de compte
+        /// </summary>
+        /// <param name="sender">L'éxpéditeur du clic</param>
+        /// <param name="e">Les arguments de l'événement</param>
+        private async void BoutonCreationCompte_Click(object sender, RoutedEventArgs e)
+        {
+            Navigation.AllerCreerUtilisateur(this);
         }
 
         /// <summary>

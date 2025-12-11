@@ -199,8 +199,6 @@ namespace IHM_Footies.Reglages
         {
             Navigation.AllerInvitations(this);
         }
-
-
         /// <summary>
         /// Bouton pour aller à la page des Statistiques
         /// </summary>
@@ -211,7 +209,5 @@ namespace IHM_Footies.Reglages
             Navigation.AllerSelectionInvite(this);
         }
         #endregion
-
-
     }
 }

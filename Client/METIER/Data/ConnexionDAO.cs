@@ -9,13 +9,11 @@ using METIER_Footies.Metier;
 
 namespace METIER_Footies.Data
 {
+    /// <summary>
+    /// Classe DAO pour la gestion de la connexion des utilisateurs
+    /// </summary>
     public class ConnexionDAO : DAO, IConnexionDAO
     {
-        /// <summary>
-        /// Connexion d'un utilisateur
-        /// </summary>
-        /// <param name="utilisateur"> l'utilisateur à connecter </param>
-        /// <returns> L'utilisateur connecté avec son ID, ou null si la connexion a échoué </returns>
         public async Task<Utilisateur?> Connexion(Identifiant identifiant)
         {
             Utilisateur? utilisateurConnecte = null;
@@ -37,5 +35,49 @@ namespace METIER_Footies.Data
 
             return utilisateurConnecte;
         }
+
+        public async Task<bool> VerifierPseudoDisponible(string pseudo)
+        {
+            bool resultat = false;
+            try
+            {
+                HttpResponseMessage reponseHttp = await PostAsync("authentification/VerifierPseudoDisponible", pseudo);
+
+                if (reponseHttp.IsSuccessStatusCode)
+                {
+                    string reponse = await reponseHttp.Content.ReadAsStringAsync();
+                    resultat = JsonSerializer.Deserialize<bool>(reponse, options);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erreur lors de la vérification de la disponibilité du pseudonyme : " + ex.Message);
+            }
+            return resultat;
+        }
+
+        public async Task<bool> Inscription(Identifiant identifiant, Utilisateur utilisateur)
+        {
+            bool resultat = false;
+            try
+            {
+                Dictionary<string, object> paquet = new Dictionary<string, object>();
+                paquet.Add("Identifiant", identifiant);
+                paquet.Add("Utilisateur", utilisateur);
+                HttpResponseMessage reponseHttp = await PostAsync("Authentification/Inscription", paquet);
+
+                if (reponseHttp.IsSuccessStatusCode)
+                {
+                    resultat = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erreur lors de la création du compte : " + ex.Message);
+            }
+            return resultat;
+        }
+
+
     }
 }
