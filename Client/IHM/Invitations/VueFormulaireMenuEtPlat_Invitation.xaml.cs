@@ -154,21 +154,36 @@ namespace IHM_Footies.Invitations
             try
             {
                 this.invitation.SynchroniserTout();
-                if (this.invitation.Invitation.IdInvitation != 0)
+
+                VuePageAvertissementInvitation fenetreVerif = new VuePageAvertissementInvitation(this.invitation);
+
+                bool? resultat = fenetreVerif.ShowDialog();
+
+                if (fenetreVerif.InvitationConfirmee)
                 {
-                    await this.invitationDAO.ModifierInvitation(this.invitation.Invitation);
-                    MessageBox.Show("L'invitation a été modifiée avec succès.", "Succès", MessageBoxButton.OK, MessageBoxImage.Information);
+                    if (this.invitation.Invitation.IdInvitation != 0)
+                    {
+                        await this.invitationDAO.ModifierInvitation(this.invitation.Invitation);
+                        MessageBox.Show("L'invitation a été modifiée avec succès.", "Succès", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
+                    else
+                    {
+                        await this.invitationDAO.AjouterInvitation(this.invitation.Invitation);
+                        MessageBox.Show("L'invitation a été enregistrée avec succès.", "Succès", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
+
+                    Navigation.AllerInvitations(this);
+                }
+                else if (fenetreVerif.RetournerAuxPlats)
+                {
                 }
                 else
                 {
-                    await this.invitationDAO.AjouterInvitation(this.invitation.Invitation);
-                    MessageBox.Show("L'invitation a été enregistrée avec succès.", "Succès", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
-                Navigation.AllerInvitations(this);
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Erreur lors de l'enregistrement de l'invitation : {ex.Message}", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"Erreur lors de l'analyse ou l'enregistrement : {ex.Message}", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 

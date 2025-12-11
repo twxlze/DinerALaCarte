@@ -88,15 +88,15 @@ namespace METIER_Footies.Metier
                 switch (Type)
                 {
                     case TypeAvertissement.Allergie:
-                        resultat = $"⚠️ {Invite.Identite} est allergique au plat : {infoPlat}";
+                        resultat = $"{Invite.Identite} ⚠️ {infoPlat}";
                         break;
 
                     case TypeAvertissement.PlatDeteste:
-                        resultat = $"😞 {Invite.Identite} déteste le plat : {infoPlat}";
+                        resultat = $"{Invite.Identite} 😞 {infoPlat}";
                         break;
 
                     case TypeAvertissement.PlatPrefere:
-                        resultat = $"😊 {Invite.Identite} aime le plat : {infoPlat}";
+                        resultat = $"{Invite.Identite} 😊 {infoPlat}";
                         break;
 
                     default:

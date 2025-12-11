@@ -312,4 +312,40 @@
   <data name="Double_Click" xml:space="preserve">
     <value>*Double-click on an item to view its details.</value>
   </data>
+  <data name="AnalyseInvit" xml:space="preserve">
+    <value>Analysis of the invitation</value>
+  </data>
+  <data name="ValideInvit" xml:space="preserve">
+    <value>Confirm the invitation</value>
+  </data>
+  <data name="Annuler" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="NoChoix" xml:space="preserve">
+    <value>Revisiting my choices</value>
+  </data>
+  <data name="AllergieDanger" xml:space="preserve">
+    <value>⚠️ Allergy</value>
+  </data>
+  <data name="DetesteDanger" xml:space="preserve">
+    <value>😞 Hated </value>
+  </data>
+  <data name="PrefereDanger" xml:space="preserve">
+    <value>😊 Favorite</value>
+  </data>
+  <data name="AllergieDetect" xml:space="preserve">
+    <value>⚠️ Allergies Detected</value>
+  </data>
+  <data name="PlatDest" xml:space="preserve">
+    <value>😞 Hated Dishes</value>
+  </data>
+  <data name="PlatPref" xml:space="preserve">
+    <value>😊 Favorite Dishes</value>
+  </data>
+  <data name="NoAvertissement" xml:space="preserve">
+    <value>✅ No warnings</value>
+  </data>
+  <data name="Messageaucunconflit" xml:space="preserve">
+    <value>There is no conflict with your invitation. You can confirm it with confidence.</value>
+  </data>
 </root>

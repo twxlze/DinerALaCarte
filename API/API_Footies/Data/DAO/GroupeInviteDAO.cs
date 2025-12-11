@@ -1,5 +1,6 @@
 ﻿using API_Footies.Data.Interfaces;
 using API_Footies.Metier;
+using API_Footies.Metier.Enum;
 using System.Data;
 
 namespace API_Footies.Data.DAO
@@ -226,9 +227,6 @@ namespace API_Footies.Data.DAO
         #endregion
 
         #region Méthodes privées / Création d'objets
-        /// <summary>
-        /// Crée un objet GroupeInvites à partir d'une ligne de données
-        /// </summary>
         private GroupeInvites CreerGroupeInvitesDepuisDataRow(SQLiteConnector connection, DataRow row)
         {
             long idGroupeInvite = (long)row["IDGroupeInvite"];
@@ -237,13 +235,135 @@ namespace API_Footies.Data.DAO
             return new GroupeInvites(idGroupeInvite, nom, invites);
         }
 
-        /// <summary>
-        /// Crée un objet Invite à partir d'une ligne de données
-        /// </summary>
         private Invite CreerInviteDepuisDataRow(SQLiteConnector connection, DataRow row)
         {
             long idInvite = (long)row["IDInvite"];
-            return new Invite(idInvite, row["Nom"].ToString(), row["Prenom"].ToString(), row["NumTel"].ToString(), row["Mail"].ToString(), null, null, null);
+
+            List<NomAllergene> allergenes = ObtenirAllergenesInvite(connection, idInvite);
+            List<Plat> platsDetestes = ObtenirPlatsDetestesInvite(connection, idInvite);
+            List<Plat> platsPreferes = ObtenirPlatsPreferesInvite(connection, idInvite);
+
+            List<NomAllergene> listeAllergenesFinale = null;
+            if (allergenes.Count > 0)
+            {
+                listeAllergenesFinale = allergenes;
+            }
+
+            List<Plat> listePlatsDetestesFinale = null;
+            if (platsDetestes.Count > 0)
+            {
+                listePlatsDetestesFinale = platsDetestes;
+            }
+
+            List<Plat> listePlatsPreferesFinale = null;
+            if (platsPreferes.Count > 0)
+            {
+                listePlatsPreferesFinale = platsPreferes;
+            }
+
+            return new Invite(
+                idInvite,
+                row["Nom"].ToString(),
+                row["Prenom"].ToString(),
+                row["NumTel"].ToString(),
+                row["Mail"].ToString(),
+                listeAllergenesFinale,
+                listePlatsDetestesFinale,
+                listePlatsPreferesFinale
+            );
+        }
+
+        private List<NomAllergene> ObtenirAllergenesInvite(SQLiteConnector connection, long idInvite)
+        {
+            List<NomAllergene> listeAllergenes = new List<NomAllergene>();
+
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            parameters.Add("@IdInvite", idInvite);
+
+            string query = @"SELECT a.Nom 
+                     FROM Allergene a 
+                     INNER JOIN Invite_Allergene ia ON a.IDAllergene = ia.IdAllergene 
+                     WHERE ia.IdInvite = @IdInvite";
+
+            DataTable dataTable = connection.ExecuteQuery(query, parameters);
+
+            foreach (DataRow rowAllergene in dataTable.Rows)
+            {
+                NomAllergene allergeneTemp;
+                if (Enum.TryParse(rowAllergene["Nom"].ToString(), true, out allergeneTemp))
+                {
+                    listeAllergenes.Add(allergeneTemp);
+                }
+            }
+
+            return listeAllergenes;
+        }
+
+        private List<Plat> ObtenirPlatsDetestesInvite(SQLiteConnector connection, long idInvite)
+        {
+            List<Plat> listePlats = new List<Plat>();
+
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            parameters.Add("@IdInvite", idInvite);
+
+            string query = @"SELECT p.IDPlat, p.Nom, p.Description, p.Categorie, p.Ingredients 
+                     FROM Plat p 
+                     INNER JOIN Invite_PlatDeteste ipd ON p.IDPlat = ipd.IdPlat 
+                     WHERE ipd.IdInvite = @IdInvite";
+
+            DataTable dataTable = connection.ExecuteQuery(query, parameters);
+
+            foreach (DataRow rowPlat in dataTable.Rows)
+            {
+                Plat nouveauPlat = CreerPlatDepuisDataRow(rowPlat);
+                listePlats.Add(nouveauPlat);
+            }
+
+            return listePlats;
+        }
+
+        private List<Plat> ObtenirPlatsPreferesInvite(SQLiteConnector connection, long idInvite)
+        {
+            List<Plat> listePlats = new List<Plat>();
+
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            parameters.Add("@IdInvite", idInvite);
+
+            string query = @"SELECT p.IDPlat, p.Nom, p.Description, p.Categorie, p.Ingredients 
+                     FROM Plat p 
+                     INNER JOIN Invite_PlatPrefere ipp ON p.IDPlat = ipp.IdPlat 
+                     WHERE ipp.IdInvite = @IdInvite";
+
+            DataTable dataTable = connection.ExecuteQuery(query, parameters);
+
+            foreach (DataRow rowPlat in dataTable.Rows)
+            {
+                Plat nouveauPlat = CreerPlatDepuisDataRow(rowPlat);
+                listePlats.Add(nouveauPlat);
+            }
+
+            return listePlats;
+        }
+
+        private Plat CreerPlatDepuisDataRow(DataRow row)
+        {
+            CategoriePlat categorie = CategoriePlat.plat;
+            Enum.TryParse(row["Categorie"].ToString(), true, out categorie);
+
+            string description = row["Description"] as string;
+            string ingredients = row["Ingredients"] as string;
+
+            long idPlat = (long)row["IDPlat"];
+            string nom = row["Nom"].ToString();
+
+            return new Plat(
+                idPlat,
+                nom,
+                description,
+                categorie,
+                ingredients,
+                null
+            );
         }
         #endregion
     }
