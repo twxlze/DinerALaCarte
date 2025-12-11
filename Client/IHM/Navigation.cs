@@ -273,25 +273,6 @@ namespace IHM_Footies
         }
         #endregion
 
-        /// <summary>
-        /// Aller à la page des réglages
-        /// </summary>
-        /// <param name="fenetreActuelle">La fenêtre actuelle</param>
-        public static void AllerReglages(Window fenetreActuelle)
-        {
-            VuePageReglages vueReglages = new VuePageReglages();
-            vueReglages.Show();
-            fenetreActuelle.Close();
-        }
-
-        /// <summary>
-        /// Permet de fermer la fenêtre actuelle
-        /// </summary>
-        /// <param name="fenetreActuelle"> La fenêtre actuelle à fermer</param>
-        public static void FermerFenetre(Window fenetreActuelle)
-        {
-            fenetreActuelle.Close();
-        }
 
         
     }
