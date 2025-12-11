@@ -511,20 +511,20 @@ namespace IHM_Footies.Ressources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à 🛈Sélectionnez les invités pour afficher leurs statistiques de fréquence de venue.
-        /// </summary>
-        public static string messageStats {
-            get {
-                return ResourceManager.GetString("messageStats", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Recherche une chaîne localisée semblable à Votre invitation ne présente aucun conflit. Vous pouvez la valider sereinement..
         /// </summary>
         public static string Messageaucunconflit {
             get {
                 return ResourceManager.GetString("Messageaucunconflit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à 🛈Sélectionnez les invités pour afficher leurs statistiques de fréquence de venue.
+        /// </summary>
+        public static string messageStats {
+            get {
+                return ResourceManager.GetString("messageStats", resourceCulture);
             }
         }
         

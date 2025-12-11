@@ -332,6 +332,7 @@
   </data>
   <data name="Double_Click_Plat" xml:space="preserve">
     <value>Double-cliquez sur un plat pour voir ses informations.</value>
+  </data>
   <data name="AnalyseInvit" xml:space="preserve">
     <value>Analyse de l'invitation</value>
   </data>
