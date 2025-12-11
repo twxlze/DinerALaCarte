@@ -36,7 +36,7 @@ namespace IHM_Footies.Connexion
         }
         #endregion
 
-        #region Méthodes (Gestionnaires d'événements)
+        #region Méthodes
 
         /// <summary>
         /// Gère le clic sur le bouton "S'enregistrer"

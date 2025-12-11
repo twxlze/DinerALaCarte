@@ -13,67 +13,41 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using VM_Footies.VM_Page;
 
-namespace IHM_Footies.Statistique
+namespace IHM_Footies.Connexion
 {
     /// <summary>
-    /// Logique d'interaction pour VuePageSelectionStatistique.xaml
+    /// Logique d'interaction pour VueInformationUtilisateur.xaml
     /// </summary>
-    public partial class VuePageSelectionStatistique : Window
+    public partial class VueInformationUtilisateur : Window
     {
         #region Attributs
-        private VmPageStatistique vmPageStatistique;
+        private VMPageInformationUtilisateur vm;
         #endregion
-
         #region Constructeurs
-        /// <summary>
-        /// Constructeur de la vue de sélection des statistiques
-        /// </summary>
-        /// <param name="vMPageInvitation">prend en parametre le model des invitations</param>
-        public VuePageSelectionStatistique()
+        public VueInformationUtilisateur()
         {
             InitializeComponent();
-            this.vmPageStatistique = new VmPageStatistique();
-            this.DataContext = this.vmPageStatistique;
-            WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            this.vm = new VMPageInformationUtilisateur();
+            this.DataContext = this.vm;
         }
         #endregion
 
-        #region Boutons enregistrer l'affichage 
+        #region Méthodes
         /// <summary>
-        /// Gestion du clic sur le bouton Enregistrer
+        /// Action du bouton "Se déconnecter"
         /// </summary>
-        /// <param name="sender"> L'expéditeur </param>
-        /// <param name="e"> Les arguments de l'événement </param>
-
-        private async void Afficher_Click(object sender, RoutedEventArgs e)
+        private void BoutonDeconnexion_Click(object sender, RoutedEventArgs e)
         {
-            try
+            MessageBoxResult resultat = MessageBox.Show( "Voulez-vous vraiment vous déconnecter ?", "Déconnexion", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (resultat == MessageBoxResult.Yes)
             {
-                bool AuMoinUnSelection = this.vmPageStatistique.InvitesSelectionnes != null;
-
-                if (!AuMoinUnSelection)
-                {
-                    MessageBox.Show(
-                        "Sélectionnez au moins un invité pour voir les stats",
-                        "Erreur de validation",
-                        MessageBoxButton.OK,
-                        MessageBoxImage.Error
-                    );
-                }
-                else
-                {
-                    this.vmPageStatistique.CreerStatistique();
-                    Navigation.AllerStatistique(this, this.vmPageStatistique);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+                this.vm.Deconnecter();
+                Navigation.AllerConnexion(this);
             }
         }
         #endregion
 
-        #region Boutons de navigation
+        #region Navigation
         /// <summary>
         /// Bouton pour aller à la page plat
         /// </summary>
@@ -134,16 +108,6 @@ namespace IHM_Footies.Statistique
         }
 
         /// <summary>
-        /// Bouton pour aller à la page des invitations
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void BoutonAllerInvitation_Click(object sender, RoutedEventArgs e)
-        {
-            Navigation.AllerInvitations(this);
-        }
-
-        /// <summary>
         /// Bouton pour fermer la fenêtre
         /// </summary>
         /// <param name="sender"></param>
@@ -153,8 +117,19 @@ namespace IHM_Footies.Statistique
             Navigation.FermerFenetre(this);
         }
 
+
         /// <summary>
-        /// Bouton pour aller à la page des statistiques d'invités
+        /// Bouton pour aller à la page d'invitations
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BoutonAllerInvitation_Click(object sender, RoutedEventArgs e)
+        {
+            Navigation.AllerInvitations(this);
+        }
+
+        /// <summary>
+        /// Bouton pour aller à la page des Statistiques
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -163,31 +138,6 @@ namespace IHM_Footies.Statistique
             Navigation.AllerSelectionInvite(this);
         }
 
-        /// <summary>
-        /// Bouton pour reinitialiser le contenu de la barre de recherche
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void BoutonRetour_Click(object sender, RoutedEventArgs e)
-        {
-            this.vmPageStatistique.TexteRechercheGroupe = string.Empty;
-        }
-
-        private void RechercheInvite_Click(object sender, RoutedEventArgs e)
-        {
-            this.vmPageStatistique.RechercherInviteStatistique(this.vmPageStatistique.TexteRechercheGroupe);
-        }
-
-        /// <summary>
-        /// Bouton pour aller à la page des informations utilisateur
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void BoutonAllerInformationUtilisateur_Click(object sender, RoutedEventArgs e)
-        {
-            Navigation.AllerInformationUtilisateur(this);
-        }
         #endregion
-
     }
 }
