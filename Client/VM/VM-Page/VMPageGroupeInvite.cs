@@ -51,7 +51,7 @@ namespace VM_Footies
                 {
                     foreach (VMInvite vmInviteSel in this.GroupeSelectionne.InvitesListe)
                     {
-                        if (vmInviteSel.EstSelectionne)
+                        if (vmInviteSel.InviteSelectionne)
                         {
                             invites.Add(new VMInvite(vmInviteSel.Invite));
                         }
