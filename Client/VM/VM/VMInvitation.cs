@@ -20,7 +20,7 @@ namespace VM_Footies.VM
         #region Attributs
         private Invitation invitation;
         private ObservableCollection<VMMenuSelectionne> menusListe;
-        private ObservableCollection<VMGroupeInviteSelectionne> groupesInvitesListe;
+        private ObservableCollection<VMGroupeInvite> groupesInvitesListe;
         private ObservableCollection<VMInvite> invitesListe;
         private ObservableCollection<VMPlat> platsListe;
         #endregion
@@ -161,7 +161,7 @@ namespace VM_Footies.VM
         /// <summary>
         /// Liste des groupes d'invités sélectionnables
         /// </summary>
-        public ObservableCollection<VMGroupeInviteSelectionne> GroupesInvitesListe
+        public ObservableCollection<VMGroupeInvite> GroupesInvitesListe
         {
             get => groupesInvitesListe;
             set
@@ -236,7 +236,7 @@ namespace VM_Footies.VM
         private void InitialiserCollections()
         {
             this.menusListe = new ObservableCollection<VMMenuSelectionne>();
-            this.groupesInvitesListe = new ObservableCollection<VMGroupeInviteSelectionne>();
+            this.groupesInvitesListe = new ObservableCollection<VMGroupeInvite>();
             this.invitesListe = new ObservableCollection<VMInvite>();
             this.platsListe = new ObservableCollection<VMPlat>();
         }
@@ -302,11 +302,11 @@ namespace VM_Footies.VM
         {
             List<GroupeInvites> groupesInvitesSelectionnes = new List<GroupeInvites>();
 
-            foreach (VMGroupeInviteSelectionne vmGroupe in this.groupesInvitesListe)
+            foreach (VMGroupeInvite vmGroupe in this.groupesInvitesListe)
             {
                 if (vmGroupe.EstSelectionne)
                 {
-                    groupesInvitesSelectionnes.Add(vmGroupe.GroupeInvite);
+                    groupesInvitesSelectionnes.Add(vmGroupe.Groupe);
                 }
             }
 

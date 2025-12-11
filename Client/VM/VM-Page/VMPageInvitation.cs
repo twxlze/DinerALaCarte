@@ -256,7 +256,7 @@ namespace VM_Footies.VM_Page
             foreach (VMGroupeInvite vmGroupe in this.vmPageGroupeInvite.VMGroupeInvite)
             {
                 bool estSelectionne = idDesGroupes.Contains(vmGroupe.Groupe.IdGroupeInvites);
-                VMGroupeInviteSelectionne vmGroupeSelectionne = new VMGroupeInviteSelectionne(vmGroupe.Groupe, estSelectionne);
+                VMGroupeInvite vmGroupeSelectionne = new VMGroupeInvite(vmGroupe.Groupe, estSelectionne);
                 vmGroupeSelectionne.PropertyChanged += invitation.VmElement_PropertyChanged;
                 invitation.GroupesInvitesListe.Add(vmGroupeSelectionne);
             }
