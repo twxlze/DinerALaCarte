@@ -1,239 +1,153 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using METIER_Footies.Enum;
 using METIER_Footies.Metier;
 
 namespace VM_Footies.VM
 {
-    public class VMNotePlat
+    public class VMNotePlat : INotifyPropertyChanged
     {
         #region Attributs
-        private Plat plat;
-        private List<VMAllergene> allergenesListe;
-        private bool estSelectionne;
+        private Invitation invitation;
+        private ObservableCollection<VMInvite> listeInvites;
+        private ObservableCollection<VMPlat> listePlats;
+        private VMInvite? inviteSelectionne;
+        private VMPlat? platSelectionne;
+        private string noteSaisie;
+        private string commentaireSaisi;
         #endregion
 
-        #region Evenement
         public event PropertyChangedEventHandler? PropertyChanged;
-        #endregion
 
-        #region Propriétés
-        /// <summary>
-        /// Plat associé au VMPlat
-        /// </summary>
-        public Plat Plat => plat;
+        #region Propriétés pour le Binding XAML
 
         /// <summary>
-        /// Id du plat
+        /// Liste des invités d'une invitation
         /// </summary>
-        public long Id
+        public ObservableCollection<VMInvite> ListeInvites
         {
-            get { return plat.Id; }
-        }
-
-        /// <summary>
-        /// Nom du plat
-        /// </summary>
-        /// <remarks> Le set notifie le changement de la propriété </remarks>
-        public string Nom
-        {
-            get { return plat.Nom; }
+            get => listeInvites;
             set
             {
-                if (!string.IsNullOrWhiteSpace(value))
-                {
-                    plat.Nom = char.ToUpper(value[0]) + value.Substring(1);
-                }
-                else
-                {
-                    plat.Nom = value;
-                }
-                Notify("Nom");
+                listeInvites = value;
+                Notify("ListeInvites");
             }
         }
 
         /// <summary>
-        /// Description d'un plat
+        /// Liste des plats d'une invitation
         /// </summary>
-        /// <remarks> Le set notifie le changement de la propriété </remarks>
-        public string Description
+        public ObservableCollection<VMPlat> ListePlats
         {
-            get { return plat.Description; }
+            get => listePlats;
             set
             {
-                plat.Description = value;
-                Notify("Description");
+                listePlats = value;
+                Notify("ListePlats");
             }
         }
 
         /// <summary>
-        /// Catégorie du plat
+        /// Invité sélectionné dans la liste des invités
         /// </summary>
-        /// <remarks> Le set notifie le changement de la propriété </remarks>
-        public CategoriePlat Categorie
+        public VMInvite? InviteSelectionne
         {
-            get { return plat.Categorie; }
+            get => inviteSelectionne;
             set
             {
-                plat.Categorie = value;
-                Notify("Categorie");
+                inviteSelectionne = value;
+                Notify("InviteSelectionne");
             }
         }
 
         /// <summary>
-        /// Ingrédients du plat
+        /// Plats sélectionné dans la liste des plats
         /// </summary>
-        public string? Ingredients
+        public VMPlat? PlatSelectionne
         {
-            get { return plat.Ingredients; }
+            get => platSelectionne;
             set
             {
-                plat.Ingredients = value;
-                Notify("Ingredients");
+                platSelectionne = value;
+                Notify("PlatSelectionne");
             }
         }
 
         /// <summary>
-        /// Index de la catégorie pour le ComboBox
+        /// Note saisi par l'utilisateur de 1 à 10
         /// </summary>
-        public int CategorieIndex
+        public string NoteSaisie
         {
-            get
-            {
-                return (int)plat.Categorie;
-            }
+            get => noteSaisie;
             set
             {
-                plat.Categorie = (CategoriePlat)value;
-                Notify("CategorieIndex");
-                Notify("Categorie");
+                noteSaisie = value;
+                Notify("NoteSaisie");
             }
         }
 
         /// <summary>
-        /// Liste de TOUS les allergènes (cochés ou non) pour l'affichage XAML
+        /// Commentaire saisi par l'utilisateur
         /// </summary>
-        public List<VMAllergene> AllergenesListe
+        public string CommentaireSaisi
         {
-            get
-            {
-                return allergenesListe;
-            }
+            get => commentaireSaisi;
             set
             {
-                allergenesListe = value;
-                Notify("AllergenesListe");
+                commentaireSaisi = value; 
+                Notify("CommentaireSaisi");
             }
-        }
-
-        /// <summary>
-        /// Indique si le plat est sélectionné (pour les menus)
-        /// </summary>
-        public bool EstSelectionne
-        {
-            get { return estSelectionne; }
-            set
-            {
-                if (estSelectionne != value)
-                {
-                    estSelectionne = value;
-                    Notify("EstSelectionne");
-                }
-            }
-        }
-
-        /// <summary>
-        /// Liste des allergènes sélectionnés uniquement (pour l'affichage en lecture seule)
-        /// </summary>
-        public List<VMAllergene> AllergenesSelectionnes
-        {
-            get
-            {
-                return allergenesListe?.Where(a => a.EstSelectionne).ToList() ?? new List<VMAllergene>();
-            }
-        }
-        #endregion
-
-        #region Constructeurs
-        /// <summary>
-        /// Constructeur d'un VMPlat à partir d'un Plat
-        /// </summary>
-        /// <param name="plat"> Le plat à utiliser </param>
-        public VMNotePlat(Plat plat, bool estSelectionne = false)
-        {
-            this.plat = plat;
-            this.estSelectionne = estSelectionne;
-            InitialiserListeAllergenes();
-        }
-
-        /// <summary>
-        /// Construit un VMPlat à partir d'un autre VMPlat (constructeur de copie)
-        /// </summary>
-        /// <param name="modele"> Le VMPlat à copier </param>
-        public VMNotePlat(VMPlat modele) : this(new Plat(modele.Plat))
-        {
-            this.estSelectionne = modele.EstSelectionne;
-        }
-
-        /// <summary>
-        /// Constructeur par défaut d'un VMPlat
-        /// </summary>
-        public VMNotePlat() : this(new Plat())
-        {
         }
 
         #endregion
 
-        #region Méthodes
+        #region Constructeur
+
         /// <summary>
-        /// Prépare la liste de tous les allergènes possibles pour l'interface
+        /// Constructeur par défaut
         /// </summary>
-        private void InitialiserListeAllergenes()
+        public VMNotePlat()
         {
-            List<VMAllergene> listeTemp = new List<VMAllergene>();
-            Array valeursEnum = Enum.GetValues(typeof(NomAllergene));
-
-            foreach (NomAllergene allergene in valeursEnum)
-            {
-                bool estPresent = false;
-                if (this.plat.Allergenes != null)
-                {
-                    estPresent = this.plat.Allergenes.Contains(allergene);
-                }
-
-                VMAllergene vmAllergene = new VMAllergene(allergene, estPresent);
-                listeTemp.Add(vmAllergene);
-            }
-
-            this.allergenesListe = listeTemp;
+            this.listeInvites = new ObservableCollection<VMInvite>();
+            this.listePlats = new ObservableCollection<VMPlat>();
+            this.noteSaisie = "";
+            this.commentaireSaisi = "";
         }
 
         /// <summary>
-        /// Transfère les cases cochées de l'interface vers le modèle Plat
+        /// Constructeur d'un VMNotePlat à partir d'une invitation 
         /// </summary>
-        public void SauvegarderAllergenes()
+        /// <param name="invitation"></param>
+        public VMNotePlat(Invitation invitation)
         {
-            List<NomAllergene> allergenesSelectionnes = new List<NomAllergene>();
+            this.invitation = invitation;
+            this.listeInvites = new ObservableCollection<VMInvite>();
 
-            foreach (VMAllergene vm in this.allergenesListe)
-            {
-                if (vm.EstSelectionne)
-                {
-                    allergenesSelectionnes.Add(vm.Allergene);
-                }
-            }
-
-            this.plat.Allergenes = allergenesSelectionnes;
+            this.listePlats = new ObservableCollection<VMPlat>();
+            this.noteSaisie = "";
+            this.commentaireSaisi = "";
         }
 
-        private void Notify(string message)
+        /// <summary>
+        /// Constructeur par copie d'un VMNotePlat
+        /// </summary>
+        /// <param name="vmNotePlat"> VMNotePlat à copier </param>
+        public VMNotePlat(VMNotePlat vmNotePlat)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(message));
+            this.invitation = vmNotePlat.invitation;
+            this.listeInvites = vmNotePlat.listeInvites;
+            this.listePlats = vmNotePlat.listePlats;
+            this.inviteSelectionne = vmNotePlat.inviteSelectionne;
+            this.platSelectionne = vmNotePlat.platSelectionne;
+            this.noteSaisie = vmNotePlat.noteSaisie;
+            this.commentaireSaisi = vmNotePlat.commentaireSaisi;
         }
+
+        #endregion
+
+        #region méthodes privées
+        
+        private void Notify(string name) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+
         #endregion
     }
 }
