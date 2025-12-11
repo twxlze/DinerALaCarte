@@ -11,7 +11,9 @@ using IHM_Footies.Invite;
 using IHM_Footies.Menu;
 using IHM_Footies.Plat;
 using IHM_Footies.Reglages;
+using IHM_Footies.Statistique;
 using VM_Footies.VM;
+using VM_Footies.VM_Page;
 
 namespace IHM_Footies
 {
@@ -155,6 +157,30 @@ namespace IHM_Footies
         {
             VuePageMenuDetail fenetre = new VuePageMenuDetail(menu, provenance, invitationPrecedente);
             fenetre.Show();
+            fenetreActuelle.Close();
+        }
+        #endregion
+
+        #region Stats
+        /// <summary>
+        /// Permet de naviguer vers la fenêtre de sélection des invite pour les statistiques
+        /// </summary>
+        /// <param name="fenetreActuelle"></param>
+        public static void AllerSelectionInvite(Window fenetreActuelle)
+        {
+            VuePageSelectionStatistique vueSelection = new VuePageSelectionStatistique();
+            vueSelection.Show();
+            fenetreActuelle.Close();
+        }
+
+        /// <summary>
+        /// Permet de naviguer vers la fenêtre des Statistiques
+        /// </summary>
+        /// <param name="fenetreActuelle"> La fenêtre actuelle à fermer</param>
+        public static void AllerStatistique(Window fenetreActuelle, VmPageStatistique vmPageStatistique)
+        {
+            VuePageStatistique vuestats = new VuePageStatistique(vmPageStatistique);
+            vuestats.Show();
             fenetreActuelle.Close();
         }
         #endregion

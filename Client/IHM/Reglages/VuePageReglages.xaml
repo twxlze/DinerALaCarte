@@ -143,6 +143,8 @@
                     <RowDefinition/>
                     <RowDefinition/>
                     <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
                     <RowDefinition Height="2*"/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
@@ -154,8 +156,10 @@
                 <Button x:Name="BoutonInvitations" Content="{x:Static res:Strings.Invitations}" Grid.Row="4" Grid.Column="0" Style="{StaticResource BoutonMenu}" Click="BoutonAllerInvitation_Click"/>
                 <Button x:Name="BoutonMenus" Content="{x:Static res:Strings.Menus}" Grid.Row="5" Grid.Column="0" Style="{StaticResource BoutonMenu}" Cursor="Hand" Click="BoutonAllerMenu_Click" />
                 <Button x:Name="BoutonPlats" Content="{x:Static res:Strings.Plats}" Grid.Row="6" Grid.Column="0" Style="{StaticResource BoutonMenu}" Click="BoutonAllerPlat_Click" />
-                <Button x:Name="BoutonUtilisateur" Content="👤" Grid.Row="8" Grid.Column="0" Style="{StaticResource BoutonMenu}" Margin="0,0,100,0" HorizontalContentAlignment="Center" FontSize="25"/>
-                <Button x:Name="BoutonReglage" Content="⚙️" Grid.Row="8" Grid.Column="0" Style="{StaticResource BoutonMenu}" Background="#BFBFBF" FontWeight="Bold" HorizontalContentAlignment="Center" Margin="100,0,0,0" FontSize="25" Click="BoutonAllerReglages_Click"/>
+                <Button x:Name="BoutonStatistique" Content="{x:Static res:Strings.Stats}" Grid.Row="7" Grid.Column="0" Style="{StaticResource BoutonMenu}" Click="BoutonAllerStatistique_Click"/>
+                <!-- <Button x:Name="BoutonTableauDeBord" Content="📈Tableau de Bord" Grid.Row="8" Grid.Column="0" Style="{StaticResource BoutonMenu}" Click="BoutonAllerTableauDeBord_Click"/> -->
+                <Button x:Name="BoutonUtilisateur" Content="👤" Grid.Row="10" Grid.Column="0" Style="{StaticResource BoutonMenu}" Margin="0,0,100,0" HorizontalContentAlignment="Center" FontSize="25"/>
+                <Button x:Name="BoutonReglage" Content="⚙️" Grid.Row="10" Grid.Column="0" Style="{StaticResource BoutonMenu}" HorizontalContentAlignment="Center" Margin="100,0,0,0" FontSize="25" Click="BoutonAllerReglages_Click"/>
             </Grid>
         </Border>
         <Image Source="{StaticResource ResourceKey=LogoHostably}" Margin="14,10,122,17"/>

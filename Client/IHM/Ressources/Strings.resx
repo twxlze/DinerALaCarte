@@ -312,6 +312,21 @@
   <data name="Double_Click" xml:space="preserve">
     <value>*Double-cliquez sur un élément pour afficher ses détails.</value>
   </data>
+  <data name="Stats" xml:space="preserve">
+    <value>📊 Statistiques</value>
+  </data>
+  <data name="StatsPage" xml:space="preserve">
+    <value>Statistiques des invités</value>
+  </data>
+  <data name="messageStats" xml:space="preserve">
+    <value>🛈Sélectionnez les invités pour afficher leurs statistiques de fréquence de venue</value>
+  </data>
+  <data name="selecttout" xml:space="preserve">
+    <value>Sélectionner tout</value>
+  </data>
+  <data name="AfficherStats" xml:space="preserve">
+    <value>Consulter les statistiques</value>
+  </data>
   <data name="Double_Click_invite" xml:space="preserve">
     <value>Double-cliquez sur un invité pour voir ses informations.</value>
   </data>

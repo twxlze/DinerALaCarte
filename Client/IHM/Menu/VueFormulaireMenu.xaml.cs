@@ -160,7 +160,15 @@ namespace IHM_Footies
             Navigation.AllerInvitations(this);
         }
 
-
+        /// <summary>
+        /// Bouton pour aller à la page des Statistiques
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BoutonAllerStatistique_Click(object sender, RoutedEventArgs e)
+        {
+            Navigation.AllerSelectionInvite(this);
+        }
         #endregion
 
 
