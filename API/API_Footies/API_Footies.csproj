@@ -17,6 +17,7 @@
 
   <!-- Fichiers à exclure -->
   <ItemGroup>
+    <None Remove="Config\config.ini" />
     <None Remove="Data\SQLLiteConnector.cs~RFb668d2b.TMP" />
   </ItemGroup>
 
@@ -30,6 +31,11 @@
     <PackageReference Include="SQLitePCLRaw.bundle_e_sqlite3" Version="3.0.2" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.14" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Config\config.ini">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Program.cs">

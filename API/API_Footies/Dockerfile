@@ -32,4 +32,5 @@ ENV ASPNETCORE_Kestrel__Certificates__Default__Path="/https/thecertif.pfx"
 COPY --from=publish --chmod=555 /root/.dotnet/corefx/cryptography/x509stores/my/* /https/thecertif.pfx
 COPY --from=publish /app/publish .
 COPY --chmod=666 ["API_Footies/DataBase.db", "."]
+COPY --chmod=666 ["API_Footies/Config/config.ini", "."]
 ENTRYPOINT ["dotnet", "API_Footies.dll"]
