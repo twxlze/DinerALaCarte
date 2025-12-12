@@ -26,6 +26,9 @@ namespace IHM_Footies.TableauDeBord
         #endregion
 
         #region Constructeur
+        /// <summary>
+        /// le constructeur de la page tableau de bord
+        /// </summary>
         public VuePageTableauDeBord()
         {
             InitializeComponent();
@@ -37,6 +40,9 @@ namespace IHM_Footies.TableauDeBord
         #endregion
 
         #region Methode public
+        /// <summary>
+        /// Initialisation de la page tableau de bord
+        /// </summary>
         public async void Initialiser()
         {
             await this.vmPageTableauDeBord.ChargerDonneesInvite();
@@ -48,14 +54,29 @@ namespace IHM_Footies.TableauDeBord
                 this.listeInviteStat.Children.Add(vueTableauDeBord);
             }
         }
-        
-        
+
+
         #endregion
 
         #region bouton d'action
+        /// <summary>
+        /// Bouton pour rechercher un invité dans la barre de recherche du tableau de bord
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void RechercheInvite_Click(object sender, RoutedEventArgs e)
         {
             this.vmPageTableauDeBord.RechercherInviteTableauDeBord(this.vmPageTableauDeBord.TexteRechercheInvite);
+        }
+
+        /// <summary>
+        /// Bouton pour reinitialiser le contenu de la barre de recherche
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BoutonRetour_Click(object sender, RoutedEventArgs e)
+        {
+            this.vmPageTableauDeBord.TexteRechercheInvite = string.Empty;
         }
         #endregion
 
