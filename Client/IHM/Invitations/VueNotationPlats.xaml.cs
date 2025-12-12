@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using METIER_Footies.Data;
+using METIER_Footies.Metier;
 using VM_Footies.VM;
 using VM_Footies.VM_Page;
 
@@ -139,23 +140,46 @@ namespace IHM_Footies.Invitations
 
 
         #region boutons 
-        
-        
+
+
         private async void BoutonEnregistrer_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                this.invitation.SynchroniserTout();
-                if (this.vmPageNotePlat.CommentaireSaisi.Length != 0)
+                if (this.vmPageNotePlat.InviteSelectionne == null || this.vmPageNotePlat.PlatSelectionne == null)
                 {
-                    await this.invitationDAO.AjouterCommentairePlat(this.vmPageNotePlat.CommentaireSaisi);
-                    MessageBox.Show("Commentaire enregistré avec succès.", "Succès", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show("Veuillez sélectionner un invité et un plat.", "Validation", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
-                Navigation.AllerInvitations(this);
+
+                int note = Int32.Parse(this.vmPageNotePlat.NoteSaisie);
+                if (note < 1 || note > 10)
+                {
+                    MessageBox.Show("La note doit être un chiffre entre 1 et 10.", "Validation", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+
+                if (this.vmPageNotePlat.NoteSaisie == null)
+                {
+                    MessageBox.Show("Veuillez saisir une note.", "Validation", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+
+                Avis nouvelAvis = new Avis(this.vmPageNotePlat.PlatSelectionne.Id, this.vmPageNotePlat.InviteSelectionne.Id, note, this.vmPageNotePlat.CommentaireSaisi);
+                METIER_Footies.Data.PlatDAO platDAO = new METIER_Footies.Data.PlatDAO();
+                System.Net.Http.HttpResponseMessage reponse = await platDAO.AjouterAvis(nouvelAvis);
+
+                if (reponse.IsSuccessStatusCode)
+                {
+                    MessageBox.Show("Note et commentaire enregistrés !", "Succès", MessageBoxButton.OK, MessageBoxImage.Information);
+                    Navigation.AllerInvitations(this);
+                }
+                else
+                {
+                    string erreur = await reponse.Content.ReadAsStringAsync();
+                    MessageBox.Show($"L'API a refusé l'ajout : {erreur}", "Erreur API", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Erreur lors de l'enregistrement de l'invitation : {ex.Message}", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"Erreur technique : {ex.Message}", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
