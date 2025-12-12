@@ -16,6 +16,7 @@ namespace VM_Footies.VM_Page
         private VMPageInvitation _invitation;
         private VMPageInvite _invite;
         private ObservableCollection<VMInvite> listeInvite;
+        private string texteRecherche;
         #endregion
 
         #region Propriétés
@@ -48,6 +49,19 @@ namespace VM_Footies.VM_Page
             _invitation = new VMPageInvitation();
             _invite = new VMPageInvite();
             listeInvite = new ObservableCollection<VMInvite>();
+        }
+
+        /// <summary>
+        /// Texte de recherche pour filtrer les invités
+        /// </summary>
+        public string TexteRechercheInvite
+        {
+            get { return texteRecherche; }
+            set
+            {
+                texteRecherche = value;
+                Notify("TexteRechercheInvite");
+            }
         }
         #endregion
 
@@ -101,14 +115,14 @@ namespace VM_Footies.VM_Page
         /// ici les invites correspondant au texte de recherche sont placés en haut de la liste
         /// </summary>
         /// <param name="textrechercher">le text de recherche</param>
-        public void RechercherInviteTableauDeBord(string textrechercher)
+        public void RechercherInviteTableauDeBord(string texterechercher)
         {
             List<VMInvite> invitesFiltres = new List<VMInvite>();
             List<VMInvite> invitesNonFiltres = new List<VMInvite>();
 
             foreach (VMInvite inviteStat in listeInvite)
             {
-                if (inviteStat.Invite.Identite.Contains(textrechercher, StringComparison.OrdinalIgnoreCase))
+                if (inviteStat.Invite.Identite.Contains(texterechercher, StringComparison.OrdinalIgnoreCase))
                 {
                     invitesFiltres.Add(inviteStat);
                 }

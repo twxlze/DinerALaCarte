@@ -48,6 +48,15 @@ namespace IHM_Footies.TableauDeBord
                 this.listeInviteStat.Children.Add(vueTableauDeBord);
             }
         }
+        
+        
+        #endregion
+
+        #region bouton d'action
+        private void RechercheInvite_Click(object sender, RoutedEventArgs e)
+        {
+            this.vmPageTableauDeBord.RechercherInviteTableauDeBord(this.vmPageTableauDeBord.TexteRechercheInvite);
+        }
         #endregion
 
 
