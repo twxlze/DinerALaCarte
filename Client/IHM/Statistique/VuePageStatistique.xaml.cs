@@ -138,6 +138,11 @@ namespace IHM_Footies.Statistique
         {
             Navigation.FermerFenetre(this);
         }
+
+        private void BoutonAllerInformationUtilisateur_Click(object sender, RoutedEventArgs e)
+        {
+            Navigation.AllerInformationUtilisateur(this);
+        }
         #endregion
     }
 }

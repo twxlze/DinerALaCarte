@@ -87,7 +87,6 @@ namespace IHM_Footies.TableauDeBord
         }
         #endregion
 
-
         #region Boutons de navigation
         /// <summary>
         /// Bouton pour aller à la page plat
@@ -186,6 +185,11 @@ namespace IHM_Footies.TableauDeBord
         private void BoutonAllerTableauDeBord_Click(object sender, RoutedEventArgs e)
         {
             Navigation.AllerTableaudebord(this);
+        }
+
+        private void BoutonAllerInformationUtilisateur_Click(object sender, RoutedEventArgs e)
+        {
+            Navigation.AllerInformationUtilisateur(this);
         }
         #endregion
 

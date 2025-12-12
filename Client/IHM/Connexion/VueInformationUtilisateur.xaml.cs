@@ -23,6 +23,7 @@ namespace IHM_Footies.Connexion
         #region Attributs
         private VMPageInformationUtilisateur vm;
         #endregion
+
         #region Constructeurs
         public VueInformationUtilisateur()
         {
@@ -138,6 +139,15 @@ namespace IHM_Footies.Connexion
             Navigation.AllerSelectionInvite(this);
         }
 
+        private void BoutonAllerTableauDeBord_Click(object sender, RoutedEventArgs e)
+        {
+            Navigation.AllerTableaudebord(this);
+        }
+
+        private void BoutonAllerInformationUtilisateur_Click(object sender, RoutedEventArgs e)
+        {
+            Navigation.AllerInformationUtilisateur(this);
+        }
         #endregion
     }
 }

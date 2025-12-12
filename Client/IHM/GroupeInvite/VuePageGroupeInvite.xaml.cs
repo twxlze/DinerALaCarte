@@ -1,4 +1,5 @@
-﻿using IHM_Footies.GroupeInvite;
+﻿using IHM_Footies.Connexion;
+using IHM_Footies.GroupeInvite;
 using System;
 using System.Collections.Generic;
 using System.Linq;

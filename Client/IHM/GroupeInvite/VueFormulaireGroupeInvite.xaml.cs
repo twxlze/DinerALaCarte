@@ -105,7 +105,6 @@ namespace IHM_Footies
         }
         #endregion
 
-
         #region Boutons de navigation
         /// <summary>
         /// Bouton pour aller à la page plat

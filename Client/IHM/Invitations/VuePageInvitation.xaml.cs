@@ -16,6 +16,10 @@ namespace IHM_Footies.Invitations
         private List<VueInvitation> vueInvitations = new List<VueInvitation>();
         #endregion
 
+        #region Constructeur
+        /// <summary>
+        /// Constructeur de VuePageInvitation
+        /// </summary>
         public VuePageInvitation()
         {
             InitializeComponent();
@@ -24,6 +28,7 @@ namespace IHM_Footies.Invitations
             this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             this.RafraichirListe();
         }
+        #endregion
 
         #region Méthodes
         /// <summary>
