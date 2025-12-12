@@ -1,43 +1,114 @@
-﻿using API_Footies.Controllers;
-using API_Footies.Data.Interfaces;
-using API_Footies.Metier;
-using API_Footies.Services.Interfaces;
-using API_Footies.Services.Realisations;
-using Microsoft.AspNetCore.Mvc;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Moq;
+using Xunit;
 using API_Footies.Data.DAO;
+using API_Footies.Metier;
 
 namespace UnitTest_Footies
 {
-    /// <summary>
-    /// Tests unitaires pour la gestion des groupes d'invités
-    /// </summary>
     public class TestGroupeInvite
     {
+        private const long ID_UTILISATEUR_TEST = 1;
 
         [Fact]
-        public void TestCreationGroupeInvite()
+        public void AjouterGroupeInvite()
         {
-            string nomGroupe = "GroupeTest";
-            List<string> listeInvites = new List<string> { "Invite1", "Invite2", "Invite3" };
-            GroupeInvites groupeInvite = new GroupeInvites();
-            groupeInvite.Nom = nomGroupe;
-            groupeInvite.Invites = new List<Invite>();
-            foreach (string nomInvite in listeInvites)
-            {
-                Invite invite = new Invite { Nom = nomInvite, Email = "truc@gmail.com", Prenom = nomGroupe + " Truc", Telephone = "454461046146" };
-                groupeInvite.Invites.Add(invite);
-            }
-            Assert.Equal(nomGroupe, groupeInvite.Nom);
-            Assert.Equal(3, groupeInvite.Invites.Count);
-            Assert.Contains(groupeInvite.Invites, i => i.Nom == "Invite1");
-            Assert.True(groupeInvite.Invites.Any());
+            GroupeInviteDAO groupeInviteDAO = new GroupeInviteDAO();
+            List<Invite> listeVide = new List<Invite>();
+            GroupeInvites groupe = new GroupeInvites(0, "Groupe Test", listeVide);
+
+            bool resultat = groupeInviteDAO.AjouterGroupeInvites(groupe, ID_UTILISATEUR_TEST);
+
+            Assert.True(resultat);
+            Assert.True(groupe.IdGroupeInvites > 0);
+
+            groupeInviteDAO.SupprimerGroupeInvite(groupe.IdGroupeInvites, ID_UTILISATEUR_TEST);
         }
-        
+
+        [Fact]
+        public void AjouterGroupeAvecInvites()
+        {
+            InviteDAO inviteDAO = new InviteDAO();
+            GroupeInviteDAO groupeInviteDAO = new GroupeInviteDAO();
+
+            Invite invite1 = new Invite(0, "Dupont", "Jean", "0600000000", "jean@test.com", null, null, null);
+            inviteDAO.AjouterInvite(invite1, ID_UTILISATEUR_TEST);
+
+            List<Invite> invites = new List<Invite>();
+            invites.Add(invite1);
+
+            GroupeInvites groupe = new GroupeInvites(0, "Groupe Avec Membres", invites);
+            bool resultat = groupeInviteDAO.AjouterGroupeInvites(groupe, ID_UTILISATEUR_TEST);
+
+            Assert.True(resultat);
+
+            List<GroupeInvites> groupes = groupeInviteDAO.ListeGroupesInvites(ID_UTILISATEUR_TEST);
+            GroupeInvites groupeRecupere = groupes.FirstOrDefault(g => g.IdGroupeInvites == groupe.IdGroupeInvites);
+
+            Assert.NotNull(groupeRecupere);
+            Assert.NotEmpty(groupeRecupere.Invites);
+            Assert.Equal(invite1.Id, groupeRecupere.Invites[0].Id);
+
+            groupeInviteDAO.SupprimerGroupeInvite(groupe.IdGroupeInvites, ID_UTILISATEUR_TEST);
+            inviteDAO.SupprimerInvite(invite1.Id, ID_UTILISATEUR_TEST);
+        }
+
+        [Fact]
+        public void ModifierGroupeInvite()
+        {
+            GroupeInviteDAO groupeInviteDAO = new GroupeInviteDAO();
+            GroupeInvites groupe = new GroupeInvites(0, "Nom Original", new List<Invite>());
+            groupeInviteDAO.AjouterGroupeInvites(groupe, ID_UTILISATEUR_TEST);
+
+            groupe.Nom = "Nom Modifie";
+            bool resultat = groupeInviteDAO.ModifierGroupe(groupe, ID_UTILISATEUR_TEST);
+
+            Assert.True(resultat);
+
+            List<GroupeInvites> groupes = groupeInviteDAO.ListeGroupesInvites(ID_UTILISATEUR_TEST);
+            GroupeInvites groupeModifie = groupes.FirstOrDefault(g => g.IdGroupeInvites == groupe.IdGroupeInvites);
+
+            Assert.NotNull(groupeModifie);
+            Assert.Equal("Nom Modifie", groupeModifie.Nom);
+
+            groupeInviteDAO.SupprimerGroupeInvite(groupe.IdGroupeInvites, ID_UTILISATEUR_TEST);
+        }
+
+        [Fact]
+        public void SupprimerGroupeInvite()
+        {
+            GroupeInviteDAO groupeInviteDAO = new GroupeInviteDAO();
+            GroupeInvites groupe = new GroupeInvites(0, "A Supprimer", new List<Invite>());
+            groupeInviteDAO.AjouterGroupeInvites(groupe, ID_UTILISATEUR_TEST);
+            long idGroupe = groupe.IdGroupeInvites;
+
+            groupeInviteDAO.SupprimerGroupeInvite(idGroupe, ID_UTILISATEUR_TEST);
+
+            List<GroupeInvites> groupes = groupeInviteDAO.ListeGroupesInvites(ID_UTILISATEUR_TEST);
+            GroupeInvites groupeSupprime = groupes.FirstOrDefault(g => g.IdGroupeInvites == idGroupe);
+
+            Assert.Null(groupeSupprime);
+        }
+
+        [Fact]
+        public void ChercherGroupeInvite()
+        {
+            GroupeInviteDAO groupeDAO = new GroupeInviteDAO();
+            GroupeInvites groupe1 = new GroupeInvites(0, "Groupe Alpha", new List<Invite>());
+            GroupeInvites groupe2 = new GroupeInvites(0, "Groupe Beta", new List<Invite>());
+
+            groupeDAO.AjouterGroupeInvites(groupe1, ID_UTILISATEUR_TEST);
+            groupeDAO.AjouterGroupeInvites(groupe2, ID_UTILISATEUR_TEST);
+
+            List<GroupeInvites> resultats = groupeDAO.ChercherGroupeInvites("Alpha", ID_UTILISATEUR_TEST);
+
+            Assert.NotNull(resultats);
+            Assert.Single(resultats);
+            Assert.Equal("Groupe Alpha", resultats[0].Nom);
+
+            groupeDAO.SupprimerGroupeInvite(groupe1.IdGroupeInvites, ID_UTILISATEUR_TEST);
+            groupeDAO.SupprimerGroupeInvite(groupe2.IdGroupeInvites, ID_UTILISATEUR_TEST);
+        }
     }
 }
