@@ -25,6 +25,7 @@ namespace VM_Footies.VM_Page
         private string texteRecherche;
         private PlotModel statistiqueModel;
         private ObservableCollection<VMInvite> _invitesStats;
+        private List<VMInvite> invitesSelectionnesSauvegardes;
         #endregion
 
         #region Propriétés
@@ -49,12 +50,9 @@ namespace VM_Footies.VM_Page
             get
             {
                 List<VMInvite> invites = new List<VMInvite>();
-                foreach (VMInvite inviteStat in _invitesStats)
+                if (invitesSelectionnesSauvegardes != null)
                 {
-                    if (inviteStat.InviteSelectionne == true)
-                    {
-                        invites.Add(inviteStat);
-                    }
+                    invites = invitesSelectionnesSauvegardes.Where(invite => invite.InviteSelectionne == true).ToList();
                 }
                 return invites;
             }
@@ -68,22 +66,6 @@ namespace VM_Footies.VM_Page
             get => _toutSelectionner;
             set
             {
-                /*
-                _toutSelectionner = value;
-
-                _invitesStats.Clear();
-                foreach (VMInvite invite in _invite.VMInvites)
-                {
-                    VMInvite vmStats = new VMInvite(invite)
-                    {
-                        EstSelectionne = value
-                    };
-
-                    _invitesStats.Add(vmStats);
-                }
-
-                Notify("ToutSelectionner");
-                */
                 if (_toutSelectionner != value)
                 {
                     _toutSelectionner = value;
@@ -155,18 +137,19 @@ namespace VM_Footies.VM_Page
         #endregion
 
         #region Méthodes publiques
-
         /// <summary>
         /// Initialise les statistiques des invités
         /// </summary>
         public void InitialiserStatsInvites()
         {
             _invitesStats.Clear();
+            this.invitesSelectionnesSauvegardes = new List<VMInvite>();
             foreach (VMInvite invite in _invite.VMInvites)
             {
                 VMInvite vmStats = new VMInvite(invite);
-                _invitesStats.Add(vmStats);
+                invitesSelectionnesSauvegardes.Add(vmStats);
             }
+            InvitesStats = new ObservableCollection<VMInvite>(invitesSelectionnesSauvegardes);
         }
 
         /// <summary>
@@ -231,30 +214,10 @@ namespace VM_Footies.VM_Page
         /// <param name="textrechercher">le text de recherche</param>
         public void RechercherInviteStatistique(string textrechercher)
         {
-            List<VMInvite> invitesFiltres = new List<VMInvite>();
-            List<VMInvite> invitesNonFiltres = new List<VMInvite>();
-
-            foreach (VMInvite inviteStat in _invitesStats)
-            {
-                if (inviteStat.Invite.Identite.Contains(textrechercher, StringComparison.OrdinalIgnoreCase))
-                {
-                    invitesFiltres.Add(inviteStat);
-                }
-                else
-                {
-                    invitesNonFiltres.Add(inviteStat);
-                }
-            }
-
-            invitesFiltres = invitesFiltres.OrderBy(i => i.Invite.Identite).ToList();
-            invitesNonFiltres = invitesNonFiltres.OrderBy(i => i.Invite.Identite).ToList();
-            invitesFiltres.AddRange(invitesNonFiltres);
-
-            _invitesStats.Clear();
-            foreach (VMInvite inviteStat in invitesFiltres)
-            {
-                _invitesStats.Add(inviteStat);
-            }
+            if (string.IsNullOrWhiteSpace(textrechercher))
+                this._invitesStats = new ObservableCollection<VMInvite>(invitesSelectionnesSauvegardes);
+            List<VMInvite> resultatsFiltres = invitesSelectionnesSauvegardes.Where(i => i.Identite.Contains(textrechercher, StringComparison.OrdinalIgnoreCase)).OrderBy(i => i.Identite).ToList();
+            this._invitesStats = new ObservableCollection<VMInvite>(resultatsFiltres);
         }
 
         /// <summary>

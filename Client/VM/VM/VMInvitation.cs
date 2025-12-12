@@ -22,6 +22,10 @@ namespace VM_Footies.VM
         private ObservableCollection<VMGroupeInvite> groupesInvitesListe;
         private ObservableCollection<VMInvite> invitesListe;
         private ObservableCollection<VMPlat> platsListe;
+        private string texteRechercheInvite;
+        private string texteRechercheGroupeInvite;
+        private string texteRechercheMenu;
+        private string texteRecherchePlat;
         #endregion
 
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -139,6 +143,58 @@ namespace VM_Footies.VM
                     invitation.Remarque = value;
                     Notify("Remarque");
                 }
+            }
+        }
+
+        /// <summary>
+        /// Texte de recherche pour les invités
+        /// </summary>
+        public string TexteRechercheInvite
+        {
+            get => texteRechercheInvite;
+            set
+            {
+                texteRechercheInvite = value;
+                Notify("TexteRechercheInvite");
+            }
+        }
+
+        /// <summary>
+        /// Texte de recherche pour les groupes d'invités
+        /// </summary>
+        public string TexteRechercheGroupeInvite
+        {
+            get => texteRechercheGroupeInvite;
+            set
+            {
+                texteRechercheGroupeInvite = value;
+                Notify("TexteRechercheGroupeInvite"); 
+            }
+        }
+
+        /// <summary>
+        /// Texte de recherche pour les menus
+        /// </summary>
+        public string TexteRechercheMenu
+        {
+            get => texteRechercheMenu;
+            set
+            {
+                texteRechercheMenu = value;
+                Notify("TexteRechercheMenu");
+            }
+        }
+
+        /// <summary>
+        /// Texte de recherche pour les plats
+        /// </summary>
+        public string TexteRecherchePlat
+        {
+            get => texteRecherchePlat;
+            set
+            {
+                texteRecherchePlat = value;
+                Notify("TexteRecherchePlat");
             }
         }
         #endregion
