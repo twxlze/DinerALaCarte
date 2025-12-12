@@ -1,7 +1,10 @@
-﻿using System.Windows;
+﻿using System.Collections.ObjectModel;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using IHM_Footies.Menu;
+using METIER_Footies.Data;
+using METIER_Footies.Metier;
 using VM_Footies;
 using VM_Footies.VM;
 using VM_Footies.VM_Element_Selectionne;
@@ -22,12 +25,31 @@ namespace IHM_Footies.Invitations
         private List<VueMenu> vueMenus = new List<VueMenu>();
         private VMPagePlat VMPagePlat = new VMPagePlat();
         private List<VuePlat> vuePlats = new List<VuePlat>();
+        private ObservableCollection<AvisDetail> listeAvis;
+        #endregion
+
+        #region propriete 
+
+        /// <summary>
+        /// Liste des avis des plats donnée par les invités
+        /// </summary>
+        public ObservableCollection<AvisDetail> ListeAvis
+        {
+            get => listeAvis;
+            set 
+            { 
+                listeAvis = value; 
+            }
+        }
+
         #endregion
 
         #region Constructeur
         public VuePageInvitationDetail(VMInvitation invitation, string provenance = "Invitation")
         {
             InitializeComponent();
+            this.listeAvis = new ObservableCollection<AvisDetail>();
+            this.PanelAvis.ItemsSource = this.listeAvis; 
             this.vmInvitation = invitation;
             this.DataContext = this.vmInvitation;
             this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
@@ -43,6 +65,26 @@ namespace IHM_Footies.Invitations
             this.AfficherGroupes();
             this.AfficherMenus();
             this.AfficherPlats();
+            this.AfficherAvis();
+        }
+
+        private async void AfficherAvis()
+        {
+            try
+            {
+                InvitationDAO dao = new InvitationDAO();
+                List<AvisDetail> avis = await dao.ObtenirAvisPourInvitation(this.vmInvitation.Invitation.IdInvitation);
+
+                this.listeAvis.Clear();
+                foreach (AvisDetail a in avis)
+                {
+                    this.listeAvis.Add(a);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void AfficherInvites()
