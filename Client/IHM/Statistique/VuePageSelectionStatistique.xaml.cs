@@ -73,6 +73,28 @@ namespace IHM_Footies.Statistique
         }
         #endregion
 
+        #region Bouton d'action
+        /// <summary>
+        /// Bouton pour reinitialiser le contenu de la barre de recherche
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BoutonRetour_Click(object sender, RoutedEventArgs e)
+        {
+            this.vmPageStatistique.TexteRechercheInviteStats = string.Empty;
+        }
+
+        /// <summary>
+        /// Bouton pour rechercher un invité dans la barre de recherche des statistiques
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void RechercheInvite_Click(object sender, RoutedEventArgs e)
+        {
+            this.vmPageStatistique.RechercherInviteStatistique(this.vmPageStatistique.TexteRechercheInviteStats);
+        }
+        #endregion
+
         #region Boutons de navigation
         /// <summary>
         /// Bouton pour aller à la page plat
@@ -171,21 +193,6 @@ namespace IHM_Footies.Statistique
         private void BoutonAllerTableauDeBord_Click(object sender, RoutedEventArgs e)
         {
             Navigation.AllerTableaudebord(this);
-        }
-
-        /// <summary>
-        /// Bouton pour reinitialiser le contenu de la barre de recherche
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void BoutonRetour_Click(object sender, RoutedEventArgs e)
-        {
-            this.vmPageStatistique.TexteRechercheGroupe = string.Empty;
-        }
-
-        private void RechercheInvite_Click(object sender, RoutedEventArgs e)
-        {
-            this.vmPageStatistique.RechercherInviteStatistique(this.vmPageStatistique.TexteRechercheGroupe);
         }
 
         /// <summary>

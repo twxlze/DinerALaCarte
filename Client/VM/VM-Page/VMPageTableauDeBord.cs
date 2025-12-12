@@ -15,7 +15,8 @@ namespace VM_Footies.VM_Page
         #region Attributs
         private VMPageInvitation _invitation;
         private VMPageInvite _invite;
-        private List<VMInvite> listeInvite;
+        private ObservableCollection<VMInvite> listeInvite;
+        private string texteRecherche;
         #endregion
 
         #region Propriétés
@@ -23,7 +24,7 @@ namespace VM_Footies.VM_Page
         /// <summary>
         /// La liste de tous les invites
         /// </summary>
-        public List<VMInvite> ListeInvites
+        public ObservableCollection<VMInvite> ListeInvites
         {
             get { return listeInvite; }
             set 
@@ -47,7 +48,21 @@ namespace VM_Footies.VM_Page
         {
             _invitation = new VMPageInvitation();
             _invite = new VMPageInvite();
-            listeInvite = new List<VMInvite>();
+            listeInvite = new ObservableCollection<VMInvite>();
+            this.texteRecherche = string.Empty;
+        }
+
+        /// <summary>
+        /// Texte de recherche pour filtrer les invités
+        /// </summary>
+        public string TexteRechercheInvite
+        {
+            get { return texteRecherche; }
+            set
+            {
+                texteRecherche = value;
+                Notify("TexteRechercheInvite");
+            }
         }
         #endregion
 
@@ -60,7 +75,11 @@ namespace VM_Footies.VM_Page
         {
             await _invite.ChargerInvites();
             await _invitation.ChargerInvitations();
-            ListeInvites = _invite.VMInvites;
+
+            foreach (VMInvite vMInvite in _invite.VMInvites)
+            {
+                listeInvite.Add(vMInvite);
+            }
         }
 
         public VMStats ChargerInvitationsParticipe(VMInvite inviteParticipe)
@@ -90,6 +109,39 @@ namespace VM_Footies.VM_Page
             }
 
             return vMStats;
+        }
+
+        /// <summary>
+        /// Recherche un invité dans le tableau de bord en fonction du texte recherché
+        /// ici les invites correspondant au texte de recherche sont placés en haut de la liste
+        /// </summary>
+        /// <param name="textrechercher">le text de recherche</param>
+        public void RechercherInviteTableauDeBord(string texterechercher)
+        {
+            List<VMInvite> invitesFiltres = new List<VMInvite>();
+            List<VMInvite> invitesNonFiltres = new List<VMInvite>();
+
+            foreach (VMInvite inviteStat in listeInvite)
+            {
+                if (inviteStat.Invite.Identite.Contains(texterechercher, StringComparison.OrdinalIgnoreCase))
+                {
+                    invitesFiltres.Add(inviteStat);
+                }
+                else
+                {
+                    invitesNonFiltres.Add(inviteStat);
+                }
+            }
+
+            invitesFiltres = invitesFiltres.OrderBy(i => i.Invite.Identite).ToList();
+            invitesNonFiltres = invitesNonFiltres.OrderBy(i => i.Invite.Identite).ToList();
+            invitesFiltres.AddRange(invitesNonFiltres);
+
+            listeInvite.Clear();
+            foreach (VMInvite inviteStat in invitesFiltres)
+            {
+                listeInvite.Add(inviteStat);
+            }
         }
         #endregion
 
