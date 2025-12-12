@@ -136,7 +136,7 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <TextBlock Text="Notation des plats" FontWeight="Bold" FontSize="24" Foreground="#B44B3E" FontFamily="Poppins" Width="234"/>
+            <TextBlock Text="{x:Static res:Strings.Noteplat}" FontWeight="Bold" FontSize="24" Foreground="#B44B3E" FontFamily="Poppins" Width="234"/>
 
             <Button Content="✖" FontSize="16" FontWeight="Bold" BorderThickness="0" Foreground="#B44B3E" Background="Transparent" Margin="724,-5,0,5" Click="ButonFermerFenetre_Click"/>
 
@@ -153,7 +153,7 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
-                    <TextBlock Text="1. Sélectionnez un invité" FontWeight="Bold" FontSize="15" Foreground="#B44B3E" Margin="0,0,0,5"/>
+                    <TextBlock Text="{x:Static res:Strings.uninvit}" FontWeight="Bold" FontSize="15" Foreground="#B44B3E" Margin="0,0,0,5"/>
 
                     <Border Grid.Row="1" BorderBrush="#8C2F26" BorderThickness="3" CornerRadius="10" Background="White" Padding="2">
                         <ScrollViewer VerticalScrollBarVisibility="Auto">
@@ -177,7 +177,7 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
-                    <TextBlock Text="2. Sélectionnez un plat" FontWeight="Bold" FontSize="15" Foreground="#B44B3E" Margin="0,0,0,5"/>
+                    <TextBlock Text="{x:Static res:Strings.deuxplat}" FontWeight="Bold" FontSize="15" Foreground="#B44B3E" Margin="0,0,0,5"/>
 
                     <Border Grid.Row="1" BorderBrush="#8C2F26" BorderThickness="3" CornerRadius="10" Background="White" Padding="2">
                         <ScrollViewer VerticalScrollBarVisibility="Auto">
@@ -202,7 +202,7 @@
                     <ColumnDefinition Width="46*"/>
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Text="3. Note attribuée (1-10)" FontWeight="Bold" FontSize="15" Foreground="#B44B3E" Margin="-30,-14,30,42" Grid.ColumnSpan="2"/>
+                <TextBlock Text="{x:Static res:Strings.troisnote}" FontWeight="Bold" FontSize="15" Foreground="#B44B3E" Margin="-30,-14,30,42" Grid.ColumnSpan="2"/>
 
                 <Border BorderBrush="#8C2F26" BorderThickness="2" CornerRadius="10" Background="White" Width="100" Height="50" HorizontalAlignment="Left" Margin="0,8,0,-8">
                     <TextBox Text="{Binding NoteSaisie, UpdateSourceTrigger=PropertyChanged}"
@@ -219,7 +219,7 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <TextBlock Text="Commentaire (facultatif)" FontWeight="Bold" FontSize="15" Foreground="#B44B3E" Margin="0,0,0,5"/>
+                <TextBlock Text="{x:Static res:Strings.comfac}" FontWeight="Bold" FontSize="15" Foreground="#B44B3E" Margin="0,0,0,5"/>
 
                 <Border Grid.Row="1" BorderBrush="#8C2F26" BorderThickness="2" CornerRadius="10" Background="White" Height="100">
                     <ScrollViewer VerticalScrollBarVisibility="Auto">
@@ -232,7 +232,7 @@
                 </Border>
             </Grid>
 
-            <Button Grid.Row="4" Content="Enregistrer la note" 
+            <Button Grid.Row="4" Content="{x:Static res:Strings.enregistrernote}" 
                     HorizontalAlignment="Right" Margin="0,0,10,20" Width="200" Height="40"
                     Style="{StaticResource StyleBoutonMenu}" Click="BoutonEnregistrer_Click" />
         </Grid>

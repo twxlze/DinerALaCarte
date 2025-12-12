@@ -62,7 +62,7 @@
         <ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Auto" Margin="0,23,0,0">
             <StackPanel>
 
-                <TextBlock Text="Les informations du plat" 
+                <TextBlock Text="{x:Static res:Strings.infoplatdet}" 
                    FontSize="16" FontWeight="SemiBold" 
                    Foreground="#B44B3E" 
                    Margin="0,0,0,15" 
@@ -104,7 +104,7 @@
                 </Border>
 
 
-                <TextBlock Text="Allergènes du plat" FontSize="15" FontWeight="SemiBold" Foreground="#B44B3E" Margin="0,0,0,10" HorizontalAlignment="Center"/>
+                <TextBlock Text="{x:Static res:Strings.alegduplat}" FontSize="15" FontWeight="SemiBold" Foreground="#B44B3E" Margin="0,0,0,10" HorizontalAlignment="Center"/>
                 <Border Background="White" CornerRadius="12" Padding="15" Margin="40,0,40,20"
                         BorderBrush="#E0E0E0" BorderThickness="1">
                     <ScrollViewer VerticalScrollBarVisibility="Auto" MaxHeight="150">
