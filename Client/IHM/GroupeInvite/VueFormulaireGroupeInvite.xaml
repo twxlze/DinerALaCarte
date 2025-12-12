@@ -11,6 +11,94 @@
         WindowStyle="None"
         AllowsTransparency="True">
     <Window.Resources>
+        <Style x:Key="StyleBoutonRetour" TargetType="Button">
+            <Setter Property="Background" Value="#F9F9F9"/>
+            <Setter Property="Foreground" Value="#B44B3E"/>
+            <Setter Property="FontSize" Value="24"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Width" Value="60"/>
+            <Setter Property="Height" Value="50"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="5">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#E0E0E0"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="StyleContainerRecherche" TargetType="Border">
+            <Setter Property="BorderBrush" Value="#8C2F26"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="CornerRadius" Value="5"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Width" Value="126"/>
+            <Setter Property="Height" Value="18"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+        </Style>
+
+        <Style x:Key="StyleChampRecherche" TargetType="TextBox">
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="8,0,0,0"/>
+            <Setter Property="FontFamily" Value="Poppins"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Foreground" Value="#333333"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Style.Triggers>
+                <Trigger Property="Text" Value="">
+                    <Setter Property="Background">
+                        <Setter.Value>
+                            <VisualBrush Stretch="None" AlignmentX="Left">
+                                <VisualBrush.Visual>
+                                    <TextBlock Text="Rechercher..." Foreground="#BFBFBF" FontSize="12" Margin="8,0,0,0"/>
+                                </VisualBrush.Visual>
+                            </VisualBrush>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- Style loupe de recherche -->
+        <Style x:Key="StyleLoupeRecherche" TargetType="Button">
+            <Setter Property="Content" Value="🔍"/>
+            <Setter Property="Width" Value="30"/>
+            <Setter Property="Height" Value="24"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Foreground" Value="#B44B3E"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="3">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#E0E0E0"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
         <BitmapImage x:Key="LogoHostably" UriSource="/Ressources/LogoHostably.png"/>
         <Style x:Key="BoutonMenu" TargetType="Button">
             <Setter Property="Background" Value="#F9F9F9"/>
@@ -186,6 +274,33 @@
         <Label Grid.Column="1" Margin="92,6,300,6" Grid.Row="1" FontSize="16" Foreground="#B44B3E" Content="{x:Static res:Strings.Nom}"/>
         <TextBox Grid.Column="1" Margin="177,8,35,3" Grid.Row="1" Height="25" Text="{Binding Nom, UpdateSourceTrigger=PropertyChanged}"/>
 
+        <!-- souton refresh -->
+        <Button x:Name="BoutonRetourApresRecherche"
+          Style="{StaticResource StyleBoutonRetour}"
+          Content="⟳"
+          Click="RefreshInvite_Click"
+          Grid.Column="1"
+          Grid.Row="2" RenderTransformOrigin="0.217,0.517" Width="34" Height="33" Margin="166,0,0,0"/>
+
+        <!-- Barre de recherche pour les Invites -->
+        <Border Style="{StaticResource StyleContainerRecherche}" Grid.Column="1" Grid.Row="2" Margin="212,0,0,0" Width="162" Height="25" VerticalAlignment="Center">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="23*"/>
+                    <ColumnDefinition Width="105*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBox x:Name="zonerechercheinvite"
+          Grid.Column="0" 
+          Style="{StaticResource StyleChampRecherche}"
+          Text="{Binding TexteRechercheInvite, UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="3" Margin="6,0,24,0"/>
+
+                <Button x:Name="rechercheinvite" 
+         Grid.Column="2" 
+         Style="{StaticResource StyleLoupeRecherche}" Click="RechercheInvite_Click" />
+            </Grid>
+        </Border>
         <!-- Invités à séléctionner -->
         <Border BorderBrush="#8C2F26" 
         Grid.Column="1" Grid.RowSpan="5" 
@@ -198,7 +313,7 @@
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <CheckBox Content="{Binding Identite}"
-                              IsChecked="{Binding EstSelectionne}"
+                              IsChecked="{Binding InviteSelectionne}"
                               Margin="5"
                               FontSize="12"
                               Foreground="#333333"/>

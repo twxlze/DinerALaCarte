@@ -162,6 +162,7 @@ namespace VM_Footies
                     groupe.GestionnaireEvenement(vmInviteSelectionne);
                     groupe.InvitesListe.Add(vmInviteSelectionne);
                 }
+                groupe.InitialiserSauvegardePourRecherche();
             }
             catch (Exception ex)
             {

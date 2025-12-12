@@ -19,6 +19,8 @@ namespace VM_Footies.VM
         private GroupeInvites groupe; 
         private bool estSelectionne;
         private ObservableCollection<VMInvite> invitesListe;
+        private List<VMInvite> invitesSauvegardes;
+        private string texteRechercheInvite;
         #endregion
 
         #region Evénement
@@ -70,6 +72,19 @@ namespace VM_Footies.VM
                 }
             }
         }
+
+        /// <summary>
+        /// Texte de recherche pour les invités dans le groupe
+        /// </summary>
+        public string TexteRechercheInvite
+        {
+            get => texteRechercheInvite;
+            set
+            {
+                texteRechercheInvite = value;
+                Notify("TexteRechercheInvite");
+            }
+        }
         #endregion
 
         #region Propriétés pour les invités séléctionnables
@@ -94,6 +109,7 @@ namespace VM_Footies.VM
             this.groupe = groupeInvite;
             this.estSelectionne = estSelectionne;
             this.invitesListe = new ObservableCollection<VMInvite>();
+            this.invitesSauvegardes = new List<VMInvite>();
         }
 
         /// <summary>
@@ -104,6 +120,7 @@ namespace VM_Footies.VM
             this.groupe = new GroupeInvites(modele.Groupe);
             this.invitesListe = new ObservableCollection<VMInvite>();
             this.estSelectionne = modele.EstSelectionne;
+            this.invitesSauvegardes = new List<VMInvite>();
         }
 
         /// <summary>
@@ -145,15 +162,43 @@ namespace VM_Footies.VM
         public void SynchroniserInvitesSelectionnes()
         {
             List<Invite> inviteSelectionne = new List<Invite>();
-            foreach (VMInvite vmInvite in this.invitesListe)
+            List<VMInvite> listeSource;
+
+            if (invitesSauvegardes != null && invitesSauvegardes.Count > 0)
+                listeSource = invitesSauvegardes;
+            else
+                listeSource = invitesListe.ToList();
+
+            foreach (VMInvite vmInvite in listeSource)
             {
                 if (vmInvite.InviteSelectionne)
-                {
                     inviteSelectionne.Add(vmInvite.Invite);
-                }
             }
             this.groupe.Invites = inviteSelectionne;
             Notify("Invites");
+        }
+
+        /// <summary>
+        /// Sauvegarde la liste complète des invités pour permettre le filtrage
+        /// </summary>
+        public void InitialiserSauvegardePourRecherche()
+        {
+            this.invitesSauvegardes = new List<VMInvite>(this.InvitesListe);
+        }
+
+        /// <summary>
+        /// Filtre la liste des invités affichés selon le texte
+        /// </summary>
+        public void RechercherInviteDansGroupe(string texteRecherche)
+        {
+            if (string.IsNullOrWhiteSpace(texteRecherche))
+                this.InvitesListe = new ObservableCollection<VMInvite>(invitesSauvegardes);
+            else
+            {
+                List<VMInvite> resultats = invitesSauvegardes.Where(i => i.Identite.Contains(texteRecherche, StringComparison.OrdinalIgnoreCase)).OrderBy(i => i.Identite).ToList();
+
+                this.InvitesListe = new ObservableCollection<VMInvite>(resultats);
+            }
         }
 
         /// <summary>

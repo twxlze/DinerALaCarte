@@ -93,6 +93,16 @@ namespace IHM_Footies
             }
         }
 
+        private void RechercheInvite_Click(object sender, RoutedEventArgs e)
+        {
+            this.groupeInvite.RechercherInviteDansGroupe(this.groupeInvite.TexteRechercheInvite);
+        }
+
+        private void RefreshInvite_Click(object sender, RoutedEventArgs e)
+        {
+            this.groupeInvite.TexteRechercheInvite = string.Empty;
+            this.groupeInvite.RechercherInviteDansGroupe(string.Empty);
+        }
         #endregion
 
 
