@@ -67,6 +67,13 @@ namespace IHM_Footies.TableauDeBord
         private void RechercheInvite_Click(object sender, RoutedEventArgs e)
         {
             this.vmPageTableauDeBord.RechercherInviteTableauDeBord(this.vmPageTableauDeBord.TexteRechercheInvite);
+            this.listeInviteStat.Children.Clear();
+            foreach (VMInvite invite in this.vmPageTableauDeBord.ListeInvites)
+            {
+                VMStats vMStats = this.vmPageTableauDeBord.ChargerInvitationsParticipe(invite);
+                VueTableauDeBord vueTableauDeBord = new VueTableauDeBord(vMStats);
+                this.listeInviteStat.Children.Add(vueTableauDeBord);
+            }
         }
 
         /// <summary>

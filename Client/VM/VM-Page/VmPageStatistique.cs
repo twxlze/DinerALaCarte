@@ -106,7 +106,7 @@ namespace VM_Footies.VM_Page
             set
             {
                 texteRecherche = value;
-                Notify("TexteRechercheGroupe");
+                Notify("TexteRechercheInviteStats");
             }
         }
 

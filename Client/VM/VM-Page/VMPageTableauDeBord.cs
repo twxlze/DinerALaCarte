@@ -49,6 +49,7 @@ namespace VM_Footies.VM_Page
             _invitation = new VMPageInvitation();
             _invite = new VMPageInvite();
             listeInvite = new ObservableCollection<VMInvite>();
+            this.texteRecherche = string.Empty;
         }
 
         /// <summary>
