@@ -252,11 +252,11 @@
         <Image Source="{StaticResource ResourceKey=LogoHostably}" Margin="14,10,122,17"/>
 
         <Button x:Name="BoutonRetourApresRecherche"
-Style="{StaticResource StyleBoutonRetour}"
-Content="⟳"
-Click="BoutonRetour_Click"
-Grid.Column="1"
-Grid.Row="0" RenderTransformOrigin="0.217,0.517" Width="34" Height="33" Margin="26,58,0,0" Grid.RowSpan="2"/>
+            Style="{StaticResource StyleBoutonRetour}"
+            Content="⟳"
+            Click="BoutonRetour_Click"
+            Grid.Column="1"
+            Grid.Row="0" RenderTransformOrigin="0.217,0.517" Width="34" Height="33" Margin="30,55,0,0" Grid.RowSpan="2"/>
 
         <Border Style="{StaticResource StyleContainerRecherche}" Grid.Column="1" Margin="0,60,0,0" Width="440" Grid.RowSpan="2" HorizontalAlignment="Center" Height="27">
             <Grid>
@@ -281,7 +281,7 @@ Grid.Row="0" RenderTransformOrigin="0.217,0.517" Width="34" Height="33" Margin="
         <TextBlock Grid.Column="1" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{x:Static res:Strings.TableaudeBord}" VerticalAlignment="Top" FontWeight="Bold" FontSize="20" Foreground="#B44B3E" Margin="0,20,0,0"/>
         <Border BorderBrush="#8C2F26" 
                     Grid.Column="1" Grid.RowSpan="9" 
-                    Margin="10,100,10,1"
+                    Margin="10,100,10,30"
                     BorderThickness="3"
                     CornerRadius="10"
                     Padding="5">
