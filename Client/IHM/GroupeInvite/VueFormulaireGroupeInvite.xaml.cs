@@ -185,6 +185,16 @@ namespace IHM_Footies
         {
             Navigation.AllerSelectionInvite(this);
         }
+
+        /// <summary>
+        /// Bouton pour aller à la page du tableau de bord
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BoutonAllerTableauDeBord_Click(object sender, RoutedEventArgs e)
+        {
+            Navigation.AllerTableaudebord(this);
+        }
         #endregion
 
 

@@ -520,6 +520,15 @@ namespace IHM_Footies.Ressources {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à  repas au total.
+        /// </summary>
+        public static string NbFoisInvite {
+            get {
+                return ResourceManager.GetString("NbFoisInvite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Nom*.
         /// </summary>
         public static string Nom {
@@ -687,6 +696,15 @@ namespace IHM_Footies.Ressources {
         public static string SupprimerPlat {
             get {
                 return ResourceManager.GetString("SupprimerPlat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à 📈 Tableau de Bord.
+        /// </summary>
+        public static string TableaudeBord {
+            get {
+                return ResourceManager.GetString("TableaudeBord", resourceCulture);
             }
         }
         

@@ -333,4 +333,10 @@
   <data name="Double_Click_Plat" xml:space="preserve">
     <value>Double-cliquez sur un plat pour voir ses informations.</value>
   </data>
+  <data name="TableaudeBord" xml:space="preserve">
+    <value>📈 Tableau de Bord</value>
+  </data>
+  <data name="NbFoisInvite" xml:space="preserve">
+    <value> repas au total</value>
+  </data>
 </root>
