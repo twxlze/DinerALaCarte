@@ -10,8 +10,10 @@
         Background="#F9F9F9"
         WindowStyle="None"
         AllowsTransparency="True">
+
     <Window.Resources>
         <BitmapImage x:Key="LogoHostably" UriSource="/Ressources/LogoHostably.png"/>
+
         <Style x:Key="BoutonMenu" TargetType="Button">
             <Setter Property="Background" Value="#F9F9F9"/>
             <Setter Property="Foreground" Value="#B44B3E"/>
@@ -68,11 +70,79 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
+
+        <Style x:Key="StyleBoutonRetour" TargetType="Button">
+            <Setter Property="Background" Value="#F9F9F9"/>
+            <Setter Property="Foreground" Value="#B44B3E"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Width" Value="30"/>
+            <Setter Property="Height" Value="25"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="5">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#E0E0E0"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="StyleContainerRecherche" TargetType="Border">
+            <Setter Property="BorderBrush" Value="#8C2F26"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="5"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Height" Value="22"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+
+        <Style x:Key="StyleChampRecherche" TargetType="TextBox">
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="4,0,0,0"/>
+            <Setter Property="FontFamily" Value="Poppins"/>
+            <Setter Property="FontSize" Value="10"/>
+            <Setter Property="Foreground" Value="#333333"/>
+            <Setter Property="Background" Value="Transparent"/>
+        </Style>
+
+        <Style x:Key="StyleLoupeRecherche" TargetType="Button">
+            <Setter Property="Content" Value="🔍"/>
+            <Setter Property="Width" Value="20"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Foreground" Value="#B44B3E"/>
+            <Setter Property="FontSize" Value="10"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
     </Window.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="2*"/>
+            <RowDefinition/>
+            <RowDefinition/>
             <RowDefinition/>
             <RowDefinition/>
             <RowDefinition/>
@@ -87,7 +157,6 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <!-- Bouton fermer -->
         <Button x:Name="CloseButton"
                 Content="✖"
                 FontSize="16"
@@ -102,8 +171,7 @@
                 Click="ButonFermerFenetre_Click"
                 Grid.Column="1"/>
 
-        <!-- Menu à gauche -->
-        <Border BorderBrush="#8C2F26" BorderThickness="0,0,2,0" Grid.Column="0" Grid.RowSpan="9">
+        <Border BorderBrush="#8C2F26" BorderThickness="0,0,2,0" Grid.Column="0" Grid.RowSpan="11">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="2*"/>
@@ -120,146 +188,214 @@
                 </Grid.RowDefinitions>
 
                 <TextBlock Text="À table !" FontSize="20" FontWeight="Bold" Foreground="#B44B3E" VerticalAlignment="Top" Height="27" Margin="82,34,33,0" FontFamily="Montserrat"/>
+
                 <Button x:Name="BoutonAccueil" Content="{x:Static res:Strings.Accueil}" Grid.Row="1" Grid.Column="0" Style="{StaticResource BoutonMenu}"  Click="BoutonAllerAccueil_Click"/>
                 <Button x:Name="BoutonInvites" Content="{x:Static res:Strings.Invites}" Grid.Row="2" Grid.Column="0" Style="{StaticResource BoutonMenu}" Click="BoutonAllerInvite_Click" />
                 <Button x:Name="BoutonGroupes" Content="{x:Static res:Strings.GroupeInvite}" Grid.Row="3" Grid.Column="0" Style="{StaticResource BoutonMenu}" Click="BoutonAllerGroupeInvite_Click"/>
                 <Button x:Name="BoutonInvitations" Content="{x:Static res:Strings.Invitations}" Grid.Row="4" Grid.Column="0" Style="{StaticResource BoutonMenu}" Click="BoutonAllerInvitation_Click"/>
+
                 <Button x:Name="BoutonMenus" Content="{x:Static res:Strings.Menus}" Grid.Row="5" Grid.Column="0" Style="{StaticResource BoutonMenu}" Cursor="Hand" Click="BoutonAllerMenu_Click" Background="#BFBFBF" FontWeight="Bold"/>
+
                 <Button x:Name="BoutonPlats" Content="{x:Static res:Strings.Plats}" Grid.Row="6" Grid.Column="0" Style="{StaticResource BoutonMenu}" Click="BoutonAllerPlat_Click"/>
                 <Button x:Name="BoutonStatistique" Content="{x:Static res:Strings.Stats}" Grid.Row="7" Grid.Column="0" Style="{StaticResource BoutonMenu}" Click="BoutonAllerStatistique_Click"/>
-                <Button x:Name="BoutonTableauDeBord" Content="{x:Static res:Strings.TableaudeBord}" Grid.Row="8" Grid.Column="0" Style="{StaticResource BoutonMenu}" Click="BoutonAllerTableauDeBord_Click"/> 
+                <Button x:Name="BoutonTableauDeBord" Content="{x:Static res:Strings.TableaudeBord}" Grid.Row="8" Grid.Column="0" Style="{StaticResource BoutonMenu}" Click="BoutonAllerTableauDeBord_Click"/>
+
                 <Button x:Name="BoutonUtilisateur" Content="👤" Grid.Row="10" Grid.Column="0" Style="{StaticResource BoutonMenu}" Margin="0,0,100,0" HorizontalContentAlignment="Center" FontSize="25"/>
                 <Button x:Name="BoutonReglage" Content="⚙️" Grid.Row="10" Grid.Column="0" Style="{StaticResource BoutonMenu}" HorizontalContentAlignment="Center" Margin="100,0,0,0" FontSize="25" Click="BoutonAllerReglages_Click"/>
             </Grid>
         </Border>
         <Image Source="{StaticResource ResourceKey=LogoHostably}" Margin="14,10,122,17"/>
 
-        <!-- Partie droite -->
+        <Border BorderBrush="#8C2F26" 
+            Grid.Column="1" Grid.RowSpan="10" 
+            Margin="10,47,10,26"
+            BorderThickness="3"
+            CornerRadius="10"
+            Padding="5">
+            <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="2">
+                <StackPanel>
 
-        <!-- Titre -->
+                </StackPanel>
+            </ScrollViewer>
+        </Border>
         <TextBlock Grid.Column="1" HorizontalAlignment="Center" TextWrapping="Wrap" 
                    Text="{x:Static res:Strings.GestionMenu}" VerticalAlignment="Top" 
-                   FontWeight="Bold" FontSize="20" Foreground="#B44B3E" Margin="0,20,0,0"/>
+                   FontWeight="Bold" FontSize="20" Foreground="#B44B3E" Margin="0,10,0,0"/>
 
-        <!-- Sous-titre -->
-        <TextBlock Grid.Column="1" HorizontalAlignment="Center" TextWrapping="Wrap" 
-                   Text="{x:Static res:Strings.Information}" VerticalAlignment="Top" 
-                   FontWeight="SemiBold" FontSize="16" Foreground="#B44B3E" 
-                   Margin="0,65,0,0" Grid.RowSpan="2"/>
+        <Grid Grid.Column="1" Grid.Row="1" Margin="10,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" MinWidth="94"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" FontSize="16" Foreground="#B44B3E" VerticalAlignment="Center" Content="{x:Static res:Strings.NomDuMenu}" Grid.ColumnSpan="2" Height="31" Margin="7,0,460,0"/>
+            <TextBox Grid.Column="1" Height="25" Margin="26,0,39,0" VerticalAlignment="Center"
+                     Text="{Binding Nom, UpdateSourceTrigger=PropertyChanged}"/>
+        </Grid>
 
-        <!-- Nom du menu -->
-        <Label Grid.Column="1" Margin="232,4,160,4" Grid.Row="1" FontSize="16" 
-               Foreground="#B44B3E" Content="{x:Static res:Strings.NomDuMenu}"/>
-        <TextBox Grid.Column="1" Margin="106,34,106,20" Grid.Row="1" Height="25" 
-                 Text="{Binding Nom, UpdateSourceTrigger=PropertyChanged}" Grid.RowSpan="2"/>
+        <Label Grid.Column="1" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Bottom" 
+               FontSize="16" Foreground="#B44B3E" Content="{x:Static res:Strings.CategoriesDansMenu}" Margin="0,0,0,5"/>
 
-        <!-- Titre des catégories -->
-        <Label Grid.Column="1" Margin="200,18,193,24" Grid.Row="2" FontSize="16" 
-               Foreground="#B44B3E" Grid.RowSpan="2" Content="{x:Static res:Strings.CategoriesDansMenu}"/>
+        <Grid x:Name="GridCategories" Grid.Column="1" Grid.Row="3" Grid.RowSpan="4" Margin="10,0,10,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
 
-        <!-- Labels des catégories -->
-        <Label Grid.Column="1" Margin="51,10,471,31" Grid.Row="3" FontSize="16" 
-               Foreground="#B44B3E" Grid.RowSpan="2" Content="{x:Static res:Strings.Aperitif}"/>
-        <Label Grid.Column="1" Margin="194,7,348,37" Grid.Row="3" FontSize="16" 
-               Foreground="#B44B3E" Grid.RowSpan="2" Content="{x:Static res:Strings.Entree}"/>
-        <Label Grid.Column="1" Margin="349,7,193,37" Grid.Row="3" FontSize="16" 
-               Foreground="#B44B3E" Grid.RowSpan="2" Content="{x:Static res:Strings.Plat}"/>
-        <Label Grid.Column="1" Margin="477,7,59,37" Grid.Row="3" FontSize="16" 
-               Foreground="#B44B3E" Grid.RowSpan="2" Content="{x:Static res:Strings.Dessert}"/>
+            <Grid Grid.Column="0" Margin="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Label Content="{x:Static res:Strings.Aperitif}" Foreground="#B44B3E" FontSize="14" FontWeight="Bold" HorizontalAlignment="Center"/>
+                <Grid Grid.Row="1" Margin="0,0,0,5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" MinWidth="34"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Button Style="{StaticResource StyleBoutonRetour}" Content="⟳" Click="RefreshAperitif_Click" HorizontalAlignment="Center" Width="14" Height="22" Cursor="Hand"/>
+                    <Border Grid.Column="1" Style="{StaticResource StyleContainerRecherche}" Width="Auto" Height="22" Margin="0,0,10,0">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox Grid.Column="0" Style="{StaticResource StyleChampRecherche}" Text="{Binding TexteRechercheAperitif, UpdateSourceTrigger=PropertyChanged}"/>
+                            <Button Grid.Column="1" Style="{StaticResource StyleLoupeRecherche}" Click="RechercheAperitif_Click"/>
+                        </Grid>
+                    </Border>
+                </Grid>
+                <Border Grid.Row="2" BorderBrush="#8C2F26" BorderThickness="2" CornerRadius="8" Padding="2" Margin="10,0,0,-104">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <ItemsControl ItemsSource="{Binding PlatsAperitif}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <CheckBox Content="{Binding Nom}" IsChecked="{Binding EstSelectionne}" Margin="2" FontSize="11" Foreground="#333333"/>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                </Border>
+            </Grid>
 
-        <!-- Container Apéritif -->
-        <Border BorderBrush="#8C2F26" 
-                Grid.Column="1" Grid.RowSpan="5" 
-                Margin="21,39,459,61"
-                BorderThickness="3"
-                CornerRadius="10"
-                Padding="5" Grid.Row="3">
-            <ScrollViewer VerticalScrollBarVisibility="Auto">
-                <ItemsControl ItemsSource="{Binding PlatsAperitif}">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <CheckBox Content="{Binding Nom}"
-                                      IsChecked="{Binding EstSelectionne}"
-                                      Margin="5"
-                                      FontSize="12"
-                                      Foreground="#333333"/>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-            </ScrollViewer>
-        </Border>
+            <Grid Grid.Column="1" Margin="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Label Content="{x:Static res:Strings.Entree}" Foreground="#B44B3E" FontSize="14" FontWeight="Bold" HorizontalAlignment="Center"/>
+                <Grid Grid.Row="1" Margin="0,0,10,5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Style="{StaticResource StyleBoutonRetour}" Content="⟳" Click="RefreshEntree_Click" Margin="0,0,2,0"/>
+                    <Border Grid.Column="1" Style="{StaticResource StyleContainerRecherche}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox Grid.Column="0" Style="{StaticResource StyleChampRecherche}" Text="{Binding TexteRechercheEntree, UpdateSourceTrigger=PropertyChanged}"/>
+                            <Button Grid.Column="1" Style="{StaticResource StyleLoupeRecherche}" Click="RechercheEntree_Click"/>
+                        </Grid>
+                    </Border>
+                </Grid>
+                <Border Grid.Row="2" BorderBrush="#8C2F26" BorderThickness="2" CornerRadius="8" Padding="2" Margin="10,0,0,-104">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <ItemsControl ItemsSource="{Binding PlatsEntree}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <CheckBox Content="{Binding Nom}" IsChecked="{Binding EstSelectionne}" Margin="2" FontSize="11" Foreground="#333333"/>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                </Border>
+            </Grid>
 
-        <!-- Container Entrée -->
-        <Border BorderBrush="#8C2F26" 
-                Grid.Column="1" Grid.RowSpan="5" 
-                Margin="162,39,316,61"
-                BorderThickness="3"
-                CornerRadius="10"
-                Padding="5" Grid.Row="3">
-            <ScrollViewer VerticalScrollBarVisibility="Auto">
-                <ItemsControl ItemsSource="{Binding PlatsEntree}">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <CheckBox Content="{Binding Nom}"
-                                      IsChecked="{Binding EstSelectionne}"
-                                      Margin="5"
-                                      FontSize="12"
-                                      Foreground="#333333"/>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-            </ScrollViewer>
-        </Border>
+            <Grid Grid.Column="2" Margin="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Label Content="{x:Static res:Strings.Plat}" Foreground="#B44B3E" FontSize="14" FontWeight="Bold" HorizontalAlignment="Center"/>
+                <Grid Grid.Row="1" Margin="0,0,10,5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Style="{StaticResource StyleBoutonRetour}" Content="⟳" Click="RefreshPlat_Click" Margin="0,0,2,0"/>
+                    <Border Grid.Column="1" Style="{StaticResource StyleContainerRecherche}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox Grid.Column="0" Style="{StaticResource StyleChampRecherche}" Text="{Binding TexteRecherchePlat, UpdateSourceTrigger=PropertyChanged}"/>
+                            <Button Grid.Column="1" Style="{StaticResource StyleLoupeRecherche}" Click="RecherchePlat_Click"/>
+                        </Grid>
+                    </Border>
+                </Grid>
+                <Border Grid.Row="2" BorderBrush="#8C2F26" BorderThickness="2" CornerRadius="8" Padding="2" Margin="10,0,0,-104">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <ItemsControl ItemsSource="{Binding PlatsPlat}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <CheckBox Content="{Binding Nom}" IsChecked="{Binding EstSelectionne}" Margin="2" FontSize="11" Foreground="#333333"/>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                </Border>
+            </Grid>
 
-        <!-- Container Plat -->
-        <Border BorderBrush="#8C2F26" 
-                Grid.Column="1" Grid.RowSpan="5" 
-                Margin="309,39,170,61"
-                BorderThickness="3"
-                CornerRadius="10"
-                Padding="5" Grid.Row="3">
-            <ScrollViewer VerticalScrollBarVisibility="Auto">
-                <ItemsControl ItemsSource="{Binding PlatsPlat}">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <CheckBox Content="{Binding Nom}"
-                                      IsChecked="{Binding EstSelectionne}"
-                                      Margin="5"
-                                      FontSize="12"
-                                      Foreground="#333333"/>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-            </ScrollViewer>
-        </Border>
+            <Grid Grid.Column="3" Margin="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Label Content="{x:Static res:Strings.Dessert}" Foreground="#B44B3E" FontSize="14" FontWeight="Bold" HorizontalAlignment="Center"/>
+                <Grid Grid.Row="1" Margin="-2,0,12,5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Style="{StaticResource StyleBoutonRetour}" Content="⟳" Click="RefreshDessert_Click" Margin="0,0,2,0"/>
+                    <Border Grid.Column="1" Style="{StaticResource StyleContainerRecherche}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox Grid.Column="0" Style="{StaticResource StyleChampRecherche}" Text="{Binding TexteRechercheDessert, UpdateSourceTrigger=PropertyChanged}"/>
+                            <Button Grid.Column="1" Style="{StaticResource StyleLoupeRecherche}" Click="RechercheDessert_Click"/>
+                        </Grid>
+                    </Border>
+                </Grid>
+                <Border Grid.Row="2" BorderBrush="#8C2F26" BorderThickness="2" CornerRadius="8" Padding="2" Margin="10,0,10,-104">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <ItemsControl ItemsSource="{Binding PlatsDessert}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <CheckBox Content="{Binding Nom}" IsChecked="{Binding EstSelectionne}" Margin="2" FontSize="11" Foreground="#333333"/>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                </Border>
+            </Grid>
+        </Grid>
 
-        <!-- Container Dessert -->
-        <Border BorderBrush="#8C2F26" 
-                Grid.Column="1" Grid.RowSpan="5" 
-                Margin="448,39,30,61"
-                BorderThickness="3"
-                CornerRadius="10"
-                Padding="5" Grid.Row="3">
-            <ScrollViewer VerticalScrollBarVisibility="Auto">
-                <ItemsControl ItemsSource="{Binding PlatsDessert}">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <CheckBox Content="{Binding Nom}"
-                                      IsChecked="{Binding EstSelectionne}"
-                                      Margin="5"
-                                      FontSize="12"
-                                      Foreground="#333333"/>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-            </ScrollViewer>
-        </Border>
-
-        <!-- Bouton Enregistrer -->
-        <Button Grid.RowSpan="2" Grid.Column="1" Content="{x:Static res:Strings.Enregistrer}" 
-                HorizontalAlignment="Center" Margin="0,58,0,0" Grid.Row="7" 
+        <Button Grid.Row="9" Grid.Column="1" Content="{x:Static res:Strings.Enregistrer}" 
+                HorizontalAlignment="Center" Margin="0,54,0,0" 
                 VerticalAlignment="Top" Height="40" Width="240" 
                 Style="{StaticResource StyleBoutonEnregistrer}" 
-                Click="Enregistrer_Click"/>
+                Click="Enregistrer_Click" Grid.RowSpan="2"/>
     </Grid>
 </Window>

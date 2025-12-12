@@ -76,6 +76,50 @@ namespace IHM_Footies
                     MessageBoxImage.Error);
             }
         }
+
+        private void RechercheAperitif_Click(object sender, RoutedEventArgs e)
+        {
+            this.menu.RechercherAperitif(this.menu.TexteRechercheAperitif);
+        }
+
+        private void RefreshAperitif_Click(object sender, RoutedEventArgs e)
+        {
+            this.menu.TexteRechercheAperitif = string.Empty;
+            this.menu.RechercherAperitif(string.Empty);
+        }
+
+        private void RechercheEntree_Click(object sender, RoutedEventArgs e)
+        {
+            this.menu.RechercherEntree(this.menu.TexteRechercheEntree);
+        }
+
+        private void RefreshEntree_Click(object sender, RoutedEventArgs e)
+        {
+            this.menu.TexteRechercheEntree = string.Empty;
+            this.menu.RechercherEntree(string.Empty);
+        }
+
+        private void RecherchePlat_Click(object sender, RoutedEventArgs e)
+        {
+            this.menu.RechercherPlatPrincipal(this.menu.TexteRecherchePlat);
+        }
+
+        private void RefreshPlat_Click(object sender, RoutedEventArgs e)
+        {
+            this.menu.TexteRecherchePlat = string.Empty;
+            this.menu.RechercherPlatPrincipal(string.Empty);
+        }
+
+        private void RechercheDessert_Click(object sender, RoutedEventArgs e)
+        {
+            this.menu.RechercherDessert(this.menu.TexteRechercheDessert);
+        }
+
+        private void RefreshDessert_Click(object sender, RoutedEventArgs e)
+        {
+            this.menu.TexteRechercheDessert = string.Empty;
+            this.menu.RechercherDessert(string.Empty);
+        }
         #endregion
 
         #region Boutons de navigation
