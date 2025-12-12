@@ -1,0 +1,170 @@
+﻿<Window x:Class="IHM_Footies.Statistique.VuePageStatistiquePlat"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:IHM_Footies.Statistique"
+        xmlns:res="clr-namespace:IHM_Footies.Ressources"
+        xmlns:oxy="http://oxyplot.org/wpf"
+        mc:Ignorable="d"
+        Title="VuePageStatistique" Height="450" Width="800"
+        Background="#F9F9F9"
+        WindowStyle="None"
+        AllowsTransparency="True">
+
+    <Window.Resources>
+        <Style x:Key="StyleBoutonRetour" TargetType="Button">
+            <Setter Property="Background" Value="#F9F9F9"/>
+            <Setter Property="Foreground" Value="#B44B3E"/>
+            <Setter Property="FontSize" Value="24"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Width" Value="60"/>
+            <Setter Property="Height" Value="50"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="5">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#E0E0E0"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <BitmapImage x:Key="LogoHostably" UriSource="/Ressources/LogoHostably.png"/>
+        <Style x:Key="BoutonMenu" TargetType="Button">
+            <Setter Property="Background" Value="#F9F9F9"/>
+            <Setter Property="Foreground" Value="#B44B3E"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="20,0"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="FontFamily" Value="Poppins"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#E0E0E0"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="StyleBoutonInvite" TargetType="Button">
+            <Setter Property="Background" Value="#8C2F26"/>
+            <Setter Property="Foreground" Value="#F9F9F9"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="20,0"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="FontFamily" Value="Poppins"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="10" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#B44B3E"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Button x:Name="CloseButton" Content="✖" FontSize="16" FontWeight="Bold" Foreground="#B44B3E" Background="Transparent" BorderThickness="0" Cursor="Hand" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,5,8,0" Grid.Column="1" Click="ButonFermerFenetre_Click"/>
+
+        <Border BorderBrush="#8C2F26" BorderThickness="0,0,2,0" Grid.Column="0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Image Source="{StaticResource ResourceKey=LogoHostably}" Margin="14,10,122,17"/>
+                <TextBlock Text="À table !" FontSize="20" FontWeight="Bold" Foreground="#B44B3E" VerticalAlignment="Top" Height="27" Margin="82,34,33,0" FontFamily="Montserrat"/>
+                <Button x:Name="BoutonAccueil" Content="{x:Static res:Strings.Accueil}" Grid.Row="1" Style="{StaticResource BoutonMenu}" Click="BoutonAllerAccueil_Click"/>
+                <Button x:Name="BoutonInvites" Content="{x:Static res:Strings.Invites}" Grid.Row="2" Style="{StaticResource BoutonMenu}" Click="BoutonAllerInvite_Click"/>
+                <Button x:Name="BoutonGroupes" Content="{x:Static res:Strings.GroupeInvite}" Grid.Row="3" Style="{StaticResource BoutonMenu}" Click="BoutonAllerGroupeInvite_Click"/>
+                <Button x:Name="BoutonInvitations" Content="{x:Static res:Strings.Invitations}" Grid.Row="4" Style="{StaticResource BoutonMenu}" Click="BoutonAllerInvitation_Click"/>
+                <Button x:Name="BoutonMenus" Content="{x:Static res:Strings.Menus}" Grid.Row="5" Style="{StaticResource BoutonMenu}" Click="BoutonAllerMenu_Click"/>
+                <Button x:Name="BoutonPlats" Content="{x:Static res:Strings.Plats}" Grid.Row="6" Style="{StaticResource BoutonMenu}" Click="BoutonAllerPlat_Click"/>
+                <Button x:Name="BoutonStatistique" Content="{x:Static res:Strings.Stats}" Grid.Row="7" Style="{StaticResource BoutonMenu}" Background="#BFBFBF" FontWeight="Bold" Click="BoutonAllerStatistique_Click"/>
+                <Button x:Name="BoutonUtilisateur" Content="👤" Grid.Row="9" Style="{StaticResource BoutonMenu}" Margin="0,0,100,0" HorizontalContentAlignment="Center" FontSize="25" Click="BoutonAllerInformationUtilisateur_Click"/>
+                <Button x:Name="BoutonReglage" Content="⚙️" Grid.Row="9" Style="{StaticResource BoutonMenu}" HorizontalContentAlignment="Center" Margin="100,0,0,0" FontSize="25" Click="BoutonAllerReglages_Click"/>
+            </Grid>
+        </Border>
+
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0" Text="{x:Static res:Strings.StatsPagePlat}" HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="Bold" FontSize="20" Foreground="#B44B3E" Margin="0,20,0,10"/>
+
+            <Button Grid.Row="0" x:Name="BoutonRetourAprdesStats" Style="{StaticResource StyleBoutonRetour}" Content="←" Margin="10,10,0,0" Click="BoutonRetour_Click" Width="60" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
+            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Margin="10,0,10,10">
+                <StackPanel>
+
+                    <Border Background="White" CornerRadius="8" Margin="5,5,5,15" Padding="10">
+                        <StackPanel>
+                            <TextBlock Text="{Binding TitreStatistique}" FontSize="16" FontWeight="SemiBold" Foreground="#333" Margin="0,0,0,5" HorizontalAlignment="Center"/>
+                            <oxy:PlotView Model="{Binding StatistiqueModelPlat}" Height="300" Background="Transparent"/>
+                        </StackPanel>
+                    </Border>
+
+                    <Border Background="White" CornerRadius="8" Margin="5,0,5,15" Padding="10">
+                        <StackPanel>
+                            <TextBlock Text="Top des Plats Aimés" FontSize="16" FontWeight="SemiBold" Foreground="#2E8B57" Margin="0,0,0,5" HorizontalAlignment="Center"/>
+                            <oxy:PlotView Model="{Binding StatistiqueModelAimes}" Height="300" Background="Transparent"/>
+                        </StackPanel>
+                    </Border>
+
+                    <Border Background="White" CornerRadius="8" Margin="5,0,5,15" Padding="10">
+                        <StackPanel>
+                            <TextBlock Text="Top des Plats Détestés" FontSize="16" FontWeight="SemiBold" Foreground="#B22222" Margin="0,0,0,5" HorizontalAlignment="Center"/>
+                            <oxy:PlotView Model="{Binding StatistiqueModelDetestes}" Height="300" Background="Transparent"/>
+                        </StackPanel>
+                    </Border>
+
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
+    </Grid>
+</Window>

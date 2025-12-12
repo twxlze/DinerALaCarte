@@ -44,27 +44,30 @@ namespace IHM_Footies.Statistique
         /// </summary>
         /// <param name="sender"> L'expéditeur </param>
         /// <param name="e"> Les arguments de l'événement </param>
+        // Dans VuePageSelectionStatistique.xaml.cs
 
-        private async void Afficher_Click(object sender, RoutedEventArgs e)
+        private void Afficher_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                bool AuMoinUnSelection = this.vmPageStatistique.InvitesSelectionnes != null;
+                bool aInvitesSelectionnes = this.vmPageStatistique.InvitesSelectionnes != null && this.vmPageStatistique.InvitesSelectionnes.Any();
+                bool aDesPlatsSelectionnes = this.vmPageStatistique.EstSelectionne != null && this.vmPageStatistique.EstSelectionne.Any();
 
-                if (!AuMoinUnSelection)
-                {
-                    MessageBox.Show(
-                        "Sélectionnez au moins un invité pour voir les stats",
-                        "Erreur de validation",
-                        MessageBoxButton.OK,
-                        MessageBoxImage.Error
-                    );
-                }
-                else
+                if (aDesPlatsSelectionnes && aInvitesSelectionnes)
+                    MessageBox.Show("Veuillez sélectionner soit des invités, soit des plats, pas les deux en même temps.", "Erreur de validation", MessageBoxButton.OK, MessageBoxImage.Error);
+               
+                else if (aInvitesSelectionnes)
                 {
                     this.vmPageStatistique.CreerStatistique();
                     Navigation.AllerStatistique(this, this.vmPageStatistique);
                 }
+                else if (aDesPlatsSelectionnes)
+                {
+                    this.vmPageStatistique.CreerStatistiquePlat();
+                    Navigation.AllerStatistiquePlat(this, this.vmPageStatistique);
+                }
+                else
+                    MessageBox.Show("Sélectionnez au moins un invité ou un plat pour voir les stats", "Erreur de validation", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             catch (Exception ex)
             {
@@ -85,6 +88,12 @@ namespace IHM_Footies.Statistique
             this.vmPageStatistique.RechercherInviteStatistique(string.Empty);
         }
 
+        private void BoutonRefreshPlat_Click(object sender, RoutedEventArgs e)
+        {
+            this.vmPageStatistique.TexteRecherchePlatStats = string.Empty;
+            this.vmPageStatistique.RechercherPlatStatistique(string.Empty);
+        }
+
         /// <summary>
         /// Bouton pour rechercher un invité dans la barre de recherche des statistiques
         /// </summary>
@@ -93,6 +102,11 @@ namespace IHM_Footies.Statistique
         private void RechercheInvite_Click(object sender, RoutedEventArgs e)
         {
             this.vmPageStatistique.RechercherInviteStatistique(this.vmPageStatistique.TexteRechercheInviteStats);
+        }
+
+        private void RecherchePlat_Click(object sender, RoutedEventArgs e)
+        {
+            this.vmPageStatistique.RechercherPlatStatistique(this.vmPageStatistique.TexteRecherchePlatStats);
         }
         #endregion
 
