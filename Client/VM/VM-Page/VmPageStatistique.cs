@@ -82,13 +82,13 @@ namespace VM_Footies.VM_Page
         /// <summary>
         /// Texte de recherche pour filtrer les invités
         /// </summary>
-        public string TexteRechercheGroupe
+        public string TexteRechercheInviteStats
         {
             get { return texteRecherche; }
             set
             {
                 texteRecherche = value;
-                Notify("TexteRechercheGroupe");
+                Notify("TexteRechercheInviteStats");
             }
         }
 
@@ -180,9 +180,7 @@ namespace VM_Footies.VM_Page
 
             foreach (VMInvitation invitation in this._invitation.VMInvitations)
             {
-
-                List<Invite> nomInvite = invitation.Invites;
-                foreach (Invite invite in nomInvite)
+                foreach (Invite invite in invitation.Invites)
                 {
                     string nom = invite.Identite;
                     if (statistiques.ContainsKey(nom))
@@ -190,8 +188,8 @@ namespace VM_Footies.VM_Page
                         statistiques[nom]++;
                     }
                 }
-                List<GroupeInvites> groupes = invitation.GroupeInvites;
-                foreach (GroupeInvites groupe in groupes)
+
+                foreach (GroupeInvites groupe in invitation.GroupeInvites)
                 {
                     foreach (Invite invite in groupe.Invites)
                     {

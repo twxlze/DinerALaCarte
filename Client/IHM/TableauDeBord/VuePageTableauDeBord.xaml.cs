@@ -12,87 +12,79 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using VM_Footies.VM;
+using VM_Footies.VM_Page;
 
-namespace IHM_Footies
+namespace IHM_Footies.TableauDeBord
 {
     /// <summary>
-    /// Logique d'interaction pour VueFormulaireGroupeInvite.xaml
+    /// Logique d'interaction pour VuePageTableauDeBord.xaml
     /// </summary>
-    public partial class VueFormulaireGroupeInvite : Window
+    public partial class VuePageTableauDeBord : Window
     {
-
-        #region Attributs
-        private VMGroupeInvite groupeInvite;
+        #region Atributs    
+        private VMPageTableauDeBord vmPageTableauDeBord;
         #endregion
 
-        #region Propriétés
+        #region Constructeur
         /// <summary>
-        /// La viewModel du groupe d'invités
+        /// le constructeur de la page tableau de bord
         /// </summary>
-        public VMGroupeInvite GroupeInvite => this.groupeInvite;
-        #endregion
-
-
-        #region Constructeurs
-        /// <summary>
-        /// Constructeur avec ViewModel
-        /// </summary>
-        /// <param name="groupeInvite">la viewModel</param>
-        public VueFormulaireGroupeInvite(VMGroupeInvite groupeInvite)
+        public VuePageTableauDeBord()
         {
-            this.groupeInvite = groupeInvite;
-            this.DataContext = this.groupeInvite;
             InitializeComponent();
+            this.vmPageTableauDeBord = new VMPageTableauDeBord();
+            this.DataContext = this.vmPageTableauDeBord;
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            this.Initialiser();
         }
-
-        /// <summary>
-        /// Constructeur par défaut
-        /// </summary>
-        public VueFormulaireGroupeInvite() : this(new VMGroupeInvite())
-        {
-        }
-        
         #endregion
 
-        #region Boutons enregistrer modifications 
+        #region Methode public
         /// <summary>
-        /// Gestion du clic sur le bouton Enregistrer
+        /// Initialisation de la page tableau de bord
         /// </summary>
-        /// <param name="sender"> L'expéditeur </param>
-        /// <param name="e"> Les arguments de l'événement </param>
-
-        private async void Enregistrer_Click(object sender, RoutedEventArgs e)
+        public async void Initialiser()
         {
-            try
+            await this.vmPageTableauDeBord.ChargerDonneesInvite();
+            this.listeInviteStat.Children.Clear();
+            foreach (VMInvite invite in this.vmPageTableauDeBord.ListeInvites)
             {
-                List<string> erreurs = new List<string>();
-                // nom
-                if (string.IsNullOrWhiteSpace(this.groupeInvite.Nom))
-                {
-                    erreurs.Add("Entrez le nom du groupe d'invités");
-                }
-                if (this.groupeInvite.Invites == null || this.groupeInvite.Invites.Count == 0)
-                {
-                    erreurs.Add("Sélectionnez au moins un invité pour le groupe");
-                }
-                if (erreurs.Count > 0)
-                {
-                    string message = string.Join("\n", erreurs);
-                    MessageBox.Show(message, "Erreur de validation", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-                else
-                {
-                    this.DialogResult = true;
-
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+                VMStats vMStats = this.vmPageTableauDeBord.ChargerInvitationsParticipe(invite);
+                VueTableauDeBord vueTableauDeBord = new VueTableauDeBord(vMStats);
+                this.listeInviteStat.Children.Add(vueTableauDeBord);
             }
         }
 
+
+        #endregion
+
+        #region bouton d'action
+        /// <summary>
+        /// Bouton pour rechercher un invité dans la barre de recherche du tableau de bord
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void RechercheInvite_Click(object sender, RoutedEventArgs e)
+        {
+            this.vmPageTableauDeBord.RechercherInviteTableauDeBord(this.vmPageTableauDeBord.TexteRechercheInvite);
+            this.listeInviteStat.Children.Clear();
+            foreach (VMInvite invite in this.vmPageTableauDeBord.ListeInvites)
+            {
+                VMStats vMStats = this.vmPageTableauDeBord.ChargerInvitationsParticipe(invite);
+                VueTableauDeBord vueTableauDeBord = new VueTableauDeBord(vMStats);
+                this.listeInviteStat.Children.Add(vueTableauDeBord);
+            }
+        }
+
+        /// <summary>
+        /// Bouton pour reinitialiser le contenu de la barre de recherche
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BoutonRetour_Click(object sender, RoutedEventArgs e)
+        {
+            this.vmPageTableauDeBord.TexteRechercheInvite = string.Empty;
+        }
         #endregion
 
 
@@ -156,6 +148,7 @@ namespace IHM_Footies
             Navigation.AllerGroupesInvites(this);
         }
 
+
         /// <summary>
         /// Bouton pour aller à la page des invitations
         /// </summary>
@@ -166,7 +159,6 @@ namespace IHM_Footies
             Navigation.AllerInvitations(this);
         }
 
-        /// <summary>
         /// Bouton pour fermer la fenêtre
         /// </summary>
         /// <param name="sender"></param>
@@ -187,7 +179,7 @@ namespace IHM_Footies
         }
 
         /// <summary>
-        /// Bouton pour aller à la page du tableau de bord
+        /// Bouton pour aller à la page tableau de bord
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -195,18 +187,7 @@ namespace IHM_Footies
         {
             Navigation.AllerTableaudebord(this);
         }
-
-        /// <summary>
-        /// Bouton pour aller à la page des informations utilisateur
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void BoutonAllerInformationUtilisateur_Click(object sender, RoutedEventArgs e)
-        {
-            Navigation.AllerInformationUtilisateur(this);
-        }
         #endregion
-
 
     }
 }

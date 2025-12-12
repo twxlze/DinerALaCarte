@@ -115,7 +115,10 @@ namespace VM_Footies.VM_Page
                 this.listeVMInvitation.Add(vmInvitation);
             }
 
-            this.listeVMInvitation = this.listeVMInvitation.OrderBy(vm => vm.Date).ThenBy(vm => vm.Nom).ToList();
+            this.listeVMInvitation = this.listeVMInvitation
+                .OrderByDescending(vm => vm.Date)
+                .ThenByDescending(vm => vm.Nom)
+                .ToList();
         }
 
         /// <summary>

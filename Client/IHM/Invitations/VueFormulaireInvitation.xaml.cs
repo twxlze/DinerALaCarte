@@ -171,6 +171,15 @@ namespace IHM_Footies.Invitations
         }
 
         /// <summary>
+        /// Bouton pour aller à la page du tableau de bord
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BoutonAllerTableauDeBord_Click(object sender, RoutedEventArgs e)
+        {
+            Navigation.AllerTableaudebord(this);
+        }
+        /// <summary>
         /// Bouton pour aller à la page des informations utilisateur
         /// </summary>
         /// <param name="sender"></param>
