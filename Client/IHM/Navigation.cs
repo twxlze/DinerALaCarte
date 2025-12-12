@@ -286,7 +286,6 @@ namespace IHM_Footies
             vueFormulaireInvitation.Show();
             fenetreActuelle.Close();
         }
-        #endregion
 
         #region Connexion 
         /// <summary>
