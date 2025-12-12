@@ -53,7 +53,10 @@ namespace IHM_Footies.Statistique
                 bool aInvitesSelectionnes = this.vmPageStatistique.InvitesSelectionnes != null && this.vmPageStatistique.InvitesSelectionnes.Any();
                 bool aDesPlatsSelectionnes = this.vmPageStatistique.EstSelectionne != null && this.vmPageStatistique.EstSelectionne.Any();
 
-                if (aInvitesSelectionnes)
+                if (aDesPlatsSelectionnes && aInvitesSelectionnes)
+                    MessageBox.Show("Veuillez sélectionner soit des invités, soit des plats, pas les deux en même temps.", "Erreur de validation", MessageBoxButton.OK, MessageBoxImage.Error);
+               
+                else if (aInvitesSelectionnes)
                 {
                     this.vmPageStatistique.CreerStatistique();
                     Navigation.AllerStatistique(this, this.vmPageStatistique);
@@ -64,9 +67,7 @@ namespace IHM_Footies.Statistique
                     Navigation.AllerStatistiquePlat(this, this.vmPageStatistique);
                 }
                 else
-                {
-                    MessageBox.Show("Sélectionnez au moins un invité ou un plat pour voir les stats","Erreur de validation", MessageBoxButton.OK,MessageBoxImage.Error);
-                }
+                    MessageBox.Show("Sélectionnez au moins un invité ou un plat pour voir les stats", "Erreur de validation", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             catch (Exception ex)
             {
