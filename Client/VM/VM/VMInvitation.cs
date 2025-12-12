@@ -8,7 +8,6 @@ using System.Text;
 using System.Threading.Tasks;
 using METIER_Footies.Data;
 using METIER_Footies.Metier;
-using VM_Footies.VM_Element_Selectionne;
 
 namespace VM_Footies.VM
 {
@@ -19,8 +18,8 @@ namespace VM_Footies.VM
     {
         #region Attributs
         private Invitation invitation;
-        private ObservableCollection<VMMenuSelectionne> menusListe;
-        private ObservableCollection<VMGroupeInviteSelectionne> groupesInvitesListe;
+        private ObservableCollection<VMMenu> menusListe;
+        private ObservableCollection<VMGroupeInvite> groupesInvitesListe;
         private ObservableCollection<VMInvite> invitesListe;
         private ObservableCollection<VMPlat> platsListe;
         #endregion
@@ -29,9 +28,8 @@ namespace VM_Footies.VM
 
         public List<Invite> ObtenirInvitesSelectionnes()
         {
-            return InvitesListe.Where(i => i.EstSelectionne).Select(i => i.Invite).ToList();
+            return InvitesListe.Where(i => i.InviteSelectionne).Select(i => i.Invite).ToList();
         }
-
 
         #region PROPRIETES
         /// <summary>
@@ -127,13 +125,29 @@ namespace VM_Footies.VM
         /// Format d'affichage de l'invitation avec le nom et la date
         /// </summary>
         public string FormatInvitation => $"{Nom} - {Date.ToShortDateString()}";
+
+        /// <summary>
+        /// Remarque de l'invitation 
+        /// </summary>
+        public string? Remarque
+        {
+            get => this.invitation.Remarque;
+            set
+            {
+                if (invitation.Remarque != value)
+                {
+                    invitation.Remarque = value;
+                    Notify("Remarque");
+                }
+            }
+        }
         #endregion
 
-        #region PROPRIETES / Eléments sélectionnables
+        #region Propriétés / Eléments sélectionnables
         /// <summary>
         /// Liste des menus sélectionnables
         /// </summary>
-        public ObservableCollection<VMMenuSelectionne> MenusListe
+        public ObservableCollection<VMMenu> MenusListe
         {
             get => menusListe;
             set
@@ -146,7 +160,7 @@ namespace VM_Footies.VM
         /// <summary>
         /// Liste des groupes d'invités sélectionnables
         /// </summary>
-        public ObservableCollection<VMGroupeInviteSelectionne> GroupesInvitesListe
+        public ObservableCollection<VMGroupeInvite> GroupesInvitesListe
         {
             get => groupesInvitesListe;
             set
@@ -181,6 +195,8 @@ namespace VM_Footies.VM
                 Notify("PlatsListe");
             }
         }
+
+
         #endregion
 
         #region Constructeurs
@@ -218,8 +234,8 @@ namespace VM_Footies.VM
         /// </summary>
         private void InitialiserCollections()
         {
-            this.menusListe = new ObservableCollection<VMMenuSelectionne>();
-            this.groupesInvitesListe = new ObservableCollection<VMGroupeInviteSelectionne>();
+            this.menusListe = new ObservableCollection<VMMenu>();
+            this.groupesInvitesListe = new ObservableCollection<VMGroupeInvite>();
             this.invitesListe = new ObservableCollection<VMInvite>();
             this.platsListe = new ObservableCollection<VMPlat>();
         }
@@ -267,7 +283,7 @@ namespace VM_Footies.VM
         private void SynchroniserMenuSelectionne()
         {
             List<Menu> menusSelectionnes = new List<Menu>();
-            foreach (VMMenuSelectionne vmMenu in this.menusListe)
+            foreach (VMMenu vmMenu in this.menusListe)
             {
                 if (vmMenu.EstSelectionne)
                 {
@@ -284,13 +300,15 @@ namespace VM_Footies.VM
         private void SynchroniserGroupeInviteSelectionne()
         {
             List<GroupeInvites> groupesInvitesSelectionnes = new List<GroupeInvites>();
-            foreach (VMGroupeInviteSelectionne vmGroupe in this.groupesInvitesListe)
+
+            foreach (VMGroupeInvite vmGroupe in this.groupesInvitesListe)
             {
                 if (vmGroupe.EstSelectionne)
                 {
-                    groupesInvitesSelectionnes.Add(vmGroupe.GroupeInvite);
+                    groupesInvitesSelectionnes.Add(vmGroupe.Groupe);
                 }
             }
+
             this.invitation.GroupeInvites = groupesInvitesSelectionnes;
             Notify("GroupeInvites");
         }
@@ -303,7 +321,7 @@ namespace VM_Footies.VM
             List<Invite> invitesSelectionnes = new List<Invite>();
             foreach (VMInvite vmInvite in this.invitesListe)
             {
-                if (vmInvite.EstSelectionne)
+                if (vmInvite.InviteSelectionne)
                 {
                     invitesSelectionnes.Add(vmInvite.Invite);
                 }

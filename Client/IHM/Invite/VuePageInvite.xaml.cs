@@ -119,6 +119,7 @@ namespace IHM_Footies
         {
             VueFormulaireInvite fenetre = new VueFormulaireInvite();
             bool? result = fenetre.ShowDialog();
+
             if (result == true)
             {
                 try
@@ -293,6 +294,7 @@ namespace IHM_Footies
         {
             Navigation.AllerSelectionInvite(this);
         }
+<<<<<<< HEAD
 
         /// <summary>
         /// Bouton pour aller à la page du tableau de bord
@@ -304,7 +306,19 @@ namespace IHM_Footies
             Navigation.AllerTableaudebord(this);
         }
         #endregion
+=======
+>>>>>>> Test-Merge-TableauDeBord-Sprint3
 
+        /// <summary>
+        /// Bouton pour aller à la page des informations utilisateur
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BoutonAllerInformationUtilisateur_Click(object sender, RoutedEventArgs e)
+        {
+            Navigation.AllerInformationUtilisateur(this);
+        }
+        #endregion
 
         #region Méthodes
 

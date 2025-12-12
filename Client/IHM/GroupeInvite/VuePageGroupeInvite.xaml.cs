@@ -124,8 +124,10 @@ namespace IHM_Footies
             VMGroupeInvite nvGroupe = new VMGroupeInvite();
             await this.vmPageGroupeInvite.ChargerInvitesDansGroupe(nvGroupe);
 
+            
             VueFormulaireGroupeInvite fenetre = new VueFormulaireGroupeInvite(nvGroupe);
             bool? result = fenetre.ShowDialog();
+            
             if (result == true)
             {
                 try
@@ -325,6 +327,7 @@ namespace IHM_Footies
         }
 
         /// <summary>
+<<<<<<< HEAD
         /// Bouton pour aller à la page du tableau de bord
         /// </summary>
         /// <param name="sender"></param>
@@ -332,6 +335,15 @@ namespace IHM_Footies
         private void BoutonAllerTableauDeBord_Click(object sender, RoutedEventArgs e)
         {
             Navigation.AllerTableaudebord(this);
+=======
+        /// Bouton pour aller à la page des informations utilisateur
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BoutonAllerInformationUtilisateur_Click(object sender, RoutedEventArgs e)
+        {
+            Navigation.AllerInformationUtilisateur(this);
+>>>>>>> Test-Merge-TableauDeBord-Sprint3
         }
         #endregion
 

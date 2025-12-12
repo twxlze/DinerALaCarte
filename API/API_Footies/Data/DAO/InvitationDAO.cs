@@ -49,13 +49,14 @@ namespace API_Footies.Data.DAO
                 {
                     long idInvitation = (long)row["IdInvitation"];
                     string nom = row["Nom"].ToString();
+                    string? remarque = row["Remarque"].ToString();
                     DateTime date = DateTime.Parse(row["Date"].ToString());
                     List<Invite> invites = ObtenirInvitesDansInvitation(connection, idInvitation);
                     List<Plat> plats = ObtenirPlatsDansInvitation(connection, idInvitation);
                     List<Menu> menus = ObtenirMenusDansInvitation(connection, idInvitation);
                     List<GroupeInvites> groupesInvites = ObtenirGroupesInvitesDansInvitation(connection, idInvitation);
 
-                    Invitation invitation = new Invitation(groupesInvites, menus, invites, plats, idInvitation, nom, date);
+                    Invitation invitation = new Invitation(groupesInvites, menus, invites, plats, idInvitation, nom, date, remarque);
                     invitations.Add(invitation);
                 }
             }
@@ -114,9 +115,10 @@ namespace API_Footies.Data.DAO
             {
                 {"@Nom", invitation.Nom },
                 {"@Date", invitation.Date },
-                {"@IdUtilisateur", idUtilisateur }
+                {"@IdUtilisateur", idUtilisateur },
+                {"@Remarque", invitation.Remarque ?? "" }
             };
-            return connection.ExecuteInsert("INSERT INTO Invitation (Nom, Date, IdUtilisateur) VALUES (@Nom, @Date, @IdUtilisateur)", parameters);
+            return connection.ExecuteInsert("INSERT INTO Invitation (Nom, Date, IdUtilisateur, Remarque) VALUES (@Nom, @Date, @IdUtilisateur, @Remarque)", parameters);
         }
 
         private void AjouterGroupesInvitesDansInvitation(SQLiteConnector connection, Invitation invitation)
@@ -213,26 +215,163 @@ namespace API_Footies.Data.DAO
         #endregion
 
         #region Méthodes Obtenir
+
+        /// <summary>
+        /// Récupère la liste des invités pour une invitation donnée
+        /// </summary>
         private List<Invite> ObtenirInvitesDansInvitation(SQLiteConnector connection, long idInvitation)
         {
-            List<Invite> invites = new List<Invite>();
-            Dictionary<string, object> parameters = new Dictionary<string, object>()
-            {
-                {"@IdInvitation", idInvitation }
-            };
+            List<Invite> listeInvites = new List<Invite>();
 
-            DataTable dataTable = connection.ExecuteQuery(@"SELECT I.IdInvite, I.Nom, I.Prenom, I.NumTel, I.Mail FROM Invite I INNER JOIN Invitation_Invite II ON I.IdInvite = II.IdInvite  WHERE II.IdInvitation = @IdInvitation", parameters);
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            parameters.Add("@IdInvitation", idInvitation);
+
+            string query = @"SELECT I.IdInvite, I.Nom, I.Prenom, I.NumTel, I.Mail 
+                     FROM Invite I 
+                     INNER JOIN Invitation_Invite II ON I.IdInvite = II.IdInvite 
+                     WHERE II.IdInvitation = @IdInvitation";
+
+            DataTable dataTable = connection.ExecuteQuery(query, parameters);
 
             foreach (DataRow row in dataTable.Rows)
             {
-                long idInvite = (long)row["IdInvite"];
-                List<NomAllergene> allergenes = ObtenirAllergenesDeInvite(connection, idInvite);
-                List<Plat> platsPreferes = ObtenirPlatsPreferesDeInvite(connection, idInvite);
-                List<Plat> platsDetestes = ObtenirPlatsDetestesDeInvite(connection, idInvite);
-                Invite invite = new Invite(idInvite, row["Nom"].ToString(), row["Prenom"].ToString(), row["NumTel"].ToString(), row["Mail"].ToString(), allergenes.Count > 0 ? allergenes : null, platsDetestes.Count > 0 ? platsDetestes : null, platsPreferes.Count > 0 ? platsPreferes : null);
-                invites.Add(invite);
+                Invite invite = CreerInviteDepuisDataRow(connection, row);
+                listeInvites.Add(invite);
             }
-            return invites;
+
+            return listeInvites;
+        }
+        private Invite CreerInviteDepuisDataRow(SQLiteConnector connection, DataRow row)
+        {
+            long idInvite = (long)row["IdInvite"];
+
+            List<NomAllergene> allergenes = ObtenirAllergenesInvite(connection, idInvite);
+            List<Plat> platsDetestes = ObtenirPlatsDetestesInvite(connection, idInvite);
+            List<Plat> platsPreferes = ObtenirPlatsPreferesInvite(connection, idInvite);
+
+            List<NomAllergene> listeAllergenesFinale = null;
+            if (allergenes.Count > 0)
+            {
+                listeAllergenesFinale = allergenes;
+            }
+
+            List<Plat> listePlatsDetestesFinale = null;
+            if (platsDetestes.Count > 0)
+            {
+                listePlatsDetestesFinale = platsDetestes;
+            }
+
+            List<Plat> listePlatsPreferesFinale = null;
+            if (platsPreferes.Count > 0)
+            {
+                listePlatsPreferesFinale = platsPreferes;
+            }
+
+            string numTel = row["NumTel"] as string;
+            string mail = row["Mail"] as string;
+
+            return new Invite(
+                idInvite,
+                row["Nom"].ToString(),
+                row["Prenom"].ToString(),
+                numTel,
+                mail,
+                listeAllergenesFinale,
+                listePlatsDetestesFinale,
+                listePlatsPreferesFinale
+            );
+        }
+
+        private List<NomAllergene> ObtenirAllergenesInvite(SQLiteConnector connection, long idInvite)
+        {
+            List<NomAllergene> listeAllergenes = new List<NomAllergene>();
+
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            parameters.Add("@IdInvite", idInvite);
+
+            string query = @"SELECT a.Nom 
+                     FROM Allergene a 
+                     INNER JOIN Invite_Allergene ia ON a.IDAllergene = ia.IdAllergene 
+                     WHERE ia.IdInvite = @IdInvite";
+
+            DataTable dataTable = connection.ExecuteQuery(query, parameters);
+
+            foreach (DataRow rowAllergene in dataTable.Rows)
+            {
+                NomAllergene allergeneTemp;
+                if (Enum.TryParse(rowAllergene["Nom"].ToString(), true, out allergeneTemp))
+                {
+                    listeAllergenes.Add(allergeneTemp);
+                }
+            }
+
+            return listeAllergenes;
+        }
+
+        private List<Plat> ObtenirPlatsDetestesInvite(SQLiteConnector connection, long idInvite)
+        {
+            List<Plat> listePlats = new List<Plat>();
+
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            parameters.Add("@IdInvite", idInvite);
+
+            string query = @"SELECT p.IDPlat, p.Nom, p.Description, p.Categorie, p.Ingredients 
+                     FROM Plat p 
+                     INNER JOIN Invite_PlatDeteste ipd ON p.IDPlat = ipd.IdPlat 
+                     WHERE ipd.IdInvite = @IdInvite";
+
+            DataTable dataTable = connection.ExecuteQuery(query, parameters);
+
+            foreach (DataRow rowPlat in dataTable.Rows)
+            {
+                Plat nouveauPlat = CreerPlatDepuisDataRow(rowPlat);
+                listePlats.Add(nouveauPlat);
+            }
+
+            return listePlats;
+        }
+
+        private List<Plat> ObtenirPlatsPreferesInvite(SQLiteConnector connection, long idInvite)
+        {
+            List<Plat> listePlats = new List<Plat>();
+
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            parameters.Add("@IdInvite", idInvite);
+
+            string query = @"SELECT p.IDPlat, p.Nom, p.Description, p.Categorie, p.Ingredients 
+                     FROM Plat p 
+                     INNER JOIN Invite_PlatPrefere ipp ON p.IDPlat = ipp.IdPlat 
+                     WHERE ipp.IdInvite = @IdInvite";
+
+            DataTable dataTable = connection.ExecuteQuery(query, parameters);
+
+            foreach (DataRow rowPlat in dataTable.Rows)
+            {
+                Plat nouveauPlat = CreerPlatDepuisDataRow(rowPlat);
+                listePlats.Add(nouveauPlat);
+            }
+
+            return listePlats;
+        }
+        private Plat CreerPlatDepuisDataRow(DataRow row)
+        {
+            CategoriePlat categorie = CategoriePlat.plat;
+            if (!Enum.TryParse(row["Categorie"].ToString(), true, out categorie))
+            {
+                categorie = CategoriePlat.plat;
+            }
+
+            string description = row["Description"] as string;
+            string ingredients = row["Ingredients"] as string;
+
+            return new Plat(
+                (long)row["IDPlat"],
+                row["Nom"].ToString(),
+                description,
+                categorie,
+                ingredients,
+                null
+            );
         }
 
         private List<NomAllergene> ObtenirAllergenesDeInvite(SQLiteConnector connection, long idInvite)
@@ -367,19 +506,59 @@ namespace API_Footies.Data.DAO
         private List<Plat> ObtenirPlatsDansMenu_Optimise(SQLiteConnector connection, long idMenu)
         {
             List<Plat> plats = new List<Plat>();
-            Dictionary<string, object> parameters = new Dictionary<string, object>()
-            {
-                {"@IdMenu", idMenu }
-            };
 
-            DataTable dataTable = connection.ExecuteQuery(@"SELECT P.IdPlat, P.Nom, P.Categorie  FROM Plat P INNER JOIN Menu_Plat MP ON P.IdPlat = MP.IdPlat  WHERE MP.IdMenu = @IdMenu", parameters);
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            parameters.Add("@IdMenu", idMenu);
+
+            string queryPlats = @"SELECT P.IdPlat, P.Nom, P.Categorie, P.Description, P.Ingredients
+                          FROM Plat P 
+                          INNER JOIN Menu_Plat MP ON P.IdPlat = MP.IdPlat 
+                          WHERE MP.IdMenu = @IdMenu";
+
+            DataTable dataTable = connection.ExecuteQuery(queryPlats, parameters);
 
             foreach (DataRow row in dataTable.Rows)
             {
                 long idPlat = (long)row["IdPlat"];
-                List<NomAllergene> allergenes = ObtenirAllergenesDePlats(connection, idPlat);
 
-                Plat plat = new Plat(idPlat, row["Nom"].ToString(), null, CategoriePlat.plat, null, allergenes);
+                CategoriePlat categorie = CategoriePlat.plat;
+                Enum.TryParse(row["Categorie"].ToString(), true, out categorie);
+
+                List<NomAllergene> allergenesPlat = new List<NomAllergene>();
+                Dictionary<string, object> parametersAllergene = new Dictionary<string, object>();
+                parametersAllergene.Add("@IdPlat", idPlat);
+
+                string queryAllergene = @"SELECT a.Nom 
+                                  FROM Allergene a
+                                  INNER JOIN Plat_Allergene pa ON a.IDAllergene = pa.IDAllergene 
+                                  WHERE pa.IDPlat = @IdPlat";
+
+                DataTable dataTableAllergenes = connection.ExecuteQuery(queryAllergene, parametersAllergene);
+
+                foreach (DataRow rowAllergene in dataTableAllergenes.Rows)
+                {
+                    NomAllergene allergene;
+                    if (Enum.TryParse(rowAllergene["Nom"].ToString(), true, out allergene))
+                    {
+                        allergenesPlat.Add(allergene);
+                    }
+                }
+
+                List<NomAllergene> listeAllergenesFinale = null;
+                if (allergenesPlat.Count > 0)
+                {
+                    listeAllergenesFinale = allergenesPlat;
+                }
+
+                Plat plat = new Plat(
+                    idPlat,
+                    row["Nom"].ToString(),
+                    row["Description"]?.ToString(),
+                    categorie,
+                    row["Ingredients"]?.ToString(),
+                    listeAllergenesFinale
+                );
+
                 plats.Add(plat);
             }
             return plats;
@@ -411,20 +590,20 @@ namespace API_Footies.Data.DAO
         private List<Invite> ObtenirInvitesDansGroupeInvites(SQLiteConnector connection, long idGroupeInvite)
         {
             List<Invite> invites = new List<Invite>();
-            Dictionary<string, object> parameters = new Dictionary<string, object>()
-            {
-                {"@IDGroupeInvite", idGroupeInvite }
-            };
 
-            DataTable dataTable = connection.ExecuteQuery(@"SELECT I.IdInvite, I.Nom, I.Prenom  FROM Invite I  INNER JOIN Invite_Groupe IG ON I.IdInvite = IG.IdInvite  WHERE IG.IDGroupeInvite = @IDGroupeInvite", parameters);
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            parameters.Add("@IDGroupeInvite", idGroupeInvite);
+
+            string queryInvites = @"SELECT I.IdInvite, I.Nom, I.Prenom, I.NumTel, I.Mail
+                    FROM Invite I 
+                    INNER JOIN Invite_Groupe IG ON I.IdInvite = IG.IdInvite 
+                    WHERE IG.IDGroupeInvite = @IDGroupeInvite";
+
+            DataTable dataTable = connection.ExecuteQuery(queryInvites, parameters);
 
             foreach (DataRow row in dataTable.Rows)
             {
-                List<NomAllergene> allergenes = ObtenirAllergenesDeInvite(connection, (long)row["IdInvite"]);
-                List<Plat> platsDetestes = ObtenirPlatsDetestesDeInvite(connection, (long)row["IdInvite"]);
-                List<Plat> platsPreferes = ObtenirPlatsPreferesDeInvite(connection, (long)row["IdInvite"]);
-                Invite invite = new Invite((long)row["IdInvite"], row["Nom"].ToString(), row["Prenom"].ToString(), null, null, allergenes, null, null);
-
+                Invite invite = CreerInviteDepuisDataRow(connection, row);
                 invites.Add(invite);
             }
             return invites;
@@ -440,9 +619,10 @@ namespace API_Footies.Data.DAO
                 {"@IdInvitation", invitation.IdInvitation },
                 {"@Nom", invitation.Nom },
                 {"@Date", invitation.Date },
-                {"@IdUtilisateur", idUtilisateur }
+                {"@IdUtilisateur", idUtilisateur },
+                {"@Remarque", invitation.Remarque ?? ""   }
             };
-            connection.ExecuteQuery("UPDATE Invitation SET Nom = @Nom, Date = @Date WHERE IdInvitation = @IdInvitation AND IdUtilisateur = @IdUtilisateur", parameters);
+            connection.ExecuteQuery("UPDATE Invitation SET Nom = @Nom, Date = @Date, Remarque = @Remarque WHERE IdInvitation = @IdInvitation AND IdUtilisateur = @IdUtilisateur", parameters);
             return invitation.IdInvitation;
         }
 
@@ -534,9 +714,6 @@ namespace API_Footies.Data.DAO
             }
         }
 
-        /// <summary>
-        /// Recherche des invitations par nom
-        /// </summary>
         /// <summary>
         /// Recherche des invitations par nom ET par utilisateur
         /// </summary>

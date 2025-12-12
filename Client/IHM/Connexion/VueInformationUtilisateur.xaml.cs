@@ -1,84 +1,53 @@
-﻿using System.Windows;
-using VM_Footies.VM;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
+using VM_Footies.VM_Page;
 
-namespace IHM_Footies
+namespace IHM_Footies.Connexion
 {
     /// <summary>
-    /// Logique d'interaction pour VueFormulaireMenu.xaml
+    /// Logique d'interaction pour VueInformationUtilisateur.xaml
     /// </summary>
-    public partial class VueFormulaireMenu : Window
+    public partial class VueInformationUtilisateur : Window
     {
         #region Attributs
-        private VMMenu menu;
-        public VMMenu Menu => this.menu;
+        private VMPageInformationUtilisateur vm;
         #endregion
-
         #region Constructeurs
-        /// <summary>
-        /// Constructeur d'une vue de formulaire de menu
-        /// </summary>
-        /// <param name="menu">Le VMMenu à afficher</param>
-        public VueFormulaireMenu(VMMenu menu)
+        public VueInformationUtilisateur()
         {
-            this.menu = menu;
-            this.DataContext = this.menu;
             InitializeComponent();
-            WindowStartupLocation = WindowStartupLocation.CenterScreen;
-        }
-
-        /// <summary>
-        /// Constructeur par défaut d'une vue de formulaire de menu
-        /// </summary>
-        public VueFormulaireMenu() : this(new VMMenu())
-        {
+            this.vm = new VMPageInformationUtilisateur();
+            this.DataContext = this.vm;
         }
         #endregion
 
-        #region Boutons d'action
+        #region Méthodes
         /// <summary>
-        /// Gestion du clic sur le bouton Enregistrer
+        /// Action du bouton "Se déconnecter"
         /// </summary>
-        /// <param name="sender">L'expéditeur</param>
-        /// <param name="e">Les arguments de l'événement</param>
-        private async void Enregistrer_Click(object sender, RoutedEventArgs e)
+        private void BoutonDeconnexion_Click(object sender, RoutedEventArgs e)
         {
-            try
+            MessageBoxResult resultat = MessageBox.Show( "Voulez-vous vraiment vous déconnecter ?", "Déconnexion", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (resultat == MessageBoxResult.Yes)
             {
-                this.menu.SynchroniserPlatsSelectionnes();
-                List<string> erreurs = new List<string>();
-
-                if (string.IsNullOrWhiteSpace(this.menu.Nom))
-                {
-                    erreurs.Add("Entrez le nom du menu");
-                }
-
-                if (this.menu.Plats == null || this.menu.Plats.Count == 0)
-                {
-                    erreurs.Add("Sélectionnez au moins un plat pour le menu");
-                }
-
-                if (erreurs.Count > 0)
-                {
-                    string message = string.Join("\n", erreurs);
-                    MessageBox.Show(message, "Erreur de validation", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-                else
-                {
-                    this.DialogResult = true;
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(
-                    "Erreur lors de la validation : " + ex.Message,
-                    "Erreur",
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Error);
+                this.vm.Deconnecter();
+                Navigation.AllerConnexion(this);
             }
         }
         #endregion
 
-        #region Boutons de navigation
+        #region Navigation
         /// <summary>
         /// Bouton pour aller à la page plat
         /// </summary>
@@ -138,7 +107,6 @@ namespace IHM_Footies
             Navigation.AllerGroupesInvites(this);
         }
 
-
         /// <summary>
         /// Bouton pour fermer la fenêtre
         /// </summary>
@@ -151,7 +119,7 @@ namespace IHM_Footies
 
 
         /// <summary>
-        /// Aller à la page d'invitations
+        /// Bouton pour aller à la page d'invitations
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -170,27 +138,6 @@ namespace IHM_Footies
             Navigation.AllerSelectionInvite(this);
         }
 
-        /// <summary>
-<<<<<<< HEAD
-        /// Bouton pour aller à la page du tableau de bord
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void BoutonAllerTableauDeBord_Click(object sender, RoutedEventArgs e)
-        {
-            Navigation.AllerTableaudebord(this);
-=======
-        /// Bouton pour aller à la page des informations utilisateur
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void BoutonAllerInformationUtilisateur_Click(object sender, RoutedEventArgs e)
-        {
-            Navigation.AllerInformationUtilisateur(this);
->>>>>>> Test-Merge-TableauDeBord-Sprint3
-        }
         #endregion
-
-
     }
 }

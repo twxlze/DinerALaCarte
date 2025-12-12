@@ -131,6 +131,21 @@
             </Style.Triggers>
         </Style>
 
+        <!--  remarques -->
+        <Style x:Key="StyleTextBoxRemarques" TargetType="TextBox">
+            <Setter Property="BorderBrush" Value="#AAAAAA"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="8,6"/>
+            <Setter Property="FontFamily" Value="Poppins"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontStyle" Value="Italic"/>
+            <Setter Property="Foreground" Value="#555555"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="AcceptsReturn" Value="True"/>
+            <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>
+        </Style>
+
     </Window.Resources>
 
     <Grid Cursor="Hand">
@@ -190,16 +205,21 @@
                 <Button x:Name="BoutonMenus" Content="📋 Menus" Grid.Row="5" Style="{StaticResource BoutonMenu}" Click="BoutonAllerMenu_Click" />
                 <Button x:Name="BoutonPlats" Content="🍽️ Plats" Grid.Row="6" Style="{StaticResource BoutonMenu}" Click="BoutonAllerPlat_Click" />
                 <Button x:Name="BoutonStatistique" Content="{x:Static res:Strings.Stats}" Grid.Row="7" Grid.Column="0" Style="{StaticResource BoutonMenu}" Click="BoutonAllerStatistique_Click"/>
+<<<<<<< HEAD
                 <Button x:Name="BoutonTableauDeBord" Content="{x:Static res:Strings.TableaudeBord}" Grid.Row="8" Grid.Column="0" Style="{StaticResource BoutonMenu}" Click="BoutonAllerTableauDeBord_Click"/>
                 <Button x:Name="BoutonUtilisateur" Content="👤" Grid.Row="10" Grid.Column="0" Style="{StaticResource BoutonMenu}" Margin="0,0,100,0" HorizontalContentAlignment="Center" FontSize="25"/>
+=======
+                <!-- <Button x:Name="BoutonTableauDeBord" Content="📈Tableau de Bord" Grid.Row="8" Grid.Column="0" Style="{StaticResource BoutonMenu}" Click="BoutonAllerTableauDeBord_Click"/> -->
+                <Button x:Name="BoutonUtilisateur" Content="👤" Grid.Row="10" Grid.Column="0" Style="{StaticResource BoutonMenu}" Margin="0,0,100,0" HorizontalContentAlignment="Center" FontSize="25" Click="BoutonAllerInformationUtilisateur_Click"/>
+>>>>>>> Test-Merge-TableauDeBord-Sprint3
                 <Button x:Name="BoutonReglage" Content="⚙️" Grid.Row="10" Grid.Column="0" Style="{StaticResource BoutonMenu}" HorizontalContentAlignment="Center" Margin="100,0,0,0" FontSize="25" Click="BoutonAllerReglages_Click"/>
             </Grid>
         </Border>
 
 
         <Border BorderBrush="#8C2F26" 
-                Grid.Column="1" Grid.RowSpan="9" 
-                Margin="10,31,20,20"
+                Grid.Column="1" Grid.RowSpan="8" 
+                Margin="10,31,20,10"
                 BorderThickness="2"
                 CornerRadius="10"
                 Padding="5">
@@ -217,7 +237,7 @@
         <!-- Groupe invités -->
 
         <TextBlock Grid.Column="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Groupe invités" VerticalAlignment="Top" FontWeight="Bold" FontSize="15
-                   " Foreground="#B44B3E" Margin="385,9,0,0" RenderTransformOrigin="0.5,0.5" Grid.Row="1">
+                   " Foreground="#B44B3E" Margin="385,73,0,0" RenderTransformOrigin="0.5,0.5" Grid.RowSpan="2">
             <TextBlock.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -228,8 +248,8 @@
         </TextBlock>
 
         <Border BorderBrush="#8C2F26" 
-        Grid.Column="1" Grid.RowSpan="6" 
-        Margin="338,28,60,38"
+        Grid.Column="1" Grid.RowSpan="5" 
+        Margin="338,4,60,19"
         BorderThickness="3"
         CornerRadius="10"
         Padding="5" Grid.Row="2">
@@ -250,7 +270,7 @@
 
         <!-- Invites -->
 
-        <TextBlock Grid.Column="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Invites" VerticalAlignment="Top" FontWeight="Bold" FontSize="15" Foreground="#B44B3E" Margin="119,9,0,0" RenderTransformOrigin="0.5,0.5" Grid.Row="1">
+        <TextBlock Grid.Column="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Invites" VerticalAlignment="Top" FontWeight="Bold" FontSize="15" Foreground="#B44B3E" Margin="119,75,0,0" RenderTransformOrigin="0.5,0.5" Grid.RowSpan="2">
             <TextBlock.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -262,16 +282,16 @@
 
 
         <Border BorderBrush="#8C2F26" 
-        Grid.Column="1" Margin="53,28,355,40"
+        Grid.Column="1" Margin="53,4,355,19"
         BorderThickness="3"
         CornerRadius="10"
-        Padding="5" Grid.Row="2" Grid.RowSpan="6">
+        Padding="5" Grid.Row="2" Grid.RowSpan="5">
             <ScrollViewer VerticalScrollBarVisibility="Auto">
                 <ItemsControl ItemsSource="{Binding InvitesListe}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <CheckBox Content="{Binding Identite}"
-                              IsChecked="{Binding EstSelectionne}"
+                              IsChecked="{Binding InviteSelectionne}"
                               Margin="5"
                               FontSize="12"
                               Foreground="#333333"/>
@@ -281,7 +301,27 @@
             </ScrollViewer>
         </Border>
 
-        <Button Grid.Column="1" Content="Page suivante" HorizontalAlignment="Left" Margin="195,58,0,29" Grid.Row="7" Width="200" Style="{StaticResource StyleBoutonMenu}" Click="BoutonFormulaireInvitationMenuPlat_Click" Grid.RowSpan="2" />
+        <!-- Remarques -->
+        <TextBlock Grid.Column="1" 
+                   HorizontalAlignment="Left" 
+                   TextWrapping="Wrap" 
+                   Text="{x:Static res:Strings.Remarque}"
+                   VerticalAlignment="Top" 
+                   FontWeight="Normal" 
+                   FontSize="12" 
+                   Foreground="#777777" 
+                   Margin="53,23,0,0" 
+                   Grid.Row="6"/>
+
+        <TextBox Grid.Column="1" 
+                 Grid.Row="7"
+                 Margin="53,3,60,26"
+                 Style="{StaticResource StyleTextBoxRemarques}"
+                 Text="{Binding Remarque, UpdateSourceTrigger=PropertyChanged}"
+                 MinHeight="50"
+                 MaxHeight="80"/>
+
+        <Button Grid.Column="1" Content="Page suivante" HorizontalAlignment="Left" Margin="195,80,0,7" Grid.Row="7" Width="200" Style="{StaticResource StyleBoutonMenu}" Click="BoutonFormulaireInvitationMenuPlat_Click" Grid.RowSpan="2" />
 
 
         <!-- Barre de recherche pour les Menus -->
@@ -289,7 +329,7 @@
 
 
         <!-- Barre de recherche pour les Groupe Invité -->
-        <Border Style="{StaticResource StyleContainerRecherche}" Grid.Column="1" Grid.Row="1" Margin="350,34,0,0" Width="173" Height="25" Grid.RowSpan="2">
+        <Border Style="{StaticResource StyleContainerRecherche}" Grid.Column="1" Grid.Row="1" Margin="350,14,0,0" Width="173" Height="25">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -299,7 +339,7 @@
                 <TextBox x:Name="zonerechercheGroupeInvite" 
                  Grid.Column="0" 
                  Style="{StaticResource StyleChampRecherche}"
-                 Text="{Binding TexteRechercheGroupeInvite, UpdateSourceTrigger=PropertyChanged}"/>
+                 Text="{Binding TexteRechercheGroupeInvite, UpdateSourceTrigger=PropertyChanged}" Margin="6,0,24,0" Grid.ColumnSpan="2"/>
 
                 <Button x:Name="rechercheGroupeInvite" 
                 Grid.Column="1" 
@@ -311,20 +351,21 @@
 
 
         <!-- Barre de recherche pour les Invites -->
-        <Border Style="{StaticResource StyleContainerRecherche}" Grid.Column="1" Grid.Row="1" Margin="65,34,0,0" Width="162" Height="25" Grid.RowSpan="2">
+        <Border Style="{StaticResource StyleContainerRecherche}" Grid.Column="1" Grid.Row="1" Margin="65,13,0,0" Width="162" Height="25">
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="23*"/>
+                    <ColumnDefinition Width="105*"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
                 <TextBox x:Name="zonerechercheinvite"
                  Grid.Column="0" 
                  Style="{StaticResource StyleChampRecherche}"
-                 Text="{Binding TexteRechercheInvite, UpdateSourceTrigger=PropertyChanged}"/>
+                 Text="{Binding TexteRechercheInvite, UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="3" Margin="6,0,24,0"/>
 
                 <Button x:Name="rechercheinvite" 
-                Grid.Column="1" 
+                Grid.Column="2" 
                 Style="{StaticResource StyleLoupeRecherche}"/>
             </Grid>
         </Border>

@@ -4,7 +4,6 @@ using System.Windows.Media;
 using IHM_Footies.Menu;
 using VM_Footies;
 using VM_Footies.VM;
-using VM_Footies.VM_Element_Selectionne;
 using VM_Footies.VM_Page;
 
 namespace IHM_Footies.Invitations

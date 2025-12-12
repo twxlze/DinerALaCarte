@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using METIER_Footies.Data;
 using METIER_Footies.Data.Interfaces;
 using METIER_Footies.Metier;
-using VM_Footies.VM_Element_Selectionne;
 
 namespace VM_Footies.VM
 {
@@ -24,6 +23,7 @@ namespace VM_Footies.VM
         private ObservableCollection<VMPlat> platsEntree;
         private ObservableCollection<VMPlat> platsPlat;
         private ObservableCollection<VMPlat> platsDessert;
+        private bool estSelectionne;
         #endregion
 
         #region Événement
@@ -52,9 +52,28 @@ namespace VM_Footies.VM
             }
         }
 
+        /// <summary>
+        /// Liste des plats du menu
+        /// </summary>
         public List<Plat> Plats
         {
             get => this.menu.Plat;
+        }
+
+        /// <summary>
+        /// État de sélection du menu
+        /// </summary>
+        public bool EstSelectionne
+        {
+            get => estSelectionne;
+            set
+            {
+                if (estSelectionne != value)
+                {
+                    estSelectionne = value;
+                    Notify("MenuSelectionne");
+                }
+            }
         }
         #endregion
 
@@ -117,9 +136,10 @@ namespace VM_Footies.VM
         // Constructeur d'un VMMenu à partir d'un Menu
         /// </summary>
         /// <param name="Menu"> menu à copier </param>
-        public VMMenu(Menu menu)
+        public VMMenu(Menu menu, bool estSelectionne = false)
         {
             this.menu = menu;
+            this.estSelectionne = estSelectionne;
             InitialiserCollections();
         }
 
@@ -130,16 +150,15 @@ namespace VM_Footies.VM
         public VMMenu(VMMenu modele)
         {
             this.menu = new Menu(modele.Menu);
+            this.estSelectionne = modele.estSelectionne;
             InitialiserCollections();
         }
 
         /// <summary>
         /// Initialise une nouvelle instance de la classe VMMenu.
         /// </summary>
-        public VMMenu()
+        public VMMenu() : this(new Menu())
         {
-            this.menu = new Menu();
-            InitialiserCollections();
         }
 
         /// <summary>

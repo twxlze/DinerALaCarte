@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using METIER_Footies.Data;
 using METIER_Footies.Enum;
 using METIER_Footies.Metier;
-using VM_Footies.VM_Element_Selectionne;
 using static METIER_Footies.Metier.Plat;
 
 namespace VM_Footies.VM

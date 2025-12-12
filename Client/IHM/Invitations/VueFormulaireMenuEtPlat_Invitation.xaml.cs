@@ -12,25 +12,17 @@ namespace IHM_Footies.Invitations
     {
 
         #region attributs
-
         private VMInvitation invitation;
-
         private InvitationDAO invitationDAO;
-
         private VMPageInvitation pageInvitation;
-
-
         #endregion
 
         #region proprietes
-
         /// <summary>
         /// Récupérer les invitations
         /// </summary>
         public VMInvitation Invitation => this.invitation;
-
         #endregion
-
 
         #region constructeurs
 
@@ -52,7 +44,6 @@ namespace IHM_Footies.Invitations
         #endregion
 
         #region methodes
-
         private async void VueFormulaireMenuEtPlat_Invitation_Loaded(object sender, RoutedEventArgs e)
         {
             await ChargerDonnees();
@@ -62,10 +53,7 @@ namespace IHM_Footies.Invitations
         {
             await this.pageInvitation.ChargerElementsDansInvitation(invitation);
         }
-
-
         #endregion
-
 
         #region boutons navigations 
 
@@ -160,6 +148,7 @@ namespace IHM_Footies.Invitations
         }
 
         /// <summary>
+<<<<<<< HEAD
         /// Bouton pour aller à la page du tableau de bord
         /// </summary>
         /// <param name="sender"></param>
@@ -167,33 +156,48 @@ namespace IHM_Footies.Invitations
         private void BoutonAllerTableauDeBord_Click(object sender, RoutedEventArgs e)
         {
             Navigation.AllerTableaudebord(this);
+=======
+        /// Bouton pour aller à la page des informations utilisateur
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BoutonAllerInformationUtilisateur_Click(object sender, RoutedEventArgs e)
+        {
+            Navigation.AllerInformationUtilisateur(this);
+>>>>>>> Test-Merge-TableauDeBord-Sprint3
         }
         #endregion
 
-
         #region boutons 
-
         private async void BoutonEnregistrerInvitation_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 this.invitation.SynchroniserTout();
-                if (this.invitation.Invitation.IdInvitation != 0)
+
+                VuePageAvertissementInvitation fenetreVerif = new VuePageAvertissementInvitation(this.invitation);
+
+                bool? resultat = fenetreVerif.ShowDialog();
+
+                if (fenetreVerif.InvitationConfirmee)
                 {
-                    await this.invitationDAO.ModifierInvitation(this.invitation.Invitation);
+                    if (this.invitation.Invitation.IdInvitation != 0)
+                    {
+                        await this.invitationDAO.ModifierInvitation(this.invitation.Invitation);
+                    }
+                    else
+                    {
+                        await this.invitationDAO.AjouterInvitation(this.invitation.Invitation);
+                    }
+
+                    Navigation.AllerInvitations(this);
                 }
-                else
-                {
-                    await this.invitationDAO.AjouterInvitation(this.invitation.Invitation);
-                }
-                Navigation.AllerInvitations(this);
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Erreur lors de l'enregistrement de l'invitation : {ex.Message}", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"Erreur lors de l'analyse ou l'enregistrement : {ex.Message}", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-
         #endregion
 
     }
