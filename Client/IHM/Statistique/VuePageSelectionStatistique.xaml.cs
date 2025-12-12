@@ -90,6 +90,12 @@ namespace IHM_Footies.Statistique
             this.vmPageStatistique.RechercherInviteStatistique(string.Empty);
         }
 
+        private void BoutonRefreshPlat_Click(object sender, RoutedEventArgs e)
+        {
+            this.vmPageStatistique.TexteRecherchePlatStats = string.Empty;
+            this.vmPageStatistique.RechercherPlatStatistique(string.Empty);
+        }
+
         /// <summary>
         /// Bouton pour rechercher un invité dans la barre de recherche des statistiques
         /// </summary>
@@ -98,6 +104,11 @@ namespace IHM_Footies.Statistique
         private void RechercheInvite_Click(object sender, RoutedEventArgs e)
         {
             this.vmPageStatistique.RechercherInviteStatistique(this.vmPageStatistique.TexteRechercheInviteStats);
+        }
+
+        private void RecherchePlat_Click(object sender, RoutedEventArgs e)
+        {
+            this.vmPageStatistique.RechercherPlatStatistique(this.vmPageStatistique.TexteRecherchePlatStats);
         }
         #endregion
 
