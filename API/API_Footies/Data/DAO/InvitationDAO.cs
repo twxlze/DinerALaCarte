@@ -1,7 +1,9 @@
 ﻿using System.Data;
+using System.Text.Json;
 using API_Footies.Data.Interfaces;
 using API_Footies.Metier;
 using API_Footies.Metier.Enum;
+using Microsoft.Extensions.Options;
 
 namespace API_Footies.Data.DAO
 {
@@ -233,6 +235,31 @@ namespace API_Footies.Data.DAO
                 invites.Add(invite);
             }
             return invites;
+        }
+
+        public List<AvisDetail> ObtenirAvisParInvitation(long idInvitation)
+        {
+            List<AvisDetail> avisList = new List<AvisDetail>();
+            using (SQLiteConnector connection = new SQLiteConnector())
+            {
+                string query = @"SELECT i.Nom AS NomInvite, i.Prenom AS PrenomInvite, p.Nom AS NomPlat, ap.Note, ap.Commentaire FROM Avis_Plat ap JOIN Invite i ON ap.IdInvite = i.IDInvite JOIN Plat p ON ap.IdPlat = p.IDPlat WHERE ap.IdPlat IN ( SELECT IdPlat FROM Invitation_Plat WHERE IdInvitation = @IdInv UNION SELECT mp.IdPlat  FROM Invitation_Menu im JOIN Menu_Plat mp ON im.IdMenu = mp.IdMenu WHERE im.IdInvitation = @IdInv )";
+
+                Dictionary<string, object> parameters = new Dictionary<string, object> { { "@IdInv", idInvitation } };
+                DataTable table = connection.ExecuteQuery(query, parameters);
+
+                foreach (DataRow row in table.Rows)
+                {
+                    avisList.Add(new AvisDetail
+                    {
+                        NomInvite = row["NomInvite"].ToString(),
+                        PrenomInvite = row["PrenomInvite"].ToString(),
+                        NomPlat = row["NomPlat"].ToString(),
+                        Note = Convert.ToInt32(row["Note"]),
+                        Commentaire = row["Commentaire"].ToString()
+                    });
+                }
+            }
+            return avisList;
         }
 
         private List<NomAllergene> ObtenirAllergenesDeInvite(SQLiteConnector connection, long idInvite)
