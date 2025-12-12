@@ -312,39 +312,6 @@ namespace VM_Footies.VM
             }
         }
 
-        private void SynchroniserPlatsEntree(List<Plat> platsSelectionnes)
-        {
-            foreach (VMPlat vmPlat in PlatsEntree)
-            {
-                if (vmPlat.EstSelectionne)
-                {
-                    platsSelectionnes.Add(vmPlat.Plat);
-                }
-            }
-        }
-
-        private void SynchroniserPlatsPlats(List<Plat> platsSelectionnes)
-        {
-            foreach (VMPlat vmPlat in PlatsPlat)
-            {
-                if (vmPlat.EstSelectionne)
-                {
-                    platsSelectionnes.Add(vmPlat.Plat);
-                }
-            }
-        }
-
-        private void SynchroniserPlatsDesserts(List<Plat> platsSelectionnes)
-        {
-            foreach (VMPlat vmPlat in PlatsDessert)
-            {
-                if (vmPlat.EstSelectionne)
-                {
-                    platsSelectionnes.Add(vmPlat.Plat);
-                }
-            }
-        }
-
         /// <summary>
         /// Ajoute un gestionnaire d'événement pour un VMPlatSelectionne
         /// </summary>
