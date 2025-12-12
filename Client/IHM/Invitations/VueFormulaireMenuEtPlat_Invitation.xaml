@@ -287,13 +287,13 @@
                 Width="192"/>
         </StackPanel>
 
-        <TextBlock Grid.Column="1" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Gestion des invitations" VerticalAlignment="Top" FontWeight="Bold" FontSize="20" Foreground="#B44B3E" Margin="0,3,0,0"/>
+        <TextBlock Grid.Column="1" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{x:Static res:Strings.gestinvit}" VerticalAlignment="Top" FontWeight="Bold" FontSize="20" Foreground="#B44B3E" Margin="0,3,0,0"/>
         <Image Source="{StaticResource ResourceKey=LogoHostably}" Margin="15,10,121,17" />
 
 
         <!-- Plats -->
 
-        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Plats" VerticalAlignment="Top" FontWeight="Bold" FontSize="15" Foreground="#B44B3E" Margin="261,68,0,0" RenderTransformOrigin="0.539,0.751" Grid.Column="1" Grid.RowSpan="2">
+        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="{x:Static res:Strings.platinvit}" VerticalAlignment="Top" FontWeight="Bold" FontSize="15" Foreground="#B44B3E" Margin="261,68,0,0" RenderTransformOrigin="0.539,0.751" Grid.Column="1" Grid.RowSpan="2">
             <TextBlock.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -323,7 +323,7 @@
         </Border>
 
 
-        <Button Grid.Column="1" Content="Enregistrer" HorizontalAlignment="Left" Margin="380,19,0,68" Grid.Row="6" Width="181" Style="{StaticResource StyleBoutonMenu}" Grid.RowSpan="2" Click="BoutonEnregistrerInvitation_Click" />
+        <Button Grid.Column="1" Content="{x:Static res:Strings.Enregistrer}" HorizontalAlignment="Left" Margin="380,19,0,68" Grid.Row="6" Width="181" Style="{StaticResource StyleBoutonMenu}" Grid.RowSpan="2" Click="BoutonEnregistrerInvitation_Click" />
         <!-- souton refresh -->
         <Button x:Name="BoutonRetourApresRecherche"
           Style="{StaticResource StyleBoutonRetour}"

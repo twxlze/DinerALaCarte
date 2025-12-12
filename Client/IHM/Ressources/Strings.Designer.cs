@@ -115,6 +115,15 @@ namespace IHM_Footies.Ressources {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Ajouter une invitation.
+        /// </summary>
+        public static string ajoutinvit {
+            get {
+                return ResourceManager.GetString("ajoutinvit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Allergène(s).
         /// </summary>
         public static string Allergene {
@@ -223,6 +232,15 @@ namespace IHM_Footies.Ressources {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Commentaire (facultatif).
+        /// </summary>
+        public static string comfac {
+            get {
+                return ResourceManager.GetString("comfac", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Commentaires et impressions.
         /// </summary>
         public static string CommentairesImpression {
@@ -295,6 +313,15 @@ namespace IHM_Footies.Ressources {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à 2. Sélectionnez un plat.
+        /// </summary>
+        public static string deuxplat {
+            get {
+                return ResourceManager.GetString("deuxplat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à *Double-cliquez sur un élément pour afficher ses détails..
         /// </summary>
         public static string Double_Click {
@@ -340,6 +367,15 @@ namespace IHM_Footies.Ressources {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Enregistrer la note.
+        /// </summary>
+        public static string enregistrernote {
+            get {
+                return ResourceManager.GetString("enregistrernote", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à S&apos;enregistrer.
         /// </summary>
         public static string enregistrerr {
@@ -372,6 +408,15 @@ namespace IHM_Footies.Ressources {
         public static string Francais {
             get {
                 return ResourceManager.GetString("Francais", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Gestion des invitations.
+        /// </summary>
+        public static string gestinvit {
+            get {
+                return ResourceManager.GetString("gestinvit", resourceCulture);
             }
         }
         
@@ -439,6 +484,15 @@ namespace IHM_Footies.Ressources {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Groupe d&apos;invités.
+        /// </summary>
+        public static string GwoupInvite {
+            get {
+                return ResourceManager.GetString("GwoupInvite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Informations.
         /// </summary>
         public static string Information {
@@ -489,6 +543,15 @@ namespace IHM_Footies.Ressources {
         public static string InviteGroupe {
             get {
                 return ResourceManager.GetString("InviteGroupe", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Invites.
+        /// </summary>
+        public static string inviteinvit {
+            get {
+                return ResourceManager.GetString("inviteinvit", resourceCulture);
             }
         }
         
@@ -628,6 +691,15 @@ namespace IHM_Footies.Ressources {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Modifier une invitation.
+        /// </summary>
+        public static string modifinvit {
+            get {
+                return ResourceManager.GetString("modifinvit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Mon Profil.
         /// </summary>
         public static string Monprofil {
@@ -691,6 +763,24 @@ namespace IHM_Footies.Ressources {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Notation des plats.
+        /// </summary>
+        public static string Noteplat {
+            get {
+                return ResourceManager.GetString("Noteplat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Noter des plats.
+        /// </summary>
+        public static string noterplat {
+            get {
+                return ResourceManager.GetString("noterplat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Plat.
         /// </summary>
         public static string Plat {
@@ -732,6 +822,15 @@ namespace IHM_Footies.Ressources {
         public static string PlatFavori {
             get {
                 return ResourceManager.GetString("PlatFavori", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Plats.
+        /// </summary>
+        public static string platinvit {
+            get {
+                return ResourceManager.GetString("platinvit", resourceCulture);
             }
         }
         
@@ -808,6 +907,15 @@ namespace IHM_Footies.Ressources {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Rechercher....
+        /// </summary>
+        public static string rechercher {
+            get {
+                return ResourceManager.GetString("rechercher", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Réglages.
         /// </summary>
         public static string Reglages {
@@ -844,6 +952,15 @@ namespace IHM_Footies.Ressources {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à 🛈Sélectionnez les invités pour afficher leurs statistiques de fréquence de venue.
+        /// </summary>
+        public static string Se {
+            get {
+                return ResourceManager.GetString("Se", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Sélectionner tout.
         /// </summary>
         public static string selecttout {
@@ -867,6 +984,15 @@ namespace IHM_Footies.Ressources {
         public static string StatsPage {
             get {
                 return ResourceManager.GetString("StatsPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Page suivante.
+        /// </summary>
+        public static string suivante {
+            get {
+                return ResourceManager.GetString("suivante", resourceCulture);
             }
         }
         
@@ -907,6 +1033,15 @@ namespace IHM_Footies.Ressources {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Supprimer une invitation.
+        /// </summary>
+        public static string supprinvit {
+            get {
+                return ResourceManager.GetString("supprinvit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à 📈 Tableau de Bord.
         /// </summary>
         public static string TableaudeBord {
@@ -930,6 +1065,24 @@ namespace IHM_Footies.Ressources {
         public static string Telephone {
             get {
                 return ResourceManager.GetString("Telephone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à 3. Note attribuée (1-10).
+        /// </summary>
+        public static string troisnote {
+            get {
+                return ResourceManager.GetString("troisnote", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à 1. Sélectionnez un invité.
+        /// </summary>
+        public static string uninvit {
+            get {
+                return ResourceManager.GetString("uninvit", resourceCulture);
             }
         }
         

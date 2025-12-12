@@ -318,7 +318,7 @@
   <data name="StatsPage" xml:space="preserve">
     <value>Statistiques des invités</value>
   </data>
-  <data name="messageStats" xml:space="preserve">
+  <data name="Se" xml:space="preserve">
     <value>🛈Sélectionnez les invités pour afficher leurs statistiques de fréquence de venue</value>
   </data>
   <data name="selecttout" xml:space="preserve">
@@ -410,5 +410,56 @@
   </data>
   <data name="pseudo" xml:space="preserve">
     <value>Pseudo</value>
+  </data>
+  <data name="rechercher" xml:space="preserve">
+    <value>Rechercher...</value>
+  </data>
+  <data name="inviteinvit" xml:space="preserve">
+    <value>Invites</value>
+  </data>
+  <data name="GwoupInvite" xml:space="preserve">
+    <value>Groupe d'invités</value>
+  </data>
+  <data name="suivante" xml:space="preserve">
+    <value>Page suivante</value>
+  </data>
+  <data name="platinvit" xml:space="preserve">
+    <value>Plats</value>
+  </data>
+  <data name="gestinvit" xml:space="preserve">
+    <value>Gestion des invitations</value>
+  </data>
+  <data name="Noteplat" xml:space="preserve">
+    <value>Notation des plats</value>
+  </data>
+  <data name="uninvit" xml:space="preserve">
+    <value>1. Sélectionnez un invité</value>
+  </data>
+  <data name="deuxplat" xml:space="preserve">
+    <value>2. Sélectionnez un plat</value>
+  </data>
+  <data name="troisnote" xml:space="preserve">
+    <value>3. Note attribuée (1-10)</value>
+  </data>
+  <data name="comfac" xml:space="preserve">
+    <value>Commentaire (facultatif)</value>
+  </data>
+  <data name="enregistrernote" xml:space="preserve">
+    <value>Enregistrer la note</value>
+  </data>
+  <data name="ajoutinvit" xml:space="preserve">
+    <value>Ajouter une invitation</value>
+  </data>
+  <data name="modifinvit" xml:space="preserve">
+    <value>Modifier une invitation</value>
+  </data>
+  <data name="supprinvit" xml:space="preserve">
+    <value>Supprimer une invitation</value>
+  </data>
+  <data name="noterplat" xml:space="preserve">
+    <value>Noter des plats</value>
+  </data>
+  <data name="messageStats" xml:space="preserve">
+    <value>🛈Sélectionnez les invités pour afficher leurs statistiques de fréquence de venue</value>
   </data>
 </root>

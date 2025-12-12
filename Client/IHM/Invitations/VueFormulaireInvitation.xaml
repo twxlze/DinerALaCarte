@@ -252,7 +252,7 @@
 
         <!-- Nom du menu -->
 
-        <TextBlock Grid.Column="1" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" FontWeight="Bold" FontSize="20" Foreground="#B44B3E" Margin="95,38,0,0"><Run Language="fr-fr" Text="Nom :"/></TextBlock>
+        <TextBlock Grid.Column="1" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" FontWeight="Bold" FontSize="20" Foreground="#B44B3E" Margin="95,38,0,0"><Run Language="fr-fr" Text="{x:Static res:Strings.Name}"/></TextBlock>
         <TextBox Grid.Column="1" Margin="163,43,151,17" Text="{Binding Nom, UpdateSourceTrigger=PropertyChanged}"/>
 
         <!-- Groupe invités -->
@@ -291,7 +291,7 @@
 
         <!-- Invites -->
 
-        <TextBlock Grid.Column="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Invites" VerticalAlignment="Top" FontWeight="Bold" FontSize="15" Foreground="#B44B3E" Margin="119,75,0,0" RenderTransformOrigin="0.5,0.5" Grid.RowSpan="2">
+        <TextBlock Grid.Column="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{x:Static res:Strings.inviteinvit}" VerticalAlignment="Top" FontWeight="Bold" FontSize="15" Foreground="#B44B3E" Margin="119,75,0,0" RenderTransformOrigin="0.5,0.5" Grid.RowSpan="2">
             <TextBlock.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
