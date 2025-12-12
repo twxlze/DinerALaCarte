@@ -232,6 +232,42 @@ namespace IHM_Footies.Ressources {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Connexion.
+        /// </summary>
+        public static string connexionvue {
+            get {
+                return ResourceManager.GetString("connexionvue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Pas encore de compte ? Créer un compte.
+        /// </summary>
+        public static string Creeruncompte {
+            get {
+                return ResourceManager.GetString("Creeruncompte", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à CRÉER UN COMPTE.
+        /// </summary>
+        public static string Creeruncomptetitre {
+            get {
+                return ResourceManager.GetString("Creeruncomptetitre", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Se déconnecter.
+        /// </summary>
+        public static string deconect {
+            get {
+                return ResourceManager.GetString("deconect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Description.
         /// </summary>
         public static string Description {
@@ -300,6 +336,15 @@ namespace IHM_Footies.Ressources {
         public static string Enregistrer {
             get {
                 return ResourceManager.GetString("Enregistrer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à S&apos;enregistrer.
+        /// </summary>
+        public static string enregistrerr {
+            get {
+                return ResourceManager.GetString("enregistrerr", resourceCulture);
             }
         }
         
@@ -412,6 +457,15 @@ namespace IHM_Footies.Ressources {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Vos informations personnelles.
+        /// </summary>
+        public static string infosperso {
+            get {
+                return ResourceManager.GetString("infosperso", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Ingrédient(s).
         /// </summary>
         public static string Ingredient {
@@ -462,6 +516,15 @@ namespace IHM_Footies.Ressources {
         public static string mail {
             get {
                 return ResourceManager.GetString("mail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Mot de passe.
+        /// </summary>
+        public static string mdp {
+            get {
+                return ResourceManager.GetString("mdp", resourceCulture);
             }
         }
         
@@ -561,6 +624,15 @@ namespace IHM_Footies.Ressources {
         public static string ModifierPlat {
             get {
                 return ResourceManager.GetString("ModifierPlat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Mon Profil.
+        /// </summary>
+        public static string Monprofil {
+            get {
+                return ResourceManager.GetString("Monprofil", resourceCulture);
             }
         }
         
@@ -718,6 +790,24 @@ namespace IHM_Footies.Ressources {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Pseudo.
+        /// </summary>
+        public static string pseudo {
+            get {
+                return ResourceManager.GetString("pseudo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Pseudo :.
+        /// </summary>
+        public static string pseudopur {
+            get {
+                return ResourceManager.GetString("pseudopur", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Réglages.
         /// </summary>
         public static string Reglages {
@@ -732,6 +822,15 @@ namespace IHM_Footies.Ressources {
         public static string Remarque {
             get {
                 return ResourceManager.GetString("Remarque", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Retour à la connexion.
+        /// </summary>
+        public static string Retouralaco {
+            get {
+                return ResourceManager.GetString("Retouralaco", resourceCulture);
             }
         }
         

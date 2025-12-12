@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:IHM_Footies.Connexion"
+        xmlns:res="clr-namespace:IHM_Footies.Ressources"
         mc:Ignorable="d"
         Title="Connexion - Hostably" Height="450" Width="800"
         Background="#F9F9F9"
@@ -115,12 +116,12 @@
         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Width="300">
             <Image Source="{StaticResource ResourceKey=LogoHostably}" Width="80" Height="80" Margin="0,0,0,20"/>
             <TextBlock Text="À table !" FontSize="28" FontWeight="Bold" Foreground="#B44B3E" HorizontalAlignment="Center" FontFamily="Montserrat" Margin="0,0,0,40"/>
-            <TextBlock Text="Pseudo" FontFamily="Poppins" FontSize="14" FontWeight="SemiBold" Foreground="#B44B3E" Margin="0,0,0,5"/>
+            <TextBlock Text="{x:Static res:Strings.pseudo}" FontFamily="Poppins" FontSize="14" FontWeight="SemiBold" Foreground="#B44B3E" Margin="0,0,0,5"/>
             <TextBox x:Name="ChampPseudo" Text="{Binding Pseudo, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource StyleChamp}" Margin="0,0,0,20"/>
-            <TextBlock Text="Mot de passe" FontFamily="Poppins" FontSize="14"  FontWeight="SemiBold" Foreground="#B44B3E" Margin="0,0,0,5"/>
+            <TextBlock Text="{x:Static res:Strings.mdp}" FontFamily="Poppins" FontSize="14"  FontWeight="SemiBold" Foreground="#B44B3E" Margin="0,0,0,5"/>
             <PasswordBox x:Name="ChampMotDePasse" Style="{StaticResource StyleChampMotDePasse}" Margin="0,0,0,30"/>
-            <Button x:Name="BoutonConnexion" Content="Connexion" Style="{StaticResource StyleBoutonConnexion}" Width="200" Height="40" Click="BoutonConnexion_Click" Margin="0,0,0,15"/>
-            <Button x:Name="BoutonCreationCompte" Content="Pas encore de compte ? Créer un compte" Style="{StaticResource StyleBoutonLien}" Click="BoutonCreationCompte_Click"/>
+            <Button x:Name="BoutonConnexion" Content="{x:Static res:Strings.connexionvue}" Style="{StaticResource StyleBoutonConnexion}" Width="200" Height="40" Click="BoutonConnexion_Click" Margin="0,0,0,15"/>
+            <Button x:Name="BoutonCreationCompte" Content="{x:Static res:Strings.Creeruncompte}" Style="{StaticResource StyleBoutonLien}" Click="BoutonCreationCompte_Click"/>
         </StackPanel>
     </Grid>
 </Window>

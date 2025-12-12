@@ -110,7 +110,8 @@
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200"/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="59*"/>
+            <ColumnDefinition Width="61*"/>
         </Grid.ColumnDefinitions>
 
         <!-- Bouton fermer -->
@@ -126,7 +127,7 @@
     VerticalAlignment="Top"
     Margin="0,5,8,0"
     Click="ButonFermerFenetre_Click"
-    Grid.Column="1"/>
+    Grid.Column="2"/>
 
         <!-- Menu à gauche -->
         <Border BorderBrush="#8C2F26"  BorderThickness="0,0,2,0" Grid.Column="0" Grid.RowSpan="9">
@@ -160,13 +161,13 @@
         </Border>
         <Image Source="{StaticResource ResourceKey=LogoHostably}" Margin="14,10,122,17"/>
 
-        <TextBlock Grid.Column="1" HorizontalAlignment="Center" TextWrapping="Wrap" 
-                   Text="Mon Profil" 
-                   VerticalAlignment="Top" FontWeight="Bold" FontSize="20" Foreground="#B44B3E" Margin="0,20,0,0"/>
+        <TextBlock Grid.Column="1" HorizontalAlignment="Left" TextWrapping="Wrap" 
+                   Text="{x:Static res:Strings.Monprofil}" 
+                   VerticalAlignment="Top" FontWeight="Bold" FontSize="20" Foreground="#B44B3E" Margin="250,20,0,0" Grid.ColumnSpan="2"/>
 
-        <TextBlock Grid.Column="1" HorizontalAlignment="Center" TextWrapping="Wrap" 
-                   Text="Vos informations personnelles" 
-                   VerticalAlignment="Top" FontWeight="SemiBold" FontSize="16" Foreground="#B44B3E" Margin="0,60,0,0" Grid.RowSpan="2"/>
+        <TextBlock Grid.Column="1" HorizontalAlignment="Left" TextWrapping="Wrap" 
+                   Text="{x:Static res:Strings.infosperso}" 
+                   VerticalAlignment="Top" FontWeight="SemiBold" FontSize="16" Foreground="#B44B3E" Margin="191,60,0,0" Grid.ColumnSpan="2"/>
 
         <Border BorderBrush="#8C2F26" 
                 Grid.Column="1" Grid.Row="1" Grid.RowSpan="7" 
@@ -174,7 +175,7 @@
                 BorderThickness="3"
                 CornerRadius="10"
                 Padding="20"
-                Background="White">
+                Background="White" Grid.ColumnSpan="2">
 
             <Grid>
                 <Grid.RowDefinitions>
@@ -199,16 +200,16 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
-                    <TextBlock Text="Pseudo :" Style="{StaticResource LabelInfo}" Grid.Row="0" Grid.Column="0"/>
+                    <TextBlock Text="{x:Static res:Strings.pseudopur}" Style="{StaticResource LabelInfo}" Grid.Row="0" Grid.Column="0"/>
                     <TextBlock Text="{Binding Utilisateur.Pseudo}" Style="{StaticResource ValeurInfo}" Grid.Row="0" Grid.Column="1"/>
 
-                    <TextBlock Text="Nom :" Style="{StaticResource LabelInfo}" Grid.Row="1" Grid.Column="0"/>
+                    <TextBlock Text="{x:Static res:Strings.Name}" Style="{StaticResource LabelInfo}" Grid.Row="1" Grid.Column="0"/>
                     <TextBlock Text="{Binding Utilisateur.Nom}" Style="{StaticResource ValeurInfo}" Grid.Row="1" Grid.Column="1"/>
 
-                    <TextBlock Text="Prénom :" Style="{StaticResource LabelInfo}" Grid.Row="2" Grid.Column="0"/>
+                    <TextBlock Text="{x:Static res:Strings.FirstName}" Style="{StaticResource LabelInfo}" Grid.Row="2" Grid.Column="0"/>
                     <TextBlock Text="{Binding Utilisateur.Prenom}" Style="{StaticResource ValeurInfo}" Grid.Row="2" Grid.Column="1"/>
 
-                    <TextBlock Text="Email :" Style="{StaticResource LabelInfo}" Grid.Row="3" Grid.Column="0"/>
+                    <TextBlock Text="{x:Static res:Strings.mail}" Style="{StaticResource LabelInfo}" Grid.Row="3" Grid.Column="0"/>
                     <TextBlock Text="{Binding Utilisateur.Mail}" Style="{StaticResource ValeurInfo}" Grid.Row="3" Grid.Column="1"/>
 
                     <TextBlock Text="Téléphone :" Style="{StaticResource LabelInfo}" Grid.Row="4" Grid.Column="0"/>
@@ -219,13 +220,13 @@
 
         <Button x:Name="BoutonDeconnexion"
                 Grid.Row="7" Grid.Column="1" Grid.RowSpan="2"
-                Content="Se déconnecter" 
-                HorizontalAlignment="Center" 
+                Content="{x:Static res:Strings.deconect}" 
+                HorizontalAlignment="Left" 
                 VerticalAlignment="Top" 
                 Height="40" Width="240" 
                 Style="{StaticResource StyleBoutonDeconnexion}" 
                 Click="BoutonDeconnexion_Click"
-                Margin="0,53,0,0"/>
+                Margin="180,53,0,0" Grid.ColumnSpan="2"/>
 
     </Grid>
 </Window>

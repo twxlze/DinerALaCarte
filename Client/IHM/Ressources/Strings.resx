@@ -378,4 +378,37 @@
   <data name="Remarque" xml:space="preserve">
     <value>💬 Remarques</value>
   </data>
+  <data name="mdp" xml:space="preserve">
+    <value>Mot de passe</value>
+  </data>
+  <data name="connexionvue" xml:space="preserve">
+    <value>Connexion</value>
+  </data>
+  <data name="Creeruncompte" xml:space="preserve">
+    <value>Pas encore de compte ? Créer un compte</value>
+  </data>
+  <data name="Creeruncomptetitre" xml:space="preserve">
+    <value>CRÉER UN COMPTE</value>
+  </data>
+  <data name="enregistrerr" xml:space="preserve">
+    <value>S'enregistrer</value>
+  </data>
+  <data name="Retouralaco" xml:space="preserve">
+    <value>Retour à la connexion</value>
+  </data>
+  <data name="Monprofil" xml:space="preserve">
+    <value>Mon Profil</value>
+  </data>
+  <data name="infosperso" xml:space="preserve">
+    <value>Vos informations personnelles</value>
+  </data>
+  <data name="deconect" xml:space="preserve">
+    <value>Se déconnecter</value>
+  </data>
+  <data name="pseudopur" xml:space="preserve">
+    <value>Pseudo :</value>
+  </data>
+  <data name="pseudo" xml:space="preserve">
+    <value>Pseudo</value>
+  </data>
 </root>
