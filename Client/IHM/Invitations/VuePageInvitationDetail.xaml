@@ -237,7 +237,6 @@
                     </StackPanel>
                 </ScrollViewer>
             </Border>
-
         </Grid>
     </Border>
 </Window>

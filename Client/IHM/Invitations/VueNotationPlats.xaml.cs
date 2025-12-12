@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Net.Http;
+using System.Windows;
 using METIER_Footies.Data;
 using METIER_Footies.Metier;
 using VM_Footies.VM;
@@ -146,35 +147,30 @@ namespace IHM_Footies.Invitations
         {
             try
             {
+                int note = Int32.Parse(this.vmPageNotePlat.NoteSaisie);
                 if (this.vmPageNotePlat.InviteSelectionne == null || this.vmPageNotePlat.PlatSelectionne == null)
                 {
                     MessageBox.Show("Veuillez sélectionner un invité et un plat.", "Validation", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
-
-                int note = Int32.Parse(this.vmPageNotePlat.NoteSaisie);
-                if (note < 1 || note > 10)
+                else if (note < 1 || note > 10)
                 {
                     MessageBox.Show("La note doit être un chiffre entre 1 et 10.", "Validation", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
-
-                if (this.vmPageNotePlat.NoteSaisie == null)
-                {
-                    MessageBox.Show("Veuillez saisir une note.", "Validation", MessageBoxButton.OK, MessageBoxImage.Warning);
-                }
-
-                Avis nouvelAvis = new Avis(this.vmPageNotePlat.PlatSelectionne.Id, this.vmPageNotePlat.InviteSelectionne.Id, note, this.vmPageNotePlat.CommentaireSaisi);
-                METIER_Footies.Data.PlatDAO platDAO = new METIER_Footies.Data.PlatDAO();
-                System.Net.Http.HttpResponseMessage reponse = await platDAO.AjouterAvis(nouvelAvis);
-
-                if (reponse.IsSuccessStatusCode)
-                {
-                    MessageBox.Show("Note et commentaire enregistrés !", "Succès", MessageBoxButton.OK, MessageBoxImage.Information);
-                    Navigation.AllerInvitations(this);
-                }
                 else
                 {
-                    string erreur = await reponse.Content.ReadAsStringAsync();
-                    MessageBox.Show($"L'API a refusé l'ajout : {erreur}", "Erreur API", MessageBoxButton.OK, MessageBoxImage.Error);
+                    Avis nouvelAvis = new Avis(this.vmPageNotePlat.PlatSelectionne.Id, this.vmPageNotePlat.InviteSelectionne.Id, note, this.vmPageNotePlat.CommentaireSaisi);
+                    PlatDAO platDAO = new PlatDAO();
+                    HttpResponseMessage reponse = await platDAO.AjouterAvis(nouvelAvis);
+                    if (reponse.IsSuccessStatusCode)
+                    {
+                        MessageBox.Show("Note et commentaire enregistrés !", "Succès", MessageBoxButton.OK, MessageBoxImage.Information);
+                        Navigation.AllerInvitations(this);
+                    }
+                    else
+                    {
+                        string erreur = await reponse.Content.ReadAsStringAsync();
+                        MessageBox.Show($"L'API a refusé l'ajout : {erreur}", "Erreur API", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
                 }
             }
             catch (Exception ex)
