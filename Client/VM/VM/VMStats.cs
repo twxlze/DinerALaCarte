@@ -12,9 +12,10 @@ namespace VM_Footies.VM
         #region Attribut
         private List<VMInvitation> _invitationsParticipe;
         private VMInvite _invite;
+        private VMPlat plat;
         #endregion
 
-        #region
+        #region Propriétés
         /// <summary>
         /// Les invitations auxquelles l'invité a participé
         /// </summary>
@@ -37,6 +38,14 @@ namespace VM_Footies.VM
         }
 
         /// <summary>
+        /// Nom du plat qui revient le plus souvent
+        /// </summary>
+        public string NomPlat
+        {
+            get { return plat.Nom; }
+        }
+
+        /// <summary>
         /// Le nombre de participations de l'invité
         /// </summary>
         public int NombreParticipation
@@ -47,11 +56,24 @@ namespace VM_Footies.VM
         public event PropertyChangedEventHandler? PropertyChanged;
         #endregion
 
-
         #region Constructeur
-        public VMStats(VMInvite vMInvite) 
+        /// <summary>
+        /// Constructeur de VMStat prenant en compte un invité
+        /// </summary>
+        /// <param name="vMInvite"> L'invité </param>
+        public VMStats(VMInvite vMInvite)
         { 
             this._invite = vMInvite;
+            _invitationsParticipe = new List<VMInvitation>();
+        }
+
+        /// <summary>
+        /// Constructeur de VMStat prenant en compte un plat
+        /// </summary>
+        /// <param name="vMPlat">Le plat </param>
+        public VMStats(VMPlat vMPlat)
+        {
+            this.plat = vMPlat;
             _invitationsParticipe = new List<VMInvitation>();
         }
         #endregion

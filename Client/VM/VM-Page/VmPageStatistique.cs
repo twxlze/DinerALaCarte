@@ -20,12 +20,23 @@ namespace VM_Footies.VM_Page
     {
         #region Attributs
         private VMPageInvitation _invitation;
+
         private VMPageInvite _invite;
         private bool _toutSelectionner;
         private string texteRecherche;
         private PlotModel statistiqueModel;
         private ObservableCollection<VMInvite> _invitesStats;
         private List<VMInvite> invitesSelectionnesSauvegardes;
+
+        private VMPagePlat plat;
+        private bool toutSelectionnerPlat;
+        private string texteRecherchePlat;
+        private ObservableCollection<VMPlat> platsStats;
+        private List<VMPlat> platsSelectionnesSauvegardes;
+        private PlotModel statistiqueModelPlat;
+
+        private PlotModel statistiqueModelAimes;
+        private PlotModel statistiqueModelDetestes;
         #endregion
 
         #region Propriétés
@@ -109,6 +120,81 @@ namespace VM_Footies.VM_Page
         }
 
         /// <summary>
+        /// Modèle de graphique pour les statistiques des plats
+        /// </summary>
+        public PlotModel StatistiqueModelPlat
+        {
+            get { return this.statistiqueModelPlat; }
+            set
+            {
+                this.statistiqueModelPlat = value;
+                Notify("StatistiqueModelPlat");
+            }
+        }
+
+        /// <summary>
+        /// Liste de tous les plats pour les statistiques
+        /// </summary>
+        public ObservableCollection<VMPlat> PlatsStats
+        {
+            get { return platsStats; }
+            set
+            {
+                platsStats = value;
+                Notify("PlatsStats");
+            }
+        }
+
+        /// <summary>
+        /// Liste des plats selectionnés
+        /// </summary>
+        public List<VMPlat> EstSelectionne
+        {
+            get
+            {
+                List<VMPlat> plats = new List<VMPlat>();
+                if (platsSelectionnesSauvegardes != null)
+                {
+                    plats = platsSelectionnesSauvegardes.Where(plat => plat.EstSelectionne == true).ToList();
+                }
+                return plats;
+            }
+        }
+
+        /// <summary>
+        /// Indique si tous les plats sont sélectionnés
+        /// </summary>
+        public bool ToutSelectionnerPlat
+        {
+            get => this.toutSelectionnerPlat;
+            set
+            {
+                if (this.toutSelectionnerPlat != value)
+                {
+                    this.toutSelectionnerPlat = value;
+                    foreach (VMPlat plat in this.platsStats)
+                    {
+                        plat.EstSelectionne = value;
+                    }
+                    Notify("ToutSelectionnerPlat");
+                }
+            }
+        }
+
+        /// <summary>
+        /// Texte de recherche pour filtrer les plats
+        /// </summary>
+        public string TexteRecherchePlatStats
+        {
+            get { return this.texteRecherchePlat; }
+            set
+            {
+                this.texteRecherchePlat = value;
+                Notify("TexteRecherchePlatStats");
+            }
+        }
+
+        /// <summary>
         /// Événement déclenché lorsqu'une propriété change
         /// </summary>
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -118,6 +204,31 @@ namespace VM_Footies.VM_Page
         /// </summary>
         public VMPageInvitation Invitation { get { return _invitation; } }
 
+        /// <summary>
+        /// Modèle de graphique pour les statistiques des plats aimés
+        /// </summary>
+        public PlotModel StatistiqueModelAimes
+        {
+            get { return this.statistiqueModelAimes; }
+            set
+            {
+                this.statistiqueModelAimes = value;
+                Notify("StatistiqueModelAimes");
+            }
+        }
+
+        /// <summary>
+        /// Modèle de graphique pour les statistiques des plats détestés
+        /// </summary>
+        public PlotModel StatistiqueModelDetestes
+        {
+            get { return this.statistiqueModelDetestes; }
+            set
+            {
+                this.statistiqueModelDetestes = value;
+                Notify("StatistiqueModelDetestes");
+            }
+        }
         #endregion
 
         #region Constructeur
@@ -127,16 +238,27 @@ namespace VM_Footies.VM_Page
         /// <param name="vMPageInvitation">prend en parametre les invitations</param>
         public VmPageStatistique()
         {
+            this.Initialiser();
+            ChargerDonneesInvite();
+            ChargerDonneesPlat();
+        }
+
+        private void Initialiser()
+        {
             this._invitation = new VMPageInvitation();
             this._invite = new VMPageInvite();
             this._invitesStats = new ObservableCollection<VMInvite>();
             this._toutSelectionner = false;
             this.texteRecherche = string.Empty;
-            ChargerDonneesInvite();
+
+            this.plat = new VMPagePlat();
+            this.platsStats = new ObservableCollection<VMPlat>();
+            this.toutSelectionnerPlat = false;
+            this.texteRecherchePlat = string.Empty;
         }
         #endregion
 
-        #region Méthodes publiques
+        #region Méthodes stats - invités
         /// <summary>
         /// Initialise les statistiques des invités
         /// </summary>
@@ -151,6 +273,7 @@ namespace VM_Footies.VM_Page
             }
             InvitesStats = new ObservableCollection<VMInvite>(invitesSelectionnesSauvegardes);
         }
+
 
         /// <summary>
         /// Charge les données des invités pour initialiser les statistiques
@@ -228,33 +351,197 @@ namespace VM_Footies.VM_Page
         /// </summary>
         public async void CreerStatistique()
         {
+            Dictionary<string, int> donnees = await GenererDonneesStatistiques();
+            StatistiqueModel = GenererGraphique("Fréquence de venue des invités",OxyColor.FromRgb(255, 250, 240), OxyColors.DarkBlue,"Invités","Fréquence de venue",OxyColor.FromArgb(255, 140, 47, 38),donnees);
+        }
+        #endregion
+
+        #region Méthodes stats - plats
+        /// <summary>
+        /// Initialise les statistiques des plats
+        /// </summary>
+        public void InitialiserStatsPlats()
+        {
+            this.platsStats.Clear();
+            this.platsSelectionnesSauvegardes = new List<VMPlat>();
+            foreach (VMPlat plat in this.plat.VMPlat)
+            {
+                VMPlat vmStats = new VMPlat(plat);
+                platsSelectionnesSauvegardes.Add(vmStats);
+            }
+            PlatsStats = new ObservableCollection<VMPlat>(this.platsSelectionnesSauvegardes);
+        }
+
+        /// <summary>
+        /// Charge les données des plats pour initialiser les statistiques
+        /// </summary>
+        public async void ChargerDonneesPlat()
+        {
+            await plat.ChargerPlats();
+            InitialiserStatsPlats();
+        }
+
+        /// <summary>
+        /// Génère les données statistiques pour la fréquence de sélection de chaque plat
+        /// </summary>
+        /// <returns> une tache</returns>
+        public async Task<Dictionary<string, int>> GenererDonneesStatistiquesPlat()
+        {
+            await _invitation.ChargerInvitations();
+
+            Dictionary<string, int> statistiques = new Dictionary<string, int>();
+
+            foreach (VMPlat vMPlat in EstSelectionne)
+            {
+                statistiques.Add(vMPlat.Nom, 0);
+            }
+
+            foreach (VMInvitation invitation in this._invitation.VMInvitations)
+            {
+                foreach (Plat plat in invitation.Plats)
+                {
+                    string nom = plat.Nom;
+                    if (statistiques.ContainsKey(nom))
+                    {
+                        statistiques[nom]++;
+                    }
+                }
+
+                foreach (Menu menu in invitation.Menu)
+                {
+                    foreach (Plat plat in menu.Plat)
+                    {
+                        string nom = plat.Nom;
+                        if (statistiques.ContainsKey(nom))
+                        {
+                            statistiques[nom]++;
+                        }
+                    }
+                }
+            }
+            statistiques = statistiques.OrderByDescending(x => x.Value).ToDictionary(x => x.Key, x => x.Value);
+            return statistiques;
+        }
+
+        /// <summary>
+        /// recherche un plat dans les statistiques en fonction du texte recherché
+        /// </summary>
+        /// <param name="textrechercher"> le text de recherche</param>
+        public void RechercherPlatStatistique(string textrechercher)
+        {
+            if (string.IsNullOrWhiteSpace(textrechercher))
+                this.PlatsStats = new ObservableCollection<VMPlat>(this.platsSelectionnesSauvegardes);
+            else
+            {
+                List<VMPlat> resultatsFiltres = this.platsSelectionnesSauvegardes.Where(i => i.Nom.Contains(textrechercher, StringComparison.OrdinalIgnoreCase)).OrderBy(i => i.Nom).ToList();
+                this.PlatsStats = new ObservableCollection<VMPlat>(resultatsFiltres);
+            }
+        }
+
+        /// <summary>
+        /// Crée le modèle de statistique pour la fréquence de sélection de chaque plat (le graphique)
+        /// </summary>
+        public async void CreerStatistiquePlat()
+        {
+            Dictionary<string, int> donnees = await GenererDonneesStatistiquesPlat();
+            StatistiqueModelPlat = GenererGraphique("Fréquence des plats sélectionnés",OxyColor.FromRgb(255, 250, 240), OxyColors.DarkBlue,"Plats","Fréquence de sélection",OxyColor.FromArgb(255, 46, 139, 87),donnees);
+            CreerStatistiquePlatsAimes();
+            CreerStatistiquePlatsDetestes();
+        }
+        #endregion
+
+        #region Méthodes stats - plats aimés et détestés
+        /// <summary>
+        /// Génère les données pour les plats les plus aimés par les invités sélectionnés
+        /// </summary>
+        public Dictionary<string, int> GenererDonneesPlatsAimes()
+        {
+            Dictionary<string, int> stats = new Dictionary<string, int>();
+
+            foreach (VMInvite vmInvite in this.invitesSelectionnesSauvegardes)
+            {
+                foreach (Plat plat in vmInvite.Invite.PlatsPreferes ?? Enumerable.Empty<Plat>())
+                {
+                    if (stats.ContainsKey(plat.Nom))
+                        stats[plat.Nom]++;
+                    else
+                        stats.Add(plat.Nom, 1);
+                }
+            }
+            return stats.OrderByDescending(x => x.Value).Take(5).ToDictionary(x => x.Key, x => x.Value);
+        }
+
+        /// <summary>
+        /// Génère les données pour les plats les plus détestés par les invités sélectionnés
+        /// </summary>
+        public Dictionary<string, int> GenererDonneesPlatsDetestes()
+        {
+            Dictionary<string, int> stats = new Dictionary<string, int>();
+
+            foreach (VMInvite vmInvite in this.invitesSelectionnesSauvegardes)
+            {
+                if (vmInvite.Invite.PlatsDetestes == null) continue;
+
+                foreach (Plat plat in vmInvite.Invite.PlatsDetestes)
+                {
+                    if (stats.ContainsKey(plat.Nom))
+                        stats[plat.Nom]++;
+                    else
+                        stats.Add(plat.Nom, 1);
+                }
+            }
+            return stats.OrderByDescending(x => x.Value).Take(5).ToDictionary(x => x.Key, x => x.Value); // top 5
+        }
+
+        /// <summary>
+        /// Crée le graphique des plats aimés
+        /// </summary>
+        public void CreerStatistiquePlatsAimes()
+        {
+            Dictionary<string, int> donnees = GenererDonneesPlatsAimes();
+            StatistiqueModelAimes = GenererGraphique("Top des Plats Aimés",OxyColor.FromRgb(250, 255, 250),OxyColors.DarkGreen,"Plats", "Nombre d'approbations",OxyColors.SeaGreen, donnees);
+        }
+
+        /// <summary>
+        /// Crée le graphique des plats détestés
+        /// </summary>
+        public void CreerStatistiquePlatsDetestes()
+        {
+            Dictionary<string, int> donnees = GenererDonneesPlatsDetestes();
+            StatistiqueModelDetestes = GenererGraphique("Top des Plats Détestés",OxyColor.FromRgb(255, 250, 250),OxyColors.DarkRed, "Plats","Nombre de rejets",OxyColors.IndianRed,donnees );
+        }
+        #endregion
+
+        #region Méthodes protegées / privées 
+        private PlotModel GenererGraphique(string titre, OxyColor fond, OxyColor couleurTitre, string axeX, string axeY, OxyColor couleurBarres, Dictionary<string, int> donnees)
+        {
             PlotModel model = new PlotModel
             {
-                Title = "Fréquence de venue des invités",
-                PlotAreaBackground = OxyColor.FromRgb(255, 250, 240),
+                Title = titre,
+                PlotAreaBackground = fond,
                 TitleFontSize = 18,
-                TitleColor = OxyColors.DarkBlue
+                TitleColor = couleurTitre
             };
 
             CategoryAxis categoryAxis = new CategoryAxis
             {
                 Position = AxisPosition.Left,
-                Title = "Invités",
-                TitleFontSize = 18,
+                Title = axeX,
+                TitleFontSize = 14,
                 TitleColor = OxyColors.DarkRed,
                 TextColor = OxyColors.Black,
-                FontSize = 14,
+                FontSize = 12,
                 IsZoomEnabled = false
             };
 
             LinearAxis valueAxis = new LinearAxis
             {
                 Position = AxisPosition.Bottom,
-                Title = "Fréquence de venue",
-                TitleFontSize = 18,
+                Title = axeY,
+                TitleFontSize = 14,
                 TitleColor = OxyColors.DarkRed,
                 TextColor = OxyColors.Black,
-                FontSize = 14,
+                FontSize = 12,
                 AbsoluteMinimum = 0,
                 MajorGridlineStyle = LineStyle.Solid,
                 MajorGridlineColor = OxyColors.LightGray,
@@ -268,36 +555,30 @@ namespace VM_Footies.VM_Page
 
             BarSeries barSeries = new BarSeries
             {
-                Title = "Fréquence de venue : ",
-                FillColor = OxyColor.FromArgb(255, 140, 47, 38),
+                Title = "Données : ",
+                FillColor = couleurBarres,
                 StrokeColor = OxyColors.Black,
                 StrokeThickness = 1,
                 TextColor = OxyColor.FromRgb(10, 10, 10),
-                FontWeight = FontWeights.Bold, 
+                FontWeight = FontWeights.Bold,
                 LabelFormatString = "{0}"
             };
 
-            Dictionary<string, int> donneesStatistiques = await GenererDonneesStatistiques();
-
             int maxZoom = 0;
-            foreach (KeyValuePair<string, int> element in donneesStatistiques)
+            foreach (KeyValuePair<string, int> element in donnees)
             {
                 categoryAxis.Labels.Add(element.Key);
                 barSeries.Items.Add(new BarItem { Value = element.Value });
-                if (element.Value > maxZoom)
-                {
-                    maxZoom = element.Value;
-                }
+                if (element.Value > maxZoom) maxZoom = element.Value;
             }
 
             valueAxis.AbsoluteMaximum = maxZoom + 5;
             valueAxis.Maximum = maxZoom + 1;
             model.Series.Add(barSeries);
-            StatistiqueModel = model;
-        }
-        #endregion
 
-        #region Méthodes protegées
+            return model;
+        }
+
         protected void Notify(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

@@ -17,6 +17,7 @@
 
   <!-- Fichiers à exclure -->
   <ItemGroup>
+    <None Remove="Config\config.ini" />
     <None Remove="Data\SQLLiteConnector.cs~RFb668d2b.TMP" />
   </ItemGroup>
 
@@ -32,12 +33,17 @@
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.14" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Config\config.ini">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
     <Compile Update="Program.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Update="DataBase.db">
+    <None Update="DataBase2.db">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

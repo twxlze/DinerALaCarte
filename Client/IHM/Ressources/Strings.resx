@@ -468,4 +468,7 @@
   <data name="alegduplat" xml:space="preserve">
     <value>Allergènes du plat</value>
   </data>
+  <data name="StatsPagePlat" xml:space="preserve">
+    <value>Statistiques des plats</value>
+  </data>
 </root>

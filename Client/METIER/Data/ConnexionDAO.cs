@@ -20,7 +20,7 @@ namespace METIER_Footies.Data
 
             try
             {
-                HttpResponseMessage reponseHttp = await PostAsync("Authentification/VerifierConnexion", identifiant);
+                HttpResponseMessage reponseHttp = await PostAsync("authentification/VerifierConnexion", identifiant);
 
                 if (reponseHttp.IsSuccessStatusCode)
                 {
@@ -64,7 +64,7 @@ namespace METIER_Footies.Data
                 Dictionary<string, object> paquet = new Dictionary<string, object>();
                 paquet.Add("Identifiant", identifiant);
                 paquet.Add("Utilisateur", utilisateur);
-                HttpResponseMessage reponseHttp = await PostAsync("Authentification/Inscription", paquet);
+                HttpResponseMessage reponseHttp = await PostAsync("authentification/Inscription", paquet);
 
                 if (reponseHttp.IsSuccessStatusCode)
                 {

@@ -1011,6 +1011,14 @@ namespace IHM_Footies.Ressources {
         public static string suivante {
             get {
                 return ResourceManager.GetString("suivante", resourceCulture);
+                }
+        }
+        
+        ///   Recherche une chaîne localisée semblable à Statistiques des plats.
+        /// </summary>
+        public static string StatsPagePlat {
+            get {
+                return ResourceManager.GetString("StatsPagePlat", resourceCulture);
             }
         }
         

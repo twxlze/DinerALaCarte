@@ -468,4 +468,7 @@
   <data name="alegduplat" xml:space="preserve">
     <value>Allergens in the dish</value>
   </data>
+  <data name="StatsPagePlat" xml:space="preserve">
+    <value>Dish statistics</value>
+  </data>
 </root>
