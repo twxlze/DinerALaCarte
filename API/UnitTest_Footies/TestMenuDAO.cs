@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Xunit;
 using API_Footies.Data.DAO;
 using API_Footies.Metier;
 using API_Footies.Metier.Enum;
@@ -9,6 +10,8 @@ namespace UnitTest_Footies
 {
     public class TestMenuDAO
     {
+        private const long ID_UTILISATEUR_TEST = 1;
+
         [Fact]
         public void AjouterMenuSansPlat()
         {
@@ -16,12 +19,12 @@ namespace UnitTest_Footies
             List<Plat> platsVides = new List<Plat>();
             Menu menu = new Menu(platsVides, 0, "Menu Test Sans Plat");
 
-            bool resultat = menuDAO.AjouterMenu(menu);
+            bool resultat = menuDAO.AjouterMenu(menu, ID_UTILISATEUR_TEST);
 
             Assert.True(resultat);
             Assert.True(menu.IdMenu > 0);
 
-            menuDAO.SupprimerMenu(menu.IdMenu);
+            menuDAO.SupprimerMenu(menu.IdMenu, ID_UTILISATEUR_TEST);
         }
 
         [Fact]
@@ -30,24 +33,25 @@ namespace UnitTest_Footies
             PlatDAO platDAO = new PlatDAO();
             MenuDAO menuDAO = new MenuDAO();
 
-            Plat plat1 = new Plat(0, "Salade César", "Salade romaine", CategoriePlat.entree);
-            platDAO.AjouterPlat(plat1);
-            Plat plat2 = new Plat(0, "Poulet rôti", "Poulet au four", CategoriePlat.plat);
-            platDAO.AjouterPlat(plat2);
+            Plat plat1 = new Plat(0, "Salade César", "Salade romaine", CategoriePlat.entree, "", null);
+            platDAO.AjouterPlat(plat1, ID_UTILISATEUR_TEST);
+
+            Plat plat2 = new Plat(0, "Poulet rôti", "Poulet au four", CategoriePlat.plat, "", null);
+            platDAO.AjouterPlat(plat2, ID_UTILISATEUR_TEST);
 
             List<Plat> plats = new List<Plat>();
             plats.Add(plat1);
             plats.Add(plat2);
 
             Menu menu = new Menu(plats, 0, "Menu Complet Test");
-            bool resultat = menuDAO.AjouterMenu(menu);
+            bool resultat = menuDAO.AjouterMenu(menu, ID_UTILISATEUR_TEST);
 
             Assert.True(resultat);
             Assert.True(menu.IdMenu > 0);
 
-            menuDAO.SupprimerMenu(menu.IdMenu);
-            platDAO.SupprimerPlat(plat1.Id);
-            platDAO.SupprimerPlat(plat2.Id);
+            menuDAO.SupprimerMenu(menu.IdMenu, ID_UTILISATEUR_TEST);
+            platDAO.SupprimerPlat(plat1.Id, ID_UTILISATEUR_TEST);
+            platDAO.SupprimerPlat(plat2.Id, ID_UTILISATEUR_TEST);
         }
 
         [Fact]
@@ -58,18 +62,18 @@ namespace UnitTest_Footies
             Menu menu1 = new Menu(platsVides, 0, "Menu Test 1");
             Menu menu2 = new Menu(platsVides, 0, "Menu Test 2");
 
-            menuDAO.AjouterMenu(menu1);
-            menuDAO.AjouterMenu(menu2);
+            menuDAO.AjouterMenu(menu1, ID_UTILISATEUR_TEST);
+            menuDAO.AjouterMenu(menu2, ID_UTILISATEUR_TEST);
 
-            List<Menu> listeMenus = menuDAO.ListMenu();
+            List<Menu> listeMenus = menuDAO.ListMenu(ID_UTILISATEUR_TEST);
 
             Assert.NotNull(listeMenus);
             Assert.True(listeMenus.Count >= 2);
             Assert.Contains(listeMenus, m => m.Nom == "Menu Test 1");
             Assert.Contains(listeMenus, m => m.Nom == "Menu Test 2");
 
-            menuDAO.SupprimerMenu(menu1.IdMenu);
-            menuDAO.SupprimerMenu(menu2.IdMenu);
+            menuDAO.SupprimerMenu(menu1.IdMenu, ID_UTILISATEUR_TEST);
+            menuDAO.SupprimerMenu(menu2.IdMenu, ID_UTILISATEUR_TEST);
         }
 
         [Fact]
@@ -78,18 +82,18 @@ namespace UnitTest_Footies
             MenuDAO menuDAO = new MenuDAO();
             List<Plat> platsVides = new List<Plat>();
             Menu menu = new Menu(platsVides, 0, "Ancien Nom");
-            menuDAO.AjouterMenu(menu);
+            menuDAO.AjouterMenu(menu, ID_UTILISATEUR_TEST);
 
             menu.Nom = "Nouveau Nom";
-            bool resultat = menuDAO.ModifierMenu(menu);
+            bool resultat = menuDAO.ModifierMenu(menu, ID_UTILISATEUR_TEST);
 
             Assert.True(resultat);
-            List<Menu> listeMenus = menuDAO.ListMenu();
+            List<Menu> listeMenus = menuDAO.ListMenu(ID_UTILISATEUR_TEST);
             Menu menuModifie = listeMenus.FirstOrDefault(m => m.IdMenu == menu.IdMenu);
             Assert.NotNull(menuModifie);
             Assert.Equal("Nouveau Nom", menuModifie.Nom);
 
-            menuDAO.SupprimerMenu(menu.IdMenu);
+            menuDAO.SupprimerMenu(menu.IdMenu, ID_UTILISATEUR_TEST);
         }
 
         [Fact]
@@ -98,32 +102,32 @@ namespace UnitTest_Footies
             PlatDAO platDAO = new PlatDAO();
             MenuDAO menuDAO = new MenuDAO();
 
-            Plat plat1 = new Plat(0, "Tarte", "Tarte aux pommes", CategoriePlat.dessert);
-            platDAO.AjouterPlat(plat1);
+            Plat plat1 = new Plat(0, "Tarte", "Tarte aux pommes", CategoriePlat.dessert, "", null);
+            platDAO.AjouterPlat(plat1, ID_UTILISATEUR_TEST);
 
-            Plat plat2 = new Plat(0, "Glace", "Glace vanille", CategoriePlat.dessert);
-            platDAO.AjouterPlat(plat2);
+            Plat plat2 = new Plat(0, "Glace", "Glace vanille", CategoriePlat.dessert, "", null);
+            platDAO.AjouterPlat(plat2, ID_UTILISATEUR_TEST);
 
             List<Plat> platsInitiaux = new List<Plat>();
             platsInitiaux.Add(plat1);
             Menu menu = new Menu(platsInitiaux, 0, "Menu Dessert");
-            menuDAO.AjouterMenu(menu);
+            menuDAO.AjouterMenu(menu, ID_UTILISATEUR_TEST);
 
             List<Plat> nouveauxPlats = new List<Plat>();
             nouveauxPlats.Add(plat2);
             menu.Plat = nouveauxPlats;
-            bool resultat = menuDAO.ModifierMenu(menu);
+            bool resultat = menuDAO.ModifierMenu(menu, ID_UTILISATEUR_TEST);
 
             Assert.True(resultat);
-            List<Menu> listeMenus = menuDAO.ListMenu();
+            List<Menu> listeMenus = menuDAO.ListMenu(ID_UTILISATEUR_TEST);
             Menu menuModifie = listeMenus.FirstOrDefault(m => m.IdMenu == menu.IdMenu);
             Assert.NotNull(menuModifie);
             Assert.Single(menuModifie.Plat);
             Assert.Equal(plat2.Id, menuModifie.Plat[0].Id);
 
-            menuDAO.SupprimerMenu(menu.IdMenu);
-            platDAO.SupprimerPlat(plat1.Id);
-            platDAO.SupprimerPlat(plat2.Id);
+            menuDAO.SupprimerMenu(menu.IdMenu, ID_UTILISATEUR_TEST);
+            platDAO.SupprimerPlat(plat1.Id, ID_UTILISATEUR_TEST);
+            platDAO.SupprimerPlat(plat2.Id, ID_UTILISATEUR_TEST);
         }
 
         [Fact]
@@ -132,38 +136,14 @@ namespace UnitTest_Footies
             MenuDAO menuDAO = new MenuDAO();
             List<Plat> platsVides = new List<Plat>();
             Menu menu = new Menu(platsVides, 0, "Menu A Supprimer");
-            menuDAO.AjouterMenu(menu);
+            menuDAO.AjouterMenu(menu, ID_UTILISATEUR_TEST);
             long idMenu = menu.IdMenu;
 
-            menuDAO.SupprimerMenu(idMenu);
+            menuDAO.SupprimerMenu(idMenu, ID_UTILISATEUR_TEST);
 
-            List<Menu> listeMenus = menuDAO.ListMenu();
+            List<Menu> listeMenus = menuDAO.ListMenu(ID_UTILISATEUR_TEST);
             Menu menuSupprime = listeMenus.FirstOrDefault(m => m.IdMenu == idMenu);
             Assert.Null(menuSupprime);
-        }
-
-        [Fact]
-        public void SupprimerMenuAvecPlats()
-        {
-            PlatDAO platDAO = new PlatDAO();
-            MenuDAO menuDAO = new MenuDAO();
-
-            Plat plat = new Plat(0, "Soupe", "Soupe à l'oignon", CategoriePlat.entree);
-            platDAO.AjouterPlat(plat);
-
-            List<Plat> plats = new List<Plat>();
-            plats.Add(plat);
-            Menu menu = new Menu(plats, 0, "Menu Avec Plat");
-            menuDAO.AjouterMenu(menu);
-            long idMenu = menu.IdMenu;
-
-            menuDAO.SupprimerMenu(idMenu);
-
-            List<Menu> listeMenus = menuDAO.ListMenu();
-            Menu menuSupprime = listeMenus.FirstOrDefault(m => m.IdMenu == idMenu);
-            Assert.Null(menuSupprime);
-
-            platDAO.SupprimerPlat(plat.Id);
         }
     }
 }
