@@ -215,9 +215,12 @@ namespace VM_Footies.VM_Page
         public void RechercherInviteStatistique(string textrechercher)
         {
             if (string.IsNullOrWhiteSpace(textrechercher))
-                this._invitesStats = new ObservableCollection<VMInvite>(invitesSelectionnesSauvegardes);
-            List<VMInvite> resultatsFiltres = invitesSelectionnesSauvegardes.Where(i => i.Identite.Contains(textrechercher, StringComparison.OrdinalIgnoreCase)).OrderBy(i => i.Identite).ToList();
-            this._invitesStats = new ObservableCollection<VMInvite>(resultatsFiltres);
+                this.InvitesStats = new ObservableCollection<VMInvite>(invitesSelectionnesSauvegardes);
+            else
+            {
+                List<VMInvite> resultatsFiltres = invitesSelectionnesSauvegardes.Where(i => i.Identite.Contains(textrechercher, StringComparison.OrdinalIgnoreCase)).OrderBy(i => i.Identite).ToList();
+                this.InvitesStats = new ObservableCollection<VMInvite>(resultatsFiltres);
+            }
         }
 
         /// <summary>
