@@ -100,7 +100,7 @@ namespace VM_Footies.VM_Page
         /// <summary>
         /// Texte de recherche pour filtrer les invités
         /// </summary>
-        public string TexteRechercheGroupe
+        public string TexteRechercheInviteStats
         {
             get { return texteRecherche; }
             set
