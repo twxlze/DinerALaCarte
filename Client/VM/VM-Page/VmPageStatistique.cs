@@ -26,6 +26,13 @@ namespace VM_Footies.VM_Page
         private PlotModel statistiqueModel;
         private ObservableCollection<VMInvite> _invitesStats;
         private List<VMInvite> invitesSelectionnesSauvegardes;
+
+        private VMPagePlat plat;
+        private bool toutSelectionnerPlat;
+        private string texteRecherchePlat;
+        private ObservableCollection<VMPlat> platsStats;
+        private List<VMPlat> platsSelectionnesSauvegardes;
+        private PlotModel platStatistiqueModel;
         #endregion
 
         #region Propriétés
@@ -109,6 +116,81 @@ namespace VM_Footies.VM_Page
         }
 
         /// <summary>
+        /// Liste de tous les plats pour les statistiques
+        /// </summary>
+        public ObservableCollection<VMPlat> PlatsStats
+        {
+            get { return platsStats; }
+            set
+            {
+                platsStats = value;
+                Notify("PlatsStats");
+            }
+        }
+
+        /// <summary>
+        /// Liste des plats selectionnés
+        /// </summary>
+        public List<VMPlat> PlatsSelectionnes
+        {
+            get
+            {
+                List<VMPlat> plats = new List<VMPlat>();
+                if (platsSelectionnesSauvegardes != null)
+                {
+                    plats = platsSelectionnesSauvegardes.Where(plat => plat.EstSelectionne == true).ToList();
+                }
+                return plats;
+            }
+        }
+
+        /// <summary>
+        /// Indique si tous les plats sont sélectionnés
+        /// </summary>
+        public bool ToutSelectionnerPlat
+        {
+            get => this.toutSelectionnerPlat;
+            set
+            {
+                if (this.toutSelectionnerPlat != value)
+                {
+                    this.toutSelectionnerPlat = value;
+                    foreach (VMPlat plat in this.platsStats)
+                    {
+                        plat.EstSelectionne = value;
+                    }
+                    Notify("ToutSelectionnerPlat");
+                }
+            }
+        }
+
+        /// <summary>
+        /// Texte de recherche pour filtrer les plats
+        /// </summary>
+        public string TexteRecherchePlatStats
+        {
+            get { return this.texteRecherchePlat; }
+            set
+            {
+                this.texteRecherchePlat = value;
+                Notify("TexteRecherchePlatStats");
+            }
+        }
+
+        public PlotModel PlatStatistiqueModel
+        {
+            get
+            {
+                return this.platStatistiqueModel;
+            }
+            set
+            {
+                this.platStatistiqueModel = value;
+                Notify("StatistiqueModelPlat");
+            }
+        }
+
+        /// <summary>
         /// Événement déclenché lorsqu'une propriété change
         /// </summary>
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -127,12 +209,22 @@ namespace VM_Footies.VM_Page
         /// <param name="vMPageInvitation">prend en parametre les invitations</param>
         public VmPageStatistique()
         {
+            this.Initialiser();
+            ChargerDonneesInvite();
+        }
+
+        private void Initialiser()
+        {
             this._invitation = new VMPageInvitation();
             this._invite = new VMPageInvite();
             this._invitesStats = new ObservableCollection<VMInvite>();
             this._toutSelectionner = false;
             this.texteRecherche = string.Empty;
-            ChargerDonneesInvite();
+
+            this.plat = new VMPagePlat();
+            this.platsStats = new ObservableCollection<VMPlat>();
+            this.toutSelectionnerPlat = false;
+            this.texteRecherchePlat = string.Empty;
         }
         #endregion
 
@@ -151,6 +243,7 @@ namespace VM_Footies.VM_Page
             }
             InvitesStats = new ObservableCollection<VMInvite>(invitesSelectionnesSauvegardes);
         }
+
 
         /// <summary>
         /// Charge les données des invités pour initialiser les statistiques
@@ -206,6 +299,44 @@ namespace VM_Footies.VM_Page
             return statistiques;
         }
 
+        public async Task<Dictionary<string, int>> GenererDonneesStatistiquesPlat()
+        {
+            await _invitation.ChargerInvitations();
+
+            Dictionary<string, int> statistiques = new Dictionary<string, int>();
+
+            foreach (VMPlat vMPlat in PlatsSelectionnes)
+            {
+                statistiques.Add(vMPlat.Nom, 0);
+            }
+
+            foreach (VMInvitation invitation in this._invitation.VMInvitations)
+            {
+                foreach (Plat plat in invitation.Plats)
+                {
+                    string nom = plat.Nom;
+                    if (statistiques.ContainsKey(nom))
+                    {
+                        statistiques[nom]++;
+                    }
+                }
+
+                foreach (Menu menu in invitation.Menu)
+                {
+                    foreach (Plat plat in menu.Plat)
+                    {
+                        string nom = plat.Nom;
+                        if (statistiques.ContainsKey(nom))
+                        {
+                            statistiques[nom]++;
+                        }
+                    }
+                }
+            }
+            statistiques = statistiques.OrderByDescending(x => x.Value).ToDictionary(x => x.Key, x => x.Value);
+            return statistiques;
+        }
+
         /// <summary>
         /// Recherche un invité dans les statistiques en fonction du texte recherché
         /// ici les invites correspondant au texte de recherche sont placés en haut de la liste
@@ -221,6 +352,30 @@ namespace VM_Footies.VM_Page
                 List<VMInvite> resultatsFiltres = invitesSelectionnesSauvegardes.Where(i => i.Identite.Contains(textrechercher, StringComparison.OrdinalIgnoreCase)).OrderBy(i => i.Identite).ToList();
                 this.InvitesStats = new ObservableCollection<VMInvite>(resultatsFiltres);
             }
+        }
+
+        /// <summary>
+        /// Initialise les statistiques des plats
+        /// </summary>
+        public void InitialiserStatsPlats()
+        {
+            this.platsStats.Clear();
+            this.platsSelectionnesSauvegardes = new List<VMPlat>();
+            foreach (VMPlat plat in this.plat.VMPlat)
+            {
+                VMPlat vmStats = new VMPlat(plat);
+                platsSelectionnesSauvegardes.Add(vmStats);
+            }
+            PlatsStats = new ObservableCollection<VMPlat>(this.platsSelectionnesSauvegardes);
+        }
+
+        /// <summary>
+        /// Charge les données des plats pour initialiser les statistiques
+        /// </summary>
+        public async void ChargerDonneesPlat()
+        {
+            await plat.ChargerPlats();
+            InitialiserStatsPlats();
         }
 
         /// <summary>
