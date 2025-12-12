@@ -61,10 +61,7 @@ namespace IHM_Footies.Statistique
                 else if (aDesPlatsSelectionnes)
                 {
                     this.vmPageStatistique.CreerStatistiquePlat();
-
-                    VuePageStatistiquePlat vuePlat = new VuePageStatistiquePlat(this.vmPageStatistique);
-                    vuePlat.Show();
-                    this.Close();
+                    Navigation.AllerStatistiquePlat(this, this.vmPageStatistique);
                 }
                 else
                 {

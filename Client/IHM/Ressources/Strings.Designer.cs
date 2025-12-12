@@ -772,6 +772,15 @@ namespace IHM_Footies.Ressources {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Statistiques des plats.
+        /// </summary>
+        public static string StatsPagePlat {
+            get {
+                return ResourceManager.GetString("StatsPagePlat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Supprimer un groupe d&apos;invité.
         /// </summary>
         public static string SupprimerGroupeInvite {

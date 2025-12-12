@@ -184,6 +184,18 @@ namespace IHM_Footies
             vuestats.Show();
             fenetreActuelle.Close();
         }
+
+        /// <summary>
+        /// Permet de naviguer vers la fenêtre des Statistiques des plats
+        /// </summary>
+        /// <param name="fenetreActuelle"> La fenêtre actuelle à fermer</param>
+        /// <param name="vmPageStatistique"> Le model des statistiques</param>
+        public static void AllerStatistiquePlat(Window fenetreActuelle, VmPageStatistique vmPageStatistique)
+        {
+            VuePageStatistiquePlat vueStatsPlat = new VuePageStatistiquePlat(vmPageStatistique);
+            vueStatsPlat.Show();
+            fenetreActuelle.Close();
+        }
         #endregion
 
         #region tableau de bord

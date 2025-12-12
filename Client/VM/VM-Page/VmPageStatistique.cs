@@ -20,6 +20,7 @@ namespace VM_Footies.VM_Page
     {
         #region Attributs
         private VMPageInvitation _invitation;
+
         private VMPageInvite _invite;
         private bool _toutSelectionner;
         private string texteRecherche;
@@ -32,8 +33,10 @@ namespace VM_Footies.VM_Page
         private string texteRecherchePlat;
         private ObservableCollection<VMPlat> platsStats;
         private List<VMPlat> platsSelectionnesSauvegardes;
-
         private PlotModel statistiqueModelPlat;
+
+        private PlotModel statistiqueModelAimes;
+        private PlotModel statistiqueModelDetestes;
         #endregion
 
         #region Propriétés
@@ -201,6 +204,31 @@ namespace VM_Footies.VM_Page
         /// </summary>
         public VMPageInvitation Invitation { get { return _invitation; } }
 
+        /// <summary>
+        /// Modèle de graphique pour les statistiques des plats aimés
+        /// </summary>
+        public PlotModel StatistiqueModelAimes
+        {
+            get { return this.statistiqueModelAimes; }
+            set
+            {
+                this.statistiqueModelAimes = value;
+                Notify("StatistiqueModelAimes");
+            }
+        }
+
+        /// <summary>
+        /// Modèle de graphique pour les statistiques des plats détestés
+        /// </summary>
+        public PlotModel StatistiqueModelDetestes
+        {
+            get { return this.statistiqueModelDetestes; }
+            set
+            {
+                this.statistiqueModelDetestes = value;
+                Notify("StatistiqueModelDetestes");
+            }
+        }
         #endregion
 
         #region Constructeur
@@ -323,72 +351,8 @@ namespace VM_Footies.VM_Page
         /// </summary>
         public async void CreerStatistique()
         {
-            PlotModel model = new PlotModel
-            {
-                Title = "Fréquence de venue des invités",
-                PlotAreaBackground = OxyColor.FromRgb(255, 250, 240),
-                TitleFontSize = 18,
-                TitleColor = OxyColors.DarkBlue
-            };
-
-            CategoryAxis categoryAxis = new CategoryAxis
-            {
-                Position = AxisPosition.Left,
-                Title = "Invités",
-                TitleFontSize = 18,
-                TitleColor = OxyColors.DarkRed,
-                TextColor = OxyColors.Black,
-                FontSize = 14,
-                IsZoomEnabled = false
-            };
-
-            LinearAxis valueAxis = new LinearAxis
-            {
-                Position = AxisPosition.Bottom,
-                Title = "Fréquence de venue",
-                TitleFontSize = 18,
-                TitleColor = OxyColors.DarkRed,
-                TextColor = OxyColors.Black,
-                FontSize = 14,
-                AbsoluteMinimum = 0,
-                MajorGridlineStyle = LineStyle.Solid,
-                MajorGridlineColor = OxyColors.LightGray,
-                MajorStep = 1,
-                MinorStep = 1,
-                StringFormat = "0"
-            };
-
-            model.Axes.Add(categoryAxis);
-            model.Axes.Add(valueAxis);
-
-            BarSeries barSeries = new BarSeries
-            {
-                Title = "Fréquence de venue : ",
-                FillColor = OxyColor.FromArgb(255, 140, 47, 38),
-                StrokeColor = OxyColors.Black,
-                StrokeThickness = 1,
-                TextColor = OxyColor.FromRgb(10, 10, 10),
-                FontWeight = FontWeights.Bold,
-                LabelFormatString = "{0}"
-            };
-
-            Dictionary<string, int> donneesStatistiques = await GenererDonneesStatistiques();
-
-            int maxZoom = 0;
-            foreach (KeyValuePair<string, int> element in donneesStatistiques)
-            {
-                categoryAxis.Labels.Add(element.Key);
-                barSeries.Items.Add(new BarItem { Value = element.Value });
-                if (element.Value > maxZoom)
-                {
-                    maxZoom = element.Value;
-                }
-            }
-
-            valueAxis.AbsoluteMaximum = maxZoom + 5;
-            valueAxis.Maximum = maxZoom + 1;
-            model.Series.Add(barSeries);
-            StatistiqueModel = model;
+            Dictionary<string, int> donnees = await GenererDonneesStatistiques();
+            StatistiqueModel = GenererGraphique("Fréquence de venue des invités",OxyColor.FromRgb(255, 250, 240), OxyColors.DarkBlue,"Invités","Fréquence de venue",OxyColor.FromArgb(255, 140, 47, 38),donnees);
         }
         #endregion
 
@@ -479,33 +443,105 @@ namespace VM_Footies.VM_Page
         /// </summary>
         public async void CreerStatistiquePlat()
         {
+            Dictionary<string, int> donnees = await GenererDonneesStatistiquesPlat();
+            StatistiqueModelPlat = GenererGraphique("Fréquence des plats sélectionnés",OxyColor.FromRgb(255, 250, 240), OxyColors.DarkBlue,"Plats","Fréquence de sélection",OxyColor.FromArgb(255, 46, 139, 87),donnees);
+            CreerStatistiquePlatsAimes();
+            CreerStatistiquePlatsDetestes();
+        }
+        #endregion
+
+        #region Méthodes stats - plats aimés et détestés
+        /// <summary>
+        /// Génère les données pour les plats les plus aimés par les invités sélectionnés
+        /// </summary>
+        public Dictionary<string, int> GenererDonneesPlatsAimes()
+        {
+            Dictionary<string, int> stats = new Dictionary<string, int>();
+
+            foreach (VMInvite vmInvite in this.invitesSelectionnesSauvegardes)
+            {
+                foreach (Plat plat in vmInvite.Invite.PlatsPreferes ?? Enumerable.Empty<Plat>())
+                {
+                    if (stats.ContainsKey(plat.Nom))
+                        stats[plat.Nom]++;
+                    else
+                        stats.Add(plat.Nom, 1);
+                }
+            }
+            return stats.OrderByDescending(x => x.Value).Take(5).ToDictionary(x => x.Key, x => x.Value);
+        }
+
+        /// <summary>
+        /// Génère les données pour les plats les plus détestés par les invités sélectionnés
+        /// </summary>
+        public Dictionary<string, int> GenererDonneesPlatsDetestes()
+        {
+            Dictionary<string, int> stats = new Dictionary<string, int>();
+
+            foreach (VMInvite vmInvite in this.invitesSelectionnesSauvegardes)
+            {
+                if (vmInvite.Invite.PlatsDetestes == null) continue;
+
+                foreach (Plat plat in vmInvite.Invite.PlatsDetestes)
+                {
+                    if (stats.ContainsKey(plat.Nom))
+                        stats[plat.Nom]++;
+                    else
+                        stats.Add(plat.Nom, 1);
+                }
+            }
+            return stats.OrderByDescending(x => x.Value).Take(5).ToDictionary(x => x.Key, x => x.Value); // top 5
+        }
+
+        /// <summary>
+        /// Crée le graphique des plats aimés
+        /// </summary>
+        public void CreerStatistiquePlatsAimes()
+        {
+            Dictionary<string, int> donnees = GenererDonneesPlatsAimes();
+            StatistiqueModelAimes = GenererGraphique("Top des Plats Aimés",OxyColor.FromRgb(250, 255, 250),OxyColors.DarkGreen,"Plats", "Nombre d'approbations",OxyColors.SeaGreen, donnees);
+        }
+
+        /// <summary>
+        /// Crée le graphique des plats détestés
+        /// </summary>
+        public void CreerStatistiquePlatsDetestes()
+        {
+            Dictionary<string, int> donnees = GenererDonneesPlatsDetestes();
+            StatistiqueModelDetestes = GenererGraphique("Top des Plats Détestés",OxyColor.FromRgb(255, 250, 250),OxyColors.DarkRed, "Plats","Nombre de rejets",OxyColors.IndianRed,donnees );
+        }
+        #endregion
+
+        #region Méthodes protegées / privées 
+        private PlotModel GenererGraphique(string titre, OxyColor fond, OxyColor couleurTitre, string axeX, string axeY, OxyColor couleurBarres, Dictionary<string, int> donnees)
+        {
             PlotModel model = new PlotModel
             {
-                Title = "Fréquence des plats sélectionnés",
-                PlotAreaBackground = OxyColor.FromRgb(255, 250, 240),
+                Title = titre,
+                PlotAreaBackground = fond,
                 TitleFontSize = 18,
-                TitleColor = OxyColors.DarkBlue
+                TitleColor = couleurTitre
             };
 
             CategoryAxis categoryAxis = new CategoryAxis
             {
                 Position = AxisPosition.Left,
-                Title = "Plats",
-                TitleFontSize = 18,
+                Title = axeX,
+                TitleFontSize = 14,
                 TitleColor = OxyColors.DarkRed,
                 TextColor = OxyColors.Black,
-                FontSize = 14,
+                FontSize = 12,
                 IsZoomEnabled = false
             };
 
             LinearAxis valueAxis = new LinearAxis
             {
                 Position = AxisPosition.Bottom,
-                Title = "Fréquence de sélection",
-                TitleFontSize = 18,
+                Title = axeY,
+                TitleFontSize = 14,
                 TitleColor = OxyColors.DarkRed,
                 TextColor = OxyColors.Black,
-                FontSize = 14,
+                FontSize = 12,
                 AbsoluteMinimum = 0,
                 MajorGridlineStyle = LineStyle.Solid,
                 MajorGridlineColor = OxyColors.LightGray,
@@ -519,8 +555,8 @@ namespace VM_Footies.VM_Page
 
             BarSeries barSeries = new BarSeries
             {
-                Title = "Sélection : ",
-                FillColor = OxyColor.FromArgb(255, 46, 139, 87), //
+                Title = "Données : ",
+                FillColor = couleurBarres,
                 StrokeColor = OxyColors.Black,
                 StrokeThickness = 1,
                 TextColor = OxyColor.FromRgb(10, 10, 10),
@@ -528,28 +564,21 @@ namespace VM_Footies.VM_Page
                 LabelFormatString = "{0}"
             };
 
-            Dictionary<string, int> donneesStatistiques = await GenererDonneesStatistiquesPlat();
-
             int maxZoom = 0;
-            foreach (KeyValuePair<string, int> element in donneesStatistiques)
+            foreach (KeyValuePair<string, int> element in donnees)
             {
                 categoryAxis.Labels.Add(element.Key);
                 barSeries.Items.Add(new BarItem { Value = element.Value });
-                if (element.Value > maxZoom)
-                {
-                    maxZoom = element.Value;
-                }
+                if (element.Value > maxZoom) maxZoom = element.Value;
             }
 
             valueAxis.AbsoluteMaximum = maxZoom + 5;
             valueAxis.Maximum = maxZoom + 1;
-
             model.Series.Add(barSeries);
-            StatistiqueModelPlat = model;
-        }
-        #endregion
 
-        #region Méthodes protegées
+            return model;
+        }
+
         protected void Notify(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

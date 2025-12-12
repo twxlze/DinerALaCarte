@@ -129,19 +129,42 @@
             </Grid>
         </Border>
 
-        <TextBlock Grid.Column="1" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{x:Static res:Strings.StatsPage}" VerticalAlignment="Top" FontWeight="Bold" FontSize="20" Foreground="#B44B3E" Margin="0,20,0,0"/>
-
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <TextBlock Grid.Row="0" Text="{Binding TitreStatistique}" TextWrapping="Wrap" FontSize="18" FontWeight="Bold" Foreground="#8C2F26" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="80,15,10,10" TextAlignment="Center"/>
-
-            <oxy:PlotView Grid.Row="1" Model="{Binding StatistiqueModelPlat}" Background="#FFF5F5F5" Margin="10"/>
+            <TextBlock Grid.Row="0" Text="{x:Static res:Strings.StatsPagePlat}" HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="Bold" FontSize="20" Foreground="#B44B3E" Margin="0,20,0,10"/>
 
             <Button Grid.Row="0" x:Name="BoutonRetourAprdesStats" Style="{StaticResource StyleBoutonRetour}" Content="←" Margin="10,10,0,0" Click="BoutonRetour_Click" Width="60" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
+            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Margin="10,0,10,10">
+                <StackPanel>
+
+                    <Border Background="White" CornerRadius="8" Margin="5,5,5,15" Padding="10">
+                        <StackPanel>
+                            <TextBlock Text="{Binding TitreStatistique}" FontSize="16" FontWeight="SemiBold" Foreground="#333" Margin="0,0,0,5" HorizontalAlignment="Center"/>
+                            <oxy:PlotView Model="{Binding StatistiqueModelPlat}" Height="300" Background="Transparent"/>
+                        </StackPanel>
+                    </Border>
+
+                    <Border Background="White" CornerRadius="8" Margin="5,0,5,15" Padding="10">
+                        <StackPanel>
+                            <TextBlock Text="Top des Plats Aimés" FontSize="16" FontWeight="SemiBold" Foreground="#2E8B57" Margin="0,0,0,5" HorizontalAlignment="Center"/>
+                            <oxy:PlotView Model="{Binding StatistiqueModelAimes}" Height="300" Background="Transparent"/>
+                        </StackPanel>
+                    </Border>
+
+                    <Border Background="White" CornerRadius="8" Margin="5,0,5,15" Padding="10">
+                        <StackPanel>
+                            <TextBlock Text="Top des Plats Détestés" FontSize="16" FontWeight="SemiBold" Foreground="#B22222" Margin="0,0,0,5" HorizontalAlignment="Center"/>
+                            <oxy:PlotView Model="{Binding StatistiqueModelDetestes}" Height="300" Background="Transparent"/>
+                        </StackPanel>
+                    </Border>
+
+                </StackPanel>
+            </ScrollViewer>
         </Grid>
     </Grid>
 </Window>

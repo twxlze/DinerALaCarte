@@ -378,4 +378,7 @@
   <data name="Remarque" xml:space="preserve">
     <value>💬 Remarks</value>
   </data>
+  <data name="StatsPagePlat" xml:space="preserve">
+    <value>Dish statistics</value>
+  </data>
 </root>
