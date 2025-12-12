@@ -219,6 +219,7 @@ namespace VM_Footies.VM_Page
                             break;
                     }
                 }
+                menu.InitialiserSauvegardes();
             }
             catch (Exception ex)
             {
