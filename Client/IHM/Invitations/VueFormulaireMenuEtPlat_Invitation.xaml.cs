@@ -66,10 +66,10 @@ namespace IHM_Footies.Invitations
             switch (e.PropertyName)
             {
                 case "TexteRechercheMenu":
-                    this.pageInvitation.RechercherMenuDansFormulaire(this.invitation, this.invitation.TexteRechercheInvite);
+                    this.pageInvitation.RechercherMenuDansFormulaire(this.invitation, this.invitation.TexteRechercheMenu);
                     break;
                 case "TexteRecherchePlat":
-                    this.pageInvitation.RechercherPlatDansFormulaire(this.invitation, this.invitation.TexteRechercheGroupeInvite);
+                    this.pageInvitation.RechercherPlatDansFormulaire(this.invitation, this.invitation.TexteRecherchePlat);
                     break;
             }
         }
@@ -193,21 +193,15 @@ namespace IHM_Footies.Invitations
             try
             {
                 this.invitation.SynchroniserTout();
-
                 VuePageAvertissementInvitation fenetreVerif = new VuePageAvertissementInvitation(this.invitation);
-
                 bool? resultat = fenetreVerif.ShowDialog();
 
                 if (fenetreVerif.InvitationConfirmee)
                 {
                     if (this.invitation.Invitation.IdInvitation != 0)
-                    {
                         await this.invitationDAO.ModifierInvitation(this.invitation.Invitation);
-                    }
                     else
-                    {
                         await this.invitationDAO.AjouterInvitation(this.invitation.Invitation);
-                    }
 
                     Navigation.AllerInvitations(this);
                 }
@@ -220,23 +214,23 @@ namespace IHM_Footies.Invitations
 
         private void RechercheMenu_Click(object sender, RoutedEventArgs e)
         {
-            this.pageInvitation.RechercherMenuDansFormulaire(this.invitation, this.invitation.TexteRechercheInvite);
+            this.pageInvitation.RechercherMenuDansFormulaire(this.invitation, this.invitation.TexteRechercheMenu);
         }
 
         private void RefreshMenu_Click(object sender, RoutedEventArgs e)
         {
-            this.invitation.TexteRechercheInvite = string.Empty;
+            this.invitation.TexteRechercheMenu = string.Empty;
             this.pageInvitation.RechercherMenuDansFormulaire(this.invitation, string.Empty);
         }
 
         private void RecherchePlat_Click(object sender, RoutedEventArgs e)
         {
-            this.pageInvitation.RechercherPlatDansFormulaire(this.invitation, this.invitation.TexteRechercheGroupeInvite);
+            this.pageInvitation.RechercherPlatDansFormulaire(this.invitation, this.invitation.TexteRecherchePlat);
         }
 
         private void RefreshPlat_Click(object sender, RoutedEventArgs e)
         {
-            this.invitation.TexteRechercheGroupeInvite = string.Empty;
+            this.invitation.TexteRecherchePlat = string.Empty;
             this.pageInvitation.RechercherPlatDansFormulaire(this.invitation, string.Empty);
         }
         #endregion

@@ -82,6 +82,7 @@ namespace IHM_Footies.Statistique
         private void BoutonRetour_Click(object sender, RoutedEventArgs e)
         {
             this.vmPageStatistique.TexteRechercheInviteStats = string.Empty;
+            this.vmPageStatistique.RechercherInviteStatistique(string.Empty);
         }
 
         /// <summary>
@@ -185,22 +186,6 @@ namespace IHM_Footies.Statistique
             Navigation.AllerSelectionInvite(this);
         }
 
-        /// <summary>
-        /// Bouton pour aller à la page du tableau de bord
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void BoutonRetour_Click(object sender, RoutedEventArgs e)
-        {
-            this.vmPageStatistique.TexteRechercheGroupe = string.Empty;
-            this.vmPageStatistique.RechercherInviteStatistique(string.Empty);
-        }
-
-        private void RechercheInvite_Click(object sender, RoutedEventArgs e)
-        {
-            this.vmPageStatistique.RechercherInviteStatistique(this.vmPageStatistique.TexteRechercheGroupe);
-        }
-        
         private void BoutonAllerTableauDeBord_Click(object sender, RoutedEventArgs e)
         {
             Navigation.AllerTableaudebord(this);

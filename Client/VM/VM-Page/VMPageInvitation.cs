@@ -382,8 +382,11 @@ namespace VM_Footies.VM_Page
         {
             if (string.IsNullOrWhiteSpace(texteRecherche))
                 invitation.MenusListe = new ObservableCollection<VMMenu>(menusSauvegardes);
-            List<VMMenu> resultats = menusSauvegardes.Where(g => g.Nom.Contains(texteRecherche, StringComparison.OrdinalIgnoreCase)).OrderBy(g => g.Nom).ToList();
-            invitation.MenusListe = new ObservableCollection<VMMenu>(menusSauvegardes);
+            else
+            {
+                List<VMMenu> resultats = menusSauvegardes.Where(g => g.Nom.Contains(texteRecherche, StringComparison.OrdinalIgnoreCase)).OrderBy(g => g.Nom).ToList();
+                invitation.MenusListe = new ObservableCollection<VMMenu>(resultats);
+            }
         }
 
         /// <summary>
@@ -395,8 +398,11 @@ namespace VM_Footies.VM_Page
         {
             if (string.IsNullOrWhiteSpace(texteRecherche))
                 invitation.PlatsListe = new ObservableCollection<VMPlat>(platsSauvegardes);
-            List<VMPlat> resultats = platsSauvegardes.Where(g => g.Nom.Contains(texteRecherche, StringComparison.OrdinalIgnoreCase)).OrderBy(g => g.Nom).ToList();
-            invitation.PlatsListe = new ObservableCollection<VMPlat>(platsSauvegardes);
+            else
+            {
+                List<VMPlat> resultats = platsSauvegardes.Where(g => g.Nom.Contains(texteRecherche, StringComparison.OrdinalIgnoreCase)).OrderBy(g => g.Nom).ToList();
+                invitation.PlatsListe = new ObservableCollection<VMPlat>(resultats);
+            }
         }
 
 

@@ -346,7 +346,7 @@
                 <TextBox x:Name="zonerechercheMenu" 
                  Grid.Column="0" 
                  Style="{StaticResource StyleChampRecherche}"
-                 Text="{Binding TexteRechercheMenus, UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="2" Margin="-27,-2,27,-2"/>
+                 Text="{Binding TexteRechercheMenu, UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="2" Margin="-27,-2,27,-2"/>
 
                 <Button x:Name="rechercheMenu" 
                 Grid.Column="1" 
@@ -373,7 +373,7 @@
                 <TextBox x:Name="zonerecherchePlats" 
                     Grid.Column="0" 
                     Style="{StaticResource StyleChampRecherche}"
-                    Text="{Binding TexteRechercheMenus, UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="2" Margin="5,0,25,0"/>
+                    Text="{Binding TexteRecherchePlat, UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="2" Margin="5,0,25,0"/>
 
                 <Button x:Name="recherchePlats" 
                     Grid.Column="1" 
