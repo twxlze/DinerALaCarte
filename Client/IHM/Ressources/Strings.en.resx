@@ -382,7 +382,7 @@
     <value>Password</value>
   </data>
   <data name="connexionvue" xml:space="preserve">
-    <value>Connection</value>
+    <value>Log in</value>
   </data>
   <data name="Creeruncompte" xml:space="preserve">
     <value>Don't have an account yet? Create an account</value>
@@ -461,5 +461,11 @@
   </data>
   <data name="messageStats" xml:space="preserve">
     <value>🛈Select guests to view their visit frequency statistics</value>
+  </data>
+  <data name="infoplatdet" xml:space="preserve">
+    <value>Information about the dish</value>
+  </data>
+  <data name="alegduplat" xml:space="preserve">
+    <value>Allergens in the dish</value>
   </data>
 </root>

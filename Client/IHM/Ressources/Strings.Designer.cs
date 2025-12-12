@@ -124,6 +124,15 @@ namespace IHM_Footies.Ressources {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Allergènes du plat.
+        /// </summary>
+        public static string alegduplat {
+            get {
+                return ResourceManager.GetString("alegduplat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Allergène(s).
         /// </summary>
         public static string Allergene {
@@ -489,6 +498,15 @@ namespace IHM_Footies.Ressources {
         public static string GwoupInvite {
             get {
                 return ResourceManager.GetString("GwoupInvite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Les informations du plat.
+        /// </summary>
+        public static string infoplatdet {
+            get {
+                return ResourceManager.GetString("infoplatdet", resourceCulture);
             }
         }
         

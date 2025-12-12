@@ -462,4 +462,10 @@
   <data name="messageStats" xml:space="preserve">
     <value>🛈Sélectionnez les invités pour afficher leurs statistiques de fréquence de venue</value>
   </data>
+  <data name="infoplatdet" xml:space="preserve">
+    <value>Les informations du plat</value>
+  </data>
+  <data name="alegduplat" xml:space="preserve">
+    <value>Allergènes du plat</value>
+  </data>
 </root>

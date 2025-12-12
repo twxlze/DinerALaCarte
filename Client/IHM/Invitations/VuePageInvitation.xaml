@@ -62,7 +62,7 @@
                         <Setter.Value>
                             <VisualBrush Stretch="None" AlignmentX="Left">
                                 <VisualBrush.Visual>
-                                    <TextBlock Text="Rechercher..." Foreground="#BFBFBF" FontSize="12" Margin="8,0,0,0"/>
+                                    <TextBlock Text="{x:Static res:Strings.rechercher}" Foreground="#BFBFBF" FontSize="12" Margin="8,0,0,0"/>
                                 </VisualBrush.Visual>
                             </VisualBrush>
                         </Setter.Value>
