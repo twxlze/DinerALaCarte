@@ -215,8 +215,8 @@
                 <Button x:Name="BoutonMenus" Content="{x:Static res:Strings.Menus}" Grid.Row="5" Grid.Column="0" Style="{StaticResource BoutonMenu}" Cursor="Hand" Click="BoutonAllerMenu_Click" />
                 <Button x:Name="BoutonPlats" Content="{x:Static res:Strings.Plats}" Grid.Row="6" Grid.Column="0" Style="{StaticResource BoutonMenu}" Click="BoutonAllerPlat_Click" Background="#BFBFBF" FontWeight="Bold"/>
                 <Button x:Name="BoutonStatistique" Content="{x:Static res:Strings.Stats}" Grid.Row="7" Grid.Column="0" Style="{StaticResource BoutonMenu}" Click="BoutonAllerStatistique_Click"/>
-                <!-- <Button x:Name="BoutonTableauDeBord" Content="📈Tableau de Bord" Grid.Row="8" Grid.Column="0" Style="{StaticResource BoutonMenu}" Click="BoutonAllerTableauDeBord_Click"/> -->
-                <Button x:Name="BoutonUtilisateur" Content="👤" Grid.Row="10" Grid.Column="0" Style="{StaticResource BoutonMenu}" Margin="0,0,100,0" HorizontalContentAlignment="Center" FontSize="25" Click="BoutonAllerInformationUtilisateur_Click"/>
+                <Button x:Name="BoutonTableauDeBord" Content="{x:Static res:Strings.TableaudeBord}" Grid.Row="8" Grid.Column="0" Style="{StaticResource BoutonMenu}" Click="BoutonAllerTableauDeBord_Click"/>
+                <Button x:Name="BoutonUtilisateur" Content="👤" Grid.Row="10" Grid.Column="0" Style="{StaticResource BoutonMenu}" Margin="0,0,100,0" HorizontalContentAlignment="Center" FontSize="25"/>
                 <Button x:Name="BoutonReglage" Content="⚙️" Grid.Row="10" Grid.Column="0" Style="{StaticResource BoutonMenu}" HorizontalContentAlignment="Center" Margin="100,0,0,0" FontSize="25" Click="BoutonAllerReglages_Click"/>
             </Grid>
         </Border>

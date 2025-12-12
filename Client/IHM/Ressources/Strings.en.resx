@@ -333,6 +333,12 @@
   <data name="Double_Click_Plat" xml:space="preserve">
     <value>Double-click on a dish to see its information.</value>
   </data>
+  <data name="TableaudeBord" xml:space="preserve">
+    <value>📈 Dashboard</value>
+  </data>
+  <data name="NbFoisInvite" xml:space="preserve">
+    <value> Total meals</value>
+  </data>
   <data name="AnalyseInvit" xml:space="preserve">
     <value>Analysis of the invitation</value>
   </data>
