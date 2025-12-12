@@ -71,6 +71,7 @@ namespace UnitTest_Footies
             controller.AjouterInvitation(invit, ID_UTILISATEUR_TEST);
             long id = invit.IdInvitation;
 
+            controller.SupprimerInvitation(id, ID_UTILISATEUR_TEST);
 
             List<Invitation> liste = controller.ObtenirToutInvitations(ID_UTILISATEUR_TEST);
 
