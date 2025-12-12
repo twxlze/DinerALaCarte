@@ -217,6 +217,7 @@ namespace IHM_Footies.Reglages
             Navigation.AllerTableaudebord(this);
         }
 
+        /// <summary>
         /// Bouton pour aller à la page des informations utilisateur
         /// </summary>
         /// <param name="sender"></param>

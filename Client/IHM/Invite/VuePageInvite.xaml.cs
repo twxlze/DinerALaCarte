@@ -294,7 +294,6 @@ namespace IHM_Footies
         {
             Navigation.AllerSelectionInvite(this);
         }
-<<<<<<< HEAD
 
         /// <summary>
         /// Bouton pour aller à la page du tableau de bord
@@ -305,9 +304,6 @@ namespace IHM_Footies
         {
             Navigation.AllerTableaudebord(this);
         }
-        #endregion
-=======
->>>>>>> Test-Merge-TableauDeBord-Sprint3
 
         /// <summary>
         /// Bouton pour aller à la page des informations utilisateur

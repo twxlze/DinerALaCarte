@@ -574,13 +574,15 @@ namespace IHM_Footies.Ressources {
         }
         
         /// <summary>
-<<<<<<< HEAD
         ///   Recherche une chaîne localisée semblable à  repas au total.
         /// </summary>
         public static string NbFoisInvite {
             get {
                 return ResourceManager.GetString("NbFoisInvite", resourceCulture);
-=======
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à ✅ Aucun avertissement.
         /// </summary>
         public static string NoAvertissement {
@@ -595,7 +597,6 @@ namespace IHM_Footies.Ressources {
         public static string NoChoix {
             get {
                 return ResourceManager.GetString("NoChoix", resourceCulture);
->>>>>>> Test-Merge-TableauDeBord-Sprint3
             }
         }
         

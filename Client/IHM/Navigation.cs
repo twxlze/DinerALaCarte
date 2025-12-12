@@ -13,11 +13,8 @@ using IHM_Footies.Menu;
 using IHM_Footies.Plat;
 using IHM_Footies.Reglages;
 using IHM_Footies.Statistique;
-<<<<<<< HEAD
 using IHM_Footies.TableauDeBord;
-=======
 using METIER_Footies.Metier;
->>>>>>> Test-Merge-TableauDeBord-Sprint3
 using VM_Footies.VM;
 using VM_Footies.VM_Page;
 

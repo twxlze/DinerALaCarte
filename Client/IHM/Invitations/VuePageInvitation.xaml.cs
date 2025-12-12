@@ -179,7 +179,6 @@ namespace IHM_Footies.Invitations
         }
 
         /// <summary>
-<<<<<<< HEAD
         /// Bouton pour aller à la page du tableau de bord
         /// </summary>
         /// <param name="sender"></param>
@@ -187,7 +186,8 @@ namespace IHM_Footies.Invitations
         private void BoutonAllerTableauDeBord_Click(object sender, RoutedEventArgs e)
         {
             Navigation.AllerTableaudebord(this);
-=======
+        }
+        /// <summary>
         /// Bouton pour aller à la page des informations utilisateur
         /// </summary>
         /// <param name="sender"></param>
@@ -195,7 +195,6 @@ namespace IHM_Footies.Invitations
         private void BoutonAllerInformationUtilisateur_Click(object sender, RoutedEventArgs e)
         {
             Navigation.AllerInformationUtilisateur(this);
->>>>>>> Test-Merge-TableauDeBord-Sprint3
         }
         #endregion
 

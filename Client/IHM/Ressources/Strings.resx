@@ -333,13 +333,12 @@
   <data name="Double_Click_Plat" xml:space="preserve">
     <value>Double-cliquez sur un plat pour voir ses informations.</value>
   </data>
-<<<<<<< HEAD
   <data name="TableaudeBord" xml:space="preserve">
     <value>📈 Tableau de Bord</value>
   </data>
   <data name="NbFoisInvite" xml:space="preserve">
     <value> repas au total</value>
-=======
+  </data>
   <data name="AnalyseInvit" xml:space="preserve">
     <value>Analyse de l'invitation</value>
   </data>
@@ -378,6 +377,5 @@
   </data>
   <data name="Remarque" xml:space="preserve">
     <value>💬 Remarques</value>
->>>>>>> Test-Merge-TableauDeBord-Sprint3
   </data>
 </root>
