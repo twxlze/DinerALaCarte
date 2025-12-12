@@ -32,7 +32,8 @@ namespace VM_Footies.VM_Page
         private string texteRecherchePlat;
         private ObservableCollection<VMPlat> platsStats;
         private List<VMPlat> platsSelectionnesSauvegardes;
-        private PlotModel platStatistiqueModel;
+
+        private PlotModel statistiqueModelPlat;
         #endregion
 
         #region Propriétés
@@ -116,6 +117,19 @@ namespace VM_Footies.VM_Page
         }
 
         /// <summary>
+        /// Modèle de graphique pour les statistiques des plats
+        /// </summary>
+        public PlotModel StatistiqueModelPlat
+        {
+            get { return this.statistiqueModelPlat; }
+            set
+            {
+                this.statistiqueModelPlat = value;
+                Notify("StatistiqueModelPlat");
+            }
+        }
+
+        /// <summary>
         /// Liste de tous les plats pour les statistiques
         /// </summary>
         public ObservableCollection<VMPlat> PlatsStats
@@ -131,7 +145,7 @@ namespace VM_Footies.VM_Page
         /// <summary>
         /// Liste des plats selectionnés
         /// </summary>
-        public List<VMPlat> PlatsSelectionnes
+        public List<VMPlat> EstSelectionne
         {
             get
             {
@@ -177,19 +191,6 @@ namespace VM_Footies.VM_Page
             }
         }
 
-        public PlotModel PlatStatistiqueModel
-        {
-            get
-            {
-                return this.platStatistiqueModel;
-            }
-            set
-            {
-                this.platStatistiqueModel = value;
-                Notify("StatistiqueModelPlat");
-            }
-        }
-
         /// <summary>
         /// Événement déclenché lorsqu'une propriété change
         /// </summary>
@@ -211,6 +212,7 @@ namespace VM_Footies.VM_Page
         {
             this.Initialiser();
             ChargerDonneesInvite();
+            ChargerDonneesPlat();
         }
 
         private void Initialiser()
@@ -228,7 +230,7 @@ namespace VM_Footies.VM_Page
         }
         #endregion
 
-        #region Méthodes publiques
+        #region Méthodes stats - invités
         /// <summary>
         /// Initialise les statistiques des invités
         /// </summary>
@@ -299,44 +301,6 @@ namespace VM_Footies.VM_Page
             return statistiques;
         }
 
-        public async Task<Dictionary<string, int>> GenererDonneesStatistiquesPlat()
-        {
-            await _invitation.ChargerInvitations();
-
-            Dictionary<string, int> statistiques = new Dictionary<string, int>();
-
-            foreach (VMPlat vMPlat in PlatsSelectionnes)
-            {
-                statistiques.Add(vMPlat.Nom, 0);
-            }
-
-            foreach (VMInvitation invitation in this._invitation.VMInvitations)
-            {
-                foreach (Plat plat in invitation.Plats)
-                {
-                    string nom = plat.Nom;
-                    if (statistiques.ContainsKey(nom))
-                    {
-                        statistiques[nom]++;
-                    }
-                }
-
-                foreach (Menu menu in invitation.Menu)
-                {
-                    foreach (Plat plat in menu.Plat)
-                    {
-                        string nom = plat.Nom;
-                        if (statistiques.ContainsKey(nom))
-                        {
-                            statistiques[nom]++;
-                        }
-                    }
-                }
-            }
-            statistiques = statistiques.OrderByDescending(x => x.Value).ToDictionary(x => x.Key, x => x.Value);
-            return statistiques;
-        }
-
         /// <summary>
         /// Recherche un invité dans les statistiques en fonction du texte recherché
         /// ici les invites correspondant au texte de recherche sont placés en haut de la liste
@@ -352,30 +316,6 @@ namespace VM_Footies.VM_Page
                 List<VMInvite> resultatsFiltres = invitesSelectionnesSauvegardes.Where(i => i.Identite.Contains(textrechercher, StringComparison.OrdinalIgnoreCase)).OrderBy(i => i.Identite).ToList();
                 this.InvitesStats = new ObservableCollection<VMInvite>(resultatsFiltres);
             }
-        }
-
-        /// <summary>
-        /// Initialise les statistiques des plats
-        /// </summary>
-        public void InitialiserStatsPlats()
-        {
-            this.platsStats.Clear();
-            this.platsSelectionnesSauvegardes = new List<VMPlat>();
-            foreach (VMPlat plat in this.plat.VMPlat)
-            {
-                VMPlat vmStats = new VMPlat(plat);
-                platsSelectionnesSauvegardes.Add(vmStats);
-            }
-            PlatsStats = new ObservableCollection<VMPlat>(this.platsSelectionnesSauvegardes);
-        }
-
-        /// <summary>
-        /// Charge les données des plats pour initialiser les statistiques
-        /// </summary>
-        public async void ChargerDonneesPlat()
-        {
-            await plat.ChargerPlats();
-            InitialiserStatsPlats();
         }
 
         /// <summary>
@@ -428,7 +368,7 @@ namespace VM_Footies.VM_Page
                 StrokeColor = OxyColors.Black,
                 StrokeThickness = 1,
                 TextColor = OxyColor.FromRgb(10, 10, 10),
-                FontWeight = FontWeights.Bold, 
+                FontWeight = FontWeights.Bold,
                 LabelFormatString = "{0}"
             };
 
@@ -449,6 +389,163 @@ namespace VM_Footies.VM_Page
             valueAxis.Maximum = maxZoom + 1;
             model.Series.Add(barSeries);
             StatistiqueModel = model;
+        }
+        #endregion
+
+        #region Méthodes stats - plats
+        /// <summary>
+        /// Initialise les statistiques des plats
+        /// </summary>
+        public void InitialiserStatsPlats()
+        {
+            this.platsStats.Clear();
+            this.platsSelectionnesSauvegardes = new List<VMPlat>();
+            foreach (VMPlat plat in this.plat.VMPlat)
+            {
+                VMPlat vmStats = new VMPlat(plat);
+                platsSelectionnesSauvegardes.Add(vmStats);
+            }
+            PlatsStats = new ObservableCollection<VMPlat>(this.platsSelectionnesSauvegardes);
+        }
+
+        /// <summary>
+        /// Charge les données des plats pour initialiser les statistiques
+        /// </summary>
+        public async void ChargerDonneesPlat()
+        {
+            await plat.ChargerPlats();
+            InitialiserStatsPlats();
+        }
+
+        /// <summary>
+        /// Génère les données statistiques pour la fréquence de sélection de chaque plat
+        /// </summary>
+        /// <returns> une tache</returns>
+        public async Task<Dictionary<string, int>> GenererDonneesStatistiquesPlat()
+        {
+            await _invitation.ChargerInvitations();
+
+            Dictionary<string, int> statistiques = new Dictionary<string, int>();
+
+            foreach (VMPlat vMPlat in EstSelectionne)
+            {
+                statistiques.Add(vMPlat.Nom, 0);
+            }
+
+            foreach (VMInvitation invitation in this._invitation.VMInvitations)
+            {
+                foreach (Plat plat in invitation.Plats)
+                {
+                    string nom = plat.Nom;
+                    if (statistiques.ContainsKey(nom))
+                    {
+                        statistiques[nom]++;
+                    }
+                }
+
+                foreach (Menu menu in invitation.Menu)
+                {
+                    foreach (Plat plat in menu.Plat)
+                    {
+                        string nom = plat.Nom;
+                        if (statistiques.ContainsKey(nom))
+                        {
+                            statistiques[nom]++;
+                        }
+                    }
+                }
+            }
+            statistiques = statistiques.OrderByDescending(x => x.Value).ToDictionary(x => x.Key, x => x.Value);
+            return statistiques;
+        }
+
+        /// <summary>
+        /// recherche un plat dans les statistiques en fonction du texte recherché
+        /// </summary>
+        /// <param name="textrechercher"> le text de recherche</param>
+        public void RechercherPlatStatistique(string textrechercher)
+        {
+            if (string.IsNullOrWhiteSpace(textrechercher))
+                this.PlatsStats = new ObservableCollection<VMPlat>(this.platsSelectionnesSauvegardes);
+            else
+            {
+                List<VMPlat> resultatsFiltres = this.platsSelectionnesSauvegardes.Where(i => i.Nom.Contains(textrechercher, StringComparison.OrdinalIgnoreCase)).OrderBy(i => i.Nom).ToList();
+                this.PlatsStats = new ObservableCollection<VMPlat>(resultatsFiltres);
+            }
+        }
+
+        /// <summary>
+        /// Crée le modèle de statistique pour la fréquence de sélection de chaque plat (le graphique)
+        /// </summary>
+        public async void CreerStatistiquePlat()
+        {
+            PlotModel model = new PlotModel
+            {
+                Title = "Fréquence des plats sélectionnés",
+                PlotAreaBackground = OxyColor.FromRgb(255, 250, 240),
+                TitleFontSize = 18,
+                TitleColor = OxyColors.DarkBlue
+            };
+
+            CategoryAxis categoryAxis = new CategoryAxis
+            {
+                Position = AxisPosition.Left,
+                Title = "Plats",
+                TitleFontSize = 18,
+                TitleColor = OxyColors.DarkRed,
+                TextColor = OxyColors.Black,
+                FontSize = 14,
+                IsZoomEnabled = false
+            };
+
+            LinearAxis valueAxis = new LinearAxis
+            {
+                Position = AxisPosition.Bottom,
+                Title = "Fréquence de sélection",
+                TitleFontSize = 18,
+                TitleColor = OxyColors.DarkRed,
+                TextColor = OxyColors.Black,
+                FontSize = 14,
+                AbsoluteMinimum = 0,
+                MajorGridlineStyle = LineStyle.Solid,
+                MajorGridlineColor = OxyColors.LightGray,
+                MajorStep = 1,
+                MinorStep = 1,
+                StringFormat = "0"
+            };
+
+            model.Axes.Add(categoryAxis);
+            model.Axes.Add(valueAxis);
+
+            BarSeries barSeries = new BarSeries
+            {
+                Title = "Sélection : ",
+                FillColor = OxyColor.FromArgb(255, 46, 139, 87), //
+                StrokeColor = OxyColors.Black,
+                StrokeThickness = 1,
+                TextColor = OxyColor.FromRgb(10, 10, 10),
+                FontWeight = FontWeights.Bold,
+                LabelFormatString = "{0}"
+            };
+
+            Dictionary<string, int> donneesStatistiques = await GenererDonneesStatistiquesPlat();
+
+            int maxZoom = 0;
+            foreach (KeyValuePair<string, int> element in donneesStatistiques)
+            {
+                categoryAxis.Labels.Add(element.Key);
+                barSeries.Items.Add(new BarItem { Value = element.Value });
+                if (element.Value > maxZoom)
+                {
+                    maxZoom = element.Value;
+                }
+            }
+
+            valueAxis.AbsoluteMaximum = maxZoom + 5;
+            valueAxis.Maximum = maxZoom + 1;
+
+            model.Series.Add(barSeries);
+            StatistiqueModelPlat = model;
         }
         #endregion
 

@@ -266,7 +266,7 @@
         <!-- Container formulaire -->
         <Border BorderBrush="#8C2F26" 
                     Grid.Column="1" Grid.RowSpan="8" 
-                    Margin="10,61,10,41"
+                    Margin="10,61,10,28"
                     BorderThickness="3"
                     CornerRadius="10"
                     Padding="5">
@@ -277,7 +277,7 @@
             </ScrollViewer>
         </Border>
 
-        <Border Style="{StaticResource StyleContainerRecherche}" Grid.Column="1" Margin="0,75,0,0" Width="490" Grid.RowSpan="2" HorizontalAlignment="Center" Height="27" RenderTransformOrigin="0.503,1.366">
+        <Border Style="{StaticResource StyleContainerRecherche}" Grid.Column="1" Margin="34,26,0,0" Width="194" Grid.RowSpan="2" Height="27" RenderTransformOrigin="0.503,1.366" Grid.Row="1">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -302,12 +302,12 @@
                        FontSize="14"
                        Foreground="#FF4F4F4F"
                        TextWrapping="Wrap"
-                       Margin="0 5 0 0"/>
+                       Margin="9,-47,-9,52"/>
         </Border>
         <!-- Sélectionner tout -->
         <Border BorderBrush="#8C2F26"
-                    Grid.Column="1" Grid.RowSpan="5"
-                    Margin="96,15,96,158"
+                    Grid.Column="1" Grid.RowSpan="2"
+                    Margin="34,22,372,28"
                     BorderThickness="3"
                     CornerRadius="10"
                     Padding="5" Grid.Row="2">
@@ -321,7 +321,7 @@
         <!-- Invités à séléctionner -->
         <Border BorderBrush="#8C2F26" 
             Grid.Column="1" Grid.RowSpan="5" 
-            Margin="96,1,96,61"
+            Margin="34,10,372,56"
             BorderThickness="3"
             CornerRadius="10"
             Padding="5" Grid.Row="3">
@@ -340,8 +340,47 @@
             </ScrollViewer>
         </Border>
 
+        <!-- Plats à séléctionner -->
+
+        <!-- Sélectionner tout -->
+        <Border BorderBrush="#8C2F26"
+                Grid.Column="1" Grid.RowSpan="2"
+                Margin="346,16,54,35"
+                BorderThickness="3"
+                CornerRadius="10"
+                Padding="5" Grid.Row="2">
+            <CheckBox Content="{x:Static res:Strings.selecttout}"
+              IsChecked="{Binding ToutSelectionnerPlat}"
+              FontWeight="Bold"
+              FontSize="14"
+              Foreground="#8C2F26" />
+        </Border>
+
+        <!-- Plats à séléctionner -->
+        <Border BorderBrush="#8C2F26" 
+                Grid.Column="1" Grid.RowSpan="5" 
+                Margin="346,3,54,63"
+                BorderThickness="3"
+                CornerRadius="10"
+                Padding="5" Grid.Row="3">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <ItemsControl ItemsSource="{Binding PlatsStats}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <CheckBox Content="{Binding Nom}"
+                                      IsChecked="{Binding EstSelectionne}"
+                                      Margin="5"
+                                      FontSize="12"
+                                      Foreground="#333333"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+        </Border>
+
+
         <!-- Boutons -->
-        <Button Grid.RowSpan="2" Grid.Column="1" Content="{x:Static res:Strings.AfficherStats}" HorizontalAlignment="Center" Margin="0,58,0,0" Grid.Row="7" VerticalAlignment="Top" Height="40" Width="240" Style="{StaticResource StyleBoutonEnregistrer}" Click="Afficher_Click" />
+        <Button Grid.RowSpan="2" Grid.Column="1" Content="{x:Static res:Strings.AfficherStats}" HorizontalAlignment="Center" Margin="0,73,0,0" Grid.Row="7" VerticalAlignment="Top" Height="40" Width="240" Style="{StaticResource StyleBoutonEnregistrer}" Click="Afficher_Click" />
 
     </Grid>
 

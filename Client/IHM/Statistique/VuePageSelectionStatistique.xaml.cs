@@ -44,26 +44,31 @@ namespace IHM_Footies.Statistique
         /// </summary>
         /// <param name="sender"> L'expéditeur </param>
         /// <param name="e"> Les arguments de l'événement </param>
+        // Dans VuePageSelectionStatistique.xaml.cs
 
-        private async void Afficher_Click(object sender, RoutedEventArgs e)
+        private void Afficher_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                bool AuMoinUnSelection = this.vmPageStatistique.InvitesSelectionnes != null;
+                bool aInvitesSelectionnes = this.vmPageStatistique.InvitesSelectionnes != null && this.vmPageStatistique.InvitesSelectionnes.Any();
+                bool aDesPlatsSelectionnes = this.vmPageStatistique.EstSelectionne != null && this.vmPageStatistique.EstSelectionne.Any();
 
-                if (!AuMoinUnSelection)
-                {
-                    MessageBox.Show(
-                        "Sélectionnez au moins un invité pour voir les stats",
-                        "Erreur de validation",
-                        MessageBoxButton.OK,
-                        MessageBoxImage.Error
-                    );
-                }
-                else
+                if (aInvitesSelectionnes)
                 {
                     this.vmPageStatistique.CreerStatistique();
                     Navigation.AllerStatistique(this, this.vmPageStatistique);
+                }
+                else if (aDesPlatsSelectionnes)
+                {
+                    this.vmPageStatistique.CreerStatistiquePlat();
+
+                    VuePageStatistiquePlat vuePlat = new VuePageStatistiquePlat(this.vmPageStatistique);
+                    vuePlat.Show();
+                    this.Close();
+                }
+                else
+                {
+                    MessageBox.Show("Sélectionnez au moins un invité ou un plat pour voir les stats","Erreur de validation", MessageBoxButton.OK,MessageBoxImage.Error);
                 }
             }
             catch (Exception ex)
