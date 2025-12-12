@@ -143,5 +143,25 @@ namespace METIER_Footies.Data
             }
         }
 
+        public async Task<List<AvisDetail>> ObtenirAvisPourInvitation(long idInvitation)
+        {
+            try
+            {
+                List<AvisDetail> listeAvis = new List<AvisDetail>();
+                string url = $"Invitations/ListeAvis?idInvitation={idInvitation}";
+                HttpResponseMessage response = await GetAsync(url);
+                if (response.IsSuccessStatusCode)
+                {
+                    string json = await response.Content.ReadAsStringAsync();
+                    listeAvis = JsonSerializer.Deserialize<List<AvisDetail>>(json, options);
+                }
+                return listeAvis;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erreur récupération avis : " + ex.Message);
+            }
+        }
+
     }
 }

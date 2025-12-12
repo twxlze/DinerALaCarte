@@ -54,6 +54,12 @@ namespace METIER_Footies.Data.Interfaces
         /// <returns>>Une réponse HTTP</returns>
         Task<HttpResponseMessage> AjouterCommentairePlat(string commentaire);
 
+        /// <summary>
+        /// Obtenir les avis pour une invitation donnée
+        /// </summary>
+        /// <param name="idInvitation"> id de l'invitation </param>
+        /// <returns>liste des avis sur les plats</returns>
+        public Task<List<AvisDetail>> ObtenirAvisPourInvitation(long idInvitation);
 
     }
 
