@@ -12,6 +12,7 @@ using IHM_Footies.Menu;
 using IHM_Footies.Plat;
 using IHM_Footies.Reglages;
 using IHM_Footies.Statistique;
+using IHM_Footies.TableauDeBord;
 using VM_Footies.VM;
 using VM_Footies.VM_Page;
 
@@ -181,6 +182,19 @@ namespace IHM_Footies
         {
             VuePageStatistique vuestats = new VuePageStatistique(vmPageStatistique);
             vuestats.Show();
+            fenetreActuelle.Close();
+        }
+        #endregion
+
+        #region tableau de bord
+        /// <summary>
+        /// Permet de naviguer vers la fenêtre de sélection des invite pour les statistiques
+        /// </summary>
+        /// <param name="fenetreActuelle"></param>
+        public static void AllerTableaudebord(Window fenetreActuelle)
+        {
+            VuePageTableauDeBord vueSelection = new VuePageTableauDeBord();
+            vueSelection.Show();
             fenetreActuelle.Close();
         }
         #endregion
