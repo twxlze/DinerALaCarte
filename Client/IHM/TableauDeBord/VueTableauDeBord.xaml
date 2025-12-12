@@ -52,10 +52,22 @@
                                 BorderBrush="#CCCCCC"
                                 BorderThickness="1">
 
-                                <StackPanel Orientation="Horizontal" >
-                                    <TextBlock Text="{Binding FormatInvitation}" 
+                                <StackPanel Orientation="Vertical" >
+                                    <StackPanel Orientation="Horizontal" >
+                                        <TextBlock Text="{x:Static res:Strings.Invitations}" 
                                                FontWeight="SemiBold" />
-                                    <TextBlock Text="{Binding Remarque}" Foreground="#444"/>
+                                        <TextBlock Text=" : " 
+                                               FontWeight="SemiBold" />
+                                        <TextBlock Text="{Binding FormatInvitation}" />
+                                    </StackPanel>
+                                    
+                                    <StackPanel Orientation="Horizontal" >
+                                        <TextBlock Text="{x:Static res:Strings.Remarque}" 
+                                               FontWeight="SemiBold" />
+                                        <TextBlock Text=" : " 
+                                               FontWeight="SemiBold" />
+                                        <TextBlock Text="{Binding Remarque}"/>
+                                    </StackPanel>
                                 </StackPanel>
 
                             </Border>
