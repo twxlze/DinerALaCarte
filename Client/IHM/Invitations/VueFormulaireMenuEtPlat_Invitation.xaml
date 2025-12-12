@@ -13,6 +13,32 @@
 
 
     <Window.Resources>
+        <Style x:Key="StyleBoutonRetour" TargetType="Button">
+            <Setter Property="Background" Value="#F9F9F9"/>
+            <Setter Property="Foreground" Value="#B44B3E"/>
+            <Setter Property="FontSize" Value="24"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Width" Value="60"/>
+            <Setter Property="Height" Value="50"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="5">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#E0E0E0"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
         <BitmapImage x:Key="LogoHostably" UriSource="/Ressources/LogoHostably.png"/>
         <Style x:Key="BoutonMenu" TargetType="Button">
             <Setter Property="Background" Value="#F9F9F9"/>
@@ -190,7 +216,7 @@
                 <Button x:Name="BoutonMenus" Content="📋 Menus" Grid.Row="5" Style="{StaticResource BoutonMenu}" Click="BoutonAllerMenu_Click" />
                 <Button x:Name="BoutonPlats" Content="🍽️ Plats" Grid.Row="6" Style="{StaticResource BoutonMenu}" Click="BoutonAllerPlat_Click" />
                 <Button x:Name="BoutonStatistique" Content="{x:Static res:Strings.Stats}" Grid.Row="7" Grid.Column="0" Style="{StaticResource BoutonMenu}" Click="BoutonAllerStatistique_Click"/>
-                <!-- <Button x:Name="BoutonTableauDeBord" Content="📈Tableau de Bord" Grid.Row="8" Grid.Column="0" Style="{StaticResource BoutonMenu}" Click="BoutonAllerTableauDeBord_Click"/> -->
+                <Button x:Name="BoutonTableauDeBord" Content="{x:Static res:Strings.TableaudeBord}" Grid.Row="8" Grid.Column="0" Style="{StaticResource BoutonMenu}" Click="BoutonAllerTableauDeBord_Click"/>
                 <Button x:Name="BoutonUtilisateur" Content="👤" Grid.Row="10" Grid.Column="0" Style="{StaticResource BoutonMenu}" Margin="0,0,100,0" HorizontalContentAlignment="Center" FontSize="25"/>
                 <Button x:Name="BoutonReglage" Content="⚙️" Grid.Row="10" Grid.Column="0" Style="{StaticResource BoutonMenu}" HorizontalContentAlignment="Center" Margin="100,0,0,0" FontSize="25" Click="BoutonAllerReglages_Click"/>
             </Grid>
@@ -211,7 +237,7 @@
 
 
         <!-- Menus -->
-        <TextBlock Grid.Column="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Menus" VerticalAlignment="Top" FontWeight="Bold" FontSize="15" Foreground="#B44B3E" RenderTransformOrigin="0.5,0.5" Margin="76,68,0,0" Grid.RowSpan="2">
+        <TextBlock Grid.Column="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Menus" VerticalAlignment="Top" FontWeight="Bold" FontSize="15" Foreground="#B44B3E" RenderTransformOrigin="0.5,0.5" Margin="87,68,0,0" Grid.RowSpan="2">
             <TextBlock.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -226,7 +252,7 @@
 
         <Border BorderBrush="#8C2F26" 
         Grid.Column="1" Grid.RowSpan="6" 
-        Margin="26,2,422,59"
+        Margin="37,2,411,59"
         BorderThickness="3"
         CornerRadius="10"
         Padding="5" Grid.Row="2">
@@ -260,7 +286,7 @@
                 Height="164" 
                 Width="192"/>
         </StackPanel>
-        
+
         <TextBlock Grid.Column="1" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Gestion des invitations" VerticalAlignment="Top" FontWeight="Bold" FontSize="20" Foreground="#B44B3E" Margin="0,3,0,0"/>
         <Image Source="{StaticResource ResourceKey=LogoHostably}" Margin="15,10,121,17" />
 
@@ -298,29 +324,43 @@
 
 
         <Button Grid.Column="1" Content="Enregistrer" HorizontalAlignment="Left" Margin="380,19,0,68" Grid.Row="6" Width="181" Style="{StaticResource StyleBoutonMenu}" Grid.RowSpan="2" Click="BoutonEnregistrerInvitation_Click" />
-
+        <!-- souton refresh -->
+        <Button x:Name="BoutonRetourApresRecherche"
+          Style="{StaticResource StyleBoutonRetour}"
+          Content="⟳"
+          Click="RefreshMenu_Click"
+          Grid.Column="1"
+          Grid.Row="1" RenderTransformOrigin="0.217,0.517" Width="34" Height="33" Margin="14,0,0,0"/>
 
         <!-- Barre de recherche pour les Menus -->
-        <Border Style="{StaticResource StyleContainerRecherche}" Grid.Column="1" Grid.Row="1" Margin="36,0,0,0" Width="133" VerticalAlignment="Center" Height="21">
-            <Grid>
+        <Border Style="{StaticResource StyleContainerRecherche}" Grid.Column="1" Grid.Row="1" Margin="45,0,0,0" Width="133" VerticalAlignment="Center" Height="21">
+            <Grid Margin="32,0,-32,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="21*"/>
                     <ColumnDefinition Width="71*"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
+
+
                 <TextBox x:Name="zonerechercheMenu" 
                  Grid.Column="0" 
                  Style="{StaticResource StyleChampRecherche}"
-                 Text="{Binding TexteRechercheMenus, UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="3" Margin="2,-2,28,-2"/>
+                 Text="{Binding TexteRechercheMenu, UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="2" Margin="-27,-2,27,-2"/>
 
                 <Button x:Name="rechercheMenu" 
-                Grid.Column="2" 
-                Style="{StaticResource StyleLoupeRecherche}"/>
+                Grid.Column="1" 
+                Style="{StaticResource StyleLoupeRecherche}" HorizontalAlignment="Left" Margin="37,0,0,0" Click="RechercheMenu_Click"/>
             </Grid>
         </Border>
 
 
+        <Button
+          Style="{StaticResource StyleBoutonRetour}"
+          Content="⟳"
+          Click="RefreshPlat_Click"
+          Grid.Column="1"
+          Grid.Row="1" RenderTransformOrigin="0.217,0.517" Width="34" Height="33" Margin="186,0,0,0"/>
         <!-- Barre de recherche pour les plats -->
 
         <Border Style="{StaticResource StyleContainerRecherche}" Grid.Column="1" Grid.Row="1" Margin="218,0,0,0" Width="131" Height="23" VerticalAlignment="Center">
@@ -333,11 +373,11 @@
                 <TextBox x:Name="zonerecherchePlats" 
                     Grid.Column="0" 
                     Style="{StaticResource StyleChampRecherche}"
-                    Text="{Binding TexteRechercheMenus, UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="2" Margin="1,0,29,0"/>
+                    Text="{Binding TexteRecherchePlat, UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="2" Margin="5,0,25,0"/>
 
                 <Button x:Name="recherchePlats" 
                     Grid.Column="1" 
-                    Style="{StaticResource StyleLoupeRecherche}"/>
+                    Style="{StaticResource StyleLoupeRecherche}" Click="RecherchePlat_Click"/>
             </Grid>
         </Border>
 

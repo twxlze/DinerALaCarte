@@ -9,7 +9,6 @@ using METIER_Footies.Data;
 using METIER_Footies.Data.Interfaces;
 using METIER_Footies.Metier;
 using VM_Footies.VM;
-using VM_Footies.VM_Element_Selectionne;
 
 namespace VM_Footies
 {
@@ -51,7 +50,7 @@ namespace VM_Footies
                 {
                     foreach (VMInvite vmInviteSel in this.GroupeSelectionne.InvitesListe)
                     {
-                        if (vmInviteSel.EstSelectionne)
+                        if (vmInviteSel.InviteSelectionne)
                         {
                             invites.Add(new VMInvite(vmInviteSel.Invite));
                         }
@@ -163,6 +162,7 @@ namespace VM_Footies
                     groupe.GestionnaireEvenement(vmInviteSelectionne);
                     groupe.InvitesListe.Add(vmInviteSelectionne);
                 }
+                groupe.InitialiserSauvegardePourRecherche();
             }
             catch (Exception ex)
             {

@@ -177,7 +177,6 @@ namespace IHM_Footies.Reglages
             Navigation.AllerGroupesInvites(this);
         }
 
-
         /// <summary>
         /// Bouton pour fermer la fenêtre
         /// </summary>
@@ -187,8 +186,6 @@ namespace IHM_Footies.Reglages
         {
             Navigation.FermerFenetre(this);
         }
-
-
 
         /// <summary>
         /// Aller à la page d'invitations
@@ -200,7 +197,6 @@ namespace IHM_Footies.Reglages
             Navigation.AllerInvitations(this);
         }
 
-
         /// <summary>
         /// Bouton pour aller à la page des Statistiques
         /// </summary>
@@ -210,8 +206,26 @@ namespace IHM_Footies.Reglages
         {
             Navigation.AllerSelectionInvite(this);
         }
+
+        /// <summary>
+        /// Bouton pour aller à la page du tableau de bord
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BoutonAllerTableauDeBord_Click(object sender, RoutedEventArgs e)
+        {
+            Navigation.AllerTableaudebord(this);
+        }
+
+        /// <summary>
+        /// Bouton pour aller à la page des informations utilisateur
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BoutonAllerInformationUtilisateur_Click(object sender, RoutedEventArgs e)
+        {
+            Navigation.AllerInformationUtilisateur(this);
+        }
         #endregion
-
-
     }
 }

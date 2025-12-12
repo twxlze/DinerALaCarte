@@ -98,10 +98,23 @@ namespace METIER_Footies.Metier
         /// <summary>
         /// Retourne ou modifie la liste des allergènes du plat
         /// </summary>
-        public List<Enum.NomAllergene>? Allergenes
+        public List<Enum.NomAllergene> Allergenes
         {
-            get { return allergenes; }
-            set { allergenes = value; }
+            get
+            {
+                return allergenes;
+            }
+            set
+            {
+                if (value != null)
+                {
+                    allergenes = value;
+                }
+                else
+                {
+                    allergenes = new List<Enum.NomAllergene>();
+                }
+            }
         }
 
         /// <summary>
@@ -141,9 +154,24 @@ namespace METIER_Footies.Metier
             this.prenom = prenom;
             this.telephone = telephone;
             this.email = email;
-            this.allergenes = allergies ;
-            this.platsDetestes = platsDetestes;
-            this.platsPreferes = platsPreferes;
+
+            this.allergenes = new List<NomAllergene>();
+            if (allergies != null)
+            {
+                this.allergenes = allergies;
+            }
+
+            this.platsDetestes = new List<Plat>();
+            if (platsDetestes != null)
+            {
+                this.platsDetestes = platsDetestes;
+            }
+
+            this.platsPreferes = new List<Plat>();
+            if (platsPreferes != null)
+            {
+                this.platsPreferes = platsPreferes;
+            }
         }
 
         /// <summary>
@@ -156,9 +184,24 @@ namespace METIER_Footies.Metier
             this.prenom = invite.prenom;
             this.telephone = invite.telephone;
             this.email = invite.email;
-            this.allergenes = invite.allergenes;
-            this.platsDetestes = invite.platsDetestes;
-            this.platsPreferes = invite.platsPreferes;
+
+            this.allergenes = new List<NomAllergene>();
+            if (invite.allergenes != null)
+            {
+                this.allergenes.AddRange(invite.allergenes);
+            }
+
+            this.platsDetestes = new List<Plat>();
+            if (invite.platsDetestes != null)
+            {
+                this.platsDetestes.AddRange(invite.platsDetestes);
+            }
+
+            this.platsPreferes = new List<Plat>();
+            if (invite.platsPreferes != null)
+            {
+                this.platsPreferes.AddRange(invite.platsPreferes);
+            }
         }
 
         /// <summary>

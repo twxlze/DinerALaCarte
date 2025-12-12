@@ -11,6 +11,7 @@
         private string motDePasse;
         private string? motDePasseHash;
         #endregion
+
         #region Propriétés
         /// <summary>
         /// Retourne ou modifie l'id de l'utilisateur

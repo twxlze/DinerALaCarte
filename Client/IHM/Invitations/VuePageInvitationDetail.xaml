@@ -154,6 +154,40 @@
                               HorizontalScrollBarVisibility="Disabled">
                     <StackPanel Margin="5" HorizontalAlignment="Center" MaxWidth="550">
 
+                        <!--  Remarque -->
+                        <Border Background="Transparent" 
+                                Padding="8,6"
+                                Margin="0,0,0,15">
+                            <StackPanel>
+                                <TextBlock Text="💬 Remarque" 
+                                           FontSize="12" 
+                                           FontWeight="Normal"
+                                           Foreground="#999999"
+                                           Margin="0,0,0,4"/>
+                                <TextBlock Text="{Binding Remarque}" 
+                                           TextWrapping="Wrap"
+                                           FontSize="12"
+                                           FontStyle="Italic"
+                                           Foreground="#777777"
+                                           LineHeight="18">
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Remarque}" Value="">
+                                                    <Setter Property="Text" Value="Aucune remarque"/>
+                                                    <Setter Property="Foreground" Value="#BBBBBB"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Remarque}" Value="{x:Null}">
+                                                    <Setter Property="Text" Value="Aucune remarque"/>
+                                                    <Setter Property="Foreground" Value="#BBBBBB"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </StackPanel>
+                        </Border>
+
                         <!-- Section Invités -->
                         <Border Style="{StaticResource StyleCarteSection}">
                             <StackPanel>

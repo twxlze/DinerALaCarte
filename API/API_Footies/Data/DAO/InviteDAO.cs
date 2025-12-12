@@ -120,6 +120,31 @@ namespace API_Footies.Data.DAO
             }
             return listeInvite;
         }
+
+        public Invite ObtenirInviteComplet(long idInvite, long idUtilisateur)
+        {
+            Invite invite = null;
+            using (SQLiteConnector connection = new SQLiteConnector())
+            {
+                if (connection == null) throw new Exception("Erreur de connexion");
+
+                Dictionary<string, object> parameters = new Dictionary<string, object>()
+                {
+                    {"@IdInvite", idInvite },
+                    {"@IdUtilisateur", idUtilisateur }
+                };
+
+                string query = "SELECT * FROM Invite WHERE IDInvite = @IdInvite AND IdUtilisateur = @IdUtilisateur";
+                DataTable dataTable = connection.ExecuteQuery(query, parameters);
+
+                if (dataTable.Rows.Count > 0)
+                {
+                    invite = CreerInviteDepuisDataRow(connection, dataTable.Rows[0]);
+                }
+            }
+            return invite;
+        }
+
         #endregion
 
         #region Méthodes privées / Gestion des invités
@@ -162,7 +187,7 @@ namespace API_Footies.Data.DAO
         /// </summary>
         private void SupprimerInviteParId(SQLiteConnector connection, long id, long idUtilisateur)
         {
-            var parameters = new Dictionary<string, object>()
+            Dictionary<string, object> parameters = new Dictionary<string, object>()
             {
                 {"@Id", id },
                 {"@IdUtilisateur", idUtilisateur }
@@ -208,7 +233,7 @@ namespace API_Footies.Data.DAO
 
         private void InsererLienInviteAllergene(SQLiteConnector connection, long idInvite, long idAllergene)
         {
-            var parameters = new Dictionary<string, object>()
+            Dictionary<string, object> parameters = new Dictionary<string, object>()
             {
                 {"@IdInvite", idInvite },
                 {"@IdAllergene", idAllergene }
@@ -218,7 +243,7 @@ namespace API_Footies.Data.DAO
 
         private void SupprimerAllergenesInvite(SQLiteConnector connection, long idInvite)
         {
-            var parameters = new Dictionary<string, object>()
+            Dictionary<string, object> parameters = new Dictionary<string, object>()
             {
                 {"@IdInvite", idInvite }
             };
@@ -228,8 +253,8 @@ namespace API_Footies.Data.DAO
         private List<NomAllergene> ObtenirAllergenesInvite(SQLiteConnector connection, long idInvite)
         {
             List<NomAllergene> allergenes = new List<NomAllergene>();
-            var parameters = new Dictionary<string, object>() { { "@IdInvite", idInvite } };
-            var dataTable = connection.ExecuteQuery("SELECT A.Nom FROM Allergene A JOIN Invite_Allergene IA ON A.IdAllergene = IA.IdAllergene WHERE IA.IdInvite = @IdInvite", parameters);
+            Dictionary<string, object> parameters = new Dictionary<string, object>() { { "@IdInvite", idInvite } };
+            DataTable dataTable = connection.ExecuteQuery("SELECT A.Nom FROM Allergene A JOIN Invite_Allergene IA ON A.IdAllergene = IA.IdAllergene WHERE IA.IdInvite = @IdInvite", parameters);
 
             foreach (DataRow? row in dataTable.Rows)
             {
@@ -251,7 +276,7 @@ namespace API_Footies.Data.DAO
                 {
                     if (plat.Id > 0)
                     {
-                        var parameters = new Dictionary<string, object>() { { "@IdInvite", idInvite }, { "@IdPlat", plat.Id } };
+                        Dictionary<string, object> parameters = new Dictionary<string, object>() { { "@IdInvite", idInvite }, { "@IdPlat", plat.Id } };
                         connection.ExecuteQuery("INSERT INTO Invite_PlatDeteste (IdInvite, IdPlat) VALUES (@IdInvite, @IdPlat)", parameters);
                     }
                 }
@@ -260,15 +285,15 @@ namespace API_Footies.Data.DAO
 
         private void SupprimerPlatsDetestesInvite(SQLiteConnector connection, long idInvite)
         {
-            var parameters = new Dictionary<string, object>() { { "@IdInvite", idInvite } };
+            Dictionary<string, object> parameters = new Dictionary<string, object>() { { "@IdInvite", idInvite } };
             connection.ExecuteQuery("DELETE FROM Invite_PlatDeteste WHERE IdInvite = @IdInvite", parameters);
         }
 
         private List<Plat> ObtenirPlatsDetestesInvite(SQLiteConnector connection, long idInvite)
         {
             List<Plat> plats = new List<Plat>();
-            var parameters = new Dictionary<string, object>() { { "@IdInvite", idInvite } };
-            var dataTable = connection.ExecuteQuery("SELECT P.IDPlat, P.Nom, P.Description, P.Categorie, P.Ingredients FROM Plat P JOIN Invite_PlatDeteste IPD ON P.IDPlat = IPD.IdPlat WHERE IPD.IdInvite = @IdInvite", parameters);
+            Dictionary<string, object> parameters = new Dictionary<string, object>() { { "@IdInvite", idInvite } };
+            DataTable dataTable = connection.ExecuteQuery("SELECT P.IDPlat, P.Nom, P.Description, P.Categorie, P.Ingredients FROM Plat P JOIN Invite_PlatDeteste IPD ON P.IDPlat = IPD.IdPlat WHERE IPD.IdInvite = @IdInvite", parameters);
 
             foreach (DataRow? row in dataTable.Rows)
             {
@@ -285,7 +310,7 @@ namespace API_Footies.Data.DAO
                 {
                     if (plat.Id > 0)
                     {
-                        var parameters = new Dictionary<string, object>() { { "@IdInvite", idInvite }, { "@IdPlat", plat.Id } };
+                        Dictionary<string, object> parameters = new Dictionary<string, object>() { { "@IdInvite", idInvite }, { "@IdPlat", plat.Id } };
                         connection.ExecuteQuery("INSERT INTO Invite_PlatPrefere (IdInvite, IdPlat) VALUES (@IdInvite, @IdPlat)", parameters);
                     }
                 }
@@ -294,15 +319,15 @@ namespace API_Footies.Data.DAO
 
         private void SupprimerPlatsPreferesInvite(SQLiteConnector connection, long idInvite)
         {
-            var parameters = new Dictionary<string, object>() { { "@IdInvite", idInvite } };
+            Dictionary<string, object> parameters = new Dictionary<string, object>() { { "@IdInvite", idInvite } };
             connection.ExecuteQuery("DELETE FROM Invite_PlatPrefere WHERE IdInvite = @IdInvite", parameters);
         }
 
         private List<Plat> ObtenirPlatsPreferesInvite(SQLiteConnector connection, long idInvite)
         {
             List<Plat> plats = new List<Plat>();
-            var parameters = new Dictionary<string, object>() { { "@IdInvite", idInvite } };
-            var dataTable = connection.ExecuteQuery("SELECT P.IDPlat, P.Nom, P.Description, P.Categorie, P.Ingredients FROM Plat P JOIN Invite_PlatPrefere IPP ON P.IDPlat = IPP.IdPlat WHERE IPP.IdInvite = @IdInvite", parameters);
+            Dictionary<string, object> parameters = new Dictionary<string, object>() { { "@IdInvite", idInvite } };
+            DataTable dataTable = connection.ExecuteQuery("SELECT P.IDPlat, P.Nom, P.Description, P.Categorie, P.Ingredients FROM Plat P JOIN Invite_PlatPrefere IPP ON P.IDPlat = IPP.IdPlat WHERE IPP.IdInvite = @IdInvite", parameters);
 
             foreach (DataRow? row in dataTable.Rows)
             {
@@ -313,38 +338,80 @@ namespace API_Footies.Data.DAO
         #endregion
 
         #region Méthodes privées / Création d'objets & Utilitaires
+
+        /// <summary>
+        /// Crée un objet Invite complet avec ses listes (Allergènes, Plats, etc.)
+        /// </summary>
         private Invite CreerInviteDepuisDataRow(SQLiteConnector connection, DataRow row)
         {
             long idInvite = (long)row["IDInvite"];
+
             List<NomAllergene> allergenes = ObtenirAllergenesInvite(connection, idInvite);
             List<Plat> platsDetestes = ObtenirPlatsDetestesInvite(connection, idInvite);
             List<Plat> platsPreferes = ObtenirPlatsPreferesInvite(connection, idInvite);
 
-            return new Invite(
+            List<NomAllergene> allergenesFinaux = null;
+            if (allergenes.Count > 0)
+            {
+                allergenesFinaux = allergenes;
+            }
+
+            List<Plat> platsDetestesFinaux = null;
+            if (platsDetestes.Count > 0)
+            {
+                platsDetestesFinaux = platsDetestes;
+            }
+
+            List<Plat> platsPreferesFinaux = null;
+            if (platsPreferes.Count > 0)
+            {
+                platsPreferesFinaux = platsPreferes;
+            }
+
+            Invite invite = new Invite(
                 idInvite,
                 row["Nom"].ToString(),
                 row["Prenom"].ToString(),
-                row["NumTel"].ToString(),
-                row["Mail"].ToString(),
-                allergenes.Count > 0 ? allergenes : null,
-                platsDetestes.Count > 0 ? platsDetestes : null,
-                platsPreferes.Count > 0 ? platsPreferes : null
+                row["NumTel"] as string,
+                row["Mail"] as string,
+                allergenesFinaux,
+                platsDetestesFinaux,
+                platsPreferesFinaux
             );
+
+            return invite;
         }
 
+        /// <summary>
+        /// Crée un objet Plat proprement en gérant les valeurs NULL
+        /// </summary>
         private Plat CreerPlatDepuisDataRow(DataRow row)
         {
             CategoriePlat categorie = CategoriePlat.plat;
-            Enum.TryParse(row["Categorie"].ToString(), true, out categorie);
-            string? ingredients = row.Table.Columns.Contains("Ingredients") && row["Ingredients"] != DBNull.Value ? row["Ingredients"].ToString() : null;
+            if (!Enum.TryParse(row["Categorie"].ToString(), true, out categorie))
+            {
+                categorie = CategoriePlat.plat;
+            }
 
-            return new Plat((long)row["IDPlat"], row["Nom"].ToString(), row["Description"]?.ToString(), categorie, ingredients, null);
+            string description = row["Description"] as string;
+            string ingredients = row["Ingredients"] as string;
+
+            long idPlat = Convert.ToInt64(row["IDPlat"]);
+
+            return new Plat(
+                idPlat,
+                row["Nom"].ToString(),
+                description,
+                categorie,
+                ingredients,
+                null
+            );
         }
 
         private bool VerifieAppartientGroupe(SQLiteConnector connection, long idInvite)
         {
-            var parameters = new Dictionary<string, object>() { { "@IdInvite", idInvite } };
-            var dataTable = connection.ExecuteQuery("SELECT COUNT(*) as NombreGroupes FROM Invite_Groupe WHERE IdInvite = @IdInvite", parameters);
+            Dictionary<string, object> parameters = new Dictionary<string, object>() { { "@IdInvite", idInvite } };
+            DataTable dataTable = connection.ExecuteQuery("SELECT COUNT(*) as NombreGroupes FROM Invite_Groupe WHERE IdInvite = @IdInvite", parameters);
             return dataTable.Rows.Count > 0 && Convert.ToInt32(dataTable.Rows[0]["NombreGroupes"]) > 0;
         }
         #endregion

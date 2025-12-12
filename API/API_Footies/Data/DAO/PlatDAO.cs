@@ -21,32 +21,31 @@ namespace API_Footies.Data.DAO
                 }
                 else
                 {
-                    var parameters = new Dictionary<string, object>()
+                    Dictionary<string, object> parameters = new Dictionary<string, object>()
                     {
                         {"@Nom", plat.Nom },
                         {"@Categorie", plat.Categorie.ToString() },
                         {"@Description", plat.Description ?? ""},
                         {"@Ingredients", plat.Ingredients ?? ""},
-                        {"@IdUtilisateur", idUtilisateur } // Ajouté
+                        {"@IdUtilisateur", idUtilisateur } 
                     };
 
-                    // Insertion avec l'ID utilisateur
                     plat.Id = connection.ExecuteInsert("INSERT INTO Plat (Nom, Categorie, Description, Ingredients, IdUtilisateur) VALUES (@Nom, @Categorie, @Description, @Ingredients, @IdUtilisateur)", parameters);
 
                     if (plat.Allergenes != null && plat.Allergenes.Count > 0)
                     {
                         foreach (NomAllergene allergene in plat.Allergenes)
                         {
-                            var parametersAllergene = new Dictionary<string, object>()
+                            Dictionary<string, object> parametersAllergene = new Dictionary<string, object>()
                             {
                                 {"@Nom", allergene.ToString() }
                             };
-                            var dataTableAllergene = connection.ExecuteQuery("SELECT IDAllergene FROM Allergene WHERE Nom = @Nom", parametersAllergene);
+                            DataTable dataTableAllergene = connection.ExecuteQuery("SELECT IDAllergene FROM Allergene WHERE Nom = @Nom", parametersAllergene);
 
                             if (dataTableAllergene.Rows.Count > 0)
                             {
                                 long idAllergene = (long)dataTableAllergene.Rows[0]["IDAllergene"];
-                                var parametersLiaison = new Dictionary<string, object>()
+                                Dictionary<string, object> parametersLiaison = new Dictionary<string, object>()
                                 {
                                     {"@IdPlat", plat.Id },
                                     {"@IdAllergene", idAllergene }
@@ -64,7 +63,6 @@ namespace API_Footies.Data.DAO
 
         public bool EstDansUnMenu(long idPlat)
         {
-            // Pas de changement ici
             bool resultat = false;
             using (SQLiteConnector connection = new SQLiteConnector())
             {
@@ -74,7 +72,7 @@ namespace API_Footies.Data.DAO
                 }
                 else
                 {
-                    var parameters = new Dictionary<string, object>()
+                    Dictionary<string, object> parameters = new Dictionary<string, object>()
                      {
                          {"@IdPlat", idPlat }
                      };
@@ -102,13 +100,12 @@ namespace API_Footies.Data.DAO
                 }
                 else
                 {
-                    var parameters = new Dictionary<string, object>()
+                    Dictionary<string, object> parameters = new Dictionary<string, object>()
                     {
                         {"@IdUtilisateur", idUtilisateur }
                     };
 
-                    // Filtrage par utilisateur
-                    var dataTable = connection.ExecuteQuery("SELECT * FROM Plat WHERE IdUtilisateur = @IdUtilisateur", parameters);
+                    DataTable dataTable = connection.ExecuteQuery("SELECT * FROM Plat WHERE IdUtilisateur = @IdUtilisateur", parameters);
 
                     foreach (DataRow? row in dataTable.Rows)
                     {
@@ -120,19 +117,13 @@ namespace API_Footies.Data.DAO
 
                         long idPlat = (long)row["idPlat"];
 
-                        // Récupérer les allergènes du plat
                         List<NomAllergene> allergenesPlat = new List<NomAllergene>();
-                        var parametersAllergene = new Dictionary<string, object>()
+                        Dictionary<string, object> parametersAllergene = new Dictionary<string, object>()
                         {
                             {"@IdPlat", idPlat }
                         };
 
-                        var dataTableAllergenes = connection.ExecuteQuery(
-                            @"SELECT a.Nom 
-                              FROM Allergene a
-                              INNER JOIN Plat_Allergene pa ON a.IDAllergene = pa.IDAllergene 
-                              WHERE pa.IDPlat = @IdPlat",
-                            parametersAllergene);
+                        DataTable dataTableAllergenes = connection.ExecuteQuery( @"SELECT a.Nom  FROM Allergene a INNER JOIN Plat_Allergene pa ON a.IDAllergene = pa.IDAllergene WHERE pa.IDPlat = @IdPlat",parametersAllergene);
 
                         foreach (DataRow? rowAllergene in dataTableAllergenes.Rows)
                         {
@@ -142,15 +133,7 @@ namespace API_Footies.Data.DAO
                                 allergenesPlat.Add(allergene);
                             }
                         }
-
-                        Plat plat = new Plat(
-                            idPlat,
-                            row["nom"].ToString(),
-                            row["description"].ToString(),
-                            categorie,
-                            row["ingredients"].ToString(),
-                            allergenesPlat.Count > 0 ? allergenesPlat : null
-                        );
+                        Plat plat = new Plat(idPlat,row["nom"].ToString(),row["description"].ToString(),categorie,row["ingredients"].ToString(), allergenesPlat.Count > 0 ? allergenesPlat : null);
                         listePlat.Add(plat);
                     }
                 }
@@ -169,41 +152,38 @@ namespace API_Footies.Data.DAO
                 }
                 else
                 {
-                    var parameters = new Dictionary<string, object>()
+                    Dictionary<string, object> parameters = new Dictionary<string, object>()
                     {
                         {"@Id", plat.Id },
                         {"@Nom", plat.Nom },
                         {"@Categorie", plat.Categorie.ToString() },
                         {"@Description", plat.Description ?? ""},
                         {"@Ingredients", plat.Ingredients ?? ""},
-                        {"@IdUtilisateur", idUtilisateur } // Ajouté
+                        {"@IdUtilisateur", idUtilisateur } 
                     };
 
-                    // Sécurité : On vérifie l'ID Utilisateur lors de l'Update
                     connection.ExecuteQuery("UPDATE Plat SET Nom = @Nom, Categorie = @Categorie, Description = @Description, Ingredients = @Ingredients WHERE IDPlat = @Id AND IdUtilisateur = @IdUtilisateur", parameters);
 
-                    // Supprimer les anciennes liaisons avec les allergènes
-                    var parametersDelete = new Dictionary<string, object>()
+                    Dictionary<string, object> parametersDelete = new Dictionary<string, object>()
                     {
                         {"@IdPlat", plat.Id }
                     };
                     connection.ExecuteQuery("DELETE FROM Plat_Allergene WHERE IDPlat = @IdPlat", parametersDelete);
 
-                    // Ajouter les nouvelles liaisons avec les allergènes
                     if (plat.Allergenes != null && plat.Allergenes.Count > 0)
                     {
                         foreach (NomAllergene allergene in plat.Allergenes)
                         {
-                            var parametersAllergene = new Dictionary<string, object>()
+                            Dictionary<string, object> parametersAllergene = new Dictionary<string, object>()
                             {
                                 {"@Nom", allergene.ToString() }
                             };
-                            var dataTableAllergene = connection.ExecuteQuery("SELECT IDAllergene FROM Allergene WHERE Nom = @Nom", parametersAllergene);
+                            DataTable dataTableAllergene = connection.ExecuteQuery("SELECT IDAllergene FROM Allergene WHERE Nom = @Nom", parametersAllergene);
 
                             if (dataTableAllergene.Rows.Count > 0)
                             {
                                 long idAllergene = (long)dataTableAllergene.Rows[0]["IDAllergene"];
-                                var parametersLiaison = new Dictionary<string, object>()
+                                Dictionary<string, object> parametersLiaison = new Dictionary<string, object>()
                                 {
                                     {"@IdPlat", plat.Id },
                                     {"@IdAllergene", idAllergene }
@@ -212,7 +192,6 @@ namespace API_Footies.Data.DAO
                             }
                         }
                     }
-
                     modifie = true;
                 }
             }
@@ -229,18 +208,16 @@ namespace API_Footies.Data.DAO
                 }
                 else
                 {
-                    // Supprimer les liaisons avec les allergènes
-                    var parametersLiaison = new Dictionary<string, object>()
+                    Dictionary<string, object> parametersLiaison = new Dictionary<string, object>()
                     {
                         {"@IdPlat", id }
                     };
                     connection.ExecuteQuery("DELETE FROM Plat_Allergene WHERE IDPlat = @IdPlat", parametersLiaison);
 
-                    // Supprimer le plat avec sécurité utilisateur
-                    var parameters = new Dictionary<string, object>()
+                    Dictionary<string, object> parameters = new Dictionary<string, object>()
                     {
                         {"@Id", id },
-                        {"@IdUtilisateur", idUtilisateur } // Ajouté
+                        {"@IdUtilisateur", idUtilisateur } 
                     };
                     connection.ExecuteQuery("DELETE FROM Plat WHERE idPlat = @Id AND IdUtilisateur = @IdUtilisateur", parameters);
                 }
@@ -258,16 +235,13 @@ namespace API_Footies.Data.DAO
                 }
                 else
                 {
-                    var parameters = new Dictionary<string, object>()
+                    Dictionary<string, object> parameters = new Dictionary<string, object>()
                     {
                         {"@Texte", $"%{texterecherche}%"},
-                        {"@IdUtilisateur", idUtilisateur } // Ajouté
+                        {"@IdUtilisateur", idUtilisateur } 
                     };
 
-                    // Ajout du AND IdUtilisateur avec parenthèses pour le OR
-                    DataTable dataTable = connection.ExecuteQuery(
-                        "SELECT * FROM Plat WHERE (Nom LIKE @Texte OR Description LIKE @Texte) AND IdUtilisateur = @IdUtilisateur",
-                        parameters);
+                    DataTable dataTable = connection.ExecuteQuery("SELECT * FROM Plat WHERE (Nom LIKE @Texte OR Description LIKE @Texte) AND IdUtilisateur = @IdUtilisateur", parameters);
 
                     foreach (DataRow? row in dataTable.Rows)
                     {
@@ -279,19 +253,13 @@ namespace API_Footies.Data.DAO
 
                         long idPlat = (long)row["idPlat"];
 
-                        // Récupérer les allergènes
                         List<NomAllergene> allergenesPlat = new List<NomAllergene>();
-                        var parametersAllergene = new Dictionary<string, object>()
+                        Dictionary<string, object> parametersAllergene = new Dictionary<string, object>()
                         {
                             {"@IdPlat", idPlat }
                         };
 
-                        var dataTableAllergenes = connection.ExecuteQuery(
-                            @"SELECT a.Nom 
-                              FROM Allergene a
-                              INNER JOIN Plat_Allergene pa ON a.IDAllergene = pa.IDAllergene 
-                              WHERE pa.IDPlat = @IdPlat",
-                            parametersAllergene);
+                        DataTable dataTableAllergenes = connection.ExecuteQuery(@"SELECT a.Nom FROM Allergene a INNER JOIN Plat_Allergene pa ON a.IDAllergene = pa.IDAllergene WHERE pa.IDPlat = @IdPlat",parametersAllergene);
 
                         foreach (DataRow? rowAllergene in dataTableAllergenes.Rows)
                         {
@@ -302,14 +270,7 @@ namespace API_Footies.Data.DAO
                             }
                         }
 
-                        Plat plat = new Plat(
-                            idPlat,
-                            row["nom"].ToString(),
-                            row["description"]?.ToString(),
-                            categorie,
-                            row["Ingredients"]?.ToString(),
-                            allergenesPlat.Count > 0 ? allergenesPlat : null
-                        );
+                        Plat plat = new Plat(idPlat,row["nom"].ToString(),row["description"]?.ToString(),categorie, row["Ingredients"]?.ToString(),allergenesPlat.Count > 0 ? allergenesPlat : null);
                         listePlat.Add(plat);
                     }
                 }

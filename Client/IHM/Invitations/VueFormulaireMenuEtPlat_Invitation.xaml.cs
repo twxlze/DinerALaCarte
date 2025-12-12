@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.ComponentModel;
+using System.Windows;
 using METIER_Footies.Data;
 using VM_Footies.VM;
 using VM_Footies.VM_Page;
@@ -12,28 +13,23 @@ namespace IHM_Footies.Invitations
     {
 
         #region attributs
-
         private VMInvitation invitation;
-
         private InvitationDAO invitationDAO;
-
         private VMPageInvitation pageInvitation;
-
-
         #endregion
 
         #region proprietes
-
         /// <summary>
         /// Récupérer les invitations
         /// </summary>
         public VMInvitation Invitation => this.invitation;
-
         #endregion
 
-
         #region constructeurs
-
+        /// <summary>
+        /// Constructeur de la vue de formulaire d'invitation
+        /// </summary>
+        /// <param name="invitation"> prend en parametre le model des invitations</param>
         public VueFormulaireMenuEtPlat_Invitation(VMInvitation invitation)
         {
             this.pageInvitation = new VMPageInvitation();
@@ -45,6 +41,9 @@ namespace IHM_Footies.Invitations
             this.Loaded += VueFormulaireMenuEtPlat_Invitation_Loaded;
         }
 
+        /// <summary>
+        /// Constructeur par défaut
+        /// </summary>
         public VueFormulaireMenuEtPlat_Invitation() : this(new VMInvitation())
         {
         }
@@ -52,7 +51,6 @@ namespace IHM_Footies.Invitations
         #endregion
 
         #region methodes
-
         private async void VueFormulaireMenuEtPlat_Invitation_Loaded(object sender, RoutedEventArgs e)
         {
             await ChargerDonnees();
@@ -63,9 +61,19 @@ namespace IHM_Footies.Invitations
             await this.pageInvitation.ChargerElementsDansInvitation(invitation);
         }
 
-
+        private void Invitation_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            switch (e.PropertyName)
+            {
+                case "TexteRechercheMenu":
+                    this.pageInvitation.RechercherMenuDansFormulaire(this.invitation, this.invitation.TexteRechercheMenu);
+                    break;
+                case "TexteRecherchePlat":
+                    this.pageInvitation.RechercherPlatDansFormulaire(this.invitation, this.invitation.TexteRecherchePlat);
+                    break;
+            }
+        }
         #endregion
-
 
         #region boutons navigations 
 
@@ -159,32 +167,72 @@ namespace IHM_Footies.Invitations
             Navigation.AllerSelectionInvite(this);
         }
 
+        /// <summary>
+        /// Bouton pour aller à la page du tableau de bord
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BoutonAllerTableauDeBord_Click(object sender, RoutedEventArgs e)
+        {
+            Navigation.AllerTableaudebord(this);
+        }
+        /// <summary>
+        /// Bouton pour aller à la page des informations utilisateur
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BoutonAllerInformationUtilisateur_Click(object sender, RoutedEventArgs e)
+        {
+            Navigation.AllerInformationUtilisateur(this);
+        }
         #endregion
 
-
         #region boutons 
-
         private async void BoutonEnregistrerInvitation_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 this.invitation.SynchroniserTout();
-                if (this.invitation.Invitation.IdInvitation != 0)
+                VuePageAvertissementInvitation fenetreVerif = new VuePageAvertissementInvitation(this.invitation);
+                bool? resultat = fenetreVerif.ShowDialog();
+
+                if (fenetreVerif.InvitationConfirmee)
                 {
-                    await this.invitationDAO.ModifierInvitation(this.invitation.Invitation);
+                    if (this.invitation.Invitation.IdInvitation != 0)
+                        await this.invitationDAO.ModifierInvitation(this.invitation.Invitation);
+                    else
+                        await this.invitationDAO.AjouterInvitation(this.invitation.Invitation);
+
+                    Navigation.AllerInvitations(this);
                 }
-                else
-                {
-                    await this.invitationDAO.AjouterInvitation(this.invitation.Invitation);
-                }
-                Navigation.AllerInvitations(this);
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Erreur lors de l'enregistrement de l'invitation : {ex.Message}", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"Erreur lors de l'analyse ou l'enregistrement : {ex.Message}", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
+        private void RechercheMenu_Click(object sender, RoutedEventArgs e)
+        {
+            this.pageInvitation.RechercherMenuDansFormulaire(this.invitation, this.invitation.TexteRechercheMenu);
+        }
+
+        private void RefreshMenu_Click(object sender, RoutedEventArgs e)
+        {
+            this.invitation.TexteRechercheMenu = string.Empty;
+            this.pageInvitation.RechercherMenuDansFormulaire(this.invitation, string.Empty);
+        }
+
+        private void RecherchePlat_Click(object sender, RoutedEventArgs e)
+        {
+            this.pageInvitation.RechercherPlatDansFormulaire(this.invitation, this.invitation.TexteRecherchePlat);
+        }
+
+        private void RefreshPlat_Click(object sender, RoutedEventArgs e)
+        {
+            this.invitation.TexteRecherchePlat = string.Empty;
+            this.pageInvitation.RechercherPlatDansFormulaire(this.invitation, string.Empty);
+        }
         #endregion
 
     }

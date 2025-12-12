@@ -333,4 +333,49 @@
   <data name="Double_Click_Plat" xml:space="preserve">
     <value>Double-cliquez sur un plat pour voir ses informations.</value>
   </data>
+  <data name="TableaudeBord" xml:space="preserve">
+    <value>📈 Tableau de Bord</value>
+  </data>
+  <data name="NbFoisInvite" xml:space="preserve">
+    <value> repas au total</value>
+  </data>
+  <data name="AnalyseInvit" xml:space="preserve">
+    <value>Analyse de l'invitation</value>
+  </data>
+  <data name="ValideInvit" xml:space="preserve">
+    <value>Valider l'invitation</value>
+  </data>
+  <data name="Annuler" xml:space="preserve">
+    <value>Annuler</value>
+  </data>
+  <data name="NoChoix" xml:space="preserve">
+    <value>Revenir sur mes choix</value>
+  </data>
+  <data name="AllergieDanger" xml:space="preserve">
+    <value>⚠️ Allergie</value>
+  </data>
+  <data name="DetesteDanger" xml:space="preserve">
+    <value>😞 Détesté</value>
+  </data>
+  <data name="PrefereDanger" xml:space="preserve">
+    <value>😊 Préféré</value>
+  </data>
+  <data name="AllergieDetect" xml:space="preserve">
+    <value>⚠️ Allergies Détectées</value>
+  </data>
+  <data name="PlatDest" xml:space="preserve">
+    <value>😞 Plats Détestés</value>
+  </data>
+  <data name="PlatPref" xml:space="preserve">
+    <value>😊 Plats Préférés</value>
+  </data>
+  <data name="NoAvertissement" xml:space="preserve">
+    <value>✅ Aucun avertissement</value>
+  </data>
+  <data name="Messageaucunconflit" xml:space="preserve">
+    <value>Votre invitation ne présente aucun conflit. Vous pouvez la valider sereinement.</value>
+  </data>
+  <data name="Remarque" xml:space="preserve">
+    <value>💬 Remarques</value>
+  </data>
 </root>

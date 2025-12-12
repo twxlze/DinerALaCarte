@@ -1,11 +1,12 @@
-﻿using System.Data;
-using API_Footies.Data.Interfaces;
+﻿using API_Footies.Data.Interfaces;
 using API_Footies.Metier;
+using System.Data;
 
 namespace API_Footies.Data.DAO
 {
-    public class UtilisateurDAO : IUtilisateurDAO
+    public class ConnexionDAO : IConnexionDAO
     {
+
         public Identifiant RecupererIdentifiantParPseudo(string pseudo)
         {
             Identifiant identifiantTrouve = null;
@@ -64,6 +65,37 @@ namespace API_Footies.Data.DAO
                 }
             }
             return utilisateurTrouve;
+        }
+        public bool AjouterIdentifiantEtUtilisateur(Identifiant identifiant, Utilisateur utilisateur)
+        {
+            bool ajoute = false;
+
+            using (SQLiteConnector connection = new SQLiteConnector())
+            {
+                if (connection == null)
+                {
+                    throw new Exception("Erreur de connexion à la base de données");
+                }
+
+                Dictionary<string, object> parametresIdentifiant = new Dictionary<string, object>()
+                {
+                    {"@Pseudo", identifiant.Pseudo },
+                    {"@Hash", identifiant.MotDePasseHash }
+                };
+                connection.ExecuteQuery("INSERT INTO Identifiant (Pseudo, MotDePasseHash) VALUES (@Pseudo, @Hash)", parametresIdentifiant);
+
+                Dictionary<string, object> parametresUtilisateur = new Dictionary<string, object>()
+                {
+                    {"@Pseudo", utilisateur.Pseudo },
+                    {"@Nom", utilisateur.Nom ?? "" },
+                    {"@Prenom", utilisateur.Prenom ?? "" },
+                    {"@NumTel", utilisateur.NumTel ?? "" },
+                    {"@Mail", utilisateur.Mail ?? "" }
+                };
+                connection.ExecuteQuery("INSERT INTO Utilisateur (Pseudo, Nom, Prenom, NumTel, Mail) VALUES (@Pseudo, @Nom, @Prenom, @NumTel, @Mail)", parametresUtilisateur);
+                ajoute = true;
+            }
+            return ajoute;
         }
     }
 }

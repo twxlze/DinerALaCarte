@@ -73,6 +73,29 @@ namespace IHM_Footies.Statistique
         }
         #endregion
 
+        #region Bouton d'action
+        /// <summary>
+        /// Bouton pour reinitialiser le contenu de la barre de recherche
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BoutonRetour_Click(object sender, RoutedEventArgs e)
+        {
+            this.vmPageStatistique.TexteRechercheInviteStats = string.Empty;
+            this.vmPageStatistique.RechercherInviteStatistique(string.Empty);
+        }
+
+        /// <summary>
+        /// Bouton pour rechercher un invité dans la barre de recherche des statistiques
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void RechercheInvite_Click(object sender, RoutedEventArgs e)
+        {
+            this.vmPageStatistique.RechercherInviteStatistique(this.vmPageStatistique.TexteRechercheInviteStats);
+        }
+        #endregion
+
         #region Boutons de navigation
         /// <summary>
         /// Bouton pour aller à la page plat
@@ -163,22 +186,20 @@ namespace IHM_Footies.Statistique
             Navigation.AllerSelectionInvite(this);
         }
 
+        private void BoutonAllerTableauDeBord_Click(object sender, RoutedEventArgs e)
+        {
+            Navigation.AllerTableaudebord(this);
+        }
+
         /// <summary>
-        /// Bouton pour reinitialiser le contenu de la barre de recherche
+        /// Bouton pour aller à la page des informations utilisateur
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void BoutonRetour_Click(object sender, RoutedEventArgs e)
+        private void BoutonAllerInformationUtilisateur_Click(object sender, RoutedEventArgs e)
         {
-            this.vmPageStatistique.TexteRechercheGroupe = string.Empty;
+            Navigation.AllerInformationUtilisateur(this);
         }
-
-        private void RechercheInvite_Click(object sender, RoutedEventArgs e)
-        {
-            this.vmPageStatistique.RechercherInviteStatistique(this.vmPageStatistique.TexteRechercheGroupe);
-        }
-
         #endregion
-
     }
 }

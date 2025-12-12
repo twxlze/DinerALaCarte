@@ -19,5 +19,20 @@ namespace METIER_Footies.Data.Interfaces
         /// <returns> L'utilisateur connecté avec son ID, ou null si la connexion a échoué </returns>
         Task<Utilisateur?> Connexion(Identifiant identifiant);
 
+        /// <summary>
+        /// Vérifie si un pseudo est disponible
+        /// </summary>
+        /// <param name="pseudo">le pseudo à vérifier</param>
+        /// <returns>true si le pseudo est disponible</returns>
+        Task<bool> VerifierPseudoDisponible(string pseudo);
+
+        /// <summary>
+        /// Créer un nouvel utilisateur
+        /// </summary>
+        /// <param name="identifiant">Les informations d'identification de l'utilisateur à créer</param>
+        /// <param name="utilisateur">L'utilisateur à créer</param>
+        /// <returns></returns>
+        Task<bool> Inscription(Identifiant identifiant, Utilisateur utilisateur);
+
     }
 }

@@ -245,7 +245,7 @@
                 <Button x:Name="BoutonMenus" Content="{x:Static res:Strings.Menus}" Grid.Row="5" Grid.Column="0" Style="{StaticResource BoutonMenu}" Cursor="Hand" Click="BoutonAllerMenu_Click"/>
                 <Button x:Name="BoutonPlats" Content="{x:Static res:Strings.Plats}" Grid.Row="6" Grid.Column="0" Style="{StaticResource BoutonMenu}" Click="BoutonAllerPlat_Click"/>
                 <Button x:Name="BoutonStatistique" Content="{x:Static res:Strings.Stats}" Grid.Row="7" Grid.Column="0" Style="{StaticResource BoutonMenu}" Click="BoutonAllerStatistique_Click" Background="#BFBFBF" FontWeight="Bold"/>
-                <!-- <Button x:Name="BoutonTableauDeBord" Content="📈Tableau de Bord" Grid.Row="8" Grid.Column="0" Style="{StaticResource BoutonMenu}" Click="BoutonAllerTableauDeBord_Click"/> -->
+                <Button x:Name="BoutonTableauDeBord" Content="{x:Static res:Strings.TableaudeBord}" Grid.Row="8" Grid.Column="0" Style="{StaticResource BoutonMenu}" Click="BoutonAllerTableauDeBord_Click"/>
                 <Button x:Name="BoutonUtilisateur" Content="👤" Grid.Row="10" Grid.Column="0" Style="{StaticResource BoutonMenu}" Margin="0,0,100,0" HorizontalContentAlignment="Center" FontSize="25"/>
                 <Button x:Name="BoutonReglage" Content="⚙️" Grid.Row="10" Grid.Column="0" Style="{StaticResource BoutonMenu}" HorizontalContentAlignment="Center" Margin="100,0,0,0" FontSize="25" Click="BoutonAllerReglages_Click"/>
             </Grid>
@@ -287,7 +287,7 @@
                 <TextBox 
         Grid.Column="0" 
         Style="{StaticResource StyleChampRecherche}"
-        Text="{Binding TexteRechercheGroupe, UpdateSourceTrigger=PropertyChanged}" Margin="10,0,0,0"/>
+        Text="{Binding TexteRechercheInviteStats, UpdateSourceTrigger=PropertyChanged}" Margin="10,0,0,0"/>
 
                 <Button Click="RechercheInvite_Click" 
         Grid.Column="1" 
@@ -304,8 +304,8 @@
                        TextWrapping="Wrap"
                        Margin="0 5 0 0"/>
         </Border>
-            <!-- Sélectionner tout -->
-            <Border BorderBrush="#8C2F26"
+        <!-- Sélectionner tout -->
+        <Border BorderBrush="#8C2F26"
                     Grid.Column="1" Grid.RowSpan="5"
                     Margin="96,15,96,158"
                     BorderThickness="3"
@@ -316,29 +316,29 @@
                   FontWeight="Bold"
                   FontSize="14"
                   Foreground="#8C2F26" />
-            </Border>
+        </Border>
 
-            <!-- Invités à séléctionner -->
-            <Border BorderBrush="#8C2F26" 
+        <!-- Invités à séléctionner -->
+        <Border BorderBrush="#8C2F26" 
             Grid.Column="1" Grid.RowSpan="5" 
             Margin="96,1,96,61"
             BorderThickness="3"
             CornerRadius="10"
             Padding="5" Grid.Row="3">
-                <ScrollViewer VerticalScrollBarVisibility="Auto">
-                    <ItemsControl ItemsSource="{Binding InvitesStats}">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <CheckBox Content="{Binding Identite}"
-                                  IsChecked="{Binding EstSelectionne}"
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <ItemsControl ItemsSource="{Binding InvitesStats}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <CheckBox Content="{Binding Identite}"
+                                  IsChecked="{Binding InviteSelectionne}"
                                   Margin="5"
                                   FontSize="12"
                                   Foreground="#333333"/>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                </ScrollViewer>
-            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+        </Border>
 
         <!-- Boutons -->
         <Button Grid.RowSpan="2" Grid.Column="1" Content="{x:Static res:Strings.AfficherStats}" HorizontalAlignment="Center" Margin="0,58,0,0" Grid.Row="7" VerticalAlignment="Top" Height="40" Width="240" Style="{StaticResource StyleBoutonEnregistrer}" Click="Afficher_Click" />

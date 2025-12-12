@@ -7,6 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="VM-Element-Selectionne\**" />
+    <EmbeddedResource Remove="VM-Element-Selectionne\**" />
+    <None Remove="VM-Element-Selectionne\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="OxyPlot.Core" Version="2.2.0" />
   </ItemGroup>
 

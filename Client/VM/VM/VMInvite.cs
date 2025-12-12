@@ -7,7 +7,6 @@ using System.Text;
 using System.Threading.Tasks;
 using METIER_Footies.Enum;
 using METIER_Footies.Metier;
-using VM_Footies.VM_Element_Selectionne;
 
 namespace VM_Footies.VM
 {
@@ -25,6 +24,7 @@ namespace VM_Footies.VM
         private bool estSelectionne;
         private ObservableCollection<VMPlat> platsDetestesListe;
         private ObservableCollection<VMPlat> platsPreferesListe;
+        private VMInvite vmInviteStat;
         #endregion
 
         #region
@@ -109,7 +109,7 @@ namespace VM_Footies.VM
         /// <summary>
         /// Nom complet de l'invité (Prénom + Nom)
         /// </summary>
-        public string Identite { get => $"{Prenom} {Nom}"; }
+        public string Identite { get => invite.Identite; }
 
         /// <summary>
         /// Liste des allergènes du plat
@@ -181,7 +181,7 @@ namespace VM_Footies.VM
         /// <summary>
         /// Indique si l'invité est sélectionné dans l'interface
         /// </summary>
-        public bool EstSelectionne
+        public bool InviteSelectionne
         {
             get { return estSelectionne; }
             set
@@ -191,6 +191,19 @@ namespace VM_Footies.VM
                     estSelectionne = value;
                     Notify("InviteSelectionne");
                 }
+            }
+        }
+
+        /// <summary>
+        /// Invite associée (pour les statisiques)
+        /// </summary>
+        public VMInvite VMInviteStat
+        {
+            get { return vmInviteStat; }
+            set
+            {
+                this.vmInviteStat = value;
+                Notify("Invite");
             }
         }
         #endregion
@@ -215,7 +228,8 @@ namespace VM_Footies.VM
         /// <param name="modele"> Le VMInvite à copier </param>
         public VMInvite(VMInvite modele) : this(new Invite(modele.Invite))
         {
-            this.estSelectionne = modele.EstSelectionne;
+            this.estSelectionne = modele.InviteSelectionne;
+            this.vmInviteStat = modele;
         }
 
         /// <summary>
@@ -242,7 +256,6 @@ namespace VM_Footies.VM
                 {
                     estPresent = this.invite.Allergenes.Contains(allergie);
                 }
-
                 VMAllergene vmAllergene = new VMAllergene(allergie, estPresent);
                 listeTemp.Add(vmAllergene);
             }
@@ -351,7 +364,7 @@ namespace VM_Footies.VM
         #region Propriétés supplémentaires
 
         /// <summary>
-        /// Liste des plats préférés sélectionnés uniquement (pour l'affichage en lecture seule)
+        /// Liste des plats préférés sélectionnés uniquement 
         /// </summary>
         public List<VMPlat> PlatsPreferesSelectionnes
         {

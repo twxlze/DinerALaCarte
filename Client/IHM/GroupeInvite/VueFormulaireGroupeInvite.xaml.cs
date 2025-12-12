@@ -93,6 +93,16 @@ namespace IHM_Footies
             }
         }
 
+        private void RechercheInvite_Click(object sender, RoutedEventArgs e)
+        {
+            this.groupeInvite.RechercherInviteDansGroupe(this.groupeInvite.TexteRechercheInvite);
+        }
+
+        private void RefreshInvite_Click(object sender, RoutedEventArgs e)
+        {
+            this.groupeInvite.TexteRechercheInvite = string.Empty;
+            this.groupeInvite.RechercherInviteDansGroupe(string.Empty);
+        }
         #endregion
 
 
@@ -184,6 +194,26 @@ namespace IHM_Footies
         private void BoutonAllerStatistique_Click(object sender, RoutedEventArgs e)
         {
             Navigation.AllerSelectionInvite(this);
+        }
+
+        /// <summary>
+        /// Bouton pour aller à la page du tableau de bord
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BoutonAllerTableauDeBord_Click(object sender, RoutedEventArgs e)
+        {
+            Navigation.AllerTableaudebord(this);
+        }
+
+        /// <summary>
+        /// Bouton pour aller à la page des informations utilisateur
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BoutonAllerInformationUtilisateur_Click(object sender, RoutedEventArgs e)
+        {
+            Navigation.AllerInformationUtilisateur(this);
         }
         #endregion
 

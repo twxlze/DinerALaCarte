@@ -86,8 +86,6 @@ namespace IHM_Footies.Invitations
 
         #endregion
 
-
-
         #region Boutons de navigation
 
         /// <summary>
@@ -185,6 +183,25 @@ namespace IHM_Footies.Invitations
             Navigation.AllerNotePlats(this, this.vmPageInvitation.InvitationSelectionnee);
         }
 
+        /// <summary>
+        /// Bouton pour aller à la page du tableau de bord
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BoutonAllerTableauDeBord_Click(object sender, RoutedEventArgs e)
+        {
+            Navigation.AllerTableaudebord(this);
+        }
+
+        /// <summary>
+        /// Bouton pour aller à la page des informations utilisateur
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BoutonAllerInformationUtilisateur_Click(object sender, RoutedEventArgs e)
+        {
+            Navigation.AllerInformationUtilisateur(this);
+        }
         #endregion
 
         #region boutons
@@ -240,8 +257,7 @@ namespace IHM_Footies.Invitations
             }
             VMInvitation invitationAModifier = new VMInvitation(this.vmPageInvitation.InvitationSelectionnee);
             await this.vmPageInvitation.ChargerElementsDansInvitation(invitationAModifier);
-            VueFormulaireInvitation fenetre = new VueFormulaireInvitation(invitationAModifier);
-            fenetre.ShowDialog();
+            Navigation.AllerFormulaireInvitation(this, invitationAModifier);
             this.RafraichirListe();
         }
 

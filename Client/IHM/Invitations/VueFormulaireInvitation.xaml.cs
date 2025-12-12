@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,16 +27,17 @@ namespace IHM_Footies.Invitations
         #region Attributs
         private VMInvitation invitation;
         private VMPageInvitation vmPageInvitation;
-
         #endregion
 
         #region proprietes 
-
         public VMInvitation Menu => this.invitation;
-
         #endregion
 
         #region Constructeurs
+        /// <summary>
+        /// Constructeur de la vue de formulaire d'invitation
+        /// </summary>
+        /// <param name="invitation"> prend en parametre le model des invitations</param>
         public VueFormulaireInvitation(VMInvitation invitation)
         {
             this.invitation = invitation;
@@ -46,14 +48,15 @@ namespace IHM_Footies.Invitations
             ChargerDonnees();
         }
 
+        /// <summary>
+        /// Constructeur par défaut
+        /// </summary>
         public VueFormulaireInvitation() : this(new VMInvitation())
         {
         }
-
         #endregion
 
         #region methodes
-
         /// <summary>
         /// Charge les données depuis l'API
         /// </summary>
@@ -62,10 +65,21 @@ namespace IHM_Footies.Invitations
             await this.vmPageInvitation.ChargerElementsDansInvitation(invitation);
         }
 
+        private void Invitation_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            switch (e.PropertyName)
+            {
+                case "TexteRechercheInvite":
+                    this.vmPageInvitation.RechercherInviteDansFormulaire(this.invitation, this.invitation.TexteRechercheInvite);
+                    break;
+                case "TexteRechercheGroupeInvite":
+                    this.vmPageInvitation.RechercherGroupeDansFormulaire(this.invitation, this.invitation.TexteRechercheGroupeInvite);
+                    break;
+            }
+        }
         #endregion
 
         #region boutons de navigations
-
         /// <summary>
         /// Bouton pour fermer la fenêtre
         /// </summary>
@@ -156,11 +170,27 @@ namespace IHM_Footies.Invitations
             Navigation.AllerSelectionInvite(this);
         }
 
-
+        /// <summary>
+        /// Bouton pour aller à la page du tableau de bord
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BoutonAllerTableauDeBord_Click(object sender, RoutedEventArgs e)
+        {
+            Navigation.AllerTableaudebord(this);
+        }
+        /// <summary>
+        /// Bouton pour aller à la page des informations utilisateur
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BoutonAllerInformationUtilisateur_Click(object sender, RoutedEventArgs e)
+        {
+            Navigation.AllerInformationUtilisateur(this);
+        }
         #endregion
 
         #region boutons 
-
         /// <summary>
         /// Bouton pour aller à la page de formulaire d'invitation plat/menu
         /// </summary>
@@ -172,13 +202,31 @@ namespace IHM_Footies.Invitations
             {
                 MessageBox.Show("Veuillez saisir un nom pour l'invitation.", "Validation", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
-
-            VueFormulaireMenuEtPlat_Invitation fenetreMenuPlat = new VueFormulaireMenuEtPlat_Invitation(invitation);
-            fenetreMenuPlat.ShowDialog();
-
-            this.Close();
+            this.vmPageInvitation.PreparerSauvegarde(this.invitation);
+            Navigation.AllerFormulaireInvitationPlatMenu(this, this.invitation);
         }
 
+        private void RechercheInvite_Click(object sender, RoutedEventArgs e)
+        {
+            this.vmPageInvitation.RechercherInviteDansFormulaire(this.invitation, this.invitation.TexteRechercheInvite);
+        }
+
+        private void RefreshInvite_Click(object sender, RoutedEventArgs e)
+        {
+            this.invitation.TexteRechercheInvite = string.Empty;
+            this.vmPageInvitation.RechercherInviteDansFormulaire(this.invitation, string.Empty);
+        }
+
+        private void RechercheGroupe_Click(object sender, RoutedEventArgs e)
+        {
+            this.vmPageInvitation.RechercherGroupeDansFormulaire(this.invitation, this.invitation.TexteRechercheGroupeInvite);
+        }
+
+        private void RefreshGroupe_Click(object sender, RoutedEventArgs e)
+        {
+            this.invitation.TexteRechercheGroupeInvite = string.Empty;
+            this.vmPageInvitation.RechercherGroupeDansFormulaire(this.invitation, string.Empty);
+        }
         #endregion
 
     }
