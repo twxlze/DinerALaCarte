@@ -183,6 +183,11 @@ namespace IHM_Footies.Invitations
             Navigation.AllerMenu(this);
         }
 
+        private void BoutonClickAllerNoterPlats_Click(object sender, RoutedEventArgs e)
+        {
+            Navigation.AllerNotePlats(this, this.vmPageInvitation.InvitationSelectionnee);
+        }
+
         /// <summary>
         /// Bouton pour aller à la page du tableau de bord
         /// </summary>
@@ -192,6 +197,7 @@ namespace IHM_Footies.Invitations
         {
             Navigation.AllerTableaudebord(this);
         }
+
         /// <summary>
         /// Bouton pour aller à la page des informations utilisateur
         /// </summary>
@@ -314,8 +320,9 @@ namespace IHM_Footies.Invitations
             Navigation.AllerSelectionInvite(this);
         }
 
+
         #endregion
 
-
+        
     }
 }

@@ -46,5 +46,12 @@ namespace API_Footies.Services.Interfaces
         /// <param name="texterecherche">Le texte permettant d'un plat</param>
         /// <returns>Une liste de plats correspondant à la recherche</returns>
         public List<Plat> ChercherPlat(string texterecherche,long idUtilisateur);
+
+        /// <summary>
+        /// Ajouter un avis à un plat
+        /// </summary>
+        /// <param name="avis"></param>
+        void AjouterAvis(Avis avis);
+
     }
 }

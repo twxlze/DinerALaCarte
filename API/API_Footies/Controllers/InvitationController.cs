@@ -78,6 +78,17 @@ namespace API_Footies.Controllers
         {
             return this.service.ChercherInvitations(InvitationsRechercher, IdUtilisateur);
         }
+
+        /// Obtenir les avis des invitations
+        /// </summary>
+        /// <param name="idInvitation"> id de l'invitation </param>
+        /// <returns>liste des avis des invités sur les plats</returns>
+        [HttpGet("ListeAvis")]
+        public List<AvisDetail> ObtenirAvis(long idInvitation)
+        {
+            return this.service.ObtenirAvisParInvitation(idInvitation);
+        }
+
         #endregion
     }
 }

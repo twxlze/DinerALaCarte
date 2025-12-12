@@ -37,5 +37,13 @@ namespace API_Footies.Services.Interfaces
         /// <param name="InvitationsRechercher"> le nom ou une partie du nom de l'invitation à rechercher </param>
         /// <returns> la liste des invitations correspondants </returns>
         List<Invitation> ChercherInvitations(string InvitationsRechercher, long IdUtilisateur);
+
+        /// <summary>
+        /// Obtenir la liste des avis d'une invitation
+        /// </summary>
+        /// <param name="idInvitation"> id de l'invitation</param>
+        /// <returns> liste des avis d'une invitation</returns>
+        public List<AvisDetail> ObtenirAvisParInvitation(long idInvitation);
+
     }
 }

@@ -46,6 +46,21 @@ namespace METIER_Footies.Data.Interfaces
         /// <param name="InvitationRechercher">le texte en question </param>
         /// <returns>une liste de groupe invite dont le nom resemble au texte de la barre de recherche</returns>
         Task<List<Invitation>> ChercherInvitation(string InvitationRechercher);
+
+        /// <summary>
+        /// Ajouter un commentaire pour un plat
+        /// </summary>
+        /// <param name="invitation"> invitation sélectionnée </param>
+        /// <returns>>Une réponse HTTP</returns>
+        Task<HttpResponseMessage> AjouterCommentairePlat(string commentaire);
+
+        /// <summary>
+        /// Obtenir les avis pour une invitation donnée
+        /// </summary>
+        /// <param name="idInvitation"> id de l'invitation </param>
+        /// <returns>liste des avis sur les plats</returns>
+        public Task<List<AvisDetail>> ObtenirAvisPourInvitation(long idInvitation);
+
     }
 
 }

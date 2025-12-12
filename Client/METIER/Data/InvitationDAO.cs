@@ -112,5 +112,56 @@ namespace METIER_Footies.Data
 
             return listeDesInvitations;
         }
+
+        public async Task<HttpResponseMessage> AjouterCommentairePlat(string commentaire)
+        {
+            try
+            {
+                long idUtilisateur = SessionService.Instance.UtilisateurConnecte.IdUtilisateur;
+                string url = $"Invitations/AjoutCommentairePlat?IdUtilisateur={idUtilisateur}";
+                HttpResponseMessage reponseHttp = await PostAsync(url, commentaire);
+                return reponseHttp;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erreur lors de l'ajout du commentaire sur le plat : " + ex.Message);
+            }
+        }
+
+        public async Task<HttpResponseMessage> AjouterNotePlat(int note)
+        {
+            try
+            {
+                long idUtilisateur = SessionService.Instance.UtilisateurConnecte.IdUtilisateur;
+                string url = $"Invitations/AjoutCommentairePlat?IdUtilisateur={idUtilisateur}";
+                HttpResponseMessage reponseHttp = await PostAsync(url, note);
+                return reponseHttp;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erreur lors de l'ajout de la note sur le plat : " + ex.Message);
+            }
+        }
+
+        public async Task<List<AvisDetail>> ObtenirAvisPourInvitation(long idInvitation)
+        {
+            try
+            {
+                List<AvisDetail> listeAvis = new List<AvisDetail>();
+                string url = $"Invitations/ListeAvis?idInvitation={idInvitation}";
+                HttpResponseMessage response = await GetAsync(url);
+                if (response.IsSuccessStatusCode)
+                {
+                    string json = await response.Content.ReadAsStringAsync();
+                    listeAvis = JsonSerializer.Deserialize<List<AvisDetail>>(json, options);
+                }
+                return listeAvis;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erreur récupération avis : " + ex.Message);
+            }
+        }
+
     }
 }

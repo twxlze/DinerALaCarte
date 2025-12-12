@@ -1,9 +1,7 @@
-﻿using System.ComponentModel;
-using System.Data;
+﻿using System.Data;
 using API_Footies.Data.Interfaces;
 using API_Footies.Metier;
 using API_Footies.Metier.Enum;
-using static API_Footies.Metier.Plat;
 
 namespace API_Footies.Data.DAO
 {
@@ -279,5 +277,28 @@ namespace API_Footies.Data.DAO
             }
             return listePlat;
         }
+
+        public bool AjouterAvis(long idPlat, long idInvite, int note, string commentaire)
+        {
+            using (SQLiteConnector connection = new SQLiteConnector())
+            {
+                if (connection == null) throw new Exception("Erreur de connexion BDD");
+
+                Dictionary<string, object> parameters = new Dictionary<string, object>()
+        {
+            {"@IdPlat", idPlat},
+            {"@IdInvite", idInvite},
+            {"@Note", note},
+            {"@Commentaire", commentaire ?? ""}
+        };
+
+                string query = @"INSERT OR REPLACE INTO Avis_Plat (IdPlat, IdInvite, Note, Commentaire) 
+                         VALUES (@IdPlat, @IdInvite, @Note, @Commentaire)";
+
+                connection.ExecuteQuery(query, parameters);
+                return true;
+            }
+        }
+
     }
 }

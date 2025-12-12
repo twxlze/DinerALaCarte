@@ -47,6 +47,14 @@ namespace METIER_Footies.Data.Interfaces
         /// <param name="texterecherche">Le texte permettant de un plat</param>
         /// <returns>Une liste de plats correspondant à la recherche</returns>
         Task<List<Plat>> ChercherPlat(string texterecherche);
+
+        /// <summary>
+        /// Ajoute un avis pour un plat
+        /// </summary>
+        /// <param name="avis"> avis du plat </param>
+        /// <returns> réponse HTTP de l'API </returns>
+        public Task<HttpResponseMessage> AjouterAvis(Avis avis);
+
     }
 }
 

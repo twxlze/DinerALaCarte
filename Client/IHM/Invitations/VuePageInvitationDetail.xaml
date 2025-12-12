@@ -268,10 +268,53 @@
                             </StackPanel>
                         </Border>
 
+                        <!-- Section avis -->
+                        <Border Style="{StaticResource StyleCarteSection}">
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                                    <Ellipse Width="6" Height="6" Fill="#B44B3E" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                                    <TextBlock Text="Avis &amp; Notes" Style="{StaticResource StyleTitreSection}"/>
+                                </StackPanel>
+
+                                <Border Background="#FAFAFA" CornerRadius="6" Padding="8" MinHeight="60" BorderBrush="#E8E8E8" BorderThickness="1">
+                                    <ItemsControl x:Name="PanelAvis">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Border Background="White" CornerRadius="5" Margin="0,0,0,5" Padding="8" BorderBrush="#EEE" BorderThickness="1">
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="*"/>
+                                                            <ColumnDefinition Width="Auto"/>
+                                                        </Grid.ColumnDefinitions>
+                                                        <Grid.RowDefinitions>
+                                                            <RowDefinition Height="Auto"/>
+                                                            <RowDefinition Height="Auto"/>
+                                                        </Grid.RowDefinitions>
+
+                                                        <TextBlock Grid.Row="0" Grid.Column="0" FontSize="13">
+                                                            <TextBox Text="{Binding PrenomInvite}" FontWeight="Bold"/> 
+                                                            <TextBox Text="{Binding NomInvite}" FontWeight="Bold"/>
+                                                            <TextBox Text=" a noté " Foreground="Gray"/>
+                                                            <TextBox Text="{Binding NomPlat}" FontStyle="Italic" Foreground="#B44B3E"/>
+                                                        </TextBlock>
+
+                                                        <Border Grid.Row="0" Grid.Column="1" Background="#B44B3E" CornerRadius="10" Padding="8,2">
+                                                            <TextBlock Text="{Binding Note, StringFormat={}{0}/10}" Foreground="White" FontWeight="Bold" FontSize="11"/>
+                                                        </Border>
+
+                                                        <TextBlock Grid.Row="1" Grid.ColumnSpan="2" Text="{Binding Commentaire}" Margin="0,5,0,0" FontSize="12" Foreground="#555" TextWrapping="Wrap"/>
+                                                    </Grid>
+                                                </Border>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </Border>
+                            </StackPanel>
+                        </Border>
+
                     </StackPanel>
                 </ScrollViewer>
             </Border>
-
         </Grid>
     </Border>
 </Window>

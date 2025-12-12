@@ -263,6 +263,19 @@ namespace IHM_Footies
         }
 
         /// <summary>
+        /// Aller à la page de notation des plats d'une invitation
+        /// </summary>
+        /// <param name="fenetreActuelle"> la fenêtre à fermer </param>
+        public static void AllerNotePlats(Window fenetreActuelle, VMInvitation invitation)
+        {
+            VueNotationPlats fenetre = new VueNotationPlats(invitation);
+            fenetre.Show();
+            fenetreActuelle.Close();
+        }
+
+        #endregion
+
+        /// <summary>
         /// Aller au formulaire d'invitation des menus et des plats avec une invitation existante
         /// </summary>
         /// <param name="fenetreActuelle">La fenêtre actuelle à fermer</param>
@@ -273,7 +286,6 @@ namespace IHM_Footies
             vueFormulaireInvitation.Show();
             fenetreActuelle.Close();
         }
-        #endregion
 
         #region Connexion 
         /// <summary>

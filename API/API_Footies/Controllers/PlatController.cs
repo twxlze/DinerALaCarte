@@ -86,5 +86,28 @@ namespace API_Footies.Controllers
         {
             return this.service.ChercherPlat(texterecherche, idUtilisateur);
         }
+
+        /// <summary>
+        /// Ajoute ou modifie une note (de 1 à 10) et un commentaire pour un plat
+        /// </summary>
+        /// <param name="avis">L'objet contenant les IDs, la note et le commentaire</param>
+        [HttpPost("AjouterAvis")]
+        public IActionResult AjouterAvis(Avis avis)
+        {
+            try
+            {
+                this.service.AjouterAvis(avis);
+                return Ok("Avis enregistré avec succès.");
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Erreur serveur : " + ex.Message);
+            }
+        }
+
     }
 }

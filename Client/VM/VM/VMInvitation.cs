@@ -60,6 +60,8 @@ namespace VM_Footies.VM
             }
         }
 
+
+
         /// <summary>
         /// Menu de l'invitation
         /// </summary>

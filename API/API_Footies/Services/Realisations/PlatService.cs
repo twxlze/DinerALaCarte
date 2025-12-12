@@ -58,6 +58,12 @@ namespace API_Footies.Services.Realisations
         {
             return this.dao.ChercherPlat(texterecherche, idUtilisateur);
         }
+
+        public void AjouterAvis(Avis avis)
+        {
+            this.dao.AjouterAvis(avis.IdPlat, avis.IdInvite, avis.Note, avis.Commentaire);
+        }
+
         #endregion
 
     }

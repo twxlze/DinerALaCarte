@@ -49,6 +49,12 @@ namespace API_Footies.Services.Realisations
         {
             return this.invitationDAO.ChercherInvitations(InvitationsRechercher, IdUtilisateur);
         }
+
+        public List<AvisDetail> ObtenirAvisParInvitation(long idInvitation)
+        {
+            return this.invitationDAO.ObtenirAvisParInvitation(idInvitation);
+        }
+
         #endregion
     }
 }
