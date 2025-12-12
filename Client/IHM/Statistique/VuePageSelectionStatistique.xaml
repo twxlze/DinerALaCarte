@@ -287,7 +287,7 @@
                 <TextBox 
         Grid.Column="0" 
         Style="{StaticResource StyleChampRecherche}"
-        Text="{Binding TexteRechercheGroupe, UpdateSourceTrigger=PropertyChanged}" Margin="10,0,0,0"/>
+        Text="{Binding TexteRechercheInviteStats, UpdateSourceTrigger=PropertyChanged}" Margin="10,0,0,0"/>
 
                 <Button Click="RechercheInvite_Click" 
         Grid.Column="1" 

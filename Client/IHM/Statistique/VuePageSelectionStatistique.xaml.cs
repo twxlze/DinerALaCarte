@@ -91,7 +91,7 @@ namespace IHM_Footies.Statistique
         /// <param name="e"></param>
         private void RechercheInvite_Click(object sender, RoutedEventArgs e)
         {
-            this.vmPageStatistique.RechercherInviteStatistique(this.vmPageStatistique.TexteRechercheGroupe);
+            this.vmPageStatistique.RechercherInviteStatistique(this.vmPageStatistique.TexteRechercheInviteStats);
         }
         #endregion
 
