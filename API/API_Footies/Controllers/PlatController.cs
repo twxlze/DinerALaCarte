@@ -88,7 +88,7 @@ namespace API_Footies.Controllers
         }
 
         /// <summary>
-        /// Ajoute ou modifie une note et un commentaire pour un plat
+        /// Ajoute ou modifie une note (de 1 à 10) et un commentaire pour un plat
         /// </summary>
         /// <param name="avis">L'objet contenant les IDs, la note et le commentaire</param>
         [HttpPost("AjouterAvis")]
@@ -101,7 +101,7 @@ namespace API_Footies.Controllers
             }
             catch (ArgumentException ex)
             {
-                return BadRequest(ex.Message); // Erreur 400 si note invalide (ex: 12/10)
+                return BadRequest(ex.Message);
             }
             catch (Exception ex)
             {

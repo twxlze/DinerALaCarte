@@ -134,5 +134,19 @@ namespace METIER_Footies.Data
             }
             return listeDesPlats;
         }
+
+        public async Task<HttpResponseMessage> AjouterAvis(Avis avis)
+        {
+            try
+            {
+                string url = "Plats/AjouterAvis";
+                HttpResponseMessage reponseHttp = await PostAsync(url, avis);
+                return reponseHttp;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erreur lors de l'enregistrement de l'avis : " + ex.Message);
+            }
+        }
     }
 }
