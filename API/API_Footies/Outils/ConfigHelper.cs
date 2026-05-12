@@ -7,7 +7,7 @@
     {
         public string LireSelDansIni()
         {
-            string cheminFichier = "config.ini";
+            string cheminFichier = "Config/config.ini";
             string sel = "";
 
             if (File.Exists(cheminFichier))

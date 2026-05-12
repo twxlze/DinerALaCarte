@@ -43,6 +43,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Update="DataBase.db">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="DataBase2.db">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
